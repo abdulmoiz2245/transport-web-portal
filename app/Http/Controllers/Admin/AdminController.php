@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     
-    
+    // default constructor
     public function __construct() {
         $this->middleware('auth:admin');
     }
