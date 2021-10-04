@@ -67,7 +67,7 @@ use App\Models\Company_name;
            <div class="col-6">
                 <div class="form-group">
                     <label>Expiary Date</label>
-                    <input name="expiary_date" class="form-control" type="date">
+                    <input name="expiary_date" class="form-control" type="date" >
 
                 </div>
            </div>
@@ -271,3 +271,12 @@ use App\Models\Company_name;
 
     </form>
 </div>
+
+<script>
+    var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');
+    
+    console.log($("[type='date']").attr("min",new_date) );
+
+</script>

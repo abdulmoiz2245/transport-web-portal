@@ -470,4 +470,13 @@ use App\Models\Company_name;
         $('#smartwizard').smartWizard("reset");
 
     });
+    
+</script>
+<script>
+    var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');
+    
+    console.log($("[type='date']").attr("min",new_date) );
+
 </script>
