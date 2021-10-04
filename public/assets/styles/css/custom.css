@@ -1,0 +1,42 @@
+.sidebar-left{left:-175px;}
+.sidebar-left .navigation-left{width: 175px; text-align: left; padding-left:1rem;}
+.sidebar-left .navigation-left .nav-item .nav-item-hold{padding: 16px 0px;} 
+.sidebar-left-secondary.open{left: 170px}
+.sidebar-overlay{cursor: default; background: rgba(0, 0, 0, .1); width:calc(100% - 170px); z-index: 80;}
+.main-content-wrap.sidenav-open{width: calc(100% - 160px);}
+.btn.focus, .btn:focus{box-shadow:0 0 0 0.1rem rgba(102, 172, 114, .25);} 
+.sidebar-left .navigation-left .nav-item:hover a{color: var(--theme-red)}
+.app-footer{background: #cccccc; padding:0px 20px;}
+.sitePageMenu{font-size: 20px;}
+.cardIcons{color:var(--theme-red); font-size: 20px;}
+
+
+.text-primary{color:var(--theme-black) !important;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=================MEDIA QUERIES=============================*/
+@media (max-width: 576px){
+	.sidebar-left .navigation-left{width: 120px; text-align: center; padding-left: 0px;}
+	.sidebar-left .navigation-left .nav-item.active .triangle{border-width: 0 0 18px 18px;}
+	.sidebar-left-secondary.open{left: 110px;}
+	.sidebar-left .navigation-left .nav-item .nav-item-hold{}
+	.main-content-wrap.sidenav-open{width: 100%;}
+}
