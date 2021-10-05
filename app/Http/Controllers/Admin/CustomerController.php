@@ -368,6 +368,10 @@ class CustomerController extends Controller
             $customer_rate_card->rate = $request->input('rate');
         }
 
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
+        }
+
         if($request->input('detention') != ''){
             $customer_rate_card->detention = $request->input('detention');
         }
@@ -660,6 +664,10 @@ class CustomerController extends Controller
 
         if($request->input('rate') != ''){
             $customer_rate_card->rate = $request->input('rate');
+        }
+        
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
         }
 
         if($request->input('detention') != ''){

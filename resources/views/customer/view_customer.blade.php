@@ -526,11 +526,23 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Rate :</b></h5>
+                                    <h5 class=""><b>Rate Type:</b></h5>
 
                                 </div>
                                 <div class="col-6">
                                     <p>{{ $data['customer_rate_card']->rate }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h5 class=""><b>Rate :</b></h5>
+
+                                </div>
+                                <div class="col-6">
+                                    <p>{{ $data['customer_rate_card']->rate_price }}</p>
                                 </div>
                             </div>
                         </div>

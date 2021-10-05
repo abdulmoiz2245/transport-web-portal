@@ -381,13 +381,20 @@ use App\Models\Company_name;
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate </label>
+                                <label >Rate Type</label>
                                 <select name="rate" class="form-control" >
                                     <option value="per_ton" <?php if($data['customer_rate_card']->rate == 'per_ton') echo 'selected' ?>>Per Ton</option>
                                     <option value="per_trip" <?php if($data['customer_rate_card']->rate == 'per_trip') echo 'selected' ?>>Per Trip</option>
                                     <option value="per_day_12hr" <?php if($data['customer_rate_card']->rate == 'per_day_12hr') echo 'selected' ?>>Per Day 12hr</option>
                                     <option value="per_day_24hr" <?php if($data['customer_rate_card']->rate == 'per_day_24hr') echo 'selected' ?>>Per Day 24hr</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class=" col-md-6 col-12 mb-3">
+                                <label >Rate </label>
+                                <input type="text" name="rate_price" class="form-control" value="{{$data['customer_rate_card']->rate_price}}" >
                             </div>
                         </div>
 

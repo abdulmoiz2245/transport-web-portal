@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,19 +10,19 @@ use App\Models\Roles;
 use App\Models\Permissions;
 use App\Models\Company_name;
 use App\Models\Approvals;
-use App\Models\Customer_info;
-use App\Models\Customer_department;
-use App\Models\Customer_rate_card;
+use App\Models\Sub_contractor_info;
+use App\Models\Sub_contractor_department;
+use App\Models\Sub_contractor_rate_card;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class CustomerController extends Controller
+class Sub_contractorController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:user');
+        $this->middleware('auth:admin');
     }
 
     /////////////////////////////////////
@@ -50,28 +50,6 @@ class CustomerController extends Controller
         }
         return true;
     }
-
-    ///////////////////////////////////////////////
-    ///////// Add table name to approvals /////////
-    ///////////////////////////////////////////////
-
-    public function add_aprovals($table_name){
-        $check = false;
-        foreach (Approvals::all() as $approvals_table) {
-           
-            if($approvals_table->table_name == $table_name){
-                $check = true;
-            }
-        }
-        
-        if(!$check){
-            $approvals_table = new Approvals;
-            $approvals_table->table_name = $table_name;
-            $approvals_table->save();
-        }
-        return true;
-    }
-
 
      /////////////////////////////////////
     ///////// History Record ///////////
@@ -107,97 +85,68 @@ class CustomerController extends Controller
         return true;
     }
 
-    public function customer(){
+    public function sub_contractor(){
 
         $data['modules']= DB::table('modules')->get();
-        $data['customer_info'] = DB::table('customer_info')->get();
+        $data['customer_info'] = DB::table('Sub_contractor_info')->get();
 
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 2)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-            
-        if($data['permissions']->status != 1 ){
-            abort(403);
-        }
-
-        
-        $data['page_title'] = "Customer";
-        $data['view'] = 'customer.customer';
-        return view('users.layout', ["data"=>$data]);
+        $data['page_title'] = "Sub Contractor";
+        $data['view'] = 'admin.sub_contractor.sub_contractor';
+        return view('layout', ["data"=>$data]);
     }
 
 
-    public function add_customer(){
+    public function add_sub_contractor(){
         $data['modules']= DB::table('modules')->get();
 
+        //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 2)->first();
-
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-            
-        if($data['permissions']->status != 1 ){
-            abort(403);
-        };
-
          $data['company_names']= DB::table('company_names')->get();
 
-        $data['page_title'] = "Add Customer";
-        $data['view'] = 'customer.add_customer';
-        return view('users.layout', ["data"=>$data]);
+        $data['page_title'] = "Add Sub Contractor";
+        $data['view'] = 'admin.sub_contractor.add_sub_contractor';
+        return view('layout', ["data"=>$data]);
     }
 
-    public function view_customer(Request $request){
+    public function view_sub_contractor(Request $request){
 
-        $data['customer_info'] = Customer_info::find($request->input('id'));
-        $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 2)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-            
-        if($data['permissions']->status != 1 ){
-            abort(403);
-        }
-
+        $data['customer_info'] = Sub_contractor_info::find($request->input('id'));
+        $data['customer_department'] = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
 
         $data['modules']= DB::table('modules')->get();
         $data['company_names']= DB::table('company_names')->get();
 
-        $data['page_title'] = "  Customer";
-        $data['view'] = 'customer.view_customer';
-        return view('users.layout', ["data"=>$data]);
+        $data['page_title'] = "  Sub Contractor";
+        $data['view'] = 'admin.sub_contractor.view_sub_contractor';
+        return view('layout', ["data"=>$data]);
     }
     
 
-    public function edit_customer (Request $request){
-        $data['customer_info'] = Customer_info::find($request->input('id'));
-        $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+    public function edit_sub_contractor (Request $request){
+        $data['customer_info'] = Sub_contractor_info::find($request->input('id'));
+        $data['customer_department'] = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
 
         $data['modules']= DB::table('modules')->get();
 
+        //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 2)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-            
-        if($data['permissions']->status != 1 ){
-            abort(403);
-        }
+         $data['company_names']= DB::table('company_names')->get();
 
-        $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Edit Customer";
-        $data['view'] = 'customer.edit_customer';
-        return view('users.layout', ["data"=>$data]);
+        $data['page_title'] = "Edit Sub Contractor";
+        $data['view'] = 'admin.sub_contractor.edit_sub_contractor';
+        return view('layout', ["data"=>$data]);
     }
 
-    public function save_customer_info(Request $request){
+    public function save_sub_contractor_info(Request $request){
 
-        $customer_info = new Customer_info;
+        $customer_info = new Sub_contractor_info;
         
         if($request->input('company_id') != ''){
             $customer_info->company_id = $request->input('company_id');
@@ -291,18 +240,28 @@ class CustomerController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->trn_copy->getClientOriginalName());
             $file = $request->file('trn_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
                 $customer_info->trn_copy = $name;
 
             }
             
         }
 
+        if ($request->hasFile('nda')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->nda->getClientOriginalName());
+            $file = $request->file('nda');
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
+                $customer_info->nda = $name;
+
+            }
+            
+        }
         if ($request->hasFile('business_license_copy')) {
 
             $name = time().'_'.str_replace(" ", "_", $request->business_license_copy->getClientOriginalName());
             $file = $request->file('business_license_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
                 $customer_info->business_license_copy = $name;
 
             }
@@ -313,24 +272,14 @@ class CustomerController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->business_contract_copy->getClientOriginalName());
             $file = $request->file('business_contract_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
                 $customer_info->business_contract_copy = $name;
 
             }
             
         }
-
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
+        $customer_info->status = 'approved';
+        $customer_info->user_id = 0;
 
 
         if($customer_info->save()){
@@ -341,16 +290,20 @@ class CustomerController extends Controller
 
     }
 
-    public function save_customer_department(Request $request){
+    public function save_sub_contractor_department(Request $request){
 
-        $customer_dep = new Customer_department;
-        $customer_info = Customer_info::where('id' , $request->input('customer_id'))->first();
-        if($request->input('customer_id') != ''){
-            $customer_dep->customer_id = $request->input('customer_id');
+        $customer_dep = new Sub_contractor_department;
+
+        if($request->input('sub_contractor_id') != ''){
+            $customer_dep->sub_contractor_id = $request->input('sub_contractor_id');
         }
         
-        if($request->input('department_name') != ''){
-            $customer_dep->department_name = $request->input('department_name');
+        if($request->input('accountant_name') != ''){
+            $customer_dep->accountant_name = $request->input('accountant_name');
+        }
+
+        if($request->input('logistic_department') != ''){
+            $customer_dep->logistic_department = $request->input('logistic_department');
         }
         
         if($request->input('concerned_person_name') != ''){
@@ -377,20 +330,9 @@ class CustomerController extends Controller
             $customer_dep->email = $request->input('email');
         }
 
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
 
         if($customer_dep->save()){
-            $customer_info->save();
+
             return response()->json(['status'=>'1']);
         }else{
 
@@ -399,11 +341,331 @@ class CustomerController extends Controller
 
     }
 
-    public function save_customer_rate_card(Request $request){
+    public function save_sub_contractor_rate_card(Request $request){
 
-        $customer_rate_card = new Customer_rate_card;
-        $customer_info = Customer_info::where('id' , $request->input('customer_id'))->first();
+        $customer_rate_card = new Sub_contractor_rate_card;
         
+        if($request->input('customer_id') != ''){
+            $customer_rate_card->customer_id = $request->input('customer_id');
+        }
+
+        if($request->input('sub_contractor_id') != ''){
+            $customer_rate_card->sub_contractor_id = $request->input('sub_contractor_id');
+        }
+
+        if($request->input('from') != ''){
+            $customer_rate_card->from = $request->input('from');
+        }
+        if($request->input('to') != ''){
+            $customer_rate_card->to = $request->input('to');
+
+        }
+        if($request->input('vechicle_type') != ''){
+            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
+
+        }
+        if($request->input('other_carges') != ''){
+            $customer_rate_card->other_carges = $request->input('other_carges');
+
+        }
+        if($request->input('other_des') != ''){
+            $customer_rate_card->other_des = $request->input('other_des');
+
+        }
+
+        // if($request->input('driver_comission') != ''){
+        //     if(date('l') == 'Friday'){
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
+        //     }else{
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
+        //     }
+
+        // }
+
+        if($request->input('rate') != ''){
+            $customer_rate_card->rate = $request->input('rate');
+        }
+
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
+        }
+
+        // if($request->input('detention') != ''){
+        //     $customer_rate_card->detention = $request->input('detention');
+        // }
+
+
+        // if($request->input('time') != ''){
+        //     $customer_rate_card->time = $request->input('time');
+        // }
+
+        // if($request->input('charges') != ''){
+        //     $customer_rate_card->charges = $request->input('charges');
+        // }
+
+        // if($request->input('trip') != ''){
+        //     $customer_rate_card->trip = $request->input('trip');
+        // }
+
+        if($request->input('ap_km') != ''){
+            $customer_rate_card->ap_km = $request->input('ap_km');
+        }
+
+        // if($request->input('ap_diesel') != ''){
+        //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
+        // }
+
+        $this->history_table('sub_contractor_histories', 'add' , 0);
+
+        if($customer_rate_card->save()){
+
+            return response()->json(['status'=>'1']);
+        }else{
+
+            return response()->json(['status'=>'0']);
+        }
+
+
+    }
+
+    public function update_sub_contractor_info(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+
+        if($request->input('company_id') != ''){
+            $customer_info->company_id = $request->input('company_id');
+        }
+        
+        if($request->input('name') != ''){
+            $customer_info->name = $request->input('name');
+        }
+        
+        if($request->input('address') != ''){
+            $customer_info->address = $request->input('address');
+        }
+
+        if($request->input('city') != ''){
+            $customer_info->city = $request->input('city');
+        }
+        
+        if($request->input('country') != ''){
+            $customer_info->country = $request->input('country');
+        }
+
+        if($request->input('tel_number') != ''){
+            $customer_info->tel_number = $request->input('tel_number');
+        }
+
+        if($request->input('fax') != ''){
+            $customer_info->fax = $request->input('fax');
+        }
+
+        if($request->input('mobile') != ''){
+            $customer_info->mobile = $request->input('mobile');
+        }
+
+        if($request->input('email') != ''){
+            $customer_info->email = $request->input('email');
+        }
+
+        if($request->input('contact_person') != ''){
+            $customer_info->contact_person = $request->input('contact_person');
+        }
+
+        if($request->input('des') != ''){
+            $customer_info->des = $request->input('des');
+        }
+
+        if($request->input('web') != ''){
+            $customer_info->web = $request->input('web');
+        }
+
+        if($request->input('user') != ''){
+            $customer_info->user = $request->input('user');
+        }
+
+        if($request->input('pw') != ''){
+            $customer_info->pw = $request->input('pw');
+        }
+
+        if($request->input('pw') != ''){
+            $customer_info->pw = $request->input('pw');
+        }
+
+        if($request->input('pw') != ''){
+            $customer_info->pw = $request->input('pw');
+        }
+
+        if($request->input('credit_term') != ''){
+            $customer_info->credit_term = $request->input('credit_term');
+        }
+
+        if($request->input('portal_login') != ''){
+            $customer_info->portal_login = $request->input('portal_login');
+        }
+
+        if($request->input('remarks') != ''){
+            $customer_info->remarks = $request->input('remarks');
+        }
+
+        if($request->input('trn') != ''){
+            $customer_info->trn = $request->input('trn');
+        }
+
+        if($request->input('business_license_expiary_date') != ''){
+            $customer_info->business_license_expiary_date = $request->input('business_license_expiary_date');
+        }
+
+        if($request->input('business_contract_expiary_date') != ''){
+            $customer_info->business_contract_expiary_date = $request->input('business_contract_expiary_date');
+        }
+        
+        if ($request->hasFile('trn_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->trn_copy->getClientOriginalName());
+            $file = $request->file('trn_copy');
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
+                $customer_info->trn_copy = $name;
+
+            }
+            
+        }
+
+        if ($request->hasFile('nda')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->nda->getClientOriginalName());
+            $file = $request->file('nda');
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
+                $customer_info->nda = $name;
+
+            }
+            
+        }
+
+        if ($request->hasFile('business_license_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->business_license_copy->getClientOriginalName());
+            $file = $request->file('business_license_copy');
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
+                $customer_info->business_license_copy = $name;
+
+            }
+            
+        }
+
+        if ($request->hasFile('business_contract_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->business_contract_copy->getClientOriginalName());
+            $file = $request->file('business_contract_copy');
+            if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
+                $customer_info->business_contract_copy = $name;
+
+            }
+            
+        }
+
+
+        $customer_info->status = $request->input('status');
+
+
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        if($customer_info->action == null){
+            $customer_info->action = 'edit';
+        }
+
+        $customer_info->save();
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('sub_contractor_info');
+        }
+        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
+             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        }
+
+
+        return response()->json(['status'=>'1']);
+    }
+
+    public function update_sub_contractor_department(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_dep = Sub_contractor_department::where('id' , $id)->first();
+         $customer_info = Sub_contractor_info::where('id' , (int)$request->input('sub_contractor_id'))->first();
+
+        if($request->input('accountant_name') != ''){
+            $customer_dep->accountant_name = $request->input('accountant_name');
+        }
+
+        if($request->input('logistic_department') != ''){
+            $customer_dep->logistic_department = $request->input('logistic_department');
+        }
+        
+        if($request->input('concerned_person_name') != ''){
+            $customer_dep->concerned_person_name = $request->input('concerned_person_name');
+        }
+        
+        if($request->input('concerned_person_designation') != ''){
+            $customer_dep->concerned_person_designation = $request->input('concerned_person_designation');
+        }
+
+        if($request->input('tell') != ''){
+            $customer_dep->tell = $request->input('tell');
+        }
+
+        if($request->input('mobile') != ''){
+            $customer_dep->mobile = $request->input('mobile');
+        }
+
+        if($request->input('fax') != ''){
+            $customer_dep->fax = $request->input('fax');
+        }
+
+        if($request->input('email') != ''){
+            $customer_dep->email = $request->input('email');
+        }
+
+
+       
+
+
+        
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        if($customer_info->action == null){
+            $customer_info->action = 'edit';
+        }
+
+        $customer_dep->save();
+
+        // if($request->input('status') == 'approved'){
+        //     $this->remove_table_name('sub_contractor_department');
+        // }
+        
+        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
+             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id );
+        }
+
+
+        return response()->json(['status'=>'1']);
+
+    }
+
+    public function update_sub_contractor_rate_card(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
+        $customer_info = Sub_contractor_info::where('id' , (int)$request->input('sub_contractor_id'))->first();
+
         if($request->input('customer_id') != ''){
             $customer_rate_card->customer_id = $request->input('customer_id');
         }
@@ -428,356 +690,67 @@ class CustomerController extends Controller
 
         }
 
-        if($request->input('driver_comission') != ''){
-            if(date('l') == 'Friday'){
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
-            }else{
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
-            }
+        // if($request->input('driver_comission') != ''){
+        //     if(date('l') == 'Friday'){
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
+        //     }else{
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
+        //     }
 
-        }
+        // }
 
         if($request->input('rate') != ''){
             $customer_rate_card->rate = $request->input('rate');
         }
 
         if($request->input('rate_price') != ''){
-            $customer_rate_card->rate_price = $request->input('rate_price');
+            $customer_rate_card->rate = $request->input('rate_price');
         }
 
-        if($request->input('detention') != ''){
-            $customer_rate_card->detention = $request->input('detention');
-        }
+        // if($request->input('detention') != ''){
+        //     $customer_rate_card->detention = $request->input('detention');
+        // }
 
 
-        if($request->input('time') != ''){
-            $customer_rate_card->time = $request->input('time');
-        }
+        // if($request->input('time') != ''){
+        //     $customer_rate_card->time = $request->input('time');
+        // }
 
-        if($request->input('charges') != ''){
-            $customer_rate_card->charges = $request->input('charges');
-        }
+        // if($request->input('charges') != ''){
+        //     $customer_rate_card->charges = $request->input('charges');
+        // }
 
-        if($request->input('trip') != ''){
-            $customer_rate_card->trip = $request->input('trip');
-        }
+        // if($request->input('trip') != ''){
+        //     $customer_rate_card->trip = $request->input('trip');
+        // }
 
         if($request->input('ap_km') != ''){
             $customer_rate_card->ap_km = $request->input('ap_km');
         }
 
-        if($request->input('ap_diesel') != ''){
-            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
-        }
-
-        
-
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
-
-        if($customer_rate_card->save()){
-            $customer_info->save();
-
-            return response()->json(['status'=>'1']);
+        // if($request->input('ap_diesel') != ''){
+        //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
+        // }
+      
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
         }else{
-
-            return response()->json(['status'=>'0']);
+            $user_id  = 0;
         }
 
-
-    }
-
-    public function update_customer_info(Request $request){
-        $id =  (int)$request->input('id');
-        $customer_info = Customer_info::where('id' ,  $id )->first();
-
-        if($request->input('company_id') != ''){
-            $customer_info->company_id = $request->input('company_id');
+        if($customer_info->action == null){
+            $customer_info->action = 'edit';
         }
-        
-        if($request->input('name') != ''){
-            $customer_info->name = $request->input('name');
-        }
-        
-        if($request->input('address') != ''){
-            $customer_info->address = $request->input('address');
-        }
-
-        if($request->input('city') != ''){
-            $customer_info->city = $request->input('city');
-        }
-        
-        if($request->input('country') != ''){
-            $customer_info->country = $request->input('country');
-        }
-
-        if($request->input('tel_number') != ''){
-            $customer_info->tel_number = $request->input('tel_number');
-        }
-
-        if($request->input('fax') != ''){
-            $customer_info->fax = $request->input('fax');
-        }
-
-        if($request->input('mobile') != ''){
-            $customer_info->mobile = $request->input('mobile');
-        }
-
-        if($request->input('email') != ''){
-            $customer_info->email = $request->input('email');
-        }
-
-        if($request->input('contact_person') != ''){
-            $customer_info->contact_person = $request->input('contact_person');
-        }
-
-        if($request->input('des') != ''){
-            $customer_info->des = $request->input('des');
-        }
-
-        if($request->input('web') != ''){
-            $customer_info->web = $request->input('web');
-        }
-
-        if($request->input('user') != ''){
-            $customer_info->user = $request->input('user');
-        }
-
-        if($request->input('pw') != ''){
-            $customer_info->pw = $request->input('pw');
-        }
-
-        if($request->input('pw') != ''){
-            $customer_info->pw = $request->input('pw');
-        }
-
-        if($request->input('pw') != ''){
-            $customer_info->pw = $request->input('pw');
-        }
-
-        if($request->input('credit_term') != ''){
-            $customer_info->credit_term = $request->input('credit_term');
-        }
-
-        if($request->input('portal_login') != ''){
-            $customer_info->portal_login = $request->input('portal_login');
-        }
-
-        if($request->input('remarks') != ''){
-            $customer_info->remarks = $request->input('remarks');
-        }
-
-        if($request->input('trn') != ''){
-            $customer_info->trn = $request->input('trn');
-        }
-
-        if($request->input('business_license_expiary_date') != ''){
-            $customer_info->business_license_expiary_date = $request->input('business_license_expiary_date');
-        }
-
-        if($request->input('business_contract_expiary_date') != ''){
-            $customer_info->business_contract_expiary_date = $request->input('business_contract_expiary_date');
-        }
-        
-        if ($request->hasFile('trn_copy')) {
-
-            $name = time().'_'.str_replace(" ", "_", $request->trn_copy->getClientOriginalName());
-            $file = $request->file('trn_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
-                $customer_info->trn_copy = $name;
-
-            }
-            
-        }
-
-        if ($request->hasFile('business_license_copy')) {
-
-            $name = time().'_'.str_replace(" ", "_", $request->business_license_copy->getClientOriginalName());
-            $file = $request->file('business_license_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
-                $customer_info->business_license_copy = $name;
-
-            }
-            
-        }
-
-        if ($request->hasFile('business_contract_copy')) {
-
-            $name = time().'_'.str_replace(" ", "_", $request->business_contract_copy->getClientOriginalName());
-            $file = $request->file('business_contract_copy');
-            if($file->storeAs('/main_admin/customer/', $name , ['disk' => 'public_uploads'])){
-                $customer_info->business_contract_copy = $name;
-
-            }
-            
-        }
-
-
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'edit';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
-
-        $customer_info->save();
-
-
-        return response()->json(['status'=>'1']);
-    }
-
-    public function update_customer_department(Request $request){
-        $id =  (int)$request->input('id');
-        $customer_dep = Customer_department::where('id' , $id)->first();
-        $customer_info = Customer_info::where('id' ,  $customer_dep->customer_id )->first();
-
-        if($request->input('department_name') != ''){
-            $customer_dep->department_name = $request->input('department_name');
-        }
-        
-        if($request->input('concerned_person_name') != ''){
-            $customer_dep->concerned_person_name = $request->input('concerned_person_name');
-        }
-        
-        if($request->input('concerned_person_designation') != ''){
-            $customer_dep->concerned_person_designation = $request->input('concerned_person_designation');
-        }
-
-        if($request->input('tell') != ''){
-            $customer_dep->tell = $request->input('tell');
-        }
-
-        if($request->input('mobile') != ''){
-            $customer_dep->mobile = $request->input('mobile');
-        }
-
-        if($request->input('fax') != ''){
-            $customer_dep->fax = $request->input('fax');
-        }
-
-        if($request->input('email') != ''){
-            $customer_dep->email = $request->input('email');
-        }
-
-
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'edit';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
-
-        $customer_dep->save();
-
-        
-
-
-        return response()->json(['status'=>'1']);
-
-    }
-
-    public function update_customer_rate_card(Request $request){
-        $id =  (int)$request->input('id');
-        $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
-        $customer_info = Customer_info::where('id' ,  $customer_rate_card->customer_id )->first();
-       
-        if($request->input('from') != ''){
-            $customer_rate_card->from = $request->input('from');
-        }
-        if($request->input('to') != ''){
-            $customer_rate_card->to = $request->input('to');
-
-        }
-        if($request->input('vechicle_type') != ''){
-            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
-
-        }
-        if($request->input('other_carges') != ''){
-            $customer_rate_card->other_carges = $request->input('other_carges');
-
-        }
-        if($request->input('other_des') != ''){
-            $customer_rate_card->other_des = $request->input('other_des');
-
-        }
-
-        if($request->input('driver_comission') != ''){
-            if(date('l') == 'Friday'){
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
-            }else{
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
-            }
-
-        }
-
-        if($request->input('rate') != ''){
-            $customer_rate_card->rate = $request->input('rate');
-        }
-
-        if($request->input('rate_price') != ''){
-            $customer_rate_card->rate_price = $request->input('rate_price');
-        }
-
-        if($request->input('detention') != ''){
-            $customer_rate_card->detention = $request->input('detention');
-        }
-
-
-        if($request->input('time') != ''){
-            $customer_rate_card->time = $request->input('time');
-        }
-
-        if($request->input('charges') != ''){
-            $customer_rate_card->charges = $request->input('charges');
-        }
-
-        if($request->input('trip') != ''){
-            $customer_rate_card->trip = $request->input('trip');
-        }
-
-        if($request->input('ap_km') != ''){
-            $customer_rate_card->ap_km = $request->input('ap_km');
-        }
-
-        if($request->input('ap_diesel') != ''){
-            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
-        }
-
-
-
-        $this->add_aprovals('customer_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
 
         $customer_rate_card->save();
 
+        // if($request->input('status') == 'approved'){
+        //     $this->remove_table_name('customer_rate_card');
+        // }
+        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
+             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        }
 
 
         return response()->json(['status'=>'1']);
@@ -786,14 +759,78 @@ class CustomerController extends Controller
 
     public function delete_customer(Request $request){
         $id =  (int)$request->input('id');
-        $customer_info = Customer_info::where('id' , $id)->first();
-        
-        $customer_info->status = 'pending';
-        $customer_info->status_message = $request->input('status_message');
-        $customer_info->user_id = Auth::id();
-        $customer_info->action = 'delete';
+        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        $customer_department = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
+        $customer_rate_card = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
 
-        if( $customer_info->save()){
+        if($customer_info->trn_copy != null){
+            
+            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->trn_copy;
+            // echo $path;
+            if(File::exists($path)){
+               unlink($path);
+                //$trade_license->id_card = 'null';
+            }
+
+        }
+
+        if($customer_info->nda != null){
+            
+            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->nda;
+            // echo $path;
+            if(File::exists($path)){
+               unlink($path);
+                //$trade_license->id_card = 'null';
+            }
+
+        }
+
+        if($customer_info->business_license_copy != null){
+            
+            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->trn_cobusiness_license_copypy;
+            // echo $path;
+            if(File::exists($path)){
+               unlink($path);
+                //$trade_license->id_card = 'null';
+            }
+
+        }
+
+        if($customer_info->business_contract_copy != null){
+            
+            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->business_contract_copy;
+            // echo $path;
+            if(File::exists($path)){
+               unlink($path);
+                //$trade_license->id_card = 'null';
+            }
+
+        }
+
+
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->save();
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('sub_contractor_infos');
+        }
+
+        if($customer_info->action == null){
+            $customer_info->action = 'delete';
+        }
+
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+ 
+        if($customer_info->delete() ){
+            $customer_department->delete();
+            $customer_rate_card->delete();
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -801,7 +838,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function customer_history(){
+    public function sub_contractor_history(){
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
@@ -811,11 +848,11 @@ class CustomerController extends Controller
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
 
-        $data['trade_licenses_history']= DB::table('customer_histories')->get();
-        $data['table_name']= 'customer_histories';
+        $data['trade_licenses_history']= DB::table('sub_contractor_histories')->get();
+        $data['table_name']= 'sub_contractor_histories';
 
-        $data['page_title'] = "History | Customer ";
+        $data['page_title'] = "History | Sub Contractor ";
         $data['view'] = 'admin.hr_pro.history';
-        return view('users.layout', ["data"=>$data]);
+        return view('layout', ["data"=>$data]);
     }
 }
