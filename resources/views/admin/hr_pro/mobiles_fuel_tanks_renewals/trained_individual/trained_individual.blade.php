@@ -325,4 +325,9 @@ use App\Models\User;
 
             })
     });
+
+    var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');  
+    console.log($("[type='date']").attr("min",new_date) );
 </script>
