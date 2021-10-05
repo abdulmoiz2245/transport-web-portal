@@ -17,6 +17,7 @@ class CreateSupplierHistoriesTable extends Migration
             $table->id();
             $table->string('action');
             $table->integer('user_id');
+            $table->date('date');
             $table->timestamps();
         });
     }

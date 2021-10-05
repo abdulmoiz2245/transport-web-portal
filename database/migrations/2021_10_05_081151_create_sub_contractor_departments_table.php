@@ -17,8 +17,8 @@ class CreateSubContractorDepartmentsTable extends Migration
             $table->id();
             $table->integer('sub_contractor_id');
             $table->string('accountant_name');
-            $table->string('concerned_person_name');
-            $table->string('concerned_person_designation');
+            $table->string('concerned_person_name')->nullable();
+            $table->string('concerned_person_designation')->nullable();
             $table->string('logistic_department');
             $table->string('tell');
             $table->string('mobile');

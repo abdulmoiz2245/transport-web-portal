@@ -44,6 +44,9 @@ use Illuminate\Support\Facades\Route;
         Route::post('/delete', [Sub_contractorController::class, 'delete_sub_contractor']) 
         ->name('delete_sub_contractor');
 
+        Route::post('/get-customer-rate-card', [Sub_contractorController::class, 'get_customer_rate_card']) 
+        ->name('get_customer_rate_card');
+
         Route::get('/history', [Sub_contractorController::class, 'sub_contractor_history']) 
         ->name('sub_contractor_history');
         

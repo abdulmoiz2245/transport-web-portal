@@ -225,7 +225,7 @@
                         <div class="triangle"></div>
                     </li>
                     <li class="nav-item" data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.sub_contractor.sub_contractor') }}">
                             <i class="nav-icon i-Diploma-2"></i>
                             <span class="nav-text">Sub-Contractors</span>
                         </a>

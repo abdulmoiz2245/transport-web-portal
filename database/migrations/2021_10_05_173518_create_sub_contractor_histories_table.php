@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerHistoriesTable extends Migration
+class CreateSubContractorHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCustomerHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_histories', function (Blueprint $table) {
+        Schema::create('sub_contractor_histories', function (Blueprint $table) {
             $table->id();
             $table->string('action');
             $table->integer('user_id');
             $table->date('date');
+
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCustomerHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_histories');
+        Schema::dropIfExists('sub_contractor_histories');
     }
 }
