@@ -361,7 +361,7 @@
                     <div class="col-lg-5 col-md-5  col-12 mb-4">
                         <div class="row">
                             <div class="col-12 mb-4">
-                                <a href="{{ route ('admin.supplier.supplier') }} ">
+                                <a href="{{ route ('admin.sub_contractor.sub_contractor') }} ">
                                     <div class="p-4 border border-light rounded d-flex align-items-center bg-primary text-white">
                                         <i class="i-Data-Download text-32 mr-3"></i>
                                         <div>

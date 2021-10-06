@@ -190,7 +190,7 @@
                     
                     <div class="row">
                         <div class="col-lg-4 col-md-12 mb-4">
-                            <a href="{{ route ('user.supplier') }} ">
+                            <a href="{{ route ('user.sub_contractor') }} ">
                                 <div class="p-4 border border-light rounded d-flex align-items-center bg-primary text-white">
                                     <i class="i-Administrator text-32 mr-3"></i>
                                     <div>
