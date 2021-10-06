@@ -3,17 +3,17 @@
         <ul class="nav">
             <li>
                 <a class="nav-link" href="#step-1">
-                    <h4>Customer Info</h4>
+                    <h4>Sub Contractor Info</h4>
                 </a>
             </li>
             <li>
                 <a class="nav-link" href="#step-2">
-                    <h4>Customer Department</h4>
+                    <h4>Sub Contractor Department</h4>
                 </a>
             </li>
             <li>
                 <a class="nav-link" href="#step-3">
-                    <h4>  Customer Rate Card </h4>
+                    <h4>  Sub Contractor Rate Card </h4>
                 </a>
             </li>
         </ul>
@@ -41,7 +41,7 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Customer Name :</b></h5>
+                                    <h5 class=""><b>Sub Contractor Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
@@ -53,7 +53,7 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Customer Name :</b></h5>
+                                    <h5 class=""><b>Sub Contractor Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
@@ -65,7 +65,7 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Customer Name :</b></h5>
+                                    <h5 class=""><b>Sub Contractor Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
@@ -230,6 +230,34 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h5 class=""><b> NDA :</b></h5>
+
+                                </div>
+                                <div class="col-8">
+                                    @if( $data['customer_info']->nda == null)
+                                    
+                                        <p>No File Found</p>
+                                    @else
+                                        <a target="_blank" href="{{ asset('main_admin/sub_contractor/')}}/{{$data['customer_info']->nda}}">
+                                            <button class="btn">
+                                                View Documennt
+                                            </button>
+                                        </a>
+
+                                        <a  href="{{ asset('main_admin/sub_contractor/')}}/{{$data['customer_info']->nda}}" download>
+                                            <button class="btn">
+                                                Download Documennt
+                                            </button>
+                                        </a>
+                                    @endif
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-12">
                                 <hr>
                                 <h4 class="w-100">TRN </h4>
@@ -258,13 +286,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/sub_contractor/')}}/{{$data['customer_info']->trn_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}" download>
+                                        <a  href="{{ asset('main_admin/sub_contractor/')}}/{{$data['customer_info']->trn_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -303,13 +331,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_license_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/sub_contractor')}}/{{$data['customer_info']->business_license_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_license_copy}}" download>
+                                        <a  href="{{ asset('main_admin/sub_contractor')}}/{{$data['customer_info']->business_license_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -348,13 +376,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_contract_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/sub_contractor')}}/{{$data['customer_info']->business_contract_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_contract_copy}}" download>
+                                        <a  href="{{ asset('main_admin/sub_contractor')}}/{{$data['customer_info']->business_contract_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -375,16 +403,28 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Department Name :</b></h5>
+                                    <h5 class=""><b>Accounntant Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
-                                    <p>{{ $data['customer_department']->department_name }}</p>
+                                    <p>{{ $data['customer_department']->accountant_name }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h5 class=""><b>Logistic Department Name :</b></h5>
+
+                                </div>
+                                <div class="col-6">
+                                    <p>{{ $data['customer_department']->logistic_department }}</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-6 col-12 mb-3">
+                        <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
                                     <h5 class=""><b>CONCERNED PERSON NAME :</b></h5>
@@ -406,7 +446,7 @@
                                     <p>{{ $data['customer_department']->concerned_person_designation }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
@@ -463,6 +503,23 @@
             <div id="step-3" class="tab-pane" role="tabpanel">
                 <div class="container">
                     <div class="row mt-5">
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h5 class=""><b>Customer Name :</b></h5>
+
+                                </div>
+                                <div class="col-6">
+                                    @foreach($data['customer_infos'] as $customer)
+                                        @if($customer->id ==  $data['customer_rate_card']->customer_id)
+                                            <p>{{ $customer->name }}</p>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
@@ -547,7 +604,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-12 mb-3">
+                        <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
                                     <h5 class=""><b>Driver Comission :</b></h5>
@@ -608,7 +665,7 @@
                                     <p>{{ $data['customer_rate_card']->trip }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
@@ -622,7 +679,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-12 mb-3">
+                        <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
                                     <h5 class=""><b>Ap Diesel as per trip:</b></h5>
@@ -632,7 +689,7 @@
                                     <p>{{ $data['customer_rate_card']->ap_diesel }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -642,7 +699,7 @@
 <script>
     $(document).ready(function(){
         $('#smartwizard').smartWizard({
-            theme: 'dots'
+            theme: 'default'
            
         });
     });

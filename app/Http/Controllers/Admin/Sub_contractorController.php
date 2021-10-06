@@ -117,13 +117,29 @@ class Sub_contractorController extends Controller
 
     public function view_sub_contractor(Request $request){
 
-        $data['customer_info'] = Sub_contractor_info::find($request->input('id'));
+        $data['customer_info'] = Sub_contractor_info::where('id',$request->input('id'))->first();
         $data['customer_department'] = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
         $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
-        $data['customer_info']= DB::table('customer_info')->get();
+        // $data['customer_info']= DB::table('customer_info')->get();
 
         $data['modules']= DB::table('modules')->get();
         $data['company_names']= DB::table('company_names')->get();
+        $data['customer_infos']= Customer_info::all();
+        
+        // dd($data['customer_info']);
+
+        // foreach($data['customer_infos'] as $customer):
+        //     echo $customer->id;
+        //     echo '<br>';
+        //     echo $data['customer_info']->customer_id;
+        //     echo '<hr>';
+
+        //     if($customer->id ==  $data['customer_rate_card']->customer_id):
+        //         dd( $customer->name); 
+        //     endif;
+        // endforeach;
+
+        // die();
 
         $data['page_title'] = "  Sub Contractor";
         $data['view'] = 'admin.sub_contractor.view_sub_contractor';
