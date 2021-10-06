@@ -22,6 +22,7 @@ use App\Models\Muncipality_documents;
 use App\Models\Trained_individual;
 use App\Models\Customer_info;
 use App\Models\Supplier_info;
+use App\Models\Sub_contractor_info;
 
 
 use App\Http\Controllers\Redirect;
@@ -116,10 +117,16 @@ class AdminController extends Controller
         $data['total_pending_customer'] = Customer_info::where('status' , '=', 'pending')->count();
         $data['total_customer'] = Customer_info::count();
 
-        //Customer
+        //suplllier
         $data['total_rejected_supplier'] = Supplier_info::where('status' , '=', 'rejected')->count();
         $data['total_pending_supplier'] = Supplier_info::where('status' , '=', 'pending')->count();
         $data['total_supplier'] = Supplier_info::count();
+
+        //sub_contractor
+        $data['total_rejected_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'rejected')->count();
+        $data['total_pending_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'pending')->count();
+        $data['total_sub_contractor'] = Sub_contractor_info::count();
+
         return view('layout', ["data"=>$data]);
     }
 

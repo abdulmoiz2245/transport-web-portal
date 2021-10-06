@@ -44,6 +44,9 @@ Route::middleware(['auth:user'])->group(function () {
     
         Route::post('/sub_contractor-rate-card/save', [Sub_contractorController::class, 'save_sub_contractor_rate_card']) 
         ->name('save_sub_contractor_rate_card');
+
+        Route::post('/get-customer-rate-card', [Sub_contractorController::class, 'get_customer_rate_card']) 
+        ->name('get_customer_rate_card');
     
         Route::post('/delete', [Sub_contractorController::class, 'delete_sub_contractor']) 
         ->name('delete_sub_contractor');

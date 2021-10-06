@@ -179,6 +179,32 @@
             @endif
             @endif
             @endforeach
+
+            @foreach($data['permission'] as $permissions)
+            @if($permissions->module_id == 11)
+            @if($permissions->operation == 'view' && $permissions->status == 1)
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-title m-0 mb-3">Sub Contractor</div>
+                    <!-- <p class="text-small text-muted">Lorem ipsum dolor sit amet consectetur.</p> -->
+                    
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 mb-4">
+                            <a href="{{ route ('user.supplier') }} ">
+                                <div class="p-4 border border-light rounded d-flex align-items-center bg-primary text-white">
+                                    <i class="i-Administrator text-32 mr-3"></i>
+                                    <div>
+                                        <h4 class="text-18 mb-1 text-white">Total Sub Contractor</h4>
+                                        <span>Total: {{ $data['sub_contractor'] }}</span>
+                                    </div>
+                                </div>
+                            </a>        
+                        </div>
+                </div>
+            </div>
+            @endif
+            @endif
+            @endforeach
         </div>
         <div class="col-4">
             <!-- <div class="card mb-4"> -->

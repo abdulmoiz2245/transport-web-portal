@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,21 +11,21 @@ use App\Models\Permissions;
 use App\Models\Company_name;
 use App\Models\Approvals;
 use App\Models\Sub_contractor_info;
-use App\Models\Customer_info;
 
+use App\Models\Customer_info;
 use App\Models\Sub_contractor_department;
 use App\Models\Sub_contractor_rate_card;
+use App\Models\Customer_rate_card;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
-use App\Models\Customer_rate_card;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Sub_contractorController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:user');
     }
 
     /////////////////////////////////////
@@ -53,6 +53,28 @@ class Sub_contractorController extends Controller
         }
         return true;
     }
+
+    ///////////////////////////////////////////////
+    ///////// Add table name to approvals /////////
+    ///////////////////////////////////////////////
+
+    public function add_aprovals($table_name){
+        $check = false;
+        foreach (Approvals::all() as $approvals_table) {
+           
+            if($approvals_table->table_name == $table_name){
+                $check = true;
+            }
+        }
+        
+        if(!$check){
+            $approvals_table = new Approvals;
+            $approvals_table->table_name = $table_name;
+            $approvals_table->save();
+        }
+        return true;
+    }
+
 
      /////////////////////////////////////
     ///////// History Record ///////////
@@ -93,63 +115,71 @@ class Sub_contractorController extends Controller
         $data['modules']= DB::table('modules')->get();
         $data['customer_info'] = DB::table('sub_contractor_infos')->get();
 
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+            
+        if($data['permissions']->status != 1 ){
+            abort(403);
+        }
+
+        
         $data['page_title'] = "Sub Contractor";
-        $data['view'] = 'admin.sub_contractor.sub_contractor';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'sub_contractor.sub_contractor';
+        return view('users.layout', ["data"=>$data]);
     }
 
 
     public function add_sub_contractor(){
         $data['modules']= DB::table('modules')->get();
 
-        //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-         $data['customer_info']= DB::table('customer_info')->get();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' ,11)->first();
 
+        $data['customer_infos'] = Customer_info::all();
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+            
+        if($data['permissions']->status != 1 ){
+            abort(403);
+        };
+
+         $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Add Sub Contractor";
-        $data['view'] = 'admin.sub_contractor.add_sub_contractor';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'sub_contractor.add_sub_contractor';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function view_sub_contractor(Request $request){
 
-        $data['customer_info'] = Sub_contractor_info::where('id',$request->input('id'))->first();
+        $data['customer_info'] = Sub_contractor_info::find($request->input('id'));
         $data['customer_department'] = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
         $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
-        // $data['customer_info']= DB::table('customer_info')->get();
+        $data['customer_infos']= Customer_info::all();
+
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+            
+        if($data['permissions']->status != 1 ){
+            abort(403);
+        }
+
+        if($data['customer_department'] == null)
+            abort(403); 
+
+        if($data['customer_rate_card'] == null)
+                abort(403);         
 
         $data['modules']= DB::table('modules')->get();
         $data['company_names']= DB::table('company_names')->get();
-        $data['customer_infos']= Customer_info::all();
-
-        if($data['customer_department'] == null)
-        abort(403); 
-
-        if($data['customer_rate_card'] == null)
-            abort(403); 
-        
-        // dd($data['customer_info']);
-
-        // foreach($data['customer_infos'] as $customer):
-        //     echo $customer->id;
-        //     echo '<br>';
-        //     echo $data['customer_info']->customer_id;
-        //     echo '<hr>';
-
-        //     if($customer->id ==  $data['customer_rate_card']->customer_id):
-        //         dd( $customer->name); 
-        //     endif;
-        // endforeach;
-
-        // die();
 
         $data['page_title'] = "  Sub Contractor";
-        $data['view'] = 'admin.sub_contractor.view_sub_contractor';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'sub_contractor.view_sub_contractor';
+        return view('users.layout', ["data"=>$data]);
     }
     
 
@@ -159,24 +189,28 @@ class Sub_contractorController extends Controller
         $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
 
         $data['modules']= DB::table('modules')->get();
-         $data['customer_infos']= DB::table('customer_info')->get();
+        $data['customer_infos'] = Customer_info::all();
 
-         if($data['customer_department'] == null)
-        abort(403); 
-
-        if($data['customer_rate_card'] == null)
-            abort(403); 
-
-        //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 11)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' ,11)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
+            
+        if($data['permissions']->status != 1 ){
+            abort(403);
+        }
+
+        if($data['customer_department'] == null)
+            abort(403); 
+
+        if($data['customer_rate_card'] == null)
+                abort(403);       
+
+        $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Sub Contractor";
-        $data['view'] = 'admin.sub_contractor.edit_sub_contractor';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'sub_contractor.edit_sub_contractor';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function save_sub_contractor_info(Request $request){
@@ -292,6 +326,7 @@ class Sub_contractorController extends Controller
             }
             
         }
+
         if ($request->hasFile('business_license_copy')) {
 
             $name = time().'_'.str_replace(" ", "_", $request->business_license_copy->getClientOriginalName());
@@ -309,12 +344,21 @@ class Sub_contractorController extends Controller
             $file = $request->file('business_contract_copy');
             if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
                 $customer_info->business_contract_copy = $name;
-
             }
             
         }
-        $customer_info->status = 'approved';
-        $customer_info->user_id = 0;
+
+        $this->add_aprovals('sub_contractor_info');
+
+        $customer_info->status = 'pending';
+        $customer_info->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_info->status_message = $request->input('status_message');
+
+        }
+
+        $customer_info->user_id = Auth::id();
 
 
         if($customer_info->save()){
@@ -328,15 +372,17 @@ class Sub_contractorController extends Controller
     public function save_sub_contractor_department(Request $request){
 
         $customer_dep = new Sub_contractor_department;
+        $customer_info = Sub_contractor_info::where('id' , $request->input('sub_contractor_id'))->first();
 
+        // dd($request->input('sub_contractor_id'));
         if($request->input('sub_contractor_id') != ''){
             $customer_dep->sub_contractor_id = $request->input('sub_contractor_id');
         }
-        
+
         if($request->input('accountant_name') != ''){
             $customer_dep->accountant_name = $request->input('accountant_name');
         }
-
+        
         if($request->input('logistic_department') != ''){
             $customer_dep->logistic_department = $request->input('logistic_department');
         }
@@ -365,9 +411,20 @@ class Sub_contractorController extends Controller
             $customer_dep->email = $request->input('email');
         }
 
+        $this->add_aprovals('sub_contractor_info');
+
+        $customer_info->status = 'pending';
+        $customer_info->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_info->status_message = $request->input('status_message');
+
+        }
+
+        $customer_info->user_id = Auth::id();
 
         if($customer_dep->save()){
-
+            $customer_info->save();
             return response()->json(['status'=>'1']);
         }else{
 
@@ -379,6 +436,7 @@ class Sub_contractorController extends Controller
     public function save_sub_contractor_rate_card(Request $request){
 
         $customer_rate_card = new Sub_contractor_rate_card;
+        $customer_info = Sub_contractor_info::where('id' , $request->input('sub_contractor_id'))->first();
         
         if($request->input('customer_id') != ''){
             $customer_rate_card->customer_id = $request->input('customer_id');
@@ -450,9 +508,22 @@ class Sub_contractorController extends Controller
         //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         // }
 
-        $this->history_table('sub_contractor_histories', 'add' , 0);
+        
+
+        $this->add_aprovals('sub_contractor_info');
+
+        $customer_info->status = 'pending';
+        $customer_info->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_info->status_message = $request->input('status_message');
+
+        }
+
+        $customer_info->user_id = Auth::id();
 
         if($customer_rate_card->save()){
+            $customer_info->save();
 
             return response()->json(['status'=>'1']);
         }else{
@@ -465,7 +536,8 @@ class Sub_contractorController extends Controller
 
     public function update_sub_contractor_info(Request $request){
         $id =  (int)$request->input('id');
-        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        // dd($id);
+        $customer_info = Sub_contractor_info::where('id' ,  $id )->first();
 
         if($request->input('company_id') != ''){
             $customer_info->company_id = $request->input('company_id');
@@ -568,13 +640,11 @@ class Sub_contractorController extends Controller
 
         if ($request->hasFile('nda')) {
 
-            $name = time().'_'.str_replace(" ", "_", $request->nda->getClientOriginalName());
+            $name = time().'_'.str_replace(" ", "_", $request->trn_copy->getClientOriginalName());
             $file = $request->file('nda');
             if($file->storeAs('/main_admin/sub_contractor/', $name , ['disk' => 'public_uploads'])){
                 $customer_info->nda = $name;
-
-            }
-            
+            } 
         }
 
         if ($request->hasFile('business_license_copy')) {
@@ -600,29 +670,19 @@ class Sub_contractorController extends Controller
         }
 
 
-        $customer_info->status = $request->input('status');
+        $this->add_aprovals('sub_contractor_info');
 
+        $customer_info->status = 'pending';
+        $customer_info->action = 'edit';
+        if($request->input('status_message') != ''){
 
-        $customer_info->status_message = $request->input('status_message');
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
-            
-        }else{
-            $user_id  = 0;
+            $customer_info->status_message = $request->input('status_message');
+
         }
 
-        if($customer_info->action == null){
-            $customer_info->action = 'edit';
-        }
+        $customer_info->user_id = Auth::id();
 
         $customer_info->save();
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('sub_contractor_infos');
-        }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
-        }
 
 
         return response()->json(['status'=>'1']);
@@ -631,7 +691,7 @@ class Sub_contractorController extends Controller
     public function update_sub_contractor_department(Request $request){
         $id =  (int)$request->input('id');
         $customer_dep = Sub_contractor_department::where('id' , $id)->first();
-         $customer_info = Sub_contractor_info::where('id' , $customer_dep->sub_contractor_id)->first();
+        $customer_info = Sub_contractor_info::where('id' ,  $customer_dep->sub_contractor_id )->first();
 
         if($request->input('accountant_name') != ''){
             $customer_dep->accountant_name = $request->input('accountant_name');
@@ -666,30 +726,21 @@ class Sub_contractorController extends Controller
         }
 
 
-       
+        $this->add_aprovals('sub_contractor_info');
 
+        $customer_info->status = 'pending';
+        $customer_info->action = 'edit';
+        if($request->input('status_message') != ''){
 
-        
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
-            
-        }else{
-            $user_id  = 0;
+            $customer_info->status_message = $request->input('status_message');
+
         }
 
-        if($customer_info->action == null){
-            $customer_info->action = 'edit';
-        }
+        $customer_info->user_id = Auth::id();
 
         $customer_dep->save();
 
-        // if($request->input('status') == 'approved'){
-        //     $this->remove_table_name('sub_contractor_department');
-        // }
         
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id );
-        }
 
 
         return response()->json(['status'=>'1']);
@@ -699,10 +750,11 @@ class Sub_contractorController extends Controller
     public function update_sub_contractor_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
-        $customer_info = Sub_contractor_info::where('id' , $customer_rate_card->sub_contractor_id)->first();
-
-        if($request->input('customer_id') != ''){
-            $customer_rate_card->customer_id = $request->input('customer_id');
+        $customer_info = Sub_contractor_info::where('id' ,  $customer_rate_card->sub_contractor_id )->first();
+       
+        // dd($request->input('customers_id'));
+        if($request->input('customers_id') != ''){
+            $customer_rate_card->customer_id = $request->input('customers_id');
         }
 
         if($request->input('from') != ''){
@@ -739,7 +791,7 @@ class Sub_contractorController extends Controller
         }
 
         if($request->input('rate_price') != ''){
-            $customer_rate_card->rate = $request->input('rate_price');
+            $customer_rate_card->rate_price = $request->input('rate_price');
         }
 
         // if($request->input('detention') != ''){
@@ -766,112 +818,39 @@ class Sub_contractorController extends Controller
         // if($request->input('ap_diesel') != ''){
         //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         // }
-      
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
-            
-        }else{
-            $user_id  = 0;
+
+
+
+        $this->add_aprovals('sub_contractor_info');
+
+        $customer_info->status = 'pending';
+        $customer_info->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_info->status_message = $request->input('status_message');
+
         }
 
-        if($customer_info->action == null){
-            $customer_info->action = 'edit';
-        }
+        $customer_info->user_id = Auth::id();
 
         $customer_rate_card->save();
 
-        // if($request->input('status') == 'approved'){
-        //     $this->remove_table_name('customer_rate_card');
-        // }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
-        }
 
 
         return response()->json(['status'=>'1']);
 
     }
 
-    public function delete_sub_contractor (Request $request){
+    public function delete_sub_contractor(Request $request){
         $id =  (int)$request->input('id');
         $customer_info = Sub_contractor_info::where('id' , $id)->first();
-        $customer_department = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
-        $customer_rate_card = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
-
-        if($customer_info->trn_copy != null){
-            
-            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->trn_copy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-        if($customer_info->nda != null){
-            
-            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->nda;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-        if($customer_info->business_license_copy != null){
-            
-            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->trn_cobusiness_license_copypy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-        if($customer_info->business_contract_copy != null){
-            
-            $path = public_path().'/main_admin/sub_contractor/'.$customer_info->business_contract_copy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-
+        
+        $customer_info->status = 'pending';
         $customer_info->status_message = $request->input('status_message');
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
+        $customer_info->user_id = Auth::id();
+        $customer_info->action = 'delete';
 
-        $customer_info->save();
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('sub_contractor_infos');
-        }
-
-        if($customer_info->action == null){
-            $customer_info->action = 'delete';
-        }
-
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
- 
-        if($customer_info->delete() ){
-            if(!empty( $customer_department)){
-                $customer_department->delete();
-
-            }
-            if(!empty( $customer_rate_card)){
-                $customer_rate_card->delete();
-
-            }
+        if( $customer_info->save()){
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -894,13 +873,13 @@ class Sub_contractorController extends Controller
 
         $data['page_title'] = "History | Sub Contractor ";
         $data['view'] = 'admin.hr_pro.history';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function get_customer_rate_card(Request $request){
-       $customer =  Customer_rate_card::where('customer_id', '=', $request->input('customer_id'))->get();
-       ;
-
-       return response()->json($customer);
-    }
+        $customer =  Customer_rate_card::where('customer_id', '=', $request->input('customer_id'))->get();
+        ;
+ 
+        return response()->json($customer);
+     }
 }

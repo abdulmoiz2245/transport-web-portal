@@ -87,7 +87,8 @@
     </div>
     <div class="row">
         <div class="col-12">
-        
+
+            <!-- Hr/pro -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-title m-0 mb-3"><h3>Hr Pro</h3></div>
@@ -261,6 +262,7 @@
                 </div>
             </div>
 
+            <!-- Customer -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-title m-0 mb-3"><h3>Customer</h3></div>
@@ -298,6 +300,7 @@
                 </div>
             </div>
 
+            <!-- Supplier -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-title m-0 mb-3"><h3>Supplier</h3></div>
@@ -334,6 +337,45 @@
                     </div>      
                 </div>
             </div>
+
+            <!-- Sub Contractor -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-title m-0 mb-3"><h3>Sub Contractor</h3></div>
+                    <div class="col-lg-5 col-md-5  col-12 mb-4">
+                        <div class="card o-hidden">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div class="flex-grow-1">
+                                        <p class="text-15 text-muted m-0">Pending Approvals </p>
+                                        <p class="text-24 mb-3"><i class="i-Arrow-Up-in-Circle text-success"></i> {{ $data['total_pending_sub_contractor'] }}</p>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <p class="text-15 text-muted m-0">Rejectedd</p>
+                                        <p class="text-24 mb-3"><i class="i-Arrow-Down-in-Circle text-danger"></i> {{ $data['total_rejected_sub_contractor']  }}</p>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5  col-12 mb-4">
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <a href="{{ route ('admin.supplier.supplier') }} ">
+                                    <div class="p-4 border border-light rounded d-flex align-items-center bg-primary text-white">
+                                        <i class="i-Data-Download text-32 mr-3"></i>
+                                        <div>
+                                            <h4 class="text-18 mb-1 text-white">Sub Contractor</h4>
+                                            <span>Total: {{ $data['total_sub_contractor'] }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>      
+                    </div>      
+                </div>
+            </div>
+
         </div>
     </div>
 </div> 

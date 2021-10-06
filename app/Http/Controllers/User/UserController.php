@@ -14,6 +14,8 @@ use App\Models\Company_name;
 use App\Models\Trade_license;
 use App\Models\Customer_info;
 use App\Models\Supplier_info;
+use App\Models\Sub_contractor_info;
+
 
 
 use App\Models\Login_password;
@@ -53,7 +55,11 @@ class UserController extends Controller
 
         //Customer
         $data['customer']=  Customer_info::count();
+        //supplier
         $data['supplier']=  Supplier_info::count();
+        //sub contractor
+        $data['sub_contractor']=  Sub_contractor_info::count();
+
 
         
 
