@@ -114,17 +114,6 @@ use App\Models\Company_name;
                             <label >Credit Term</label>
                             <input type="integer" name="credit_term" class="form-control" >
                         </div>
-                        
-
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Portal Site Login</label>
-                            <textarea name="portal_login" cols="30" rows="10" class="form-control"></textarea>
-                        </div>
-
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Remarks</label>
-                            <textarea name="remarks" cols="30" rows="10" class="form-control"></textarea>
-                        </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="form-group">
@@ -140,6 +129,19 @@ use App\Models\Company_name;
                                 </div>
                             </div>
                         </div>
+                        
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Portal Site Login</label>
+                            <textarea name="portal_login" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Remarks</label>
+                            <textarea name="remarks" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+
+                        
 
                         <div class="col-12">
                             <hr>
