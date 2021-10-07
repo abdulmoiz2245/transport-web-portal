@@ -44,6 +44,15 @@ use Illuminate\Support\Facades\Route;
         Route::post('/delete', [CustomerController::class, 'delete_customer']) 
         ->name('delete_customer');
 
+        Route::get('/trash', [CustomerController::class, 'trash_customer']) 
+        ->name('trash_customer');
+
+        Route::post('/restor-delete', [CustomerController::class, 'restore_customer']) 
+        ->name('restore_customer');
+
+        Route::post('/delete-status', [CustomerController::class, 'delete_customer_status']) 
+        ->name('delete_customer_status');
+
         Route::get('/history', [CustomerController::class, 'customer_history']) 
         ->name('customer_history');
         

@@ -6,7 +6,7 @@ use App\Models\Company_name;
     <ul class="nav">
        <li>
            <a class="nav-link" href="#step-1">
-              Customer Info Abdul 
+              Customer Info  
            </a>
        </li>
        <li>
@@ -101,7 +101,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Credit Term</label>
-                            <input type="integer" name="credit_term" class="form-control" >
+                            <input type="number" name="credit_term" class="form-control" >
                         </div>
                         <div class="col-md-6 col-12 mb-3">
                              

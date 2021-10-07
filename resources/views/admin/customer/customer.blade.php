@@ -7,11 +7,20 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.customer.add_customer') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Customer
-        </button>
-    </a>
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.customer.add_customer') }}" class="">
+            <button class="btn btn-primary">
+                Add Customer
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.customer.trash_customer') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+                Customer Trash
+            </button>
+        </a>
+    </div>
+    
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -59,7 +68,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'approved')
+                                @if($customer_info->status == 'approved' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -119,7 +128,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'pending')
+                                @if($customer_info->status == 'pending' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -181,7 +190,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'rejected')
+                                @if($customer_info->status == 'rejected' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -259,7 +268,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.customer.delete_customer') }}",
+                url:"{{ route( 'admin.customer.delete_customer_status') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

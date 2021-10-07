@@ -397,7 +397,9 @@
                 </div>
                 
             </div>
+
             <div id="step-2" class="tab-pane" role="tabpanel">
+                @if($data['customer_department'] != null)
                 <div class="container">
                     <div class="row mt-5">
                         <div class="col-md-6 col-12 mb-3">
@@ -499,8 +501,14 @@
                     </div>
                     
                 </div>
+
+                @else
+
+                @endif
             </div>
+
             <div id="step-3" class="tab-pane" role="tabpanel">
+                @if($data['customer_rate_card'] != null)
                 <div class="container">
                     <div class="row mt-5">
 
@@ -692,7 +700,11 @@
                         </div> -->
                     </div>
                 </div>
+                @else
+
+                @endif
             </div>
+
         </div>
     </div>
 </div>

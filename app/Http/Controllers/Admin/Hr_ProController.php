@@ -681,7 +681,7 @@ class Hr_ProController extends Controller
             $user_id  = 0;
         }
 
-        if($trade_license->action == null){
+        if($trade_license->action == null || $trade_license->status == 'approved'){
             $trade_license->action = 'edit';
         }
 
@@ -1091,7 +1091,7 @@ class Hr_ProController extends Controller
         $office_contract->type = 'office';
         $office_contract->save();
 
-        if($office_contract->action == null){
+        if($office_contract->action == null || $office_contract->status == 'approved'){
             $office_contract->action = 'edit';
         }
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
@@ -1394,7 +1394,7 @@ class Hr_ProController extends Controller
         $office_contract->type = 'land';
         $office_contract->save();
 
-        if($office_contract->action == null){
+        if($office_contract->action == null || $office_contract->status == 'approved'){
             $office_contract->action = 'none';
         }
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
@@ -1642,7 +1642,7 @@ class Hr_ProController extends Controller
         $civil_defense->status = $request->input('status');
 
         
-        if($civil_defense->action == null){
+        if($civil_defense->action == null || $civil_defense->status == 'approved'){
             $civil_defense->action = 'edit';
         }
 
@@ -1841,7 +1841,7 @@ class Hr_ProController extends Controller
         $muncipality->status = $request->input('status');
 
         
-        if($muncipality->action == null){
+        if($muncipality->action == null || $muncipality->status == 'approved'){
             $muncipality->action = 'edit';
         }
 
@@ -2063,7 +2063,7 @@ class Hr_ProController extends Controller
         $civil_defense->status = $request->input('status');
 
         
-        if($civil_defense->action == null){
+        if($civil_defense->action == null || $civil_defense->status == 'approved'){
             $civil_defense->action = 'edit';
         }
 
@@ -2260,7 +2260,7 @@ class Hr_ProController extends Controller
         $muncipality->status = $request->input('status');
 
         
-        if($muncipality->action == null){
+        if($muncipality->action == null || $muncipality->status == 'approved'){
             $muncipality->action = 'edit';
         }
 
@@ -2586,7 +2586,7 @@ class Hr_ProController extends Controller
         $trained_individual->status = $request->input('status');
 
         
-        if($trained_individual->action == null){
+        if($trained_individual->action == null || $trained_individual->status == 'approved' ){
             $trained_individual->action = 'edit';
         }
 
@@ -2925,7 +2925,7 @@ class Hr_ProController extends Controller
         $trained_individual->status = $request->input('status');
 
         
-        if($trained_individual->action == null){
+        if($trained_individual->action == null || $trained_individual->status == 'approved'){
             $trained_individual->action = 'edit';
         }
 

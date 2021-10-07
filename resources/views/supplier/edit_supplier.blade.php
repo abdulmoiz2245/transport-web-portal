@@ -355,6 +355,7 @@ use App\Models\Company_name;
 
        <div id="step-2" class="tab-pane" role="tabpanel">
            <div class="container">
+                @if($data['customer_department'] != null)
                 <form action="" method="post" id="customer_dep">
                     @csrf
                     <input type="text" name="id" value="{{ $data['customer_department']->id }}" class="d-none">
@@ -406,6 +407,56 @@ use App\Models\Company_name;
                     </div>
 
                 </form>
+                @else
+                <form action="" method="post" id="customer_dep_save">
+                    @csrf
+                    <div class="row">
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Account Name </label>
+                            <input type="text" name="account_name"  class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Delivery/Order </label>
+                            <input type="text" name="delivery_order"  class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >CONCERNED PERSON NAME </label>
+                            <input type="text" name="concerned_person_name" class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >CONCERNED PERSON DESIGNATION </label>
+                            <input type="text" name="concerned_person_designation" class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Tell</label>
+                            <input type="text" name="tell" class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Mobile</label>
+                            <input type="text" name="mobile" class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Fax</label>
+                            <input type="text" name="fax" class="form-control" >
+                        </div>
+
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Email</label>
+                            <input type="text" name="email" class="form-control" >
+                        </div>
+                    
+                        
+                    </div>
+                    <input name="submit" type="submit" class="btn" value="Save | Next">
+
+                </form>
+                @endif
                 
            </div>
           
@@ -488,6 +539,30 @@ use App\Models\Company_name;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Supplier Department Updated Successfully");
+                        window.location.replace("{{ route('user.supplier') }}");
+                    }
+                },
+                error: function (){    
+                    alert('Technical Error (contact to web master)');
+                }
+            });
+
+        });
+
+        $('#customer_dep_save').on('submit', function (e) {
+
+            e.preventDefault();
+            var formData = new FormData($('#customer_dep_save')[0]);
+            formData.append('supplier_id', id);
+            $.ajax({
+                type: 'post',
+                url: "{{ route('user.supplier.save_supplier_department') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        toastr.success("Supplier Department Added Successfully");
                         window.location.replace("{{ route('user.supplier') }}");
                     }
                 },

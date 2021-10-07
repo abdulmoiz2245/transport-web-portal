@@ -560,7 +560,8 @@ class SupplierController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 
@@ -624,7 +625,8 @@ class SupplierController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 

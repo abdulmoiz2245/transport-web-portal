@@ -280,7 +280,9 @@ use App\Models\Company_name;
                                 <label >Select Customer</label>
                                 <select name="customer_id" class="form-control customer" required>
                                     @foreach($data['customer_infos'] as $customer)
+                                    @if($customer->status == 'approved')
                                     <option value="{{ $customer->id }}"  >{{ $customer->name }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -289,14 +291,14 @@ use App\Models\Company_name;
                         <div class="col-md-6 col-12 mb-3">
                             <div class=" col-md-6 col-12 mb-3">
                                 <label >From Location </label>
-                                <input type="text" name="from" class="form-control customer_from" readonly>
+                                <input type="text" name="from" class="form-control customer_from" readonly required>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class=" col-md-6 col-12 mb-3">
                                 <label >To Location </label>
-                                <input type="text" name="to" class="form-control customer_to" readonly>
+                                <input type="text" name="to" class="form-control customer_to" readonly required>
                             </div>
                         </div>
 

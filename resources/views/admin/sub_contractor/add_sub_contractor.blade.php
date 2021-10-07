@@ -292,7 +292,9 @@ use App\Models\Company_name;
                                 <label >Select Customer</label>
                                 <select name="customer_id" class="form-control customer" required>
                                     @foreach($data['customer_info'] as $customer)
+                                    @if($customer->status == 'approved')
                                     <option value="{{ $customer->id }}"  >{{ $customer->name }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -301,14 +303,14 @@ use App\Models\Company_name;
                         <div class="col-md-6 col-12 mb-3">
                             <div class=" col-md-6 col-12 mb-3">
                                 <label >From Location </label>
-                                <input type="text" name="from" class="form-control customer_from" readonly >
+                                <input type="text" name="from" class="form-control customer_from readonly"   required>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class=" col-md-6 col-12 mb-3">
                                 <label >To Location </label>
-                                <input type="text" name="to" class="form-control customer_to" readonly>
+                                <input type="text" name="to" class="form-control customer_to readonly"  required>
                                 
                             </div>
                         </div>
@@ -506,6 +508,11 @@ use App\Models\Company_name;
     var date = new Date();
     date.setDate(date.getDate() + 10);
     var new_date = date.toLocaleDateString('en-CA');  
-    console.log($("[type='date']").attr("min",new_date) );
+    $("[type='date']").attr("min",new_date);
+
+    $(".readonly").on('keydown paste focus mousedown', function(e){
+        if(e.keyCode != 9) // ignore tab
+            e.preventDefault();
+    });
 
 </script>

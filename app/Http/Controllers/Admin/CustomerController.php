@@ -110,6 +110,15 @@ class CustomerController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
+    public function trash_customer(){
+        $data['modules']= DB::table('modules')->get();
+        $data['customer_info'] = DB::table('customer_info')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Customer Trash";
+        $data['view'] = 'admin.customer.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function view_customer(Request $request){
 
         $data['customer_info'] = Customer_info::find($request->input('id'));
@@ -547,7 +556,7 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
             $customer_info->action = 'edit';
         }
 
@@ -567,7 +576,7 @@ class CustomerController extends Controller
     public function update_customer_department(Request $request){
         $id =  (int)$request->input('id');
         $customer_dep = Customer_department::where('id' , $id)->first();
-         $customer_info = Customer_info::where('id' , (int)$request->input('customer_id'))->first();
+         $customer_info = Customer_info::where('id' , $customer_dep->customer_id)->first();
 
         if($request->input('department_name') != ''){
             $customer_dep->department_name = $request->input('department_name');
@@ -609,7 +618,8 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 
@@ -630,7 +640,7 @@ class CustomerController extends Controller
     public function update_customer_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
-        $customer_info = Customer_info::where('id' , (int)$request->input('customer_id'))->first();
+        $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
 
        
         if($request->input('from') != ''){
@@ -702,7 +712,8 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 
@@ -721,11 +732,11 @@ class CustomerController extends Controller
     }
 
     public function delete_customer(Request $request){
-        $id =  (int)$request->input('id');
+        $id =  $request->input('id');
         $customer_info = Customer_info::where('id' , $id)->first();
         $customer_department = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
         $customer_rate_card = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
-
+        dd( $request->input('id'));
         if($customer_info->trn_copy != null){
             
             $path = public_path().'/main_admin/customer/'.$customer_info->trn_copy;
@@ -768,15 +779,16 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        $customer_info->save();
+        
 
         if($request->input('status') == 'approved'){
             $this->remove_table_name('trade_licenses');
         }
 
-        if($customer_info->action == null){
+       
             $customer_info->action = 'delete';
-        }
+        
+        $customer_info->save();
 
         $this->history_table('customer_histories', $customer_info->action , $user_id);
  
@@ -788,6 +800,73 @@ class CustomerController extends Controller
             return response()->json(['status'=>'0']);
 
         }
+    }
+
+    public function delete_customer_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Customer_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+            $customer_info->action = 'delete';
+        }
+
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_customer(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Customer_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        
+            $customer_info->action = 'restored';
+        
+        $customer_info->save();
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+ 
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function customer_history(){

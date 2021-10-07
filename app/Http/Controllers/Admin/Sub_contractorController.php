@@ -77,6 +77,7 @@ class Sub_contractorController extends Controller
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
@@ -126,11 +127,11 @@ class Sub_contractorController extends Controller
         $data['company_names']= DB::table('company_names')->get();
         $data['customer_infos']= Customer_info::all();
 
-        if($data['customer_department'] == null)
-        abort(403); 
+        // if($data['customer_department'] == null)
+        // abort(403); 
 
-        if($data['customer_rate_card'] == null)
-            abort(403); 
+        // if($data['customer_rate_card'] == null)
+        //     abort(403); 
         
         // dd($data['customer_info']);
 
@@ -161,11 +162,11 @@ class Sub_contractorController extends Controller
         $data['modules']= DB::table('modules')->get();
          $data['customer_infos']= DB::table('customer_info')->get();
 
-         if($data['customer_department'] == null)
-        abort(403); 
+        //  if($data['customer_department'] == null)
+        // abort(403); 
 
-        if($data['customer_rate_card'] == null)
-            abort(403); 
+        // if($data['customer_rate_card'] == null)
+        //     abort(403); 
 
         //dd($data['modules']);
         $user = Auth::user();
@@ -611,7 +612,8 @@ class Sub_contractorController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 
@@ -677,7 +679,8 @@ class Sub_contractorController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 
@@ -774,7 +777,8 @@ class Sub_contractorController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null){
+        if($customer_info->action == null || $customer_info->status == 'approved'){
+
             $customer_info->action = 'edit';
         }
 

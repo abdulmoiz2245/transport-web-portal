@@ -168,11 +168,11 @@ class Sub_contractorController extends Controller
             abort(403);
         }
 
-        if($data['customer_department'] == null)
-            abort(403); 
+        // if($data['customer_department'] == null)
+        //     abort(403); 
 
-        if($data['customer_rate_card'] == null)
-                abort(403);         
+        // if($data['customer_rate_card'] == null)
+        //         abort(403);         
 
         $data['modules']= DB::table('modules')->get();
         $data['company_names']= DB::table('company_names')->get();
@@ -200,11 +200,11 @@ class Sub_contractorController extends Controller
             abort(403);
         }
 
-        if($data['customer_department'] == null)
-            abort(403); 
+        // if($data['customer_department'] == null)
+        //     abort(403); 
 
-        if($data['customer_rate_card'] == null)
-                abort(403);       
+        // if($data['customer_rate_card'] == null)
+        //         abort(403);       
 
         $data['company_names']= DB::table('company_names')->get();
 
