@@ -40,6 +40,15 @@ use Illuminate\Support\Facades\Route;
         Route::post('/delete', [SupplierController::class, 'delete_supplier']) 
         ->name('delete_supplier');
 
+        Route::get('/trash', [SupplierController::class, 'trash_supplier']) 
+        ->name('trash_supplier');
+
+        Route::post('/restor-delete', [SupplierController::class, 'restore_supplier']) 
+        ->name('restore_supplier');
+
+        Route::post('/delete-status', [SupplierController::class, 'delete_supplier_status']) 
+        ->name('delete_supplier_status');
+
         Route::get('/history', [SupplierController::class, 'supplier_history']) 
         ->name('supplier_history');
         

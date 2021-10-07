@@ -70,9 +70,10 @@ class Sub_contractorController extends Controller
     public function history_table($table_name , $action , $user_id){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
@@ -81,14 +82,15 @@ class Sub_contractorController extends Controller
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
             'type' => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
     }
-
     public function sub_contractor(){
 
         $data['modules']= DB::table('modules')->get();

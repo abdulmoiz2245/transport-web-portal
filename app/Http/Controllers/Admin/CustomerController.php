@@ -67,19 +67,23 @@ class CustomerController extends Controller
     public function history_table($table_name , $action , $user_id){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
             'type' => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
@@ -736,7 +740,7 @@ class CustomerController extends Controller
         $customer_info = Customer_info::where('id' , $id)->first();
         $customer_department = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
         $customer_rate_card = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
-        dd( $request->input('id'));
+        // dd( $id);
         if($customer_info->trn_copy != null){
             
             $path = public_path().'/main_admin/customer/'.$customer_info->trn_copy;
@@ -793,8 +797,10 @@ class CustomerController extends Controller
         $this->history_table('customer_histories', $customer_info->action , $user_id);
  
         if($customer_info->delete() ){
-            $customer_department->delete();
-            $customer_rate_card->delete();
+            if($customer_department != null)
+                $customer_department->delete();
+            if($customer_rate_card != null)
+                $customer_rate_card->delete();
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -822,9 +828,9 @@ class CustomerController extends Controller
             $this->remove_table_name('trade_licenses');
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved'){
+       
             $customer_info->action = 'delete';
-        }
+        
 
         $this->history_table('customer_histories', $customer_info->action , $user_id);
  
@@ -862,7 +868,8 @@ class CustomerController extends Controller
         
         $customer_info->save();
         $this->history_table('customer_histories', $customer_info->action , $user_id);
- 
+        $customer_info->action = 'nill';
+        $customer_info->save();
       
            
             return response()->json(['status'=>'1']);

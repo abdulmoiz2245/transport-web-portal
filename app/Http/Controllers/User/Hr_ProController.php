@@ -147,6 +147,34 @@ class Hr_ProController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
+    public function trash_trade_license(){
+        $data['modules']= DB::table('modules')->get();
+        $data['trade_licenses']= DB::table('trade_licenses')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Trade License Trash";
+        $data['view'] = 'admin.hr_pro.trade_license.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trade_license_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('trade_license_histories')->get();
+        $data['table_name']= 'trade_license_histories';
+
+        $data['page_title'] = "History | TRADE LICENSE,SPONSORS, PARTNERS ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function add_trade_license(){
         $data['modules']= DB::table('modules')->get();
 
@@ -693,6 +721,26 @@ class Hr_ProController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
+    public function office_contracts_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('office__land_contract_histories')->where('type' , '=' ,'office' )->orderBy('updated_at')->get();
+        $data['table_name']= 'office__land_contract_histories';
+        $data['type']= 'office';
+        
+
+        $data['page_title'] = "History | Office Contracts ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function add_office_contract(){
         $data['modules']= DB::table('modules')->get();
 
@@ -933,6 +981,26 @@ class Hr_ProController extends Controller
         $data['page_title'] = "Land CONTRACT";
         $data['view'] = 'hr_pro.office_land_contract.land_contract.land_contract';
         return view('users.layout', ["data"=>$data]);
+    }
+
+    public function land_contracts_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('office__land_contract_histories')->where('type' , '=' ,'land' )->get();
+        $data['table_name']= 'office__land_contract_histories';
+        $data['type']= 'land';
+        
+
+        $data['page_title'] = "History | Land Contracts ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
     }
 
     public function add_land_contract(){
@@ -1208,6 +1276,27 @@ class Hr_ProController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
+    public function mobile_civil_defence_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('civil_defense_documents_histories')->where('type' , '=' ,'mobile' )->get();
+        $data['table_name']= 'civil_defense_documents_histories';
+        $data['type']= 'mobile';
+        
+
+        $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Civial Defence)
+        ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function add_mobile_civil_defence(){
 
         $data['modules']= DB::table('modules')->get();
@@ -1362,6 +1451,27 @@ class Hr_ProController extends Controller
         ";
         $data['view'] = 'hr_pro.mobiles_fuel_tanks_renewals.muncipality.muncipality';
         return view('users.layout', ["data"=>$data]);
+    }
+
+    public function mobile_muncipality_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('muncipality_documents_histories')->where('type' , '=' ,'mobile' )->get();
+        $data['table_name']= 'muncipality_documents_histories';
+        $data['type']= 'mobile';
+        
+
+        $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Muncipality)
+        ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
     }
 
     public function add_mobile_muncipality(){
@@ -1543,6 +1653,26 @@ class Hr_ProController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
+    public function non_mobile_civil_defence_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('civil_defense_documents_histories')->where('type' , '=' ,'non_mobile' )->get();
+        $data['table_name']= 'civil_defense_documents_histories';
+        $data['type']= 'non_mobile';
+        
+
+        $data['page_title'] = "History | NON MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE)";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function add_non_mobile_civil_defence(){
 
         $data['modules']= DB::table('modules')->get();
@@ -1697,6 +1827,27 @@ class Hr_ProController extends Controller
         ";
         $data['view'] = 'hr_pro.non_mobiles_fuel_tanks_renewals.muncipality.muncipality';
         return view('users.layout', ["data"=>$data]);
+    }
+
+    public function non_mobile_muncipality_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('muncipality_documents_histories')->where('type' , '=' ,'non_mobile' )->get();
+        $data['table_name']= 'muncipality_documents_histories';
+        $data['type']= 'non_mobile';
+        
+
+        $data['page_title'] = "History | NON MOBILE FUEL TANK RENEWALS (Muncipality)
+        ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
     }
 
     public function add_non_mobile_muncipality(){
@@ -1886,6 +2037,27 @@ class Hr_ProController extends Controller
         $data['page_title'] = "Trained Individual Non Mobile Fuel Tank";
         $data['view'] = 'hr_pro.non_mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
         return view('users.layout', ["data"=>$data]);
+    }
+
+    public function non_mobile_trained_individual_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('trained_individuals_histories')->where('type' , '=' ,'non_mobile' )->get();
+        $data['table_name']= 'trained_individuals_histories';
+        $data['type']= 'non_mobile';
+        
+
+        $data['page_title'] = "History | NON MOBILE FUEL TANK Trained Individual
+        ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
     }
 
     public function add_non_mobile_trained_individual(){
@@ -2149,6 +2321,27 @@ class Hr_ProController extends Controller
         $data['page_title'] = "Trained Individual  Mobile Fuel Tank";
         $data['view'] = 'hr_pro.mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
         return view('users.layout', ["data"=>$data]);
+    }
+
+    public function mobiles_trained_individual_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('trained_individuals_histories')->where('type' , '=' ,'mobile' )->get();
+        $data['table_name']= 'trained_individuals_histories';
+        $data['type']= 'mobile';
+        
+
+        $data['page_title'] = "History | MOBILE FUEL TANK Trained Individual
+        ";
+        $data['view'] = 'admin.hr_pro.history_type';
+        return view('layout', ["data"=>$data]);
     }
 
     public function add_mobiles_trained_individual(){

@@ -55,7 +55,7 @@ use App\Models\Muncipality_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'approved')
+                                @if($muncipality->status == 'approved' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -88,6 +88,10 @@ use App\Models\Muncipality_documents;
                                     
                                         <a href="#" id="{{ $muncipality->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+
+                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     
@@ -112,7 +116,7 @@ use App\Models\Muncipality_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'pending')
+                                @if($muncipality->status == 'pending' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -146,6 +150,10 @@ use App\Models\Muncipality_documents;
                                     
                                         <a href="#" id="{{ $muncipality->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+
+                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     
@@ -170,7 +178,7 @@ use App\Models\Muncipality_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'rejected')
+                                @if($muncipality->status == 'rejected' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -204,6 +212,10 @@ use App\Models\Muncipality_documents;
                                     
                                         <a href="#" id="{{ $muncipality->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+
+                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     

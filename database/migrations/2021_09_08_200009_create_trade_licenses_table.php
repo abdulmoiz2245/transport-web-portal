@@ -36,6 +36,8 @@ class CreateTradeLicensesTable extends Migration
             $table->string('sponsor_passport')->default('null');
             $table->string('partners_passport')->default('null');
 
+            $table->string('row_status')->nullable();
+
             $table->string('status');
             $table->string('action')->nullable();
             $table->string('status_message')->nullable();

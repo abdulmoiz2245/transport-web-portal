@@ -74,7 +74,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'approved')
+                                    @if($trade_license->status == 'approved' && $trade_license->row_status != 'deleted')
                                     <tr>
                                         
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -142,6 +142,11 @@
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+
+                                            <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                            </a> 
+
                                         </td>
                                         
                                     </tr>
@@ -184,7 +189,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'pending')
+                                    @if($trade_license->status == 'pending'  && $trade_license->row_status != 'deleted')
                                     <tr>
                                         
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -252,6 +257,10 @@
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+
+                                            <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                            </a> 
                                         </td>
                                         
                                     </tr>
@@ -294,7 +303,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'rejected')
+                                    @if($trade_license->status == 'rejected'  && $trade_license->row_status != 'deleted')
                                     <tr>
                                         
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -362,6 +371,10 @@
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+
+                                            <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                            </a> 
                                         </td>
                                         
                                     </tr>

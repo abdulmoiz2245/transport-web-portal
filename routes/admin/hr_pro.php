@@ -50,6 +50,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/trade-license-sponsors-partners/delete', [Hr_ProController::class, 'delete_trade_license']) 
     ->name('delete_trade_license__sponsors__partners');
 
+    Route::get('/trade-license-sponsors-partners/trash', [Hr_ProController::class, 'trash_trade_license']) 
+        ->name('trash_trade_license__sponsors__partners');
+
+    Route::post('/trade-license-sponsors-partners/restor-delete', [Hr_ProController::class, 'restore_trade_license']) 
+    ->name('restore_trade_license__sponsors__partners');
+
+    Route::post('/trade-license-sponsors-partners/delete-status', [Hr_ProController::class, 'delete_trade_license_status']) 
+    ->name('delete_trade_license__sponsors__partners_status');
+
     Route::post('/trade-license-sponsors-partners/save', [Hr_ProController::class, 'save_trade_license']) 
     ->name('save_trade_license__sponsors__partners');
 
@@ -93,6 +102,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/office-contracts-land-contracts/office-contract/delete', [Hr_ProController::class, 'delete_office_contract']) 
     ->name('delete_office_contracts');
 
+    Route::get('/office-contracts-land-contracts/office-contract/trash', [Hr_ProController::class, 'trash_office_contracts']) 
+    ->name('trash_office_contracts');
+
+    Route::post('/office-contracts-land-contracts/office-contract/restor-delete', [Hr_ProController::class, 'restore_office_contract']) 
+    ->name('restore_office_contracts');
+
+    Route::post('/office-contracts-land-contracts/office-contract/delete-status', [Hr_ProController::class, 'delete_office_contracts_status']) 
+    ->name('delete_office_contracts_status');
+
     Route::post('/office-contracts-land-contracts/office-contract/view', [Hr_ProController::class, 'view_office_contract']) 
     ->name('view_office_contracts');
 
@@ -120,6 +138,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
 
     Route::post('/office-contracts-land-contracts/land-contract/delete', [Hr_ProController::class, 'delete_land_contract']) 
     ->name('delete_land_contracts');
+
+    Route::get('/office-contracts-land-contracts/land-contract/trash', [Hr_ProController::class, 'trash_land_contract']) 
+    ->name('trash_land_contracts');
+
+    Route::post('/office-contracts-land-contracts/land-contract/restor-delete', [Hr_ProController::class, 'restore_land_contract']) 
+    ->name('restore_land_contracts');
+
+    Route::post('/office-contracts-land-contracts/land-contract/delete-status', [Hr_ProController::class, 'delete_land_contract_status']) 
+    ->name('delete_land_contracts_status');
 
     Route::post('/office-contracts-land-contracts/land-contract/view', [Hr_ProController::class, 'view_land_contract']) 
     ->name('view_land_contracts');
@@ -155,6 +182,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/non-mobiles-fuel-tanks-renewals/civil-defense/delete', [Hr_ProController::class, 'delete_non_mobile_civil_defence']) 
     ->name('delete_non_mobile_civil_defence');
 
+    Route::get('/non-mobiles-fuel-tanks-renewals/civil-defense/trash', [Hr_ProController::class, 'trash_non_mobile_civil_defence']) 
+    ->name('trash_non_mobile_civil_defence');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/civil-defense/restor-delete', [Hr_ProController::class, 'restore_non_mobile_civil_defence']) 
+    ->name('restore_non_mobile_civil_defence');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/civil-defense/delete-status', [Hr_ProController::class, 'delete_non_mobile_civil_defence_status']) 
+    ->name('delete_non_mobile_civil_defence_status');
+
     // non mobile MUNCIPALITY
 
     Route::get('/non-mobiles-fuel-tanks-renewals/muncipality', [Hr_ProController::class, 'non_mobile_muncipality']) 
@@ -181,6 +217,17 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/non-mobiles-fuel-tanks-renewals/muncipality/delete', [Hr_ProController::class, 'delete_non_mobile_muncipality']) 
     ->name('delete_non_mobile_muncipality');
 
+    Route::get('/non-mobiles-fuel-tanks-renewals/muncipality/trash', [Hr_ProController::class, 'trash_non_mobile_muncipality']) 
+    ->name('trash_non_mobile_muncipality');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/muncipality/restor-delete', [Hr_ProController::class, 'restore_non_mobile_muncipality']) 
+    ->name('restore_non_mobile_muncipality');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/muncipality/delete-status', [Hr_ProController::class, 'delete_non_mobile_muncipality_status']) 
+    ->name('delete_non_mobile_muncipality_status');
+
+    
+
     //non mobile trained individules 
 
     Route::get('/non-mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'non_mobile_trained_individual']) 
@@ -204,8 +251,17 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/update', [Hr_ProController::class, 'update_non_mobile_trained_individual']) 
     ->name('update_non_mobile_trained_individual');
 
-    Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/land-contract/delete', [Hr_ProController::class, 'delete_non_mobile_trained_individual']) 
+    Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/delete', [Hr_ProController::class, 'delete_non_mobile_trained_individual']) 
     ->name('delete_non_mobile_trained_individual');
+
+    Route::get('/non-mobiles-fuel-tanks-renewals/trained-individual/trash', [Hr_ProController::class, 'trash_non_mobile_trained_individual']) 
+    ->name('trash_non_mobiles_trained_individual');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/restor-delete', [Hr_ProController::class, 'restore_non_mobile_trained_individual']) 
+    ->name('restore_non_mobiles_trained_individual');
+
+    Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/delete-status', [Hr_ProController::class, 'delete_non_mobile_trained_individual_status']) 
+    ->name('delete_non_mobiles_trained_individual_status');
 
     Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/view', [Hr_ProController::class, 'view_non_mobile_trained_individual']) ->name('view_non_mobile_trained_individual');
 
@@ -241,6 +297,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/mobiles-fuel-tanks-renewals/civil-defense/delete', [Hr_ProController::class, 'delete_mobile_civil_defence']) 
     ->name('delete_mobile_civil_defence');
 
+    Route::get('/mobiles-fuel-tanks-renewals/civil-defense/trash', [Hr_ProController::class, 'trash_mobile_civil_defence']) 
+    ->name('trash_mobile_civil_defence');
+
+    Route::post('/mobiles-fuel-tanks-renewals/civil-defense/restor-delete', [Hr_ProController::class, 'restore_mobile_civil_defence']) 
+    ->name('restore_mobile_civil_defence');
+
+    Route::post('/mobiles-fuel-tanks-renewals/civil-defense/delete-status', [Hr_ProController::class, 'delete_mobile_civil_defence_status']) 
+    ->name('delete_mobile_civil_defence_status');
+
     //  mobile MUNCIPALITY
 
     Route::get('/mobiles-fuel-tanks-renewals/muncipality', [Hr_ProController::class, 'mobile_muncipality']) 
@@ -269,6 +334,15 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::post('/mobiles-fuel-tanks-renewals/muncipality/delete', [Hr_ProController::class, 'delete_mobile_muncipality']) 
     ->name('delete_mobile_muncipality');
 
+    Route::get('/mobiles-fuel-tanks-renewals/muncipality/trash', [Hr_ProController::class, 'trash_mobile_muncipality']) 
+    ->name('trash_mobile_muncipality');
+
+    Route::post('/mobiles-fuel-tanks-renewals/muncipality/restor-delete', [Hr_ProController::class, 'restore_mobile_muncipality']) 
+    ->name('restore_mobile_muncipality');
+
+    Route::post('/mobiles-fuel-tanks-renewals/muncipality/delete-status', [Hr_ProController::class, 'delete_mobile_muncipality_status']) 
+    ->name('delete_mobile_muncipality_status');
+
      // mobile trained individules 
 
      Route::get('/mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'mobiles_trained_individual']) 
@@ -292,8 +366,17 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
      Route::post('/mobiles-fuel-tanks-renewals/trained-individual/update', [Hr_ProController::class, 'update_mobiles_trained_individual']) 
      ->name('update_mobiles_trained_individual');
 
-     Route::post('/mobiles-fuel-tanks-renewals/trained-individual/land-contract/delete', [Hr_ProController::class, 'delete_mobiles_trained_individual']) 
+     Route::post('/mobiles-fuel-tanks-renewals/trained-individual/delete', [Hr_ProController::class, 'delete_mobiles_trained_individual']) 
      ->name('delete_mobiles_trained_individual');
+
+     Route::get('/mobiles-fuel-tanks-renewals/trained-individual/trash', [Hr_ProController::class, 'trash_mobiles_trained_individual']) 
+    ->name('trash_mobiles_trained_individual');
+
+    Route::post('/mobiles-fuel-tanks-renewals/trained-individual/restor-delete', [Hr_ProController::class, 'restore_mobiles_trained_individual']) 
+    ->name('restore_mobiles_trained_individual');
+
+    Route::post('/mobiles-fuel-tanks-renewals/trained-individual/delete-status', [Hr_ProController::class, 'delete_mobiles_trained_individual_status']) 
+    ->name('delete_mobiles_trained_individual_status');
 
      Route::post('/mobiles-fuel-tanks-renewals/trained-individual/view', [Hr_ProController::class, 'view_mobiles_trained_individual']) ->name('view_mobiles_trained_individual');
 

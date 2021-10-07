@@ -67,19 +67,23 @@ class SupplierController extends Controller
     public function history_table($table_name , $action , $user_id){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
             'type' => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
@@ -94,7 +98,14 @@ class SupplierController extends Controller
         $data['view'] = 'admin.supplier.supplier';
         return view('layout', ["data"=>$data]);
     }
-
+    public function trash_supplier(){
+        $data['modules']= DB::table('modules')->get();
+        $data['customer_info'] = DB::table('supplier_infos')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Supplier Trash";
+        $data['view'] = 'admin.supplier.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
 
     public function add_supplier(){
         $data['modules']= DB::table('modules')->get();
@@ -707,13 +718,82 @@ class SupplierController extends Controller
         $this->history_table('supplier_histories', $customer_info->action , $user_id);
  
         if($customer_info->delete() ){
-            $customer_department->delete();
+            if($customer_department != null)
+                $customer_department->delete();
         
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
 
         }
+    }
+
+    public function delete_supplier_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Supplier_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        
+            $customer_info->action = 'delete';
+        
+
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_supplier(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Supplier_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        
+            $customer_info->action = 'restored';
+        
+        $customer_info->save();
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $customer_info->action = 'nill';
+        $customer_info->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function supplier_history(){

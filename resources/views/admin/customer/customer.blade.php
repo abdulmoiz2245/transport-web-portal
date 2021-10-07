@@ -274,7 +274,7 @@ use App\Models\User;
                         if (data.status == 1) {
                             swal({
                                 title: "Deleted!",
-                                text: "Data has been deleted.",
+                                text: "Data has been mover to trash.",
                                 type: "success"
                             }).then(function () {
                                 window.location.href = '';

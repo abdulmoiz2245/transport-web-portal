@@ -6,11 +6,19 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_mobile_civil_defence') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add CIVIL DEFENSE DOCUMENTS
-        </button>
-    </a>
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_mobile_civil_defence') }}" class="">
+            <button class="btn btn-primary">
+                Add CIVIL DEFENSE DOCUMENTS
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_mobile_civil_defence') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            CIVIL DEFENSE DOCUMENTS Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -57,7 +65,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'approved')
+                                @if($civil_defense->status == 'approved' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -100,7 +108,7 @@ use App\Models\User;
                                         </form>
                                             
                                     
-                                        <a href="# id="{{ $civil_defense->id }}" class="delete-file">
+                                        <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
@@ -131,7 +139,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'pending')
+                                @if($civil_defense->status == 'pending' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -202,7 +210,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'rejected')
+                                @if($civil_defense->status == 'rejected' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -287,7 +295,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.delete_mobile_civil_defence') }}",
+                url:"{{ route( 'admin.hr_pro.delete_mobile_civil_defence_status') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

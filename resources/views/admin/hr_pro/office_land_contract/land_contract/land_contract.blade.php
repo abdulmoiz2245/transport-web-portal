@@ -6,11 +6,19 @@ use App\Models\Office_Land_contract;
   
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_land_contracts') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Land Contract
-        </button>
-    </a>
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_land_contracts') }}" class="">
+            <button class="btn btn-primary">
+                Add Land Contract
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_land_contracts') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            Land Contract Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -299,7 +307,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_land_contracts') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_land_contracts_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

@@ -6,11 +6,21 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_non_mobile_muncipality') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Muncipality DOCUMENTS
-        </button>
-    </a>
+    
+
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_non_mobile_muncipality') }}" class="">
+            <button class="btn btn-primary">
+                Add Muncipality DOCUMENTS 
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_non_mobile_muncipality') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            Muncipality DOCUMENTS Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -58,7 +68,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'approved')
+                                @if($muncipality->status == 'approved' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -132,7 +142,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'pending')
+                                @if($muncipality->status == 'pending' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -203,7 +213,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['muncipality'] as $muncipality)
-                                @if($muncipality->status == 'rejected')
+                                @if($muncipality->status == 'rejected' && $muncipality->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -217,10 +227,10 @@ use App\Models\User;
                                     </td>
                                     <td>{{ $muncipality->expiary_date }}</td>
                                     <td>
-                                        @if(muncipality->user_id == 0)
+                                        @if($muncipality->user_id == 0)
                                                 Admin
                                             @else
-                                               @if(User::find(muncipality->user_id))
+                                               @if(User::find($muncipality->user_id))
                                                     {{ User::find($muncipality->user_id)->username}}
                                                @else
                                                     User Deleted
@@ -295,7 +305,7 @@ use App\Models\User;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_non_mobile_muncipality') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_non_mobile_muncipality_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

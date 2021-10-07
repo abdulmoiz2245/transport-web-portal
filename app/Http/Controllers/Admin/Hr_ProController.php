@@ -116,19 +116,23 @@ class Hr_ProController extends Controller
     public function history_table($table_name , $action , $user_id){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
-            'date' => date("Y-m-d"),
+            'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
             'type' => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return true;
@@ -177,6 +181,16 @@ class Hr_ProController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
+    public function trash_trade_license(){
+        $data['modules']= DB::table('modules')->get();
+        $data['trade_licenses']= DB::table('trade_licenses')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Trade License Trash";
+        $data['view'] = 'admin.hr_pro.trade_license.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function trade_license_history(){
 
         $data['modules']= DB::table('modules')->get();
@@ -194,7 +208,6 @@ class Hr_ProController extends Controller
         $data['view'] = 'admin.hr_pro.history';
         return view('layout', ["data"=>$data]);
     }
-
 
     public function add_trade_license(){
         $data['modules']= DB::table('modules')->get();
@@ -859,6 +872,75 @@ class Hr_ProController extends Controller
         }
     }
 
+    public function delete_trade_license_status(Request $request){
+        $id =  (int)$request->input('id');
+        $trade_license = Trade_license::where('id' , $id)->first();
+        
+        $trade_license->status_message = $request->input('status_message');
+        if( $trade_license->user_id != 0){
+            $user_id  = $trade_license->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $trade_license->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        // if($trade_license->action == null || $trade_license->status == 'approved'){
+            $trade_license->action = 'nill';
+        // }
+
+        
+ 
+        if( $trade_license->save()){
+
+            $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_trade_license(Request $request){
+        $id =  (int)$request->input('id');
+        $trade_license = Trade_license::where('id' , $id)->first();
+        
+        $trade_license->status_message = $request->input('status_message');
+        if( $trade_license->user_id != 0){
+                        
+        }else{
+            $user_id  = 0;
+        }
+
+        $trade_license->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        
+            $trade_license->action = 'restored';
+        
+        $trade_license->save();
+        $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+ 
+        $trade_license->action = 'deleted';
+        $trade_license->save();
+           
+            return response()->json(['status'=>'1']);
+        
+    }
+
      ///////////////////////////////////////////////////
     ///////// office contract land contact ////////////
     ///////////////////////////////////////////////////
@@ -892,7 +974,22 @@ class Hr_ProController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function office_contract_history(){
+    public function trash_office_contracts(){
+        $data['modules']= DB::table('modules')->get();
+        $data['office_contract'] = Office_Land_contract::where('type', '=', 'office')->get();
+       
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "OFFICE(s) CONTRACT Trash";
+        $data['view'] = 'admin.hr_pro.office_land_contract.office_contract.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function office_contracts_history(){
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
@@ -902,7 +999,7 @@ class Hr_ProController extends Controller
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
 
-        $data['trade_licenses_history']= DB::table('office__land_contract_histories')->where('type' , '=' ,'office' )->get();
+        $data['trade_licenses_history']= DB::table('office__land_contract_histories')->where('type' , '=' ,'office' )->orderBy('updated_at')->get();
         $data['table_name']= 'office__land_contract_histories';
         $data['type']= 'office';
         
@@ -1140,9 +1237,9 @@ class Hr_ProController extends Controller
     
             $office_contract->save();
             
-            if($office_contract->action == null){
+            // if($office_contract->action == null){
                 $office_contract->action = 'delete';
-            }
+            // }
 
             if($request->input('status') == 'approved'){
                 $this->remove_table_name('office__land_contracts');
@@ -1159,6 +1256,78 @@ class Hr_ProController extends Controller
         
 
     }
+
+    
+    public function delete_office_contracts_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Office_Land_contract::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('office__land_contracts');
+        }
+
+    
+            $office_contract->action = 'deleted';
+        
+        // dd($office_contract->action );
+        
+ 
+        if( $office_contract->save()){
+            // dd($office_contract->action);
+            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_office_contract(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Office_Land_contract::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;   
+        }else{
+            $user_id  = 0;
+        }
+      
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('office__land_contracts');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+        $office_contract->action = 'nill';
+        $office_contract->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
+    }
+
+    
 
     public function view_office_contract(Request $request){
         $data['office_contract'] = Office_Land_contract::where('type', '=', 'office')->where('id' ,'=' , $request->input('id'))->first();
@@ -1192,7 +1361,22 @@ class Hr_ProController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function land_contract_history(){
+    public function trash_land_contract(){
+        $data['modules']= DB::table('modules')->get();
+        $data['land_contract'] = Office_Land_contract::where('type', '=', 'land')->get();
+       
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "OFFICE(s) CONTRACT Trash";
+        $data['view'] = 'admin.hr_pro.office_land_contract.land_contract.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function land_contracts_history(){
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
@@ -1432,9 +1616,9 @@ class Hr_ProController extends Controller
                 }
     
             }
-            if($office_contract->action == null){
+            // if($office_contract->action == null){
                 $office_contract->action = 'delete';
-            }
+            // }
     
             $office_contract->status_message = $request->input('status_message');
             if( $office_contract->user_id != 0){
@@ -1460,6 +1644,75 @@ class Hr_ProController extends Controller
         
         
 
+    }
+
+    public function delete_land_contract_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Office_Land_contract::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('office__land_contracts');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_land_contract(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Office_Land_contract::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;     
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('office__land_contracts');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+        $office_contract->action = 'nill';
+        $office_contract->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function view_land_contract(Request $request){
@@ -1518,6 +1771,16 @@ class Hr_ProController extends Controller
         $data['page_title'] = "NON MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE)
         ";
         $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.civil_defense.civil_defense';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_non_mobile_civil_defence(){
+        $data['modules']= DB::table('modules')->get();
+        $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'non_mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "NON MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE) Trash";
+        $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.civil_defense.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -1684,21 +1947,90 @@ class Hr_ProController extends Controller
 
         $civil_defense->save();
         
-        if($civil_defense->action == null){
+        // if($civil_defense->action == null){
             $civil_defense->action = 'delete';
-        }
+        // }
 
         if($request->input('status') == 'approved'){
             $this->remove_table_name('civil_defense_files');
         }
 
-        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'office');
+        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'non_mobile');
 
        if($civil_defense->delete()){
            return response()->json(['status'=>'1']);
        }else{
            return response()->json(['status'=>'0']);
        }
+    }
+
+    public function delete_non_mobile_civil_defence_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('civil_defense_files');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_non_mobile_civil_defence(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;      
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('civil_defense_files');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+ 
+        $office_contract->action = 'nill';
+        $office_contract->save();
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
 
@@ -1718,6 +2050,16 @@ class Hr_ProController extends Controller
         $data['page_title'] = "NON MOBILE FUEL TANK RENEWALS (Muncipality)
         ";
         $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.muncipality.muncipality';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_non_mobile_muncipality(){
+        $data['modules']= DB::table('modules')->get();
+        $data['muncipality'] = Muncipality_documents::where('type', '=', 'non_mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "NON MOBILE FUEL TANK RENEWALS (Muncipality)";
+        $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.muncipality.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -1882,9 +2224,9 @@ class Hr_ProController extends Controller
 
         $civil_defense->save();
         
-        if($civil_defense->action == null){
+        // if($civil_defense->action == null){
             $civil_defense->action = 'delete';
-        }
+        // }
 
         if($request->input('status') == 'approved'){
             $this->remove_table_name('muncipality_documents');
@@ -1897,6 +2239,75 @@ class Hr_ProController extends Controller
        }else{
            return response()->json(['status'=>'0']);
        }
+    }
+
+    public function delete_non_mobile_muncipality_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Muncipality_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('muncipality_documents');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_non_mobile_muncipality(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Muncipality_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;        
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('muncipality_documents');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+ 
+        $office_contract->action = 'nill';
+        $office_contract->save();
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     
@@ -1940,6 +2351,16 @@ class Hr_ProController extends Controller
         $data['page_title'] = "MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE)
         ";
         $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.civil_defense.civil_defense';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_mobile_civil_defence(){
+        $data['modules']= DB::table('modules')->get();
+        $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE) Trash";
+        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.civil_defense.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -2104,9 +2525,9 @@ class Hr_ProController extends Controller
 
         $civil_defense->save();
         
-        if($civil_defense->action == null){
-            $civil_defense->action = 'delete';
-        }
+        // if($civil_defense->action == null){
+            $civil_defense->action = 'delete ';
+        // }
 
         if($request->input('status') == 'approved'){
             $this->remove_table_name('civil_defense_files');
@@ -2120,6 +2541,74 @@ class Hr_ProController extends Controller
        }else{
            return response()->json(['status'=>'0']);
        }
+    }
+
+    public function delete_mobile_civil_defence_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        // dd( $id);
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('civil_defense_files');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_mobile_civil_defence(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;              
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('civil_defense_files');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+ 
+        $office_contract->action = 'nill';
+        $office_contract->save();
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     //muncipality
@@ -2137,6 +2626,16 @@ class Hr_ProController extends Controller
         $data['page_title'] = "MOBILE FUEL TANK RENEWALS (Muncipality)
         ";
         $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.muncipality.muncipality';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_mobile_muncipality(){
+        $data['modules']= DB::table('modules')->get();
+        $data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "MOBILE FUEL TANK RENEWALS (Muncipality) Trash";
+        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.muncipality.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -2303,9 +2802,9 @@ class Hr_ProController extends Controller
 
         $civil_defense->save();
         
-        if($civil_defense->action == null){
+        // if($civil_defense->action == null){
             $civil_defense->action = 'delete';
-        }
+        // }
 
         if($request->input('status') == 'approved'){
             $this->remove_table_name('muncipality_documents');
@@ -2318,6 +2817,78 @@ class Hr_ProController extends Controller
        }else{
            return response()->json(['status'=>'0']);
        }
+    }
+
+    public function delete_mobile_muncipality_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Muncipality_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('muncipality_documents');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_mobile_muncipality(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Muncipality_documents::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;   
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('muncipality_documents');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+        
+        $office_contract->action = 'nill';
+        $office_contract->save();
+ 
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     
@@ -2376,6 +2947,16 @@ class Hr_ProController extends Controller
         
         $data['page_title'] = "Trained Individual Non Mobile Fuel Tank";
         $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_non_mobile_trained_individual(){
+        $data['modules']= DB::table('modules')->get();
+        $data['trained_individual'] = Trained_individual::where('type', '=', 'non_mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Trained Individual Non Mobile Fuel Tank Trash";
+        $data['view'] = 'admin.hr_pro.non_mobiles_fuel_tanks_renewals.trained_individual.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -2664,9 +3245,9 @@ class Hr_ProController extends Controller
     
             $trained_individual->save();
             
-            if($trained_individual->action == null){
+            // if($trained_individual->action == null){
                 $trained_individual->action = 'delete';
-            }
+            // }
     
             if($request->input('status') == 'approved'){
                 $this->remove_table_name('trained_individuals');
@@ -2680,6 +3261,76 @@ class Hr_ProController extends Controller
                 return response()->json(['status'=>'0']);
     
             }
+    }
+
+    public function delete_non_mobile_trained_individual_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Trained_individual::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trained_individuals');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_non_mobile_trained_individual(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Trained_individual::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;   
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trained_individuals');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+
+        $office_contract->action = 'nill';
+        $office_contract->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function view_non_mobile_trained_individual(Request $request){
@@ -2717,6 +3368,16 @@ class Hr_ProController extends Controller
         
         $data['page_title'] = "Trained Individual  Mobile Fuel Tank";
         $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_mobiles_trained_individual(){
+        $data['modules']= DB::table('modules')->get();
+        $data['trained_individual'] = Trained_individual::where('type', '=', 'mobile')->get();
+        $data['company_names']= DB::table('company_names')->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Trained Individual Mobile Fuel Tank Trash";
+        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -3002,9 +3663,9 @@ class Hr_ProController extends Controller
     
             $trained_individual->save();
             
-            if($trained_individual->action == null){
+            // if($trained_individual->action == null){
                 $trained_individual->action = 'delete';
-            }
+            // }
     
             if($request->input('status') == 'approved'){
                 $this->remove_table_name('trained_individuals');
@@ -3018,6 +3679,76 @@ class Hr_ProController extends Controller
                 return response()->json(['status'=>'0']);
     
             }
+    }
+
+    public function delete_mobiles_trained_individual_status(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Trained_individual::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id  = $office_contract->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trained_individuals');
+        }
+
+        // if($office_contract->action == null || $office_contract->status == 'approved'){
+            $office_contract->action = 'delete';
+        // }
+
+        
+ 
+        if( $office_contract->save()){
+
+            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_mobiles_trained_individual(Request $request){
+        $id =  (int)$request->input('id');
+        $office_contract = Trained_individual::where('id' , $id)->first();
+        
+        $office_contract->status_message = $request->input('status_message');
+        if( $office_contract->user_id != 0){
+            $user_id = $office_contract->user_id  ;          
+        }else{
+            $user_id  = 0;
+        }
+
+        $office_contract->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trained_individuals');
+        }
+
+        
+            $office_contract->action = 'restored';
+        
+        $office_contract->save();
+        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+        $office_contract->action = 'nill';
+        $office_contract->save();
+ 
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function view_mobiles_trained_individual(Request $request){

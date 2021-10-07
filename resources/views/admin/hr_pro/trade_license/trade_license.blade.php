@@ -8,11 +8,25 @@ use App\Models\Office_Land_contract;
   
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="mb-5">
+    <!-- <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="mb-5">
         <button class="btn btn-primary">
             Add Trade License
         </button>
-    </a>
+    </a> -->
+
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="">
+            <button class="btn btn-primary">
+              Add Trade License
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            Trade License Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -79,7 +93,7 @@ use App\Models\Office_Land_contract;
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'approved')
+                                    @if($trade_license->status == 'approved' && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -208,7 +222,7 @@ use App\Models\Office_Land_contract;
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'pending')
+                                    @if($trade_license->status == 'pending' && $trade_license->row_status != 'deleted')
                                     <tr>
                                         
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -332,7 +346,7 @@ use App\Models\Office_Land_contract;
                                 </thead>
                                 <tbody>
                                     @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'rejected')
+                                    @if($trade_license->status == 'rejected' && $trade_license->row_status != 'deleted')
                                     <tr>
                                         
                                         <td>{{ $trade_license->trade_name }}</td>
@@ -582,13 +596,13 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_trade_license__sponsors__partners') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_trade_license__sponsors__partners_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
                                 swal({
                                     title: "Deleted!",
-                                    text: "Data has been deleted.",
+                                    text: "Data has been moved to trash.",
                                     type: "success"
                                 }).then(function () {
                                     window.location.href = '';

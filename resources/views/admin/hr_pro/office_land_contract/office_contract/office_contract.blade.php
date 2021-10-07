@@ -6,11 +6,21 @@ use App\Models\Office_Land_contract;
   
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_office_contracts') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Office Contract
-        </button>
-    </a>
+    
+
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_office_contracts') }}" class="">
+            <button class="btn btn-primary">
+                Add Office Contract
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_office_contracts') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            Office Contract Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -61,7 +71,7 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'approved')
+                                @if($office_contract->status == 'approved' && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -137,7 +147,7 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'pending')
+                                @if($office_contract->status == 'pending' && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -208,8 +218,8 @@ use App\Models\Office_Land_contract;
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'rejected')
+                            @foreach($data['office_contract'] as $office_contract)
+                            @if($office_contract->status == 'rejected' && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -297,7 +307,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_office_contracts') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_office_contracts_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

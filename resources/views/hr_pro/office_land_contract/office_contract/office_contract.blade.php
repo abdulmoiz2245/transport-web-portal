@@ -61,7 +61,7 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'approved')
+                                @if($office_contract->status == 'approved'  && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -106,6 +106,10 @@ use App\Models\Office_Land_contract;
                                     <a href="#" id="{{ $office_contract->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+
+                                    <a href="{{ route( 'user.hr_pro.office_contracts_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                    </a> 
                                 </td>
                                     
                                 </tr>
@@ -133,7 +137,7 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'pending')
+                                @if($office_contract->status == 'pending' && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -178,6 +182,10 @@ use App\Models\Office_Land_contract;
                                     <a href="#" id="{{ $office_contract->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+
+                                    <a href="{{ route( 'user.hr_pro.office_contracts_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                    </a> 
                                 </td>
                                     
                                 </tr>
@@ -205,7 +213,7 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['office_contract'] as $office_contract)
-                                @if($office_contract->status == 'rejected')
+                                @if($office_contract->status == 'rejected' && $office_contract->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $office_contract->id }}</td>
@@ -250,6 +258,10 @@ use App\Models\Office_Land_contract;
                                     <a href="#" id="{{ $office_contract->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+
+                                    <a href="{{ route( 'user.hr_pro.office_contracts_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                    </a> 
                                 </td>
                                     
                                 </tr>

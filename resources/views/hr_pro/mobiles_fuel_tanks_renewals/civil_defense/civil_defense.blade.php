@@ -55,7 +55,7 @@ use App\Models\Civil_defense_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'approved')
+                                @if($civil_defense->status == 'approved' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -88,6 +88,10 @@ use App\Models\Civil_defense_documents;
                                     
                                         <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+
+                                        <a href="{{ route( 'user.hr_pro.mobile_civil_defence_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     
@@ -112,7 +116,7 @@ use App\Models\Civil_defense_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'pending')
+                                @if($civil_defense->status == 'pending' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -146,6 +150,9 @@ use App\Models\Civil_defense_documents;
                                     
                                         <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+                                        <a href="{{ route( 'user.hr_pro.mobile_civil_defence_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     
@@ -170,7 +177,7 @@ use App\Models\Civil_defense_documents;
                             </thead>
                             <tbody>
                                 @foreach($data['civil_defenses'] as $civil_defense)
-                                @if($civil_defense->status == 'rejected')
+                                @if($civil_defense->status == 'rejected' && $civil_defense->row_status != 'deleted')
                                 <tr>
                                     
                                     <td>
@@ -204,6 +211,9 @@ use App\Models\Civil_defense_documents;
                                     
                                         <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                        </a>
+                                        <a href="{{ route( 'user.hr_pro.mobile_civil_defence_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                                         </a>
                                     </td>
                                     

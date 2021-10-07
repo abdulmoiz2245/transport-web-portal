@@ -3,19 +3,20 @@ use App\Models\User;
 ?>
 <div class="container">
     <div class="mb-5">
-        <a href="{{ route('admin.customer.customer') }}" class="mb-5">
+        <a href="{{ route('admin.supplier.supplier') }}" class="mb-5">
             <button class="btn btn-primary">
                 Back
             </button>
          </a>
     </div>
+    
     <div class="table-responsive">
         <table class="display table responsive nowrap  " style="width:100%">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Customer Name</th>
-                    <th>Customer Email</th>
+                    <th>Supplier Name</th>
+                    <th>Supplier Email</th>
                     <th>Username</th>
                     <!-- <th>User Action</th> -->
                     <th>Action</th>
@@ -23,7 +24,7 @@ use App\Models\User;
             </thead>
             <tbody>
                 @foreach($data['customer_info'] as $customer_info)
-                @if( $customer_info->row_status == 'deleted')
+                @if($customer_info->row_status == 'deleted' )
                 <tr>
                     <td>{{ $customer_info->id }}</td>
                     <td>{{ $customer_info->name }}</td>
@@ -36,8 +37,9 @@ use App\Models\User;
                         @endif
                     </td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
+                    <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
                     <td>
-                        <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.supplier.view_supplier') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
@@ -100,7 +102,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.customer.restore_customer') }}",
+                url:"{{ route( 'admin.supplier.restore_supplier') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -126,7 +128,7 @@ use App\Models\User;
         var file_id = this.id;
         swal({
             title: 'Are you sure?',
-            text: "You want to delete this Data.",
+            text: "You want to delete this Data Permenently.",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',  
@@ -135,7 +137,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.customer.delete_customer') }}",
+                url:"{{ route( 'admin.supplier.delete_supplier') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

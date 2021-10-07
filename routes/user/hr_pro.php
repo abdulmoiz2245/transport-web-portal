@@ -35,6 +35,12 @@ use Illuminate\Support\Facades\Route;
         Route::post('/trade-license-sponsors-partners/view', [Hr_ProController::class, 'view_trade_license']) 
         ->name('view_trade_license__sponsors__partners');
 
+        Route::get('/trade-license-sponsors-partners/history', [Hr_ProController::class, 'trade_license_history']) 
+        ->name('trade_license__sponsors__partners_history');
+
+        Route::post('/trade-license-sponsors-partners/history/clear', [Hr_ProController::class, 'trade_license_history_clear']) 
+        ->name('trade_license__sponsors__partners_history_clear');
+
         Route::get('/trade-license-sponsors-partners/add', [Hr_ProController::class, 'add_trade_license']) 
         ->name('add_trade_license__sponsors__partners');
 
@@ -69,6 +75,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/office-contracts-land-contracts/office-contract', [Hr_ProController::class, 'office_contract']) 
         ->name('office_contracts');
 
+        Route::get('/office-contracts-land-contracts/office-contract/history', [Hr_ProController::class, 'office_contracts_history']) 
+        ->name('office_contracts_history');
+
+        Route::post('/office-contracts-land-contracts/office-contract/history/clear', [Hr_ProController::class, 'office_contracts_history_clear']) 
+        ->name('office_contracts_history_clear');
+
         Route::get('/office-contracts-land-contracts/office/add', [Hr_ProController::class, 'add_office_contract']) 
         ->name('add_office_contracts');
 
@@ -90,6 +102,12 @@ use Illuminate\Support\Facades\Route;
         //land
         Route::get('/office-contracts-land-contracts/land', [Hr_ProController::class, 'land_contract']) 
         ->name('land_contracts');
+
+        Route::get('/office-contracts-land-contracts/land/history', [Hr_ProController::class, 'land_contracts_history']) 
+        ->name('land_contracts_history');
+
+        Route::post('/office-contracts-land-contracts/land/history/clear', [Hr_ProController::class, 'land_contracts_history_clear']) 
+        ->name('land_contracts_history_clear');
 
         Route::get('/office-contracts-land-contracts/land/add', [Hr_ProController::class, 'add_land_contract']) 
         ->name('add_land_contracts');
@@ -115,6 +133,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/non-mobiles-fuel-tanks-renewals', [Hr_ProController::class, 'non_mobiles_fuel_tanks_renewals']) 
         ->name('non_mobiles_fuel_tanks_renewals');
 
+        Route::get('/non-mobiles-fuel-tanks-renewals/civil-defense/history', [Hr_ProController::class, 'non_mobile_civil_defence_history']) 
+        ->name('non_mobile_civil_defence_history');
+
+        Route::post('/non-mobiles-fuel-tanks-renewals/civil-defense/history/clear', [Hr_ProController::class, 'non_mobile_civil_defence_history_clear']) 
+        ->name('non_mobile_civil_defence_history_clear');
+
         // non mobile civil defence
         Route::get('/non-mobiles-fuel-tanks-renewals/civil-defense', [Hr_ProController::class, 'non_mobile_civil_defence']) 
         ->name('non_mobile_civil_defence');
@@ -139,6 +163,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/non-mobiles-fuel-tanks-renewals/muncipality', [Hr_ProController::class, 'non_mobile_muncipality']) 
         ->name('non_mobile_muncipality');
 
+        Route::get('/non-mobiles-fuel-tanks-renewals/muncipality/history', [Hr_ProController::class, 'non_mobile_muncipality_history']) 
+        ->name('non_mobile_muncipality_history');
+
+        Route::post('/non-mobiles-fuel-tanks-renewals/muncipality/history/clear', [Hr_ProController::class, 'non_mobile_muncipality_history_clear']) 
+        ->name('non_mobile_muncipality_history_clear');
+
         Route::get('/non-mobiles-fuel-tanks-renewals/muncipality/add', [Hr_ProController::class, 'add_non_mobile_muncipality']) 
         ->name('add_non_mobile_muncipality');
 
@@ -158,6 +188,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/non-mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'non_mobile_trained_individual']) 
         ->name('non_mobile_trained_individual');
+
+        Route::get('/non-mobiles-fuel-tanks-renewals/trained-individual/history', [Hr_ProController::class, 'non_mobile_trained_individual_history']) 
+        ->name('non_mobile_trained_individual_history');
+
+        Route::post('/non-mobiles-fuel-tanks-renewals/trained-individual/history/clear', [Hr_ProController::class, 'non_mobile_trained_individual_history_clear']) 
+        ->name('non_mobile_trained_individual_history_clear');
 
         Route::get('/non-mobiles-fuel-tanks-renewals/trained-individual/add', [Hr_ProController::class, 'add_non_mobile_trained_individual']) 
         ->name('add_non_mobile_trained_individual');
@@ -187,6 +223,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/mobiles-fuel-tanks-renewals/civil-defense', [Hr_ProController::class, 'mobile_civil_defence']) 
         ->name('mobile_civil_defence');
 
+        Route::get('/mobiles-fuel-tanks-renewals/civil-defense/history', [Hr_ProController::class, 'mobile_civil_defence_history']) 
+        ->name('mobile_civil_defence_history');
+
+        Route::post('/mobiles-fuel-tanks-renewals/civil-defense/history/clear', [Hr_ProController::class, 'mobile_civil_defence_history_clean']) 
+        ->name('mobile_civil_defence_history_clean');
+
         Route::get('/mobiles-fuel-tanks-renewals/civil-defense/add', [Hr_ProController::class, 'add_mobile_civil_defence']) 
         ->name('add_mobile_civil_defence');
 
@@ -207,6 +249,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/mobiles-fuel-tanks-renewals/muncipality', [Hr_ProController::class, 'mobile_muncipality']) 
         ->name('mobile_muncipality');
 
+        Route::get('/mobiles-fuel-tanks-renewals/muncipality/history', [Hr_ProController::class, 'mobile_muncipality_history']) 
+        ->name('mobile_muncipality_history');
+
+        Route::post('/mobiles-fuel-tanks-renewals/muncipality/history/clear', [Hr_ProController::class, 'mobile_muncipality_history_clear']) 
+        ->name('mobile_muncipality_history_clear');
+
         Route::get('/mobiles-fuel-tanks-renewals/muncipality/add', [Hr_ProController::class, 'add_mobile_muncipality']) 
         ->name('add_mobile_muncipality');
 
@@ -226,6 +274,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'mobiles_trained_individual']) 
         ->name('mobiles_trained_individual');
+
+        Route::get('/mobiles-fuel-tanks-renewals/trained-individual/history', [Hr_ProController::class, 'mobiles_trained_individual_history']) 
+        ->name('mobiles_trained_individual_history');
+
+        Route::post('/mobiles-fuel-tanks-renewals/trained-individual/history/clear', [Hr_ProController::class, 'mobiles_trained_individual_history_clear']) 
+        ->name('mobiles_trained_individual_clear');
 
         Route::get('/mobiles-fuel-tanks-renewals/trained-individual/add', [Hr_ProController::class, 'add_mobiles_trained_individual']) 
         ->name('add_mobiles_trained_individual');

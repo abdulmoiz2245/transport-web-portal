@@ -1,3 +1,10 @@
+<div class="mb-5"> 
+    <a href="{{ route( 'admin.hr_pro.non_mobile_muncipality') }}">
+        <button class="btn btn-primary">
+            Back
+        </button>
+    </a>
+</div>
 <div class="container">
     <form action="{{ route('admin.hr_pro.update_non_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
     @csrf

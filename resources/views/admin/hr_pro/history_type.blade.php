@@ -2,11 +2,13 @@
 use App\Models\User;
 ?>
 <div class="container">
+    @if(Auth::guard('admin')->check())
     <div class="mb-5">
         <a class="delete-file">
             <button class="btn btn-danger"> Clean table </button>
         </a>
     </div>
+    @endif
     
 <div class="table-responsive">
     <table   class="display table responsive nowrap " style="width:100%">

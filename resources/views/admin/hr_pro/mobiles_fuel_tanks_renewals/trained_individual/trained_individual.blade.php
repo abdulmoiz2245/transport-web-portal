@@ -5,11 +5,21 @@ use App\Models\User;
   
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.hr_pro.add_mobiles_trained_individual') }}" class="mb-5">
+    \
 
-        <button class="btn btn-primary">
-            Add Trained Individual </button>
-    </a>
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.hr_pro.add_mobiles_trained_individual') }}" class="">
+            <button class="btn btn-primary">
+                Add Trained Individua
+            </button>
+        </a>
+
+        <a href="{{ route( 'admin.hr_pro.trash_mobiles_trained_individual') }}" class="" target="_blank">
+            <button class="btn btn-primary">
+            Trained Individua Trash
+            </button>
+        </a>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
         @if (session('success'))
@@ -64,7 +74,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'approved')
+                                @if($trained_individual->status == 'approved' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -141,7 +151,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'pending')
+                                @if($trained_individual->status == 'pending' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -216,7 +226,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'rejected')
+                                @if($trained_individual->status == 'rejected' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -304,7 +314,7 @@ use App\Models\User;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_mobiles_trained_individual') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_mobiles_trained_individual_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

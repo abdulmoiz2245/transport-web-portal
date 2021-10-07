@@ -61,7 +61,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'approved')
+                                @if($trained_individual->status == 'approved' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -93,6 +93,10 @@ use App\Models\User;
                                     <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+
+                                    <a href="{{ route( 'user.hr_pro.non_mobile_trained_individual_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                        </a>
                                 </td>
                                     
                                 </tr>
@@ -121,7 +125,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'pending')
+                                @if($trained_individual->status == 'pending' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -154,6 +158,9 @@ use App\Models\User;
                                     <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+                                    <a href="{{ route( 'user.hr_pro.non_mobile_trained_individual_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                        </a>
                                 </td>
                                     
                                 </tr>
@@ -183,7 +190,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'rejected')
+                                @if($trained_individual->status == 'rejected' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -217,6 +224,9 @@ use App\Models\User;
                                     <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
+                                    <a href="{{ route( 'user.hr_pro.non_mobile_trained_individual_history') }}"target="_blank" >
+                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                                        </a>
                                 </td>
                                     
                                 </tr>

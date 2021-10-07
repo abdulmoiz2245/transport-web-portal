@@ -1,63 +1,93 @@
 <?php
+use App\Models\Company_name;
 use App\Models\User;
+use App\Models\Trade_license;
+use App\Models\Office_Land_contract;
 ?>
 <div class="container">
-    <div class="mb-5">
-        <a href="{{ route('admin.customer.customer') }}" class="mb-5">
+     <div class="mb-5"> 
+        <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
             <button class="btn btn-primary">
                 Back
             </button>
-         </a>
+        </a>
     </div>
+
+    
+
+
     <div class="table-responsive">
         <table class="display table responsive nowrap  " style="width:100%">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Customer Name</th>
-                    <th>Customer Email</th>
-                    <th>Username</th>
+                    <th>ID</th>
+                    <th>Trade Name</th>
+                    <th>License Number</th>
+                    <th>Company</th>
+                    <th>Expiary Date</th>
+                    <th>User Name</th>
                     <!-- <th>User Action</th> -->
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($data['customer_info'] as $customer_info)
-                @if( $customer_info->row_status == 'deleted')
+                @foreach($data['trade_licenses'] as $trade_license)
+                @if($trade_license->row_status == 'deleted')
                 <tr>
-                    <td>{{ $customer_info->id }}</td>
-                    <td>{{ $customer_info->name }}</td>
-                    <td>{{ $customer_info->email }}</td>
+                    <td>{{ $trade_license->id }}</td>
+                    <td>{{ $trade_license->trade_name }}</td>
+                    <td>{{ $trade_license->license_number }}</td>
+                    
                     <td>
-                        @if($customer_info->user_id == 0)
+                        
+                        <?php if(Company_name::all()->count() > 0){ ?>
+                            <?php $check = 0; ?>
+                        @foreach($data['company_names'] as $company_name)
+                            @if($company_name->id == $trade_license->company_id)
+                                <?php $check = 1 ?>
+                                <span class="badge badge-pill badge-dark p-2 m-1">{{ $company_name->name}}</span>
+                            @endif
+                        @endforeach
+                        <?php if($check == 0){ ?>
+                            <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
+                        <?php } ?>
+                
+                    <?php }else{ ?>
+                            <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
+                        <?php } ?>
+                    </td>
+
+                    <td>{{ $trade_license->expiary_date }}</td>
+
+                    <td>
+                        @if($trade_license->user_id == 0)
                             Admin
                         @else
-                        {{ User::find($customer_info->user_id)->username}}
+                            @if(User::find($trade_license->user_id))
+                                {{ User::find($trade_license->user_id)->username}}
+                            @else
+                                User Deleted
+                            @endif
+                        
                         @endif
                     </td>
-                    <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
+                    <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trade_license->action }}</span></td> -->
                     <td>
-                        <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
 
-                        <!-- <form action="{{ route( 'admin.customer.edit_customer') }}" method="post" class="d-inline">
-                            @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                            <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
-                            </button>
-                        </form> -->
+                       
                             
-                        <a href="#" id="{{ $customer_info->id }}" class="delete-file">
+                        <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
 
-                        <a href="#" id="{{ $customer_info->id }}"  class="restore-file"  >
+                        <a href="#" id="{{ $trade_license->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->
                             <button class="btn btn-success">Restore</button>
                         </a>
@@ -100,7 +130,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.customer.restore_customer') }}",
+                url:"{{ route( 'admin.hr_pro.restore_trade_license__sponsors__partners') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -135,7 +165,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.customer.delete_customer') }}",
+                url:"{{ route( 'admin.hr_pro.delete_trade_license__sponsors__partners') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -156,4 +186,11 @@ use App\Models\User;
 
         })
     });
+</script>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+
 </script>

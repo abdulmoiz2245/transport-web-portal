@@ -59,7 +59,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'approved')
+                                @if($customer_info->status == 'approved' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -119,7 +119,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'pending')
+                                @if($customer_info->status == 'pending' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -181,7 +181,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
-                                @if($customer_info->status == 'rejected')
+                                @if($customer_info->status == 'rejected' && $customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
