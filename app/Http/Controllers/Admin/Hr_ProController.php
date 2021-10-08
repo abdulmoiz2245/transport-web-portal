@@ -694,7 +694,7 @@ class Hr_ProController extends Controller
             $user_id  = 0;
         }
 
-        if($trade_license->action == null || $trade_license->status == 'approved'){
+        if($trade_license->action == null || $trade_license->status == 'approved' ||$trade_license->status == 'nill'){
             $trade_license->action = 'edit';
         }
 
@@ -1188,7 +1188,7 @@ class Hr_ProController extends Controller
         $office_contract->type = 'office';
         $office_contract->save();
 
-        if($office_contract->action == null || $office_contract->status == 'approved'){
+        if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'edit';
         }
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
@@ -1578,7 +1578,7 @@ class Hr_ProController extends Controller
         $office_contract->type = 'land';
         $office_contract->save();
 
-        if($office_contract->action == null || $office_contract->status == 'approved'){
+        if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'none';
         }
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
@@ -1666,7 +1666,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('office__land_contracts');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -1905,7 +1905,7 @@ class Hr_ProController extends Controller
         $civil_defense->status = $request->input('status');
 
         
-        if($civil_defense->action == null || $civil_defense->status == 'approved'){
+        if($civil_defense->action == null || $civil_defense->status == 'approved' || $civil_defense->status == 'nill'){
             $civil_defense->action = 'edit';
         }
 
@@ -1984,7 +1984,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('civil_defense_files');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -2183,7 +2183,7 @@ class Hr_ProController extends Controller
         $muncipality->status = $request->input('status');
 
         
-        if($muncipality->action == null || $muncipality->status == 'approved'){
+        if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->status == 'nill'){
             $muncipality->action = 'edit';
         }
 
@@ -2261,7 +2261,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('muncipality_documents');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -2484,7 +2484,7 @@ class Hr_ProController extends Controller
         $civil_defense->status = $request->input('status');
 
         
-        if($civil_defense->action == null || $civil_defense->status == 'approved'){
+        if($civil_defense->action == null || $civil_defense->status == 'approved' || $civil_defense->status == 'nill'){
             $civil_defense->action = 'edit';
         }
 
@@ -2563,7 +2563,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('civil_defense_files');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -2759,7 +2759,7 @@ class Hr_ProController extends Controller
         $muncipality->status = $request->input('status');
 
         
-        if($muncipality->action == null || $muncipality->status == 'approved'){
+        if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->status == 'nill'){
             $muncipality->action = 'edit';
         }
 
@@ -2839,7 +2839,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('muncipality_documents');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -3167,7 +3167,7 @@ class Hr_ProController extends Controller
         $trained_individual->status = $request->input('status');
 
         
-        if($trained_individual->action == null || $trained_individual->status == 'approved' ){
+        if($trained_individual->action == null || $trained_individual->status == 'approved' || $trained_individual->status == 'nill' ){
             $trained_individual->action = 'edit';
         }
 
@@ -3283,7 +3283,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('trained_individuals');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 
@@ -3586,7 +3586,7 @@ class Hr_ProController extends Controller
         $trained_individual->status = $request->input('status');
 
         
-        if($trained_individual->action == null || $trained_individual->status == 'approved'){
+        if($trained_individual->action == null || $trained_individual->status == 'approved' ||  $trained_individual->status == 'nill'){
             $trained_individual->action = 'edit';
         }
 
@@ -3701,7 +3701,7 @@ class Hr_ProController extends Controller
             $this->remove_table_name('trained_individuals');
         }
 
-        // if($office_contract->action == null || $office_contract->status == 'approved'){
+        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->status == 'nill')  {
             $office_contract->action = 'delete';
         // }
 

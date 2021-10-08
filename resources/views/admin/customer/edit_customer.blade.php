@@ -2,6 +2,15 @@
 use App\Models\Company_name;
 
 ?>
+<div class="container">
+    <div class="mb-4">
+        <a href="{{ route( 'admin.customer.customer') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+</div>
 <div id="smartwizard">
     <ul class="nav">
        <li>

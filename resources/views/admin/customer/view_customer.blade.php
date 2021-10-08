@@ -1,4 +1,13 @@
 <div class="container">
+    
+    <div class="mb-4">
+        <a href="{{ route( 'admin.customer.customer') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+
     <div id="smartwizard" class=" mb-2">
         <ul class="nav">
             <li>

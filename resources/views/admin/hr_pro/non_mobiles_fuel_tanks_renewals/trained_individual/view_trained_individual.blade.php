@@ -1,4 +1,12 @@
 <div class="container mt-5">
+    <div class="mb-4">
+        <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+
+    </div>
     <div class="row mb-3">
         <div class="col-md-6 col-12">
             <div class="row">

@@ -1,4 +1,12 @@
 <div class="container">
+    <div class="mb-4">
+        <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+
+    </div>
     <form action="{{ route('admin.hr_pro.save_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
     @csrf
         <div class="row">

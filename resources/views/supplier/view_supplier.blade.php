@@ -542,7 +542,7 @@
                 </div>
                 @else
 
-                @if
+                @endif
             </div>
             
         </div>

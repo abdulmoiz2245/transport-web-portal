@@ -2,7 +2,17 @@
 use App\Models\Company_name;
 
 ?>
+<div class="container">
+    <div class="mb-4">
+        <a href="{{ route( 'admin.supplier.supplier') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+</div>
 <div id="smartwizard">
+    
     <ul class="nav">
        <li>
            <a class="nav-link" href="#step-1">
@@ -18,7 +28,7 @@ use App\Models\Company_name;
  
     <div class="tab-content">
         
-       <div id="step-1" class="tab-pane" role="tabpanel">
+        <div id="step-1" class="tab-pane" role="tabpanel">
             <div class="container">
                 
                 <form action="" method="post" id="customer_info"  enctype="multipart/form-data">
@@ -68,12 +78,12 @@ use App\Models\Company_name;
 
                         <div class="form-group col-md-6 col-12 mb-3">
                             <label for="post_tag">Products</label>
-                            <input type="text " value="{{ $data['customer_info']->product}}" name="product" value="" data-role="tagsinput" />
+                            <input type="text " value="{{ $data['customer_info']->product}}" name="product" value="" data-role="tagsinput" required>
                         </div>
 
                         <div class="form-group col-md-6 col-12 mb-3">
                             <label for="post_tag">Services</label>
-                            <input type="text" value="{{ $data['customer_info']->services}}" name="services" value="" data-role="tagsinput" />
+                            <input type="text" value="{{ $data['customer_info']->services}}" name="services" value="" data-role="tagsinput" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -118,15 +128,15 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Designation</label>
-                            <input type="text" name="des" value="{{ $data['customer_info']->des}}" class="form-control" >
+                            <input type="text" name="des" value="{{ $data['customer_info']->des}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Website</label>
-                            <input type="text" name="web" value="{{ $data['customer_info']->web}}" class="form-control" >
+                            <input type="text" name="web" value="{{ $data['customer_info']->web}}" class="form-control" required>
                         </div>
 
-                        <div class=" col-md-6 col-12 mb-3">
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >User</label>
                             <input type="text" name="user"value="{{ $data['customer_info']->user}}" class="form-control" >
                         </div>
@@ -134,25 +144,25 @@ use App\Models\Company_name;
                         <div class=" col-md-6 col-12 mb-3">
                             <label >PW</label>
                             <input type="text" name="pw" value="{{ $data['customer_info']->pw}}" class="form-control" >
-                        </div>
+                        </div> -->
 
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Credit Term</label>
-                            <input type="integer" name="credit_term" value="{{ $data['customer_info']->credit_term}}" class="form-control" >
+                            <label >Credit Days</label>
+                            <input type="number" name="credit_term" value="{{ $data['customer_info']->credit_term}}" class="form-control" required>
                         </div>
                         
                          <div class="col-md-6 col-6">
                              
                          </div>         
-                        <div class=" col-md-6 col-12 mb-3">
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >Portal Site Login</label>
                             <textarea name="portal_login" cols="30" rows="10" class="form-control">{{ $data['customer_info']->portal_login}}</textarea>
-                        </div>
+                        </div> -->
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Remarks</label>
-                            <textarea name="remarks" cols="30" rows="10" class="form-control">{{ $data['customer_info']->remarks}}</textarea>
+                            <textarea name="remarks" cols="30" rows="10" class="form-control" required>{{ $data['customer_info']->remarks}}</textarea>
                         </div>
 
                         <div class="col-12">
@@ -162,7 +172,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >GUARANTEE</label>
-                            <select name="is_guaranty" id="guaranty" class="form-control" >
+                            <select name="is_guaranty" id="guaranty" class="form-control" required>
                                     <option value="0" <?php if($data['customer_info']->is_guaranty == '0') echo 'selected="selected"' ?>>No</option>
                                     <option value="1" <?php if($data['customer_info']->is_guaranty == '1') echo 'selected="selected"' ?>>Yes</option>
                             </select>
@@ -170,7 +180,7 @@ use App\Models\Company_name;
 
                         <div class="amount col-md-6 col-12 mb-3">
                             <label >Amount</label>
-                            <input type="text" name="amount" class="form-control" value="{{$data['customer_info']->guaranty_amount}}">
+                            <input type="text" name="amount" class="form-control" value="{{$data['customer_info']->guaranty_amount}}" required>
                         </div>
 
                         <div class="cheque_copy col-md-6 col-12 mb-3">
@@ -191,7 +201,7 @@ use App\Models\Company_name;
                                         </span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="guaranty_cheque">
+                                        <input type="file" class="custom-file-input"   name="guaranty_cheque" required>
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -219,8 +229,8 @@ use App\Models\Company_name;
                                         </span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="guaranty_reciving">
-                                        <label class="custom-file-label">Choose file</label>
+                                        <input type="file" class="custom-file-input"   name="guaranty_reciving" required>
+                                        <label class="custom-file-label" required>Choose file</label>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +243,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Trn Number</label>
-                            <input type="integer" name="trn" value="{{ $data['customer_info']->trn}}" class="form-control" >
+                            <input type="integer" name="trn" value="{{ $data['customer_info']->trn}}" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 col-12">
@@ -245,7 +255,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload TRN Copy</span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="trn_copy">
+                                        <input type="file" class="custom-file-input"   name="trn_copy" required>
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -258,7 +268,7 @@ use App\Models\Company_name;
                                             <span class="input-group-text" >Upload TRN Copy</span>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input"   name="trn_copy">
+                                            <input type="file" class="custom-file-input"   name="trn_copy" required>
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
                                     </div>
@@ -280,7 +290,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_license_copy">
+                                        <input type="file" class="custom-file-input"   name="business_license_copy" required>
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -293,7 +303,7 @@ use App\Models\Company_name;
                                             <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input"   name="business_license_copy">
+                                            <input type="file" class="custom-file-input"   name="business_license_copy" required>
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
                                     </div>
@@ -303,7 +313,7 @@ use App\Models\Company_name;
                         
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Expiry Date ( BUSINESS LICENCE )</label>
-                            <input type="date" value="{{ $data['customer_info']->business_license_expiary_date}}" name="business_license_expiary_date" class="form-control" >
+                            <input type="date" value="{{ $data['customer_info']->business_license_expiary_date}}" name="business_license_expiary_date" class="form-control" required>
                         </div>
 
                         <div class="col-12">

@@ -17,11 +17,21 @@ use App\Models\User;
             </button>
         </a>
 
-        <a href="{{ route( 'admin.hr_pro.trash_non_mobiles_trained_individual') }}" class="" target="_blank">
-            <button class="btn btn-primary">
-            Trained Individua Trash
-            </button>
-        </a>
+        
+
+        <div class=""> 
+            <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'admin.hr_pro.trash_non_mobiles_trained_individual') }}" class="ml-3" target="_blank">
+                <button class="btn btn-primary">
+                Trained Individua Trash
+                </button>
+            </a>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-12">

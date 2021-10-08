@@ -14,11 +14,21 @@ use App\Models\User;
             </button>
         </a>
 
-        <a href="{{ route( 'admin.customer.trash_customer') }}" class="" target="_blank">
-            <button class="btn btn-primary">
-                Customer Trash
-            </button>
-        </a>
+        
+        <div class=""> 
+            <a href="{{ route( 'admin.dashboard') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+            <a href="{{ route( 'admin.customer.trash_customer') }}" class="ml-3" target="_blank">
+                <button class="btn btn-primary">
+                    Customer Trash
+                </button>
+            </a>
+        </div>
+
+        
     </div>
     
     <div class="row mt-5">
@@ -74,11 +84,16 @@ use App\Models\User;
                                     <td>{{ $customer_info->name }}</td>
                                     <td>{{ $customer_info->email }}</td>
                                     <td>
-                                        @if($customer_info->user_id == 0)
-                                            Admin
-                                        @else
-                                        {{ User::find($customer_info->user_id)->username}}
-                                        @endif
+                                            @if($customer_info->user_id == 0)
+                                                Admin
+                                            @else
+                                               @if(User::find($customer_info->user_id))
+                                                    {{ User::find($customer_info->user_id)->username}}
+                                               @else
+                                                    User Deleted
+                                               @endif
+                                            
+                                            @endif
                                     </td>
                                     <td>
                                         <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
@@ -134,11 +149,16 @@ use App\Models\User;
                                     <td>{{ $customer_info->name }}</td>
                                     <td>{{ $customer_info->email }}</td>
                                     <td>
-                                        @if($customer_info->user_id == 0)
-                                            Admin
-                                        @else
-                                        {{ User::find($customer_info->user_id)->username}}
-                                        @endif
+                                            @if($customer_info->user_id == 0)
+                                                Admin
+                                            @else
+                                               @if(User::find($customer_info->user_id))
+                                                    {{ User::find($customer_info->user_id)->username}}
+                                               @else
+                                                    User Deleted
+                                               @endif
+                                            
+                                            @endif
                                     </td>
                                     <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td>
                                     <td>
@@ -196,11 +216,16 @@ use App\Models\User;
                                     <td>{{ $customer_info->name }}</td>
                                     <td>{{ $customer_info->email }}</td>
                                     <td>
-                                        @if($customer_info->user_id == 0)
-                                            Admin
-                                        @else
-                                        {{ User::find($customer_info->user_id)->username}}
-                                        @endif
+                                     @if($customer_info->user_id == 0)
+                                                Admin
+                                            @else
+                                               @if(User::find($customer_info->user_id))
+                                                    {{ User::find($customer_info->user_id)->username}}
+                                               @else
+                                                    User Deleted
+                                               @endif
+                                            
+                                            @endif
                                     </td>
                                     <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td>
                                     <td>

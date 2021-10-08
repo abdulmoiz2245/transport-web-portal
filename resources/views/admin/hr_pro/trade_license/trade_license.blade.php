@@ -21,11 +21,19 @@ use App\Models\Office_Land_contract;
             </button>
         </a>
 
-        <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="" target="_blank">
-            <button class="btn btn-primary">
-            Trade License Trash
-            </button>
-        </a>
+        <div class=""> 
+            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="" target="_blank">
+                <button class="btn btn-primary">
+                Trade License Trash
+                </button>
+            </a>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-12">

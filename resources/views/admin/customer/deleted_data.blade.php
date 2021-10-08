@@ -29,11 +29,16 @@ use App\Models\User;
                     <td>{{ $customer_info->name }}</td>
                     <td>{{ $customer_info->email }}</td>
                     <td>
-                        @if($customer_info->user_id == 0)
-                            Admin
-                        @else
-                        {{ User::find($customer_info->user_id)->username}}
-                        @endif
+                    @if($customer_info->user_id == 0)
+                                                Admin
+                                            @else
+                                               @if(User::find($customer_info->user_id))
+                                                    {{ User::find($customer_info->user_id)->username}}
+                                               @else
+                                                    User Deleted
+                                               @endif
+                                            
+                                            @endif
                     </td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
                     <td>

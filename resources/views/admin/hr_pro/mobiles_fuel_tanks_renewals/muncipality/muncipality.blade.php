@@ -13,11 +13,21 @@ use App\Models\User;
             </button>
         </a>
 
-        <a href="{{ route( 'admin.hr_pro.trash_mobile_muncipality') }}" class="" target="_blank">
-            <button class="btn btn-primary">
-            Muncipality DOCUMENTS Trash
-            </button>
-        </a>
+        
+
+        <div class=""> 
+            <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'admin.hr_pro.trash_mobile_muncipality') }}" class="ml-3" target="_blank">
+                <button class="btn btn-primary">
+                Muncipality DOCUMENTS Trash
+                </button>
+            </a>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-12">

@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="mb-5"> 
+        <a href="{{ route( 'admin.hr_pro.office_contracts') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
     <form action="{{ route('admin.hr_pro.save_office_contracts') }}" method="post" enctype="multipart/form-data">
     @csrf
         <div class="row">
