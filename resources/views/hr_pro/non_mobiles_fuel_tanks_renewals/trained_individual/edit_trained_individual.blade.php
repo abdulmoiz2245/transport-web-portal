@@ -1,4 +1,12 @@
 <div class="container">
+<div class="mb-4">
+        <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+
+    </div>
     <form action="{{ route('user.hr_pro.update_non_mobile_trained_individual') }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="text" name="id" value="{{ $data['trained_individual']->id }}" class="d-none">

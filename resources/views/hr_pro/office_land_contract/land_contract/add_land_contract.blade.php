@@ -1,4 +1,13 @@
 <div class="container">
+
+    <div class="mb-5"> 
+        <a href="{{ route( 'user.hr_pro.land_contracts') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+
     <form action="{{ route('user.hr_pro.save_land_contracts') }}" method="post" enctype="multipart/form-data">
     @csrf
     

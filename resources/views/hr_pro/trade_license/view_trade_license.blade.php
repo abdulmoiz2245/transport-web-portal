@@ -1,4 +1,13 @@
-<div class="container mt-5">
+<div class="container ">
+
+    <div class="mb-5"> 
+        <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+
     <h2>Company</h2>
     <div class="row mb-3">
         <div class="col-md-6 col-12">

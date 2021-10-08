@@ -1,4 +1,13 @@
 <div class="container">
+
+    <div class="mb-5"> 
+        <a href="{{ route( 'user.hr_pro.office_contracts') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+
     <form action="{{ route('user.hr_pro.update_office_contracts') }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="text" name="id" value="{{ $data['office_contract']->id }}" class="d-none">

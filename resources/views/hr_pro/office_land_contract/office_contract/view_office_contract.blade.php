@@ -1,4 +1,13 @@
 <div class="container mt-5">
+    
+    <div class="mb-5"> 
+        <a href="{{ route( 'user.hr_pro.office_contracts') }}">
+            <button class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    </div>
+
     <div class="row mb-3">
         <div class="col-6">
             <div class="row">

@@ -3,15 +3,39 @@ use App\Models\Company_name;
 use App\Models\Customer_info;
 
 use App\Models\User;
-
-
 ?>
+
 <div class="container">
-    <a href="{{ route( 'user.customer.add_customer') }}" class="mb-5">
+    <!-- <a href="{{ route( 'user.customer.add_customer') }}" class="mb-5">
         <button class="btn btn-primary">
             Add Customer
         </button>
-    </a>
+    </a> -->
+
+    <div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'user.customer.add_customer') }}" class="">
+            <button class="btn btn-primary">
+                Add Customer
+            </button>
+        </a>
+
+        
+        <div class=""> 
+            <a href="{{ route( 'user.dashboard') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a>
+
+        </div>
+
+        
+    </div>
+
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -95,9 +119,7 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                    
                                     </td>
                                     
                                 </tr>
@@ -162,9 +184,7 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                       
                                     </td>
                                     
                                 </tr>
@@ -229,9 +249,7 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        
                                     </td>
                                     
                                 </tr>

@@ -6,11 +6,27 @@ use App\Models\Office_Land_contract;
   
 ?>
 <div class="container">
-    <a href="{{ route( 'user.hr_pro.add_land_contracts') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Land Contract
-        </button>
-    </a>
+<div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'user.hr_pro.add_land_contracts') }}" class="">
+            <button class="btn btn-primary">
+                Add Land Contract
+            </button>
+        </a>
+
+        <div class=""> 
+            <a href="{{ route( 'user.hr_pro.office_contracts__land_contracts') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'user.hr_pro.land_contracts_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a> 
+        </div>
+
+        
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -107,9 +123,7 @@ use App\Models\Office_Land_contract;
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
 
-                                    <a href="{{ route( 'user.hr_pro.land_contracts_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                    </a> 
+                                    
                                 </td>
                                     
                                 </tr>
@@ -171,9 +185,7 @@ use App\Models\Office_Land_contract;
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
 
-                                    <a href="{{ route( 'user.hr_pro.land_contracts_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                    </a>
+                                    
                                 </td>
                                     
                                 </tr>
@@ -235,9 +247,7 @@ use App\Models\Office_Land_contract;
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
 
-                                    <a href="{{ route( 'user.hr_pro.land_contracts_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                    </a>
+                                    
                                 </td>
                                     
                                 </tr>

@@ -4,11 +4,27 @@ use App\Models\Muncipality_documents;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'user.hr_pro.add_mobile_muncipality') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Muncipality DOCUMENTS
-        </button>
-    </a>
+<div class="d-flex" style="justify-content: space-between;">
+        <a href="{{ route( 'user.hr_pro.add_mobile_muncipality') }}" class="">
+            <button class="btn btn-primary">
+                Add Muncipality DOCUMENTS 
+            </button>
+        </a>
+
+        
+
+        <div class=""> 
+            <a href="{{ route( 'user.hr_pro.mobiles_fuel_tanks_renewals') }}">
+                <button class="btn btn-primary">
+                    Back
+                </button>
+            </a>
+
+            <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a>
+        </div>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -90,9 +106,7 @@ use App\Models\Muncipality_documents;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        
                                     </td>
                                     
                                 </tr>
@@ -152,9 +166,7 @@ use App\Models\Muncipality_documents;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                       
                                     </td>
                                     
                                 </tr>
@@ -214,9 +226,7 @@ use App\Models\Muncipality_documents;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        
                                     </td>
                                     
                                 </tr>
