@@ -24,6 +24,10 @@ use App\Models\User;
                 </button>
             </a>
 
+            <a href="{{ route( 'admin.hr_pro.non_mobile_muncipality_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a>
+
             <a href="{{ route( 'admin.hr_pro.trash_non_mobile_muncipality') }}" class="ml-3" target="_blank">
                 <button class="btn btn-primary">
                 Muncipality DOCUMENTS Trash
@@ -125,9 +129,7 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'admin.hr_pro.non_mobile_muncipality_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        
                                     </td>
                                     
                                 </tr>

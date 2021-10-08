@@ -22,6 +22,10 @@ use App\Models\User;
                 </button>
             </a>
 
+            <a href="{{ route( 'admin.hr_pro.mobile_civil_defence_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a>
+
             <a href="{{ route( 'admin.hr_pro.trash_mobile_civil_defence') }}" class="ml-3" target="_blank">
                 <button class="btn btn-primary">
                 CIVIL DEFENSE DOCUMENTS Trash
@@ -122,9 +126,9 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'admin.hr_pro.mobile_civil_defence_history') }}"target="_blank" >
+                                        <!-- <a href="{{ route( 'admin.hr_pro.mobile_civil_defence_history') }}"target="_blank" >
                                             <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        </a> -->
                                     </td>
                                     
                                 </tr>

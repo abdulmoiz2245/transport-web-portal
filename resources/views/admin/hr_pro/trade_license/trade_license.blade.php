@@ -22,13 +22,17 @@ use App\Models\Office_Land_contract;
         </a>
 
         <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
+            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}" class="ml-3">
                 <button class="btn btn-primary">
                     Back
                 </button>
             </a>
 
-            <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="" target="_blank">
+            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+            </a> 
+
+            <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="ml-3" target="_blank">
                 <button class="btn btn-primary">
                 Trade License Trash
                 </button>
@@ -184,9 +188,7 @@ use App\Models\Office_Land_contract;
                                         
                                             </a>
 
-                                            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" >
-                                                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                            </a>    
+                                              
                                         </td>
                                         
                                     </tr>
