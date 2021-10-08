@@ -17,6 +17,12 @@ Route::middleware(['auth:user'])->group(function () {
     Route::group(['prefix'=>'/employee/customer','as'=>'user.customer.'], function(){
         // Route::get('/', [CustomerController::class, 'customer']) 
         // ->name('customer');
+
+        Route::get('/add-department', [CustomerController::class, 'add_department']) 
+        ->name('add_department');
+
+        Route::post('/save-company', [CustomerController::class, 'save_department']) 
+        ->name('save_department');
     
         Route::post('/view', [CustomerController::class, 'view_customer']) 
         ->name('view_customer');
@@ -26,6 +32,9 @@ Route::middleware(['auth:user'])->group(function () {
     
         Route::post('/edit', [CustomerController::class, 'edit_customer']) 
         ->name('edit_customer');
+
+        Route::post('/edit-customer-rate-card', [CustomerController::class, 'edit_rate_card']) 
+        ->name('edit_rate_card');
     
         Route::post('/customer-info/update', [CustomerController::class, 'update_customer_info']) 
         ->name('update_customer_info');

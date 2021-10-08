@@ -89,6 +89,37 @@ class CustomerController extends Controller
         return true;
     }
 
+
+    /////////////////////////////////
+    ///////// Company Name /////////
+    /////////////////////////////////
+
+
+    // public function add_department(){
+    //     $data['modules']= DB::table('modules')->get();
+    //     //dd($data['modules']);
+        
+    //     $data['page_title'] = "Add Department Name";
+    //     $data['view'] = 'admin.customer.department.add_department';
+    //     return view('layout', ["data"=>$data]);
+    // }
+
+    public function save_department(Request $request){
+
+        $department_name = new Company_name;
+        $department_name->name = $request->input('name');
+        $department_name->save();
+
+        $department_names =  Company_name::all();
+        $row = '';
+        foreach($department_names as $department){
+            $row .= '<option value=" '.$department->id .' "> '. $department->name . ' </option> ';
+        }
+        
+        return response()->json(['status'=>'1' , 'row'=> $row]);
+
+    }
+
     public function customer(){
 
         $data['modules']= DB::table('modules')->get();
@@ -127,7 +158,7 @@ class CustomerController extends Controller
 
         $data['customer_info'] = Customer_info::find($request->input('id'));
         $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'));
 
         $data['modules']= DB::table('modules')->get();
         $data['company_names']= DB::table('company_names')->get();
@@ -141,7 +172,7 @@ class CustomerController extends Controller
     public function edit_customer (Request $request){
         $data['customer_info'] = Customer_info::find($request->input('id'));
         $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'));
 
         $data['modules']= DB::table('modules')->get();
 
@@ -337,89 +368,6 @@ class CustomerController extends Controller
 
             return response()->json(['status'=>'0']);
         }
-
-    }
-
-    public function save_customer_rate_card(Request $request){
-
-        $customer_rate_card = new Customer_rate_card;
-        
-        if($request->input('customer_id') != ''){
-            $customer_rate_card->customer_id = $request->input('customer_id');
-        }
-
-        if($request->input('from') != ''){
-            $customer_rate_card->from = $request->input('from');
-        }
-        if($request->input('to') != ''){
-            $customer_rate_card->to = $request->input('to');
-
-        }
-        if($request->input('vechicle_type') != ''){
-            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
-
-        }
-        if($request->input('other_carges') != ''){
-            $customer_rate_card->other_carges = $request->input('other_carges');
-
-        }
-        if($request->input('other_des') != ''){
-            $customer_rate_card->other_des = $request->input('other_des');
-
-        }
-
-        if($request->input('driver_comission') != ''){
-            if(date('l') == 'Friday'){
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
-            }else{
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
-            }
-
-        }
-
-        if($request->input('rate') != ''){
-            $customer_rate_card->rate = $request->input('rate');
-        }
-
-        if($request->input('rate_price') != ''){
-            $customer_rate_card->rate_price = $request->input('rate_price');
-        }
-
-        if($request->input('detention') != ''){
-            $customer_rate_card->detention = $request->input('detention');
-        }
-
-
-        if($request->input('time') != ''){
-            $customer_rate_card->time = $request->input('time');
-        }
-
-        if($request->input('charges') != ''){
-            $customer_rate_card->charges = $request->input('charges');
-        }
-
-        if($request->input('trip') != ''){
-            $customer_rate_card->trip = $request->input('trip');
-        }
-
-        if($request->input('ap_km') != ''){
-            $customer_rate_card->ap_km = $request->input('ap_km');
-        }
-
-        if($request->input('ap_diesel') != ''){
-            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
-        }
-
-        $this->history_table('customer_histories', 'add' , 0);
-
-        if($customer_rate_card->save()){
-
-            return response()->json(['status'=>'1']);
-        }else{
-
-            return response()->json(['status'=>'0']);
-        }
-
 
     }
 
@@ -641,99 +589,7 @@ class CustomerController extends Controller
 
     }
 
-    public function update_customer_rate_card(Request $request){
-        $id =  (int)$request->input('id');
-        $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
-        $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
-
-       
-        if($request->input('from') != ''){
-            $customer_rate_card->from = $request->input('from');
-        }
-        if($request->input('to') != ''){
-            $customer_rate_card->to = $request->input('to');
-
-        }
-        if($request->input('vechicle_type') != ''){
-            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
-
-        }
-        if($request->input('other_carges') != ''){
-            $customer_rate_card->other_carges = $request->input('other_carges');
-
-        }
-        if($request->input('other_des') != ''){
-            $customer_rate_card->other_des = $request->input('other_des');
-
-        }
-
-        if($request->input('driver_comission') != ''){
-            if(date('l') == 'Friday'){
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
-            }else{
-            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
-            }
-
-        }
-
-        if($request->input('rate') != ''){
-            $customer_rate_card->rate = $request->input('rate');
-        }
-        
-        if($request->input('rate_price') != ''){
-            $customer_rate_card->rate_price = $request->input('rate_price');
-        }
-
-        if($request->input('detention') != ''){
-            $customer_rate_card->detention = $request->input('detention');
-        }
-
-
-        if($request->input('time') != ''){
-            $customer_rate_card->time = $request->input('time');
-        }
-
-        if($request->input('charges') != ''){
-            $customer_rate_card->charges = $request->input('charges');
-        }
-
-        if($request->input('trip') != ''){
-            $customer_rate_card->trip = $request->input('trip');
-        }
-
-        if($request->input('ap_km') != ''){
-            $customer_rate_card->ap_km = $request->input('ap_km');
-        }
-
-        if($request->input('ap_diesel') != ''){
-            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
-        }
-      
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
-
-            $customer_info->action = 'edit';
-        }
-
-        $customer_rate_card->save();
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('customer_rate_card');
-        }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_info->action , $user_id);
-        }
-
-
-        return response()->json(['status'=>'1']);
-
-    }
+    
 
     public function delete_customer(Request $request){
         $id =  $request->input('id');
@@ -892,5 +748,202 @@ class CustomerController extends Controller
         $data['page_title'] = "History | Customer ";
         $data['view'] = 'admin.hr_pro.history';
         return view('layout', ["data"=>$data]);
+    }
+
+    public function edit_rate_card(Request $request){
+        // $data['customer_info'] = Customer_info::find($request->input('id'));
+        // $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Edit Customer Rate Card";
+        $data['view'] = 'admin.customer.edit_customer_rate_card';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function save_customer_rate_card(Request $request){
+
+        $customer_rate_card = new Customer_rate_card;
+        
+        if($request->input('customer_id') != ''){
+            $customer_rate_card->customer_id = $request->input('customer_id');
+        }
+
+        if($request->input('from') != ''){
+            $customer_rate_card->from = $request->input('from');
+        }
+        if($request->input('to') != ''){
+            $customer_rate_card->to = $request->input('to');
+
+        }
+        if($request->input('vechicle_type') != ''){
+            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
+
+        }
+        if($request->input('other_carges') != ''){
+            $customer_rate_card->other_carges = $request->input('other_carges');
+
+        }
+        if($request->input('other_des') != ''){
+            $customer_rate_card->other_des = $request->input('other_des');
+
+        }
+
+        if($request->input('driver_comission') != ''){
+            if(date('l') == 'Friday'){
+            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
+            }else{
+            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
+            }
+
+        }
+
+        if($request->input('rate') != ''){
+            $customer_rate_card->rate = $request->input('rate');
+        }
+
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
+        }
+
+        if($request->input('detention') != ''){
+            $customer_rate_card->detention = $request->input('detention');
+        }
+
+
+        if($request->input('time') != ''){
+            $customer_rate_card->time = $request->input('time');
+        }
+
+        if($request->input('charges') != ''){
+            $customer_rate_card->charges = $request->input('charges');
+        }
+
+        if($request->input('trip') != ''){
+            $customer_rate_card->trip = $request->input('trip');
+        }
+
+        if($request->input('ap_km') != ''){
+            $customer_rate_card->ap_km = $request->input('ap_km');
+        }
+
+        if($request->input('ap_diesel') != ''){
+            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
+        }
+
+        $this->history_table('customer_histories', 'Add Rate Card' , 0);
+
+        if($customer_rate_card->save()){
+
+            return \Redirect::route('admin.customer.customer')->with('success', 'Rate Card Added Sucessfully');
+        }else{
+
+        }
+
+
+    }
+
+    public function update_customer_rate_card(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
+        $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
+
+       
+        if($request->input('from') != ''){
+            $customer_rate_card->from = $request->input('from');
+        }
+        if($request->input('to') != ''){
+            $customer_rate_card->to = $request->input('to');
+
+        }
+        if($request->input('vechicle_type') != ''){
+            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
+
+        }
+        if($request->input('other_carges') != ''){
+            $customer_rate_card->other_carges = $request->input('other_carges');
+
+        }
+        if($request->input('other_des') != ''){
+            $customer_rate_card->other_des = $request->input('other_des');
+
+        }
+
+        if($request->input('driver_comission') != ''){
+            if(date('l') == 'Friday'){
+            $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
+            }else{
+            $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
+            }
+
+        }
+
+        if($request->input('rate') != ''){
+            $customer_rate_card->rate = $request->input('rate');
+        }
+        
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
+        }
+
+        if($request->input('detention') != ''){
+            $customer_rate_card->detention = $request->input('detention');
+        }
+
+
+        if($request->input('time') != ''){
+            $customer_rate_card->time = $request->input('time');
+        }
+
+        if($request->input('charges') != ''){
+            $customer_rate_card->charges = $request->input('charges');
+        }
+
+        if($request->input('trip') != ''){
+            $customer_rate_card->trip = $request->input('trip');
+        }
+
+        if($request->input('ap_km') != ''){
+            $customer_rate_card->ap_km = $request->input('ap_km');
+        }
+
+        if($request->input('ap_diesel') != ''){
+            $customer_rate_card->ap_diesel = $request->input('ap_diesel');
+        }
+      
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
+
+            $customer_info->action = 'edit';
+        }
+
+        $customer_rate_card->save();
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('customer_rate_card');
+        }
+        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
+             $this->history_table('customer_histories', $customer_info->action , $user_id);
+        }
+
+
+        
+            return \Redirect::route('admin.customer.customer')->with('success', 'Rate Card Added Sucessfully');
+        
+
     }
 }

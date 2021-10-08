@@ -24,11 +24,18 @@ use App\Models\User;
                 <td>{{ ucfirst($trade_licenses_history->action) }}</td>
 
                 <td>
+                    
+
                     @if($trade_licenses_history->user_id == 0)
-                        Admin
-                    @else
-                    {{ User::find($trade_licenses_history->user_id)->username}}
-                    @endif
+                                                Admin
+                                            @else
+                                               @if(User::find($trade_licenses_history->user_id))
+                                                    {{ User::find($trade_licenses_history->user_id)->username}}
+                                               @else
+                                                    User Deleted
+                                               @endif
+                                            
+                                            @endif
                 </td> 
                 <td>{{ $trade_licenses_history->date }}</td>
 

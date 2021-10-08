@@ -149,7 +149,7 @@ use App\Models\Company_name;
 
                     <div class=" col-md-6 col-12 mb-3">
                         <label >GUARANTEE</label>
-                        <select name="is_guaranty" id="guaranty" class="form-control" required>
+                        <select name="is_guaranty" id="guaranty" class="form-control" >
                                 <option value="0" selected="selected">No</option>
                                 <option value="1">Yes</option>
                         </select>
@@ -157,7 +157,7 @@ use App\Models\Company_name;
 
                     <div class="amount col-md-6 col-12 mb-3">
                         <label >Amount</label>
-                        <input type="text" name="amount" class="form-control" required>
+                        <input type="text" name="amount" class="form-control" >
                     </div>
 
                     <div class="cheque_copy col-md-6 col-12 mb-3">
@@ -168,7 +168,7 @@ use App\Models\Company_name;
                                     <span class="input-group-text" >UPLOAD CHEQUE COPY  </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input"   name="guaranty_cheque" required>
+                                    <input type="file" class="custom-file-input"   name="guaranty_cheque" >
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
@@ -183,7 +183,7 @@ use App\Models\Company_name;
                                     <span class="input-group-text" >UPLOAD RECEIVING COPY </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input"   name="guaranty_reciving" required>
+                                    <input type="file" class="custom-file-input"   name="guaranty_reciving" >
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
@@ -425,6 +425,10 @@ use App\Models\Company_name;
         });
 
         $('#smartwizard').smartWizard("reset");
-
+        var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');
+    
+    console.log($("[type='date']").attr("min",new_date) );
     });
 </script>

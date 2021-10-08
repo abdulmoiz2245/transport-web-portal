@@ -818,4 +818,27 @@ class CustomerController extends Controller
         $data['view'] = 'admin.hr_pro.history';
         return view('users.layout', ["data"=>$data]);
     }
+
+    public function edit_customer_rate_card (Request $request){
+        // $data['customer_info'] = Customer_info::find($request->input('id'));
+        // $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+
+        $data['modules']= DB::table('modules')->get();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 2)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+            
+        if($data['permissions']->status != 1 ){
+            abort(403);
+        }
+
+        $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Edit Customer";
+        $data['view'] = 'customer.edit_customer_rate_card';
+        return view('users.layout', ["data"=>$data]);
+    }
 }
