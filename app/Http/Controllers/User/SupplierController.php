@@ -167,14 +167,7 @@ class SupplierController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
-    public function trash_supplier(){
-        $data['modules']= DB::table('modules')->get();
-        $data['customer_info'] = DB::table('supplier_infos')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "Customer Trash";
-        $data['view'] = 'admin.supplier.deleted_data';
-        return view('layout', ["data"=>$data]);
-    }
+    
     
 
     public function edit_supplier (Request $request){

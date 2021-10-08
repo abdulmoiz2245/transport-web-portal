@@ -24,7 +24,7 @@ use App\Models\Office_Land_contract;
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
             </a> 
 
-            <a href="{{ route( 'admin.hr_pro.trash_land_contracts') }}" class="" target="_blank" class="ml-3">
+            <a href="{{ route( 'admin.hr_pro.trash_land_contracts') }}" target="_blank" class="ml-3">
                 <button class="btn btn-primary">
                 Land Contract Trash
                 </button>
@@ -57,12 +57,12 @@ use App\Models\Office_Land_contract;
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Office_Land_contract::where('status', '=', 'pending')->where('type', '=', 'land')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Office_Land_contract::where('status', '=', 'pending')->where('type', '=', 'land')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
                 </li>
                 <li class="nav-item">
                     
                     <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Office_Land_contract::where('status', '=', 'rejected')->where('type', '=', 'land')->count() }})</b> </a>
+                        Office_Land_contract::where('status', '=', 'rejected')->where('type', '=', 'land')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">

@@ -58,12 +58,12 @@ use App\Models\Office_Land_contract;
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Office_Land_contract::where('status', '=', 'pending')->where('type', '=', 'office')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Office_Land_contract::where('status', '=', 'pending')->where('row_status', '!=', 'deleted')->where('type', '=', 'office')->count() }})</b> </a>
                 </li>
                 <li class="nav-item">
                     
                     <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Office_Land_contract::where('status', '=', 'rejected')->where('type', '=', 'office')->count() }})</b> </a>
+                        Office_Land_contract::where('status', '=', 'rejected')->where('row_status', '!=', 'deleted')->where('type', '=', 'office')->count() }})</b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">

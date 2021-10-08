@@ -560,7 +560,7 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved'){
+        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
             $customer_info->action = 'edit';
         }
 
@@ -622,7 +622,7 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved'){
+        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
 
             $customer_info->action = 'edit';
         }
@@ -716,7 +716,7 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved'){
+        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
 
             $customer_info->action = 'edit';
         }
