@@ -13,6 +13,8 @@ use App\Models\Approvals;
 use App\Models\Customer_info;
 use App\Models\Customer_department;
 use App\Models\Customer_rate_card;
+use App\Models\Erp_department;
+
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
@@ -65,6 +67,8 @@ class CustomerController extends Controller
     }
 
     public function history_table($table_name , $action , $user_id){
+
+       
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
@@ -105,16 +109,20 @@ class CustomerController extends Controller
     // }
 
     public function save_department(Request $request){
-
-        $department_name = new Company_name;
-        $department_name->name = $request->input('name');
+           
+        $department_name = new Erp_department;
+        $department_name->name = $request->input('new_dep_name');
         $department_name->save();
 
-        $department_names =  Company_name::all();
+        $department_names =  Erp_department::all();
         $row = '';
+        $row .= " <select name='department_name' class='form-control'>";
         foreach($department_names as $department){
-            $row .= '<option value=" '.$department->id .' "> '. $department->name . ' </option> ';
+            $row .= "<option value='".$department->id ."'>". $department->name . "</option>";
         }
+
+        $row .= "</select>";
+
         
         return response()->json(['status'=>'1' , 'row'=> $row]);
 
@@ -198,6 +206,10 @@ class CustomerController extends Controller
         
         if($request->input('name') != ''){
             $customer_info->name = $request->input('name');
+        }
+
+        if($request->input('contract') != ''){
+            $customer_info->contract = $request->input('contract');
         }
         
         if($request->input('address') != ''){
@@ -381,6 +393,10 @@ class CustomerController extends Controller
         
         if($request->input('name') != ''){
             $customer_info->name = $request->input('name');
+        }
+
+        if($request->input('contract') != ''){
+            $customer_info->contract = $request->input('contract');
         }
         
         if($request->input('address') != ''){
@@ -597,38 +613,7 @@ class CustomerController extends Controller
         $customer_department = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
         $customer_rate_card = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
         // dd( $id);
-        if($customer_info->trn_copy != null){
-            
-            $path = public_path().'/main_admin/customer/'.$customer_info->trn_copy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-        if($customer_info->business_license_copy != null){
-            
-            $path = public_path().'/main_admin/customer/'.$customer_info->trn_cobusiness_license_copypy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
-
-        if($customer_info->business_contract_copy != null){
-            
-            $path = public_path().'/main_admin/customer/'.$customer_info->business_contract_copy;
-            // echo $path;
-            if(File::exists($path)){
-               unlink($path);
-                //$trade_license->id_card = 'null';
-            }
-
-        }
+       
 
 
         $customer_info->status_message = $request->input('status_message');
@@ -750,10 +735,52 @@ class CustomerController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function edit_rate_card(Request $request){
+    //////
+
+    public function customer_rate_card (){
+        $data['customer_rate_cards'] = Customer_rate_card::All();
+        // dd($data['customer_rate_cards']);
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Customer Rate Card";
+        $data['view'] = 'admin.customer.customer_rate_card';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_customer_rate_card(){
+        $data['modules']= DB::table('modules')->get();
+        $data['customer_rate_card'] = Customer_rate_card::All();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Customer Rate Card Trash";
+        $data['view'] = 'admin.customer.deleted_data_rate_card';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function customer_rate_card_add(){
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Add Customer Rate Card";
+        $data['view'] = 'admin.customer.add_customer_rate_card';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function edit_customer_rate_card(Request $request){
         // $data['customer_info'] = Customer_info::find($request->input('id'));
         // $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Customer_rate_card::where('id' ,'=' , $request->input('id'))->first();
 
         $data['modules']= DB::table('modules')->get();
 
@@ -839,11 +866,14 @@ class CustomerController extends Controller
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
 
+        $customer_rate_card->status = 'approved';
+        $customer_rate_card->user_id = 0;
+
         $this->history_table('customer_histories', 'Add Rate Card' , 0);
 
         if($customer_rate_card->save()){
 
-            return \Redirect::route('admin.customer.customer')->with('success', 'Rate Card Added Sucessfully');
+            return \Redirect::route('admin.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
         }else{
 
         }
@@ -854,7 +884,7 @@ class CustomerController extends Controller
     public function update_customer_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
-        $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
+        // $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
 
        
         if($request->input('from') != ''){
@@ -919,6 +949,87 @@ class CustomerController extends Controller
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
       
+        if( $customer_rate_card->user_id != 0){
+            $user_id  = $customer_rate_card->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+        $status = $customer_rate_card->status;
+        $customer_rate_card->status = $request->input('status');
+        
+        
+
+        
+        if($customer_rate_card->action == null || $status == 'approved' || $customer_rate_card->action == 'nill' ){
+           
+            $customer_rate_card->action = 'edit';
+        }
+        
+
+        // dd('sdsd');
+
+
+        $customer_rate_card->save();
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('customer_rate_card');
+        }
+        if($customer_rate_card->status == 'approved' || $customer_rate_card->user_id == 0 ){
+             $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
+        }
+
+
+        
+            return \Redirect::route('admin.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
+        
+
+    }
+
+    
+
+    public function delete_customer_rate_card(Request $request){
+        $id =  $request->input('id');
+    
+        $customer_rate_card = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+        // dd( $id);
+        
+
+
+        $customer_rate_card->status_message = $request->input('status_message');
+        if( $customer_rate_card->user_id != 0){
+            $user_id  = $customer_rate_card->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+       
+            $customer_rate_card->action = 'delete';
+        
+        $customer_rate_card->save();
+
+        $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
+ 
+        if($customer_rate_card->delete() ){
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function delete_customer_rate_card_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Customer_rate_card::where('id' , $id)->first();
+        // dd( $customer_info);
+        $customer_info->status_message = $request->input('status_message');
         if( $customer_info->user_id != 0){
             $user_id  = $customer_info->user_id;
             
@@ -926,24 +1037,59 @@ class CustomerController extends Controller
             $user_id  = 0;
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
+        $customer_info->row_status = 'deleted';
 
-            $customer_info->action = 'edit';
-        }
-
-        $customer_rate_card->save();
+       
 
         if($request->input('status') == 'approved'){
-            $this->remove_table_name('customer_rate_card');
-        }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_info->action , $user_id);
+            $this->remove_table_name('trade_licenses');
         }
 
+       
+            $customer_info->action = 'delete';
+        
+
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_customer_rate_card(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Customer_rate_card::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('customer_infos');
+        }
 
         
-            return \Redirect::route('admin.customer.customer')->with('success', 'Rate Card Added Sucessfully');
+            $customer_info->action = 'restored';
         
-
+        $customer_info->save();
+        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $customer_info->action = 'nill';
+        $customer_info->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 }

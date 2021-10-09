@@ -1,6 +1,6 @@
 <?php 
 use App\Models\Company_name;
-
+use App\Models\Erp_department;
 ?>
 
 <div class="container">
@@ -23,11 +23,6 @@ use App\Models\Company_name;
        <li>
            <a class="nav-link" href="#step-2">
               Customer Department
-           </a>
-       </li>
-       <li>
-           <a class="nav-link" href="#step-3">
-              Customer Rate Card
            </a>
        </li>
     </ul>
@@ -223,15 +218,22 @@ use App\Models\Company_name;
 
                         <div class="col-12">
                             <hr>
-                            <h4 class="w-100"> BUSINESS CONTRACT </h4>
+                            <h4 class="w-100"> Customer Type </h4>
+                        </div>
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Select Type</label>
+                            <select name="contract" class="form-control" required>
+                                <option value="contrct" <?php if($data['customer_info']->contrct == 'contract') echo 'selected="selected"' ?>> Contract Based</option>
+                                <option value="project" <?php if($data['customer_info']->contrct == 'project') echo 'selected="selected"' ?>> Project Based</option>
+                            </select>
                         </div>
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->business_contract_copy != null)
                             <div class="form-group">
-                                <label>Replace BUSINESS CONTRACT Copy</label>
+                                <label>Replace  Contract/Project Based Copy<</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload BUSINESS CONTRACT Copy</span>
+                                        <span class="input-group-text" >Upload Contract/Project Based Copy<</span>
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input"   name="business_contract_copy">
@@ -241,10 +243,10 @@ use App\Models\Company_name;
                             </div>
                             @else
                                 <div class="form-group">
-                                    <label>BUSINESS CONTRACT Upload</label>
+                                    <label>Upload Contract/Project Based Copy</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" >Upload  Copy</span>
+                                            <span class="input-group-text" >Upload Contract/Project Based Copy</span>
                                         </div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input"   name="business_contract_copy">
@@ -255,29 +257,67 @@ use App\Models\Company_name;
                             @endif
                         </div>
                         
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Expiry Date (  BUSINESS CONTRACT )</label>
-                            <input type="date" value="{{ $data['customer_info']->business_contract_expiary_date}}" name="business_contract_expiary_date" class="form-control" >
-                        </div>
+                        
                     </div>
                     <div class="text-center">
                         <input name="submit" type="submit" class="btn" value="Update">
                     </div>
                 </form>
             </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" method="post" id="department_add">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="">Department Name</label>
+                                    <input type="text" name="new_dep_name" class="form-control">
+                                </div>
+                                <!-- <div class="form-group">
+                                    <input type="submit" class="btn" value="Submit">
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Save changes">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
           
        </div>
 
        <div id="step-2" class="tab-pane" role="tabpanel">
            <div class="container">
+                
                 @if($data['customer_department'] != null)
+                <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                    Add Department
+                </button>
                 <form action="" method="post" id="customer_dep">
                     @csrf
                     <input type="text" name="id" value="{{ $data['customer_department']->id }}" class="d-none">
+
+                    
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Department Name </label>
-                            <input type="text" name="department_name" value="{{ $data['customer_department']->department_name}}" class="form-control" >
+                            <label >Select Department </label>
+                            <select name="department_name" id="Select_Department_" class="form-control">
+                                @foreach(Erp_department::all() as $department)
+                                    <option value="{{ $department->id }}"  <?php if($data['customer_department']->department_name == $department->id) echo 'selected="selected"' ?>> {{ $department->name }} </option>
+                                @endforeach
+                            </select>
+                            
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -318,12 +358,20 @@ use App\Models\Company_name;
 
                 </form>
                 @else
+                <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                    Add Department
+                </button>
                 <form action="" method="post" id="customer_dep_save">
                     @csrf
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Department Name </label>
-                            <input type="text" name="department_name" class="form-control" >
+                            <label >Select Department </label>
+                            <select name="department_name" id="Select_Department_" class="form-control">
+                                @foreach(Erp_department::all() as $department)
+                                    <option value="{{ $department->id }}"> {{ $department->name }} </option>
+                                @endforeach
+                            </select>
+                            
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -367,276 +415,7 @@ use App\Models\Company_name;
           
        </div>
 
-       <div id="step-3" class="tab-pane" role="tabpanel">
-           <div class="container">
-                @if($data['customer_rate_card'] != null) 
-                <form action="" method="post" id="customer_rate_card">
-                    @csrf
-                    <input type="text" name="id" value="{{ $data['customer_rate_card']->id }}" class="d-none">
-
-                    <div class="row">
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >From Location </label>
-                                <input type="text" value="{{ $data['customer_rate_card']->from}}" name="from" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >To Location </label>
-                                <input type="text" value="{{ $data['customer_rate_card']->to}}" name="to" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >VEHICLE TYPE </label>
-                                <select name="vechicle_type" class="form-control" >
-                                    <option value="flatbed" <?php if($data['customer_rate_card']->vechicle_type == 'flatbed') echo 'selected' ?>>FLATBED</option>
-                                    <option value="curtainside" <?php if($data['customer_rate_card']->vechicle_type == 'curtainside') echo 'selected' ?>>CURTAINSIDE</option>
-                                    <option value="tipper" <?php if($data['customer_rate_card']->vechicle_type == 'tipper') echo 'selected' ?>>TIPPER</option>
-                                    <option value="3_ton_chiller" <?php if($data['customer_rate_card']->vechicle_type == '3_ton_chiller') echo 'selected' ?>>3TON CHILLER</option>
-                                    <option value="7_ton" <?php if($data['customer_rate_card']->vechicle_type == '7_ton') echo 'selected' ?>>7TON</option>
-                                    <option value="10_ton" <?php if($data['customer_rate_card']->vechicle_type == '10_ton') echo 'selected' ?>>10-TON</option>
-                                    <option value="3_ton_grill" <?php if($data['customer_rate_card']->vechicle_type == '3_ton_grill') echo 'selected' ?>>3TON GRILL</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges </label>
-                                <input type="text" value="{{ $data['customer_rate_card']->other_carges}}" name="other_carges" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges Description </label>
-                                <input type="text"  value="{{ $data['customer_rate_card']->other_des}}"name="other_des" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate Type</label>
-                                <select name="rate" class="form-control" >
-                                    <option value="per_ton" <?php if($data['customer_rate_card']->rate == 'per_ton') echo 'selected' ?>>Per Ton</option>
-                                    <option value="per_trip" <?php if($data['customer_rate_card']->rate == 'per_trip') echo 'selected' ?>>Per Trip</option>
-                                    <option value="per_day_12hr" <?php if($data['customer_rate_card']->rate == 'per_day_12hr') echo 'selected' ?>>Per Day 12hr</option>
-                                    <option value="per_day_24hr" <?php if($data['customer_rate_card']->rate == 'per_day_24hr') echo 'selected' ?>>Per Day 24hr</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate </label>
-                                <input type="text" name="rate_price" class="form-control" value="{{$data['customer_rate_card']->rate_price}}" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Driver Comission </label>
-                                <input type="number" value="{{ $data['customer_rate_card']->driver_comission}}" name="driver_comission" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <hr>
-                            <h4 class="w-100">DETENTION CHARGE </h4>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Select Per Day / Per Hour</label>
-                                <select name="detention" class="form-control" >
-                                    <option value="per_day"  <?php if($data['customer_rate_card']->detention == 'per_day') echo 'selected' ?>>Per Day</option>
-                                    <option value="per_hour"  <?php if($data['customer_rate_card']->detention == 'per_hour') echo 'selected' ?>>Per Hour</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Days / Hours</label>
-                                <input  type="number"  value="{{ $data['customer_rate_card']->time}}" name="time" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Per Days Charges / Per Hours Charges</label>
-                                <input type="number"  value="{{ $data['customer_rate_card']->charges}}" name="charges" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Select Trip</label>
-                                <select name="trip" class="form-control" >
-                                    <option value="round_trip" <?php if($data['customer_rate_card']->trip == 'round_trip') echo 'selected' ?>>ROUND TRIP </option>
-                                    <option value="single_trip" <?php if($data['customer_rate_card']->trip == 'single_trip') echo 'selected' ?>>SINGLE TRIP </option>
-                                    <option value="return_trip" <?php if($data['customer_rate_card']->trip == 'return_trip') echo 'selected' ?>>RETURN TRIP </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Ap Km as per trip</label>
-                                <input type="number"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Ap Diesel as per trip</label>
-                                <input type="number"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="text-center">
-                        <input name="submit" type="submit" class="btn" value="Update">
-                    </div>
-                </form>
-                @else
-                <form action="" method="post" id="customer_rate_card_save">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >From Location </label>
-                                <input type="text" name="from" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >To Location </label>
-                                <input type="text" name="to" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >VEHICLE TYPE </label>
-                                <select name="vechicle_type" class="form-control" >
-                                    <option value="flatbed">FLATBED</option>
-                                    <option value="curtainside">CURTAINSIDE</option>
-                                    <option value="tipper">TIPPER</option>
-                                    <option value="3_ton_chiller">3TON CHILLER</option>
-                                    <option value="7_ton">7TON</option>
-                                    <option value="10_ton">10-TON</option>
-                                    <option value="3_ton_grill">3TON GRILL</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges </label>
-                                <input type="text" name="other_carges" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges Description </label>
-                                <input type="text" name="other_des" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate Type</label>
-                                <select name="rate" class="form-control" >
-                                    <option value="per_ton">Per Ton</option>
-                                    <option value="per_trip">Per Trip</option>
-                                    <option value="per_day_12hr">Per Day 12hr</option>
-                                    <option value="per_day_24hr">Per Day 24hr</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate </label>
-                                <input type="text" name="rate_price" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Driver Comission </label>
-                                <input type="number" name="driver_comission" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <hr>
-                            <h4 class="w-100">DETENTION CHARGE </h4>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Select Per Day / Per Hour</label>
-                                <select name="detention" class="form-control" >
-                                    <option value="per_day">Per Day</option>
-                                    <option value="per_hour">Per Hour</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Days / Hours</label>
-                                <input type="number" name="time" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Per Days Charges / Per Hours Charges</label>
-                                <input type="number" name="charges" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Select Trip</label>
-                                <select name="trip" class="form-control" >
-                                    <option value="round_trip">ROUND TRIP </option>
-                                    <option value="single_trip">SINGLE TRIP </option>
-                                    <option value="return_trip">RETURN TRIP </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Ap Km as per trip</label>
-                                <input type="number" name="ap_km" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Ap Diesel as per trip</label>
-                                <input type="number" name="ap_diesel" class="form-control">
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <input name="submit" type="submit" value="Submit">
-                </form>
-                @endif
-           </div>
-          
-       </div>
+       
     </div>
 </div>
 
@@ -686,6 +465,7 @@ use App\Models\Company_name;
                     if (data.status == 1) {
                         toastr.success("Customer Department Updated Successfully");
                         $('#smartwizard').smartWizard("next");
+                        window.location.replace("{{ route( 'user.customer') }}");
                     }
                 },
                 error: function (){    
@@ -710,6 +490,33 @@ use App\Models\Company_name;
                     if (data.status == 1) {
                         toastr.success("Customer Rate Card Updated Successfully");
                         window.location.replace("{{ route( 'user.customer') }}");
+                    }
+                },
+                error: function (){    
+                    alert('Technical Error (contact to web master)');
+                }
+            });
+
+        });
+
+        $('#department_add').on('submit', function (e) {
+
+            e.preventDefault();
+            var formData = new FormData($('#department_add')[0]);
+            // formData.append('customer_id', id);
+            formData.append( '_token' , '{{ csrf_token() }}')
+            $.ajax({
+                type: 'post',
+                url: "{{ route( 'user.customer.save_customer_new_department') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        // console.log($("#    "));
+                        $("#Select_Department_").html(data.row);
+                        toastr.success("Customer Department Added Successfully");
+                        // window.location.replace("{{ route( 'user.customer') }}");
                     }
                 },
                 error: function (){    

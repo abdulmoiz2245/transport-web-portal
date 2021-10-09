@@ -12,7 +12,7 @@ use App\Models\User;
         </button>
     </a> -->
 
-    <div class="d-flex" style="justify-content: space-between;">
+    <div class="d-flex mb-3" style="justify-content: space-between;">
         <a href="{{ route( 'user.customer.add_customer') }}" class="">
             <button class="btn btn-primary">
                 Add Customer
@@ -36,6 +36,12 @@ use App\Models\User;
         
     </div>
 
+    <a href="{{ route( 'user.customer.customer_rate_card') }}" class="">
+            <button class="btn btn-primary">
+                Customer Rate card
+            </button>
+        </a>
+
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -56,16 +62,15 @@ use App\Models\User;
             @endif
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  Customer_info::where('status', '=', 'approved')->count() }}) </b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Customer_info::where('status', '=', 'pending')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Customer_info::where('status', '=', 'rejected')->count() }})</b> </a>
+                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">

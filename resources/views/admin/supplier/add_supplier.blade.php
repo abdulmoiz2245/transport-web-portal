@@ -208,7 +208,7 @@ use App\Models\Company_name;
                                     <span class="input-group-text" >Upload TRN </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input"   name="trn_copy" required>
+                                    <input type="file" class="custom-file-input"   name="trn_copy" >
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@ use App\Models\Company_name;
                                     <span class="input-group-text" >Upload BUSINESS LICENCE </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input"   name="business_license_copy" required>
+                                    <input type="file" class="custom-file-input"   name="business_license_copy" >
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>

@@ -323,7 +323,7 @@ class SupplierController extends Controller
         
 
         if($customer_info->action == null){
-            $customer_info->action = 'edit';
+            $customer_info->action = 'Add';
         }
 
        

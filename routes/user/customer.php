@@ -21,8 +21,8 @@ Route::middleware(['auth:user'])->group(function () {
         Route::get('/add-department', [CustomerController::class, 'add_department']) 
         ->name('add_department');
 
-        Route::post('/save-company', [CustomerController::class, 'save_department']) 
-        ->name('save_department');
+        // Route::post('/save-company', [CustomerController::class, 'save_department']) 
+        // ->name('save_department');
     
         Route::post('/view', [CustomerController::class, 'view_customer']) 
         ->name('view_customer');
@@ -62,6 +62,27 @@ Route::middleware(['auth:user'])->group(function () {
         
         Route::post('/table-history/clear', [CustomerController::class, 'table_history_clear']) 
         ->name('table_history_clear');
+
+        Route::get('/customer-rate-card', [CustomerController::class, 'customer_rate_card']) 
+        ->name('customer_rate_card');
+
+        Route::get('/customer-rate-card/add', [CustomerController::class, 'customer_rate_card_add']) 
+        ->name('customer_rate_card_add');
+
+        Route::post('/customer-rate-card/edit', [CustomerController::class, 'edit_customer_rate_card']) 
+        ->name('edit_customer_rate_card');
+
+        Route::post('/customer-rate-card/delete', [CustomerController::class, 'delete_customer_rate_card']) 
+        ->name('delete_customer_rate_card');
+
+        Route::post('/new-department', [CustomerController::class, 'save_department']) 
+        ->name('save_customer_new_department');
+
+        // Route::post('/customer-rate-card/restor-delete', [CustomerController::class, 'restore_customer_rate_card']) 
+        // ->name('restore_customer_rate_card');
+
+        // Route::post('/customer-rate-card/delete-status', [CustomerController::class, 'delete_customer_rate_card_status']) 
+        // ->name('delete_customer_rate_card_status');
     });
 
 });

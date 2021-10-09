@@ -54,16 +54,16 @@ use App\Models\User;
             @endif
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  Supplier_info::where('status', '=', 'approved')->count() }}) </b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  Supplier_info::where('status', '=', 'approved')->where('row_status', '!=', 'deleted')->count() }}) </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Supplier_info::where('status', '=', 'pending')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Supplier_info::where('status', '=', 'pending')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
                 </li>
                 <li class="nav-item">
                     
                     <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Supplier_info::where('status', '=', 'rejected')->count() }})</b> </a>
+                        Supplier_info::where('status', '=', 'rejected')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">
