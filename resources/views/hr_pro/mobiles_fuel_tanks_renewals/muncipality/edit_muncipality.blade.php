@@ -1,6 +1,6 @@
 <div class="container">
 <div class="mb-5">
-            <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+            <a href="{{ route( 'admin.hr_pro.mobile_muncipality') }}">
                 <button class="btn btn-primary">
                     Back
                 </button>
@@ -27,7 +27,7 @@
                     <span class="input-group-text" >Upload MUNCIPALITY DOCUMENT</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input"   name="document">
+                    <input type="file" class="custom-file-input"   name="document" required>
                     <label class="custom-file-label">Choose file</label>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <span class="input-group-text" >Upload MUNCIPALITY DOCUMENT</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input"   name="document">
+                    <input type="file" class="custom-file-input"   name="document" required>
                     <label class="custom-file-label">Choose file</label>
                 </div>
             </div>

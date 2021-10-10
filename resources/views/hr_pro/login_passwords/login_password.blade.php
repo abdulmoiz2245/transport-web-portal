@@ -1,9 +1,15 @@
-
+<?php 
+use App\Models\Login_password;
+ 
+?>
 <div class="container">
     <form action="{{route('user.hr_pro.update_trade_license__sponsors__partners')}}" method="post"    enctype="multipart/form-data">
         @csrf
-        <textarea name="login_password" rows="30">
-
+        <textarea name="body" rows="30">
+                <?php 
+                  $login =  Login_password::all();
+                ?>
+                {{ $login[0]->body }}
         </textarea>
         <div class="text-center mt-4">
             <input type="submit" value="Save" class="btn btn-primary">

@@ -154,7 +154,7 @@ class Hr_ProController extends Controller
         // dd( $data['customer_info']);
         $data['page_title'] = "Trade License Trash";
         $data['view'] = 'admin.hr_pro.trade_license.deleted_data';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function trade_license_history(){
@@ -172,7 +172,7 @@ class Hr_ProController extends Controller
 
         $data['page_title'] = "History | TRADE LICENSE,SPONSORS, PARTNERS ";
         $data['view'] = 'admin.hr_pro.history';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_trade_license(){
@@ -738,7 +738,7 @@ class Hr_ProController extends Controller
 
         $data['page_title'] = "History | Office Contracts ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_office_contract(){
@@ -1000,7 +1000,7 @@ class Hr_ProController extends Controller
 
         $data['page_title'] = "History | Land Contracts ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_land_contract(){
@@ -1294,7 +1294,7 @@ class Hr_ProController extends Controller
         $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Civial Defence)
         ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_mobile_civil_defence(){
@@ -1471,7 +1471,7 @@ class Hr_ProController extends Controller
         $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Muncipality)
         ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_mobile_muncipality(){
@@ -1670,7 +1670,7 @@ class Hr_ProController extends Controller
 
         $data['page_title'] = "History | NON MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE)";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_non_mobile_civil_defence(){
@@ -1847,7 +1847,7 @@ class Hr_ProController extends Controller
         $data['page_title'] = "History | NON MOBILE FUEL TANK RENEWALS (Muncipality)
         ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_non_mobile_muncipality(){
@@ -2009,14 +2009,34 @@ class Hr_ProController extends Controller
     }
 
     public function save_login_password(Request $request){
-          $login_password =  new Login_password;
-          $login_password->body =   $request->input('body');;
+        $old_login = Login_password::all();
+        if($old_login != null){
+           $old_login[0]->body =  $request->input('body');
+           $old_login[0]->status =  'approved';
+           $old_login[0]->user_id = 0;
+           if($old_login[0]->save()){
+              
+   
+               return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('success', 'Data Added Sucessfully');
+             }else{
+               return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('error', 'Something wrong');
+             }
+        }
+        $login_password =  new Login_password;
+        $login_password->body =   $request->input('body');
 
-          if($login_password->save()){
-            return \Redirect::route('user.hr_pro.login_access_and_passwords')->with('success', 'Data Added Sucessfully');
-          }else{
-            return \Redirect::route('user.hr_pro.login_access_and_passwords')->with('error', 'Something wrong');
-          }
+        $login_password->status = 'approved';
+
+        $login_password->user_id = 0;
+
+
+        if($login_password->save()){
+         
+
+          return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('success', 'Data Added Sucessfully');
+        }else{
+          return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('error', 'Something wrong');
+        }
     }
 
     /////////////////////////////////////////////////////
@@ -2057,7 +2077,7 @@ class Hr_ProController extends Controller
         $data['page_title'] = "History | NON MOBILE FUEL TANK Trained Individual
         ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_non_mobile_trained_individual(){
@@ -2341,7 +2361,7 @@ class Hr_ProController extends Controller
         $data['page_title'] = "History | MOBILE FUEL TANK Trained Individual
         ";
         $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_mobiles_trained_individual(){

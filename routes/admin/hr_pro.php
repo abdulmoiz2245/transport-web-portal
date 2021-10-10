@@ -346,13 +346,16 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
      // mobile trained individules 
 
      Route::get('/mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'mobiles_trained_individual']) 
+     ->name('mobile_trained_individual');
+
+     Route::get('/mobiles-fuel-tanks-renewals/trained-individuals', [Hr_ProController::class, 'mobiles_trained_individual']) 
      ->name('mobiles_trained_individual');
 
      Route::get('/mobiles-fuel-tanks-renewals/trained-individual/history', [Hr_ProController::class, 'mobiles_trained_individual_history']) 
-     ->name('mobiles_trained_individual_history');
+     ->name('mobile_trained_individual_history');
 
      Route::post('/mobiles-fuel-tanks-renewals/trained-individual/history/clear', [Hr_ProController::class, 'mobiles_trained_individual_history_clear']) 
-     ->name('mobiles_trained_individual_clear');
+     ->name('mobile_trained_individual_clear');
 
      Route::get('/mobiles-fuel-tanks-renewals/trained-individual/add', [Hr_ProController::class, 'add_mobiles_trained_individual']) 
      ->name('add_mobiles_trained_individual');
@@ -368,6 +371,8 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
 
      Route::post('/mobiles-fuel-tanks-renewals/trained-individual/delete', [Hr_ProController::class, 'delete_mobiles_trained_individual']) 
      ->name('delete_mobiles_trained_individual');
+
+     
 
      Route::get('/mobiles-fuel-tanks-renewals/trained-individual/trash', [Hr_ProController::class, 'trash_mobiles_trained_individual']) 
     ->name('trash_mobiles_trained_individual');

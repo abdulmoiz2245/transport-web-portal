@@ -6,7 +6,7 @@ use App\Models\Office_Land_contract;
 ?>
 <div class="container">
      <div class="mb-5"> 
-        <a href="{{ route( 'admin.hr_pro.mobiles_trained_individual') }}">
+        <a href="{{ route( 'admin.hr_pro.mobile_trained_individual') }}">
             <button class="btn btn-primary">
                 Back
             </button>

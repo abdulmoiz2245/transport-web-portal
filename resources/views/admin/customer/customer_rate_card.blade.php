@@ -105,6 +105,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'approved' && $customer_rate_card->row_status != 'deleted')
+                                @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -167,6 +168,7 @@ use App\Models\User;
                                 </tr>
                                 @endif
                                 @endif
+                                @endif
                                 @endforeach
                             </tbody>         
                         </table>
@@ -203,6 +205,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'pending' && $customer_rate_card->row_status != 'deleted')
+                                @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -274,6 +277,7 @@ use App\Models\User;
                                     </td>
                                     
                                 </tr>
+                                @endif
                                 @endif
                                 @endif
                                 @endforeach
@@ -313,6 +317,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'rejected' && $customer_rate_card->row_status != 'deleted')
+                                @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -384,6 +389,7 @@ use App\Models\User;
                                     </td>
                                     
                                 </tr>
+                                @endif
                                 @endif
                                 @endif
                                 @endforeach

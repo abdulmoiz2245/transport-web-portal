@@ -217,6 +217,7 @@ use App\Models\Erp_department;
 
                 <form action="" method="post" id="customer_dep">
                     @csrf
+                    
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Select Department </label>
@@ -358,29 +359,7 @@ use App\Models\Erp_department;
 
         });
 
-        $('#customer_rate_card').on('submit', function (e) {
-
-            e.preventDefault();
-            var formData = new FormData($('#customer_rate_card')[0]);
-            
-            $.ajax({
-                type: 'post',
-                url: "{{ route( 'user.customer.save_department') }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status == 1) {
-                        toastr.success("Customer Rate Card Added Successfully");
-                        window.location.replace("{{ route( 'user.customer') }}");
-                    }
-                },
-                error: function (){    
-                    alert('Technical Error (contact to web master)');
-                }
-            });
-
-        });
+        
 
         $('#department_add').on('submit', function (e) {
 

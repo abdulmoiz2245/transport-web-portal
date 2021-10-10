@@ -99,6 +99,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'approved' && $customer_rate_card->row_status != 'deleted')
+                                @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -161,6 +162,8 @@ use App\Models\User;
                                 </tr>
                                 @endif
                                 @endif
+                                @endif
+
                                 @endforeach
                             </tbody>         
                         </table>
@@ -197,6 +200,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'pending' && $customer_rate_card->row_status != 'deleted')
+                                 @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -270,6 +274,8 @@ use App\Models\User;
                                 </tr>
                                 @endif
                                 @endif
+                                @endif
+
                                 @endforeach
                             </tbody>         
                         </table>
@@ -306,6 +312,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_rate_cards'] as $customer_rate_card)
                                 @if($customer_rate_card->status == 'rejected' && $customer_rate_card->row_status != 'deleted')
+                                @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_rate_card->id }}</td>
@@ -379,6 +386,8 @@ use App\Models\User;
                                 </tr>
                                 @endif
                                 @endif
+
+                                @endif
                                 @endforeach
                             </tbody>         
                         </table>
@@ -403,42 +412,44 @@ use App\Models\User;
         } );
     });
 
+
     function delete_fun(clicked_id) {
+                var file_id = clicked_id;
+                swal({
+                    title: 'Are you sure?',
+                    text: "You want to delete this Data.",
+                    type: 'warning',
+                    input:"text",
+                    inputPlaceholder:"Admin Notes",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',  
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function (result) {
+                    $.ajax({
+                        type:'POST',
+                        url:"{{ route( 'user.customer.delete_customer_rate_card') }}",
+                        data:{id:file_id, _token :"{{ csrf_token() }}" ,status_message : result},
+                        success:function(data){
+                                if (data.status == 1) {
+                                    swal({
+                                        title: "Deleted! Request to Admin",
+                                        text: "Request has been sent to Admin. You saw that in pending tab",
+                                        type: "success"
+                                    }).then(function () {
+                                        window.location.href = '';
+                                    });
+                                }else{
+                                    toastr.error("Some thing went wrong. ");
 
-        console.log(clicked_id);
-        var file_id = clicked_id;
-        swal({
-            title: 'Are you sure?',
-            text: "You want to delete this Data.",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',  
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(function () {
-            $.ajax({
-                type:'POST',
-                url:"{{ route( 'user.customer.delete_customer_rate_card') }}",
-                data:{id:file_id, _token :"{{ csrf_token() }}"},
-                success:function(data){
-                        if (data.status == 1) {
-                            swal({
-                                title: "Deleted! Request to Admin!",
-                                text: "Request has been sent to Admin. You saw that in pending tab",
-                                type: "success"
-                            }).then(function () {
-                                window.location.href = '';
-                            });
-                        }else{
-                            toastr.error("Some thing went wrong. ");
-
+                                }
                         }
-                }
-                });
-            
+                    });
+                
 
-        })
+                })
     }
+
   
     var date = new Date();
     date.setDate(date.getDate() + 10);

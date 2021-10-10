@@ -43,16 +43,7 @@ use App\Models\Company_name;
                                 
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select name="status" class="form-control">
-                                    <option value='pending' <?php if($data['customer_info']->status == 'pending') echo 'selected="selected"' ?> >Pending</option>
-                                    <option value='approved' <?php if($data['customer_info']->status == 'approved') echo 'selected="selected"' ?> >Approved</option>
-                                    <option value='rejected' <?php if($data['customer_info']->status == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                     </div>
                     <hr>
                     <div class="row">
@@ -256,7 +247,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload TRN Copy</span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="trn_copy" required>
+                                        <input type="file" class="custom-file-input"   name="trn_copy" >
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -269,7 +260,7 @@ use App\Models\Company_name;
                                             <span class="input-group-text" >Upload TRN Copy</span>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input"   name="trn_copy" required>
+                                            <input type="file" class="custom-file-input"   name="trn_copy" >
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
                                     </div>
@@ -291,7 +282,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_license_copy" required>
+                                        <input type="file" class="custom-file-input"   name="business_license_copy" >
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -304,7 +295,7 @@ use App\Models\Company_name;
                                             <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input"   name="business_license_copy" required>
+                                            <input type="file" class="custom-file-input"   name="business_license_copy" >
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
                                     </div>

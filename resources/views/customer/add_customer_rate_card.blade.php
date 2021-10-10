@@ -31,6 +31,14 @@ use App\Models\User;
         </div>
         <div class="row">
             <div class="col-md-6 col-12 mb-3">
+                <label >Select Customer </label>
+                <select name="customer_id"  class="form-control" required>
+                    @foreach(Customer_info::where('row_status', '!=' , 'deleted')->orWhereNull('row_status')->get() as $customer)
+                    <option value="{{  $customer->id }}"> {{  $customer->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-6 col-12 mb-3">
                 <label >From Location </label>
                 <select name="customer_id"  class="form-control">
                     @foreach(Customer_info::where('row_status', '!=' , 'deleted')->orWhereNull('row_status')->get() as $customer)

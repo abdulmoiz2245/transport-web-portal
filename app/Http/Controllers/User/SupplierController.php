@@ -628,7 +628,7 @@ class SupplierController extends Controller
     public function update_supplier_department(Request $request){
         $id =  (int)$request->input('id');
         $customer_dep = Supplier_department::where('id' , $id)->first();
-         $customer_info = Supplier_info::where('id' , $customer_dep->id )->first();
+         $customer_info = Supplier_info::where('id' , (int)$request->input('supplier_id'))->first();
 
          
 

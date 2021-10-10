@@ -2,7 +2,7 @@
 
 
     <div class="mb-5">
-            <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+            <a href="{{ route( 'admin.hr_pro.mobile_civil_defence') }}">
                 <button class="btn btn-primary">
                     Back
                 </button>

@@ -274,12 +274,14 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'mobiles_trained_individual']) 
         ->name('mobiles_trained_individual');
+        Route::get('/mobiles-fuel-tanks-renewals/trained-individual', [Hr_ProController::class, 'mobiles_trained_individual']) 
+     ->name('mobile_trained_individual');
 
         Route::get('/mobiles-fuel-tanks-renewals/trained-individual/history', [Hr_ProController::class, 'mobiles_trained_individual_history']) 
-        ->name('mobiles_trained_individual_history');
+        ->name('mobile_trained_individual_history');
 
         Route::post('/mobiles-fuel-tanks-renewals/trained-individual/history/clear', [Hr_ProController::class, 'mobiles_trained_individual_history_clear']) 
-        ->name('mobiles_trained_individual_clear');
+        ->name('mobile_trained_individual_history_clear');
 
         Route::get('/mobiles-fuel-tanks-renewals/trained-individual/add', [Hr_ProController::class, 'add_mobiles_trained_individual']) 
         ->name('add_mobiles_trained_individual');

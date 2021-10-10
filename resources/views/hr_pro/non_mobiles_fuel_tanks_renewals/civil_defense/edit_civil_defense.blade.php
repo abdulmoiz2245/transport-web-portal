@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="mb-4">
-        <a href="{{ route( 'user.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
+        <a href="{{ route( 'user.hr_pro.non_mobile_civil_defence') }}">
             <button class="btn btn-primary">
                 Back
             </button>

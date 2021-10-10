@@ -1,6 +1,6 @@
 <div class="container">
 <div class="mb-5">
-            <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+            <a href="{{ route( 'admin.hr_pro.mobile_muncipality') }}">
                 <button class="btn btn-primary">
                     Back
                 </button>
@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <label for="admin-status">Expiary Date</label>
-            <input type="date" name="expiary_date" class="form-control">
+            <input type="date" name="expiary_date" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

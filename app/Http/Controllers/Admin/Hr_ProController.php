@@ -2913,6 +2913,19 @@ class Hr_ProController extends Controller
     }
 
     public function save_login_password(Request $request){
+          $old_login = Login_password::all();
+          if($old_login != null){
+             $old_login[0]->body =  $request->input('body');
+             $old_login[0]->status =  'approved';
+             $old_login[0]->user_id = 0;
+             if($old_login[0]->save()){
+                //$this->history_table('muncipality_documents_histories', 'add' , 0 );
+     
+                 return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('success', 'Data Added Sucessfully');
+               }else{
+                 return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('error', 'Something wrong');
+               }
+          }
           $login_password =  new Login_password;
           $login_password->body =   $request->input('body');
 
@@ -2922,7 +2935,7 @@ class Hr_ProController extends Controller
 
 
           if($login_password->save()){
-           $this->history_table('muncipality_documents_histories', 'add' , 0 );
+           //$this->history_table('muncipality_documents_histories', 'add' , 0 );
 
             return \Redirect::route('admin.hr_pro.login_access_and_passwords')->with('success', 'Data Added Sucessfully');
           }else{

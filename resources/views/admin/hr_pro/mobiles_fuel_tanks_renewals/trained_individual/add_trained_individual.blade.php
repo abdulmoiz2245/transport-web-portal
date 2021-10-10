@@ -1,6 +1,6 @@
 <div class="container">
     <div class="mb-4">
-        <a href="{{ route( 'admin.hr_pro.mobiles_fuel_tanks_renewals') }}">
+        <a href="{{ route( 'admin.hr_pro.mobiles_trained_individual') }}">
             <button class="btn btn-primary">
                 Back
             </button>
@@ -13,13 +13,13 @@
            <div class="col-6">
                 <div class="form-group">
                     <label>Card NUMBER</label>
-                    <input type="text" name="card_number" class="form-control form-control-rounded"  placeholder="Enter Card NUMBER" >
+                    <input type="text" name="card_number" class="form-control form-control-rounded"  placeholder="Enter Card NUMBER" required>
                 </div>
            </div>
            <div class="col-6">
                 <div class="form-group">
                     <label>Employee Name</label>
-                    <input name="employee_name" class="form-control" type="text">
+                    <input name="employee_name" class="form-control" type="text" required>
 
                 </div>
            </div>

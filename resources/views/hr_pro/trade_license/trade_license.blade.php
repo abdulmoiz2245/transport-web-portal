@@ -46,11 +46,11 @@
                     </li>
                     <li class="nav-item">
                         
-                        <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Trade_license::where('status', '=', 'pending')->count() }})</b> </a>
+                        <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
                     </li>
                     <li class="nav-item">
                         
-                        <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  Trade_license::where('status', '=', 'rejected')->count() }})</b> </a>
+                        <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
                     </li>
                 </ul>
                  <div class="tab-content profile-tab" id="myTabContent">

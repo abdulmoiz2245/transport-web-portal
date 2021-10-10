@@ -29,7 +29,7 @@ use App\Models\User;
 
             <a href="{{ route( 'admin.hr_pro.trash_mobiles_trained_individual') }}" class="ml-3" target="_blank">
                 <button class="btn btn-primary">
-                Trained Individua Trash
+                Trained Individual Trash
                 </button>
             </a>
         </div>
@@ -55,17 +55,15 @@ use App\Models\User;
 
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  
-                        Trained_individual::where('status', '=', 'approved')->where('type', '=', 'mobile')->count() }})</b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Trained_individual::where('status', '=', 'pending')->where('type', '=', 'mobile')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Trained_individual::where('status', '=', 'rejected')->where('type', '=', 'mobile')->count() }})</b> </a>
+                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">
@@ -133,9 +131,7 @@ use App\Models\User;
                                         <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                     </a>
 
-                                    <!-- <a href="{{ route( 'admin.hr_pro.mobiles_trained_individual_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                    </a> -->
+                                   
                                 </td>
                                     
                                 </tr>

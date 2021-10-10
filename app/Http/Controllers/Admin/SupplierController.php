@@ -676,7 +676,7 @@ class SupplierController extends Controller
 
         if($customer_info->business_license_copy != null){
             
-            $path = public_path().'/main_admin/supplier/'.$customer_info->trn_cobusiness_license_copypy;
+            $path = public_path().'/main_admin/supplier/'.$customer_info->business_license_copy;
             // echo $path;
             if(File::exists($path)){
                unlink($path);
