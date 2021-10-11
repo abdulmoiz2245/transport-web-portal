@@ -513,7 +513,6 @@ class CustomerController extends Controller
         }
 
 
-        $customer_info->status = $request->input('status');
 
 
         $customer_info->status_message = $request->input('status_message');
@@ -527,6 +526,9 @@ class CustomerController extends Controller
         if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
             $customer_info->action = 'edit';
         }
+
+        $customer_info->status = $request->input('status');
+
 
         $customer_info->save();
 

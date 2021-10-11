@@ -560,7 +560,6 @@ class SupplierController extends Controller
         }
 
 
-        $customer_info->status = $request->input('status');
 
 
         $customer_info->status_message = $request->input('status_message');
@@ -575,6 +574,9 @@ class SupplierController extends Controller
 
             $customer_info->action = 'edit';
         }
+
+        $customer_info->status = $request->input('status');
+
 
         $customer_info->save();
 

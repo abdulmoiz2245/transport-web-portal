@@ -82,7 +82,8 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['land_contract'] as $land_contract)
-                                @if($land_contract->status == 'approved')
+                                @if($land_contract->status == 'approved' && $land_contract->row_status != 'deleted')
+
                                 <tr>
                                     
                                 <td>{{ $land_contract->id }}</td>
@@ -156,7 +157,8 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['land_contract'] as $land_contract)
-                                @if($land_contract->status == 'pending')
+                                @if($land_contract->status == 'pending' && $land_contract->row_status != 'deleted')
+
                                 <tr>
                                     
                                 <td>{{ $land_contract->id }}</td>
@@ -228,7 +230,8 @@ use App\Models\Office_Land_contract;
                             </thead>
                             <tbody>
                                 @foreach($data['land_contract'] as $land_contract)
-                                @if($land_contract->status == 'rejected')
+                                @if($land_contract->status == 'rejected' && $land_contract->row_status != 'deleted')
+
                                 <tr>
                                     
                                 <td>{{ $land_contract->id }}</td>

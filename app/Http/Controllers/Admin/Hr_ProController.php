@@ -466,13 +466,15 @@ class Hr_ProController extends Controller
         $trade_license->status = 'approved';
  
         $trade_license->user_id = 0;
+        // dd('working');
+
+        $this->history_table('trade_license_histories', 'add' , 0);
 
         if($trade_license->save()){
            
             return \Redirect::route('admin.hr_pro.trade_license__sponsors__partners')->with('success', 'Data Added Sucessfully');
         }
-
-        $this->history_table('trade_license_histories', 'add' , 0);
+        
 
 
     }
@@ -682,7 +684,6 @@ class Hr_ProController extends Controller
 
         }
 
-        $trade_license->status = $request->input('status');
 
         
 
@@ -693,10 +694,13 @@ class Hr_ProController extends Controller
         }else{
             $user_id  = 0;
         }
+        // dd($trade_license->action );
 
         if($trade_license->action == null || $trade_license->status == 'approved' ||$trade_license->action == 'nill'){
             $trade_license->action = 'edit';
         }
+        $trade_license->status = $request->input('status');
+
 
         $trade_license->save();
 
@@ -855,7 +859,7 @@ class Hr_ProController extends Controller
         }
 
         if($trade_license->action == null){
-            $trade_license->action = 'delete';
+            $trade_license->action = 'add';
         }
 
         $this->history_table('trade_license_histories', $trade_license->action , $user_id);
@@ -893,7 +897,7 @@ class Hr_ProController extends Controller
         }
 
         // if($trade_license->action == null || $trade_license->status == 'approved'){
-            $trade_license->action = 'nill';
+            $trade_license->action = 'delete';
         // }
 
         
@@ -1042,7 +1046,6 @@ class Hr_ProController extends Controller
 
     }
 
-    
     public function save_office_contract(Request $request){
         $office_contract = new Office_Land_contract;
 
@@ -1166,7 +1169,6 @@ class Hr_ProController extends Controller
 
         }
 
-        $office_contract->status = $request->input('status');
 
         
 
@@ -1191,6 +1193,10 @@ class Hr_ProController extends Controller
         if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
             $office_contract->action = 'edit';
         }
+
+        $office_contract->status = $request->input('status');
+
+
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
             $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id , 'office');
 
@@ -1256,7 +1262,6 @@ class Hr_ProController extends Controller
         
 
     }
-
     
     public function delete_office_contracts_status(Request $request){
         $id =  (int)$request->input('id');
@@ -1553,12 +1558,12 @@ class Hr_ProController extends Controller
         }
 
         
-        $office_contract->status = $request->input('status');
 
         
-        if($office_contract->action == null){
+        if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill'){
             $office_contract->action = 'edit';
         }
+        $office_contract->status = $request->input('status');
 
         $office_contract->status_message = $request->input('status_message');
         if( $office_contract->user_id != 0){
@@ -1902,12 +1907,14 @@ class Hr_ProController extends Controller
 
         }
 
-        $civil_defense->status = $request->input('status');
 
         
         if($civil_defense->action == null || $civil_defense->status == 'approved' || $civil_defense->action == 'nill'){
             $civil_defense->action = 'edit';
         }
+
+        $civil_defense->status = $request->input('status');
+
 
         $civil_defense->status_message = $request->input('status_message');
         if( $civil_defense->user_id != 0){
@@ -2180,12 +2187,13 @@ class Hr_ProController extends Controller
 
         }
 
-        $muncipality->status = $request->input('status');
 
         
         if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->action == 'nill'){
             $muncipality->action = 'edit';
         }
+        $muncipality->status = $request->input('status');
+
 
         $muncipality->status_message = $request->input('status_message');
         if( $muncipality->user_id != 0){
@@ -2481,12 +2489,13 @@ class Hr_ProController extends Controller
 
         }
 
-        $civil_defense->status = $request->input('status');
 
         
         if($civil_defense->action == null || $civil_defense->status == 'approved' || $civil_defense->action == 'nill'){
             $civil_defense->action = 'edit';
         }
+        $civil_defense->status = $request->input('status');
+
 
         $civil_defense->status_message = $request->input('status_message');
         if( $civil_defense->user_id != 0){
@@ -2756,12 +2765,13 @@ class Hr_ProController extends Controller
 
         }
 
-        $muncipality->status = $request->input('status');
 
         
         if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->action == 'nill'){
             $muncipality->action = 'edit';
         }
+        $muncipality->status = $request->input('status');
+
 
         $muncipality->status_message = $request->input('status_message');
         if( $muncipality->user_id != 0){
@@ -3177,12 +3187,12 @@ class Hr_ProController extends Controller
 
         }
 
-        $trained_individual->status = $request->input('status');
 
         
         if($trained_individual->action == null || $trained_individual->status == 'approved' || $trained_individual->action == 'nill' ){
             $trained_individual->action = 'edit';
         }
+        $trained_individual->status = $request->input('status');
 
         $trained_individual->status_message = $request->input('status_message');
         if( $trained_individual->user_id != 0){
@@ -3596,12 +3606,14 @@ class Hr_ProController extends Controller
 
         }
 
-        $trained_individual->status = $request->input('status');
 
         
         if($trained_individual->action == null || $trained_individual->status == 'approved' ||  $trained_individual->action == 'nill'){
             $trained_individual->action = 'edit';
         }
+
+        $trained_individual->status = $request->input('status');
+
 
         $trained_individual->status_message = $request->input('status_message');
         if( $trained_individual->user_id != 0){

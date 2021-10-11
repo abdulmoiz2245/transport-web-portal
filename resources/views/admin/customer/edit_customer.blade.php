@@ -354,7 +354,7 @@ use App\Models\Erp_department;
                             <label >Select Department </label>
                             <select name="department_name" id="Select_Department_" class="form-control">
                                 @foreach(Erp_department::all() as $department)
-                                    <option value="{{ $department->id }}"  <?php if($data['customer_department']->department_name == $department->id) echo 'selected="selected"' ?>> {{ $department->name }} </option>
+                                    <option value="{{ $department->id }}"> {{ $department->name }} </option>
                                 @endforeach
                             </select>
                             
