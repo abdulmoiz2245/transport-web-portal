@@ -4,7 +4,7 @@
                 Back
             </button>
         </a>
-    </div>
+</div>
 <div class="container">
     <form action="{{ route('admin.hr_pro.save_non_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
     @csrf

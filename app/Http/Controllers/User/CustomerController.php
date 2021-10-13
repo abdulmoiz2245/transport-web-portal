@@ -1089,8 +1089,6 @@ class CustomerController extends Controller
 
     }
 
-
-
     public function delete_customer_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Customer_rate_card::where('id' , $id)->first();

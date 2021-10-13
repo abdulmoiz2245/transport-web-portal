@@ -1,6 +1,6 @@
 <div class="container mt-3">
 <div class="mb-5">
-            <a href="{{ route( 'admin.hr_pro.mobile_civil_defence') }}">
+            <a href="{{ route( 'user.hr_pro.mobiles_fuel_tanks_renewals') }}">
                 <button class="btn btn-primary">
                     Back
                 </button>
@@ -25,14 +25,14 @@
                     <span class="input-group-text" >Upload CIVIL DEFENSE DOCUMENT</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="document" required>
+                    <input type="file" class="custom-file-input" name="document">
                     <label class="custom-file-label">Choose file</label>
                 </div>
             </div>
         </div>
         <div class="form-group col-md-6 col-12">
             <label for="admin-status">Expiary Date</label>
-            <input type="date" name="expiary_date" class="form-control" required>
+            <input type="date" name="expiary_date" class="form-control">
         </div>
         <div class="form-group col-md-6 col-12">
             <button type="submit" class="btn btn-primary">Submit</button>

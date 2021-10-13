@@ -1,6 +1,6 @@
 <div class="container">
 <div class="mb-4">
-        <a href="{{ route( 'admin.hr_pro.non_mobile_trained_individual') }}">
+        <a href="{{ route( 'user.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
             <button class="btn btn-primary">
                 Back
             </button>
