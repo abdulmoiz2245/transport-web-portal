@@ -9,9 +9,7 @@ use App\Models\User;
 ?>
 <div class="container">
     <a href="{{ route( 'user.sub_contractor.add_sub_contractor') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Sub Contractor
-        </button>
+        <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
     </a>
     <div class="row mt-5">
         <div class="col-12">

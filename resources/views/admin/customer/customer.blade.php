@@ -9,7 +9,7 @@ use App\Models\User;
 <div class="container">
     <div class="d-flex mb-3" style="justify-content: space-between;">
         <a href="{{ route( 'admin.customer.add_customer') }}" class="">
-        <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
         
