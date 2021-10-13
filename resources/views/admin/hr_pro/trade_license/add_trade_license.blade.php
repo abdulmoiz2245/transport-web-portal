@@ -7,18 +7,14 @@ use App\Models\Company_name;
     <div class="row mb-5">
         <div class="col-4">
             <a href="{{ route( 'admin.hr_pro.add_comany_name') }}">
-                    <button class="btn btn-primary">
-                        Add New Company
-                    </button>
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
             </a>
         </div>
             
         <div class="col-8">
             <div class="text-right">
                 <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
-                    <button class="btn btn-primary">
-                        Back
-                    </button>
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
             </div>
         </div>

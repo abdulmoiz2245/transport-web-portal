@@ -3,11 +3,9 @@ use App\Models\Company_name;
 
 ?>
 <div class="container">
-    <div class="mb-4">
+    <div class="mb-4 text-right">
         <a href="{{ route( 'admin.supplier.supplier') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 </div>

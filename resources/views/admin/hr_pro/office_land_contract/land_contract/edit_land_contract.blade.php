@@ -1,10 +1,8 @@
 <div class="container">
 
-    <div class="mb-5"> 
+    <div class="mb-5 text-right"> 
         <a href="{{ route( 'admin.hr_pro.land_contracts') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
     <form action="{{ route('admin.hr_pro.update_land_contracts') }}" method="post" enctype="multipart/form-data">

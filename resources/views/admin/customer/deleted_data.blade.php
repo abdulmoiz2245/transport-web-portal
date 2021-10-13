@@ -2,11 +2,9 @@
 use App\Models\User;
 ?>
 <div class="container">
-    <div class="mb-5">
+    <div class="mb-5 text-right">
         <a href="{{ route('admin.customer.customer') }}" class="mb-5">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>
     </div>
     <div class="table-responsive">

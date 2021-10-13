@@ -19,9 +19,7 @@ use App\Models\User;
         
         <div class=""> 
             <a href="{{ route( 'user.customer') }}">
-                <button class="btn btn-primary">
-                    Back
-                </button>
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" class="ml-3">

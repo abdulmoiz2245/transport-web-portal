@@ -10,27 +10,21 @@ use App\Models\Office_Land_contract;
 
     <div class="d-flex" style="justify-content: space-between;">
         <a href="{{ route( 'admin.hr_pro.add_office_contracts') }}" class="">
-            <button class="btn btn-primary">
-                Add Office Contract
-            </button>
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
         
         <div class=""> 
             <a href="{{ route( 'admin.hr_pro.office_contracts__land_contracts') }}">
-                <button class="btn btn-primary">
-                    Back
-                </button>
+                <img src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.hr_pro.office_contracts_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a> 
 
             <a href="{{ route( 'admin.hr_pro.trash_office_contracts') }}" class="ml-3" target="_blank">
-                <button class="btn btn-primary">
-                Office Contract Trash
-                </button>
+                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
     </div>

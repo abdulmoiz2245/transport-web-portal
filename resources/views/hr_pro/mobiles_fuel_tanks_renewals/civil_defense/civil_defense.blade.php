@@ -6,22 +6,18 @@ use App\Models\Civil_defense_documents;
 <div class="container">
 <div class="d-flex" style="justify-content: space-between;">
         <a href="{{ route( 'user.hr_pro.add_mobile_civil_defence') }}" class="">
-            <button class="btn btn-primary">
-                Add CIVIL DEFENSE DOCUMENTS
-            </button>
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
         
 
         <div class=""> 
             <a href="{{ route( 'user.hr_pro.mobiles_fuel_tanks_renewals') }}">
-                <button class="btn btn-primary">
-                    Back
-                </button>
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'user.hr_pro.mobile_civil_defence_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
         </div>
     </div>

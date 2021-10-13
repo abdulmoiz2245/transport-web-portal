@@ -2,9 +2,7 @@
 
     <div class="mb-5"> 
         <a href="{{ route( 'user.hr_pro.office_contracts') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 

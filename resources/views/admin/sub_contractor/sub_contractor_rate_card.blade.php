@@ -13,27 +13,21 @@ use App\Models\User;
 <div class="container">
     <div class="d-flex mb-3" style="justify-content: space-between;">
         <a href="{{ route( 'admin.sub_contractor.sub_contractor_rate_card_add') }}" class="">
-            <button class="btn btn-primary">
-                Add Sub Contractor Rate Card
-            </button>
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
         
         <div class=""> 
             <a href="{{ route( 'admin.sub_contractor.sub_contractor') }}">
-                <button class="btn btn-primary">
-                    Back
-                </button>
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.sub_contractor.trash_sub_contractor_rate_card') }}" class="ml-3" target="_blank">
-                <button class="btn btn-primary">
-                Sub Contractor Rate Card Trash
-                </button>
+                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
 

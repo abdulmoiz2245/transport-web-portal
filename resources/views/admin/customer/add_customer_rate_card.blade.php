@@ -11,9 +11,7 @@ use App\Models\User;
 <div class="container">
     <div class="mb-4">
         <a href="{{ route( 'admin.customer.customer_rate_card') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 </div>

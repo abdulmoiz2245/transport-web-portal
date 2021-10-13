@@ -1,9 +1,7 @@
 <div class="container mt-3">
-<div class="mb-4">
+<div class="mb-4 text-right">
         <a href="{{ route( 'user.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
 
     </div>

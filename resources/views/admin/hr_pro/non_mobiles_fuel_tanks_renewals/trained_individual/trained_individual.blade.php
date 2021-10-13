@@ -12,28 +12,22 @@ use App\Models\User;
 
     <div class="d-flex" style="justify-content: space-between;">
         <a href="{{ route( 'admin.hr_pro.add_non_mobile_trained_individual') }}" class="">
-            <button class="btn btn-primary">
-                Add Trained Individua
-            </button>
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
         
 
         <div class=""> 
             <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
-                <button class="btn btn-primary">
-                    Back
-                </button>
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.hr_pro.non_mobile_trained_individual_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.hr_pro.trash_non_mobiles_trained_individual') }}" class="ml-3" target="_blank">
-                <button class="btn btn-primary">
-                Trained Individua Trash
-                </button>
+                <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
     </div>
