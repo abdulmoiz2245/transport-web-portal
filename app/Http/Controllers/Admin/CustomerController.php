@@ -992,7 +992,7 @@ class CustomerController extends Controller
     public function delete_customer_rate_card(Request $request){
         $id =  $request->input('id');
     
-        $customer_rate_card = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
+        $customer_rate_card = Customer_rate_card::where('id' ,'=' , $request->input('id'))->first();
         // dd( $id);
         
 
