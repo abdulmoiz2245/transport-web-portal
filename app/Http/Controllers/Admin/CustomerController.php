@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    //a
     public function __construct() {
         $this->middleware('auth:admin');
     }
