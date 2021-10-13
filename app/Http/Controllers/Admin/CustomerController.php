@@ -607,8 +607,6 @@ class CustomerController extends Controller
 
     }
 
-    
-
     public function delete_customer(Request $request){
         $id =  $request->input('id');
         $customer_info = Customer_info::where('id' , $id)->first();

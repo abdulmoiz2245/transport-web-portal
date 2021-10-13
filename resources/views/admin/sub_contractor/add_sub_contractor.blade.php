@@ -14,11 +14,6 @@ use App\Models\Company_name;
               Sub Contractor Department
            </a>
        </li>
-       <li>
-           <a class="nav-link" href="#step-3">
-              Sub Contractor Rate Card
-           </a>
-       </li>
     </ul>
  
     <div class="tab-content">
@@ -280,102 +275,7 @@ use App\Models\Company_name;
           
        </div>
 
-       <div id="step-3" class="tab-pane" role="tabpanel">
-           <div class="container">
-                <form action="" method="post" id="customer_rate_card">
-                    @csrf
 
-                    <div class="row">
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Select Customer</label>
-                                <select name="customer_id" class="form-control customer" required>
-                                    @foreach($data['customer_info'] as $customer)
-                                    @if($customer->status == 'approved')
-                                    <option value="{{ $customer->id }}"  >{{ $customer->name }}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >From Location </label>
-                                <input type="text" name="from" class="form-control customer_from readonly"   required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >To Location </label>
-                                <input type="text" name="to" class="form-control customer_to readonly"  required>
-                                
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >VEHICLE TYPE </label>
-                                <select name="vechicle_type" class="form-control" >
-                                    <option value="flatbed">FLATBED</option>
-                                    <option value="curtainside">CURTAINSIDE</option>
-                                    <option value="tipper">TIPPER</option>
-                                    <option value="3_ton_chiller">3TON CHILLER</option>
-                                    <option value="7_ton">7TON</option>
-                                    <option value="10_ton">10-TON</option>
-                                    <option value="3_ton_grill">3TON GRILL</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges </label>
-                                <input type="text" name="other_carges" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Other Charges Description </label>
-                                <input type="text" name="other_des" class="form-control" >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate Type</label>
-                                <select name="rate" class="form-control" >
-                                    <option value="per_ton">Per Ton</option>
-                                    <option value="per_trip">Per Trip</option>
-                                    <option value="per_day_12hr">Per Day 12hr</option>
-                                    <option value="per_day_24hr">Per Day 24hr</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Rate </label>
-                                <input type="text" name="rate_price" class="form-control"  >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class=" col-md-6 col-12 mb-3">
-                                <label >Ap Km </label>
-                                <input type="number" name="ap_km" class="form-control">
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <input name="submit" type="submit" value="Submit">
-                </form>
-           </div>
-          
-       </div>
     </div>
 </div>
 
@@ -465,29 +365,7 @@ use App\Models\Company_name;
 
         });
 
-        $('#customer_rate_card').on('submit', function (e) {
-
-            e.preventDefault();
-            var formData = new FormData($('#customer_rate_card')[0]);
-            formData.append('sub_contractor_id', id);
-            $.ajax({
-                type: 'post',
-                url: "{{ route('admin.sub_contractor.save_sub_contractor_rate_card') }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status == 1) {
-                        toastr.success("Sub Contractor Rate Card Added Successfully");
-                        window.location.replace("{{ route('admin.sub_contractor.sub_contractor') }}");
-                    }
-                },
-                error: function (){    
-                    alert('Technical Error (contact to web master)');
-                }
-            });
-
-        });
+        
 
  
         $('#smartwizard').smartWizard({

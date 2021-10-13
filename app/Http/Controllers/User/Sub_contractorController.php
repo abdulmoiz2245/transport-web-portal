@@ -99,6 +99,7 @@ class Sub_contractorController extends Controller
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
@@ -433,106 +434,7 @@ class Sub_contractorController extends Controller
 
     }
 
-    public function save_sub_contractor_rate_card(Request $request){
-
-        $customer_rate_card = new Sub_contractor_rate_card;
-        $customer_info = Sub_contractor_info::where('id' , $request->input('sub_contractor_id'))->first();
-        
-        if($request->input('customer_id') != ''){
-            $customer_rate_card->customer_id = $request->input('customer_id');
-        }
-
-        if($request->input('sub_contractor_id') != ''){
-            $customer_rate_card->sub_contractor_id = $request->input('sub_contractor_id');
-        }
-
-        if($request->input('from') != ''){
-            $customer_rate_card->from = $request->input('from');
-        }
-        if($request->input('to') != ''){
-            $customer_rate_card->to = $request->input('to');
-
-        }
-        if($request->input('vechicle_type') != ''){
-            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
-
-        }
-        if($request->input('other_carges') != ''){
-            $customer_rate_card->other_carges = $request->input('other_carges');
-
-        }
-        if($request->input('other_des') != ''){
-            $customer_rate_card->other_des = $request->input('other_des');
-
-        }
-
-        // if($request->input('driver_comission') != ''){
-        //     if(date('l') == 'Friday'){
-        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
-        //     }else{
-        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
-        //     }
-
-        // }
-
-        if($request->input('rate') != ''){
-            $customer_rate_card->rate = $request->input('rate');
-        }
-
-        if($request->input('rate_price') != ''){
-            $customer_rate_card->rate_price = $request->input('rate_price');
-        }
-
-        // if($request->input('detention') != ''){
-        //     $customer_rate_card->detention = $request->input('detention');
-        // }
-
-
-        // if($request->input('time') != ''){
-        //     $customer_rate_card->time = $request->input('time');
-        // }
-
-        // if($request->input('charges') != ''){
-        //     $customer_rate_card->charges = $request->input('charges');
-        // }
-
-        // if($request->input('trip') != ''){
-        //     $customer_rate_card->trip = $request->input('trip');
-        // }
-
-        if($request->input('ap_km') != ''){
-            $customer_rate_card->ap_km = $request->input('ap_km');
-        }
-
-        // if($request->input('ap_diesel') != ''){
-        //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
-        // }
-
-        
-
-        $this->add_aprovals('sub_contractor_info');
-
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
-        if($request->input('status_message') != ''){
-
-            $customer_info->status_message = $request->input('status_message');
-
-        }
-
-        $customer_info->user_id = Auth::id();
-
-        if($customer_rate_card->save()){
-            $customer_info->save();
-
-            return response()->json(['status'=>'1']);
-        }else{
-
-            return response()->json(['status'=>'0']);
-        }
-
-
-    }
+    
 
     public function update_sub_contractor_info(Request $request){
         $id =  (int)$request->input('id');
@@ -747,6 +649,212 @@ class Sub_contractorController extends Controller
 
     }
 
+    
+
+    public function delete_sub_contractor(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        
+        $customer_info->status = 'pending';
+        $customer_info->status_message = $request->input('status_message');
+        $customer_info->user_id = Auth::id();
+        $customer_info->action = 'delete';
+
+        if( $customer_info->save()){
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function sub_contractor_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+     
+
+        $data['trade_licenses_history']= DB::table('sub_contractor_histories')->get();
+        $data['table_name']= 'sub_contractor_histories';
+
+        $data['page_title'] = "History | Sub Contractor ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function get_customer_rate_card(Request $request){
+        $customer =  Customer_rate_card::where('customer_id', '=', $request->input('customer_id'))->get();
+        ;
+ 
+        return response()->json($customer);
+    }
+
+    /////////
+    
+    public function sub_contractor_rate_card (){
+        $data['sub_contractor_rate_cards'] = Sub_contractor_rate_card::All();
+        // dd($data['customer_rate_cards']);
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Sub Contractor Rate Card";
+        $data['view'] = 'sub_contractor.sub_contractor_rate_card';
+        return view('user.layout', ["data"=>$data]);
+    }
+
+    public function trash_sub_contractor_rate_card(){
+        $data['modules']= DB::table('modules')->get();
+        $data['sub_contractor_rate_card'] = Sub_contractor_rate_card::All();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Sub Contractor Rate Card Trash";
+        $data['view'] = 'sub_contractor.deleted_data_rate_card';
+        return view('user.layout', ["data"=>$data]);
+    }
+
+    public function sub_contractor_rate_card_add(){
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Add Sub Contractor Rate Card";
+        $data['view'] = 'sub_contractor.add_sub_contractor_rate_card';
+        return view('user.layout', ["data"=>$data]);
+    }
+
+    public function edit_sub_contractor_rate_card(Request $request){
+        // $data['customer_info'] = Customer_info::find($request->input('id'));
+        // $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
+        $data['sub_contractor_rate_card'] = Sub_contractor_rate_card::where('id' ,'=' , $request->input('id'))->first();
+
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Edit Sub Contractor Rate Card";
+        $data['view'] = 'sub_contractor.edit_sub_contractor_rate_card';
+        return view('user.layout', ["data"=>$data]);
+    }
+
+    public function save_sub_contractor_rate_card(Request $request){
+
+        $customer_rate_card = new Sub_contractor_rate_card;
+        $customer_info = Sub_contractor_info::where('id' , $request->input('sub_contractor_id'))->first();
+        
+        if($request->input('customer_id') != ''){
+            $customer_rate_card->customer_id = $request->input('customer_id');
+        }
+
+        if($request->input('sub_contractor_id') != ''){
+            $customer_rate_card->sub_contractor_id = $request->input('sub_contractor_id');
+        }
+
+        if($request->input('from') != ''){
+            $customer_rate_card->from = $request->input('from');
+        }
+        if($request->input('to') != ''){
+            $customer_rate_card->to = $request->input('to');
+
+        }
+        if($request->input('vechicle_type') != ''){
+            $customer_rate_card->vechicle_type = $request->input('vechicle_type');
+
+        }
+        if($request->input('other_carges') != ''){
+            $customer_rate_card->other_carges = $request->input('other_carges');
+
+        }
+        if($request->input('other_des') != ''){
+            $customer_rate_card->other_des = $request->input('other_des');
+
+        }
+
+        // if($request->input('driver_comission') != ''){
+        //     if(date('l') == 'Friday'){
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission') *1.5;
+        //     }else{
+        //     $customer_rate_card->driver_comission = (int)$request->input('driver_comission');
+        //     }
+
+        // }
+
+        if($request->input('rate') != ''){
+            $customer_rate_card->rate = $request->input('rate');
+        }
+
+        if($request->input('rate_price') != ''){
+            $customer_rate_card->rate_price = $request->input('rate_price');
+        }
+
+        // if($request->input('detention') != ''){
+        //     $customer_rate_card->detention = $request->input('detention');
+        // }
+
+
+        // if($request->input('time') != ''){
+        //     $customer_rate_card->time = $request->input('time');
+        // }
+
+        // if($request->input('charges') != ''){
+        //     $customer_rate_card->charges = $request->input('charges');
+        // }
+
+        // if($request->input('trip') != ''){
+        //     $customer_rate_card->trip = $request->input('trip');
+        // }
+
+        if($request->input('ap_km') != ''){
+            $customer_rate_card->ap_km = $request->input('ap_km');
+        }
+
+        // if($request->input('ap_diesel') != ''){
+        //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
+        // }
+
+        
+
+        $this->add_aprovals('sub_contractor_info');
+
+        $customer_info->status = 'pending';
+        $customer_info->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_info->status_message = $request->input('status_message');
+
+        }
+
+        $customer_info->user_id = Auth::id();
+
+        if($customer_rate_card->save()){
+            $customer_info->save();
+
+            return response()->json(['status'=>'1']);
+        }else{
+
+            return response()->json(['status'=>'0']);
+        }
+
+
+    }
+
     public function update_sub_contractor_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
@@ -841,45 +949,19 @@ class Sub_contractorController extends Controller
 
     }
 
-    public function delete_sub_contractor(Request $request){
+    public function delete_sub_contractor_rate_card(Request $request){
         $id =  (int)$request->input('id');
-        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
         
-        $customer_info->status = 'pending';
-        $customer_info->status_message = $request->input('status_message');
-        $customer_info->user_id = Auth::id();
-        $customer_info->action = 'delete';
+        $customer_rate_card->status = 'pending';
+        $customer_rate_card->status_message = $request->input('status_message');
+        $customer_rate_card->user_id = Auth::id();
+        $customer_rate_card->action = 'delete';
 
-        if( $customer_info->save()){
+        if( $customer_rate_card->save()){
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
-
         }
     }
-
-    public function sub_contractor_history(){
-
-        $data['modules']= DB::table('modules')->get();
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-     
-
-        $data['trade_licenses_history']= DB::table('sub_contractor_histories')->get();
-        $data['table_name']= 'sub_contractor_histories';
-
-        $data['page_title'] = "History | Sub Contractor ";
-        $data['view'] = 'admin.hr_pro.history';
-        return view('users.layout', ["data"=>$data]);
-    }
-
-    public function get_customer_rate_card(Request $request){
-        $customer =  Customer_rate_card::where('customer_id', '=', $request->input('customer_id'))->get();
-        ;
- 
-        return response()->json($customer);
-     }
 }

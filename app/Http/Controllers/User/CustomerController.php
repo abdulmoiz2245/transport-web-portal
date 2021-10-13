@@ -96,6 +96,7 @@ class CustomerController extends Controller
 
         return true;
     }
+
     public function history_table_type($table_name , $action , $user_id , $type){
         DB::table($table_name)->insert([
             'action' => $action,
@@ -106,8 +107,7 @@ class CustomerController extends Controller
 
         return true;
     }
-
-    
+ 
     public function save_department(Request $request){
            
         $department_name = new Erp_department;
@@ -147,7 +147,6 @@ class CustomerController extends Controller
         $data['view'] = 'customer.customer';
         return view('users.layout', ["data"=>$data]);
     }
-
 
     public function add_customer(){
         $data['modules']= DB::table('modules')->get();
@@ -192,7 +191,6 @@ class CustomerController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
     
-
     public function edit_customer (Request $request){
         $data['customer_info'] = Customer_info::find($request->input('id'));
         $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
