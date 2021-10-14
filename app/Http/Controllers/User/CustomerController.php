@@ -863,7 +863,7 @@ class CustomerController extends Controller
 
         $data['page_title'] = "Customer Rate Card";
         $data['view'] = 'customer.customer_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function trash_customer_rate_card(){
@@ -872,7 +872,7 @@ class CustomerController extends Controller
         // dd( $data['customer_info']);
         $data['page_title'] = "Customer Rate Card Trash";
         $data['view'] = 'customer.deleted_data_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function customer_rate_card_add(){
@@ -886,7 +886,7 @@ class CustomerController extends Controller
 
         $data['page_title'] = "Add Customer Rate Card";
         $data['view'] = 'customer.add_customer_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_customer_rate_card(Request $request){
@@ -905,7 +905,7 @@ class CustomerController extends Controller
 
         $data['page_title'] = "Edit Customer Rate Card";
         $data['view'] = 'customer.edit_customer_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function save_customer_rate_card(Request $request){
