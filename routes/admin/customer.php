@@ -10,7 +10,7 @@ use App\Http\Controllers\User\Hr_ProController;
 
 use Illuminate\Support\Facades\Route;
 
-    Route::group(['prefix'=>'/admin/customer','as'=>'admin.customer.'], function(){
+    ute::group(['prefix'=>'/admin/customer','as'=>'admin.customer.'], function(){
         Route::get('/', [CustomerController::class, 'customer']) 
         ->name('customer');
 
@@ -69,10 +69,10 @@ use Illuminate\Support\Facades\Route;
         Route::post('/table-history/clear', [CustomerController::class, 'table_history_clear']) 
         ->name('table_history_clear');
 
-        Route::get('/customer-rate-card', [CustomerController::class, 'customer_rate_card']) 
+        Route::get('/customer-rate-card/{id}/', [CustomerController::class, 'customer_rate_card']) 
         ->name('customer_rate_card');
 
-        Route::get('/customer-rate-card/add', [CustomerController::class, 'customer_rate_card_add']) 
+        Route::get('/customer-rate-card/add/{id}', [CustomerController::class, 'customer_rate_card_add']) 
         ->name('customer_rate_card_add');
 
         Route::post('/customer-rate-card/edit', [CustomerController::class, 'edit_customer_rate_card']) 
@@ -81,7 +81,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/customer-rate-card/delete', [CustomerController::class, 'delete_customer_rate_card']) 
         ->name('delete_customer_rate_card');
 
-        Route::get('/customer-rate-card/trash', [CustomerController::class, 'trash_customer_rate_card']) 
+        Route::get('/customer-rate-card/trash/all', [CustomerController::class, 'trash_customer_rate_card']) 
         ->name('trash_customer_rate_card');
 
         Route::post('/customer-rate-card/restor-delete', [CustomerController::class, 'restore_customer_rate_card']) 

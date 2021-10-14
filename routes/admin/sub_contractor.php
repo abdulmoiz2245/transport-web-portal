@@ -12,7 +12,7 @@ use App\Http\Controllers\User\Hr_ProController;
 use Illuminate\Support\Facades\Route;
 
     Route::group(['prefix'=>'/admin/sub-contractor','as'=>'admin.sub_contractor.'], function(){
-        Route::get('/', [Sub_contractorController::class, 'sub_contractor']) 
+        Route::get('/', [Sub_contractorController::class, 'sub-contrator']) 
         ->name('sub_contractor');
 
         //company 
@@ -31,25 +31,25 @@ use Illuminate\Support\Facades\Route;
         Route::post('/edit', [Sub_contractorController::class, 'edit_sub_contractor']) 
         ->name('edit_sub_contractor');
 
-        Route::post('/edit-sub-contractor-rate-card', [Sub_contractorController::class, 'edit_rate_card']) 
+        Route::post('/edit-sub-contrator-rate-card', [Sub_contractorController::class, 'edit_rate_card']) 
         ->name('edit_rate_card');
 
-        Route::post('/sub-contractor-info/update', [Sub_contractorController::class, 'update_sub_contractor_info']) 
+        Route::post('/sub-contrator-info/update', [Sub_contractorController::class, 'update_sub_contractor_info']) 
         ->name('update_sub_contractor_info');
 
-        Route::post('/sub-contractor-department/update', [Sub_contractorController::class, 'update_sub_contractor_department']) 
+        Route::post('/sub-contrator-department/update', [Sub_contractorController::class, 'update_sub_contractor_department']) 
         ->name('update_sub_contractor_department');
 
-        Route::post('/sub-contractor-rate-card/update', [Sub_contractorController::class, 'update_sub_contractor_rate_card']) 
+        Route::post('/sub-contrator-rate-card/update', [Sub_contractorController::class, 'update_sub_contractor_rate_card']) 
         ->name('update_sub_contractor_rate_card');
 
-        Route::post('/sub-contractor-info/save', [Sub_contractorController::class, 'save_sub_contractor_info']) 
+        Route::post('/sub-contrator-info/save', [Sub_contractorController::class, 'save_sub_contractor_info']) 
         ->name('save_sub_contractor_info');
 
-        Route::post('/sub-contractor-department/save', [Sub_contractorController::class, 'save_sub_contractor_department']) 
+        Route::post('/sub-contrator-department/save', [Sub_contractorController::class, 'save_sub_contractor_department']) 
         ->name('save_sub_contractor_department');
 
-        Route::post('/sub-contractor-rate-card/save', [Sub_contractorController::class, 'save_sub_contractor_rate_card']) 
+        Route::post('/sub-contrator-rate-card/save', [Sub_contractorController::class, 'save_sub_contractor_rate_card']) 
         ->name('save_sub_contractor_rate_card');
 
         Route::post('/delete', [Sub_contractorController::class, 'delete_sub_contractor']) 
@@ -70,26 +70,27 @@ use Illuminate\Support\Facades\Route;
         Route::post('/table-history/clear', [Sub_contractorController::class, 'table_history_clear']) 
         ->name('table_history_clear');
 
-        Route::get('/sub-contractor-rate-card', [Sub_contractorController::class, 'sub_contractor_rate_card']) 
+        Route::get('/sub-contrator-rate-card/{id}/', [Sub_contractorController::class, 'sub_contractor_rate_card']) 
         ->name('sub_contractor_rate_card');
 
-        Route::get('/sub-contractor-rate-card/add', [Sub_contractorController::class, 'sub_contractor_rate_card_add']) 
+        Route::get('/sub-contrator-rate-card/add/{id}', [Sub_contractorController::class, 'sub_contractor_rate_card_add']) 
         ->name('sub_contractor_rate_card_add');
 
-        Route::post('/sub-contractor-rate-card/edit', [Sub_contractorController::class, 'edit_sub_contractor_rate_card']) 
+        Route::post('/sub-contrator-rate-card/edit', [Sub_contractorController::class, 'edit_sub_contractor_rate_card']) 
         ->name('edit_sub_contractor_rate_card');
 
-        Route::post('/sub-contractor-rate-card/delete', [Sub_contractorController::class, 'delete_sub_contractor_rate_card']) 
+        Route::post('/sub-contrator-rate-card/delete', [Sub_contractorController::class, 'delete_sub_contractor_rate_card']) 
         ->name('delete_sub_contractor_rate_card');
 
-        Route::get('/sub-contractor-rate-card/trash', [Sub_contractorController::class, 'trash_sub_contractor_rate_card']) 
+        Route::get('/sub-contrator-rate-card/trash/all', [Sub_contractorController::class, 'trash_sub_contractor_rate_card']) 
         ->name('trash_sub_contractor_rate_card');
 
-        Route::post('/sub-contractor-rate-card/restor-delete', [Sub_contractorController::class, 'restore_sub_contractor_rate_card']) 
+        Route::post('/sub-contrator-rate-card/restor-delete', [Sub_contractorController::class, 'restore_sub_contractor_rate_card']) 
         ->name('restore_sub_contractor_rate_card');
 
-        Route::post('/sub-contractor-rate-card/delete-status', [Sub_contractorController::class, 'delete_sub_contractor_rate_card_status']) 
+        Route::post('/sub-contrator-rate-card/delete-status', [Sub_contractorController::class, 'delete_sub_contractor_rate_card_status']) 
         ->name('delete_sub_contractor_rate_card_status');
+        
 
         Route::post('/new-department', [Sub_contractorController::class, 'save_department']) 
         ->name('save_sub_contractor_new_department');

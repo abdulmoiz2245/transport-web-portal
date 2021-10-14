@@ -431,25 +431,7 @@ use App\Models\Company_name;
         customer.append('customer_id', customer_id);
         customer.append('_token', '{{ csrf_token() }}');
 
-        $.ajax({
-                type: 'post',
-                url: "{{ route('admin.sub_contractor.get_customer_rate_card') }}",
-                data: customer,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log(data[0].to);
-                    // document.getElementsByClassName('customer_to').value = "Something"; 
-                    // $('.customer_to').val(data.to);
-                    $('.customer_to').attr( 'value',data[0].to);
-                    $('.customer_from').attr( 'value',data[0].from);
-                    // $('.customer_from').val(data.from);
-                    
-                },
-                error: function (){    
-                    alert('Technical Error (contact to web master)');
-                }
-            });
+        
 
 
         $('#customer_info').on('submit', function (e) {

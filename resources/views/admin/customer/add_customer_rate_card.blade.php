@@ -9,8 +9,8 @@ use App\Models\User;
 ?>
 
 <div class="container">
-    <div class="mb-4">
-        <a href="{{ route( 'admin.customer.customer_rate_card') }}">
+    <div class="mb-4 text-right">
+        <a href="{{ route( 'admin.customer.customer') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -19,14 +19,8 @@ use App\Models\User;
     <form action="{{ route('admin.customer.save_customer_rate_card') }}" method="post" id="customer_rate_card">
         @csrf
         <div class="row">
-            <div class="col-md-6 col-12 mb-3">
-                <label >Select Customer </label>
-                <select name="customer_id"  class="form-control" required>
-                    @foreach(Customer_info::where('row_status', '!=' , 'deleted')->orWhereNull('row_status')->get() as $customer)
-                    <option value="{{  $customer->id }}"> {{  $customer->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+
+            <input type="text" name="customer_id" value="{{ $data['customer_id'] }}" class="d-none" required >
 
             <div class="col-md-6 col-12 mb-3">
                 

@@ -216,7 +216,7 @@ use App\Models\Erp_department;
           
        </div>
 
-       <div id="step-2" class="tab-pane" role="tabpanel">
+        <div id="step-2" class="tab-pane" role="tabpanel">
            <div class="container">
                 <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
                     Add Department
@@ -271,7 +271,7 @@ use App\Models\Erp_department;
                 </form>
                 
            </div>
-           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <form action="" method="post" id="department_add">
@@ -300,7 +300,7 @@ use App\Models\Erp_department;
                     </div>
                 </div>
             </div>
-       </div>
+        </div>
 
        
     </div>

@@ -1,3 +1,9 @@
+<?php
+
+use App\Models\Sub_contractor_new_department;
+
+?>
+
 <div class="container">
     <div id="smartwizard" class=" mb-2">
         <ul class="nav">
@@ -397,7 +403,7 @@
                 @if($data['customer_department'] != null)
                 <div class="container">
                     <div class="row mt-5">
-                        <div class="col-md-6 col-12 mb-3">
+                        <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
                                     <h5 class=""><b>Accounntant Name :</b></h5>
@@ -405,6 +411,18 @@
                                 </div>
                                 <div class="col-6">
                                     <p>{{ $data['customer_department']->accountant_name }}</p>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h5 class=""><b>Department Name :</b></h5>
+
+                                </div>
+                                <div class="col-6">
+                                    <p> {{ Sub_contractor_new_department::find($data['customer_department']->accountant_name)->name}} </p>
                                 </div>
                             </div>
                         </div>

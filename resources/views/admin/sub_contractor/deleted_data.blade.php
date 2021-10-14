@@ -1,5 +1,7 @@
 <?php
 use App\Models\User;
+use App\Models\Sub_contractor_info;
+
 ?>
 <div class="container">
     <div class="mb-5 text-right">
@@ -19,8 +21,8 @@ use App\Models\User;
                 </tr>
             </thead>
             <tbody>
-                @foreach($data['customer_info'] as $customer_info)
-                @if($customer_info->status == 'approved')
+                @foreach($data['sub_contractor_rate_card'] as $customer_info)
+                @if($customer_info->row_status == 'deleted')
                 <tr>
                     <td>{{ $customer_info->id }}</td>
                     <td>{{ $customer_info->name }}</td>
@@ -40,9 +42,9 @@ use App\Models\User;
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
                     <td>
                             
-                        <a href="#" id="{{ $customer_info->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $customer_info->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
                         <a href="#" id="{{ $customer_info->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

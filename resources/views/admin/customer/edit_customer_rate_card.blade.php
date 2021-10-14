@@ -1,6 +1,6 @@
 <div class="container">
     <div class="mb-4 text-right">
-        <a href="{{ route( 'admin.customer.customer_rate_card') }}">
+        <a href="{{ route( 'admin.customer.customer_rate_card' ,['id' =>$data['customer_rate_card']->customer_id ]) }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>

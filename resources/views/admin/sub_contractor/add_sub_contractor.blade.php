@@ -1,5 +1,6 @@
 <?php 
 use App\Models\Company_name;
+use App\Models\Sub_contractor_new_department;
 
 ?>
 <div id="smartwizard">
@@ -86,7 +87,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Designation</label>
-                            <input type="text" name="des" class="form-control" >
+                            <input type="text" name="des" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -107,7 +108,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Credit Term</label>
-                            <input type="integer" name="credit_term" class="form-control" >
+                            <input type="number" name="credit_term" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -145,7 +146,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Trn Number</label>
-                            <input type="integer" name="trn" class="form-control" >
+                            <input type="number" name="trn" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -156,7 +157,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload TRN </span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="trn_copy">
+                                        <input type="file" class="custom-file-input"   name="trn_copy" required>
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -175,7 +176,7 @@ use App\Models\Company_name;
                                         <span class="input-group-text" >Upload BUSINESS LICENCE </span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_license_copy">
+                                        <input type="file" class="custom-file-input"   name="business_license_copy" required>
                                         <label class="custom-file-label">Choose file</label>
                                     </div>
                                 </div>
@@ -184,7 +185,7 @@ use App\Models\Company_name;
                         
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Expiry Date ( BUSINESS LICENCE )</label>
-                            <input type="date" name="business_license_expiary_date" class="form-control" >
+                            <input type="date" name="business_license_expiary_date" class="form-control" required>
                         </div>
 
                         <div class="col-12">
@@ -208,7 +209,7 @@ use App\Models\Company_name;
                         
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Expiry Date (  BUSINESS CONTRACT )</label>
-                            <input type="date" name="business_contract_expiary_date" class="form-control" >
+                            <input type="date" name="business_contract_expiary_date" class="form-control" required>
                         </div>
                     </div>
                     <input class="btn  form-controll" name="submit" type="submit" value="Save | Next">
@@ -218,22 +219,28 @@ use App\Models\Company_name;
        </div>
 
        <div id="step-2" class="tab-pane" role="tabpanel">
+           
            <div class="container">
+                <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                    Add Department
+                </button>
                 <form action="" method="post" id="customer_dep">
                     @csrf
                     <div class="row">
-                        <div class=" col-md-6 col-12 mb-3">
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >Accountant Name </label>
                             <input type="text" name="accountant_name" class="form-control" required>
+                        </div> -->
+                        <div class=" col-md-6 col-12 mb-3">
+                            <label >Select Department </label>
+                            <select name="accountant_name" id="Select_Department_" class="form-control">
+                                @foreach(Sub_contractor_new_department::all() as $department)
+                                    <option value="{{ $department->id }}"> {{ $department->name }} </option>
+                                @endforeach
+                            </select>
+                            
                         </div>
 
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Logistic Department Name </label>
-                            <select name="logistic_department" class="form-control" required>
-                                <option value="accounts">ACCOUNTS</option>
-                                <option value="operations">OPERATIONS </option>
-                            </select>
-                        </div>
 
                         <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON NAME </label>
@@ -272,6 +279,35 @@ use App\Models\Company_name;
                 </form>
                 
            </div>
+           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" method="post" id="department_add">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="">Department Name</label>
+                                    <input type="text" name="new_dep_name" class="form-control">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="form-group" href='#'>
+                                    <input type="submit" class="btn" value="Submit">
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
           
        </div>
 
@@ -293,25 +329,7 @@ use App\Models\Company_name;
         customer.append('_token', '{{ csrf_token() }}');
 
 
-        $.ajax({
-                type: 'post',
-                url: "{{ route('admin.sub_contractor.get_customer_rate_card') }}",
-                data: customer,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log(data[0].to);
-                    // document.getElementsByClassName('customer_to').value = "Something"; 
-                    // $('.customer_to').val(data.to);
-                    $('.customer_to').attr( 'value',data[0].to);
-                    $('.customer_from').attr( 'value',data[0].from);
-                    // $('.customer_from').val(data.from);
-                    
-                },
-                error: function (){    
-                    alert('Technical Error (contact to web master)');
-                }
-            });
+       
 
         
 
@@ -356,6 +374,33 @@ use App\Models\Company_name;
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Department Added Successfully");
                         $('#smartwizard').smartWizard("next");
+                    }
+                },
+                error: function (){    
+                    alert('Technical Error (contact to web master)');
+                }
+            });
+
+        });
+
+        $('#department_add').on('submit', function (e) {
+
+            e.preventDefault();
+            var formData = new FormData($('#department_add')[0]);
+            // formData.append('customer_id', id);
+            formData.append( '_token' , '{{ csrf_token() }}')
+            $.ajax({
+                type: 'post',
+                url: "{{ route( 'admin.sub_contractor.save_sub_contractor_new_department') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        // console.log($("#    "));
+                        $("#Select_Department_").html(data.row);
+                        toastr.success("Customer Department Added Successfully");
+                        // window.location.replace("{{ route( 'user.customer') }}");
                     }
                 },
                 error: function (){    

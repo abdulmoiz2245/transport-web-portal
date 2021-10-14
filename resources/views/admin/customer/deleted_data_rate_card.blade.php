@@ -8,7 +8,7 @@ use App\Models\User;
 ?>
 <div class="container">
     <div class="mb-5 text-right">
-        <a href="{{ route('admin.customer.customer_rate_card') }}" class="mb-5">
+        <a href="{{ route('admin.customer.customer') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>
     </div>
@@ -72,10 +72,7 @@ use App\Models\User;
                     <td>{{ $customer_rate_card->ap_km }}</td>
                     <td>{{ $customer_rate_card->ap_diesel }}</td>
                     <td>
-                            
-                        <a href="#" id="{{ $customer_rate_card->id }}" onclick="delete_fun(this.id)" class="delete-file">
-                            <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                                
 
                         <a href="#" id="{{ $customer_rate_card->id }}" onclick="restore_fun(this.id)" class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

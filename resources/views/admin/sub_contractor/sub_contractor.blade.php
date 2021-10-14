@@ -9,9 +9,29 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'admin.sub_contractor.add_sub_contractor') }}" class="mb-5">
-        <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-    </a>
+    
+    <div class="d-flex mb-3" style="justify-content: space-between;">
+        <a href="{{ route( 'admin.sub_contractor.add_sub_contractor') }}" class="">
+            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+        </a>
+
+        
+        <div class=""> 
+            <a href="{{ route( 'admin.dashboard') }}">
+                <img src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+
+            <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
+            </a>
+
+            <a href="{{ route( 'admin.sub_contractor.trash_sub_contractor') }}" class="ml-3" target="_blank">
+                <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
+            </a>
+        </div>
+
+        
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -60,6 +80,8 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'approved')
+                                @if($customer_info->row_status != 'deleted')
+
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -103,6 +125,7 @@ use App\Models\User;
                                     
                                 </tr>
                                 @endif
+                                @endif
                                 @endforeach
                             </tbody>         
                         </table>
@@ -125,6 +148,8 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'pending')
+                                @if($customer_info->row_status != 'deleted')
+
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -170,6 +195,7 @@ use App\Models\User;
                                     
                                 </tr>
                                 @endif
+                                @endif
                                 @endforeach
                             </tbody>         
                         </table>
@@ -192,6 +218,8 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'rejected')
+                                @if($customer_info->row_status != 'deleted')
+
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -237,6 +265,7 @@ use App\Models\User;
                                     
                                 </tr>
                                 @endif
+                                @endif
                                 @endforeach
                             </tbody>         
                         </table>
@@ -274,13 +303,13 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.sub_contractor.delete_sub_contractor') }}",
+                url:"{{ route( 'admin.sub_contractor.delete_sub_contractor_status') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
                             swal({
                                 title: "Deleted!",
-                                text: "Data has been deleted.",
+                                text: "Data has been moved to trash.",
                                 type: "success"
                             }).then(function () {
                                 window.location.href = '';

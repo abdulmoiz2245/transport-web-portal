@@ -738,11 +738,10 @@ class CustomerController extends Controller
 
     //////
 
-    public function customer_rate_card (){
-        $data['customer_rate_cards'] = Customer_rate_card::All();
+    public function customer_rate_card ($id){
+        $data['customer_rate_cards'] = Customer_rate_card::where('customer_id' ,'=' ,$id)->get();
         // dd($data['customer_rate_cards']);
         $data['modules']= DB::table('modules')->get();
-
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
@@ -758,13 +757,13 @@ class CustomerController extends Controller
     public function trash_customer_rate_card(){
         $data['modules']= DB::table('modules')->get();
         $data['customer_rate_card'] = Customer_rate_card::All();
-        // dd( $data['customer_info']);
+        // dd( $data['customer_rate_card']);
         $data['page_title'] = "Customer Rate Card Trash";
         $data['view'] = 'admin.customer.deleted_data_rate_card';
         return view('layout', ["data"=>$data]);
     }
 
-    public function customer_rate_card_add(){
+    public function customer_rate_card_add($id){
         $data['modules']= DB::table('modules')->get();
 
         //dd($data['modules']);
@@ -772,7 +771,7 @@ class CustomerController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
-
+         $data['customer_id'] = $id;
         $data['page_title'] = "Add Customer Rate Card";
         $data['view'] = 'admin.customer.add_customer_rate_card';
         return view('layout', ["data"=>$data]);
@@ -874,7 +873,8 @@ class CustomerController extends Controller
 
         if($customer_rate_card->save()){
 
-            return \Redirect::route('admin.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
+            return \Redirect::route('admin.customer.customer_rate_card' ,  
+            ['id' =>  $request->input('customer_id') ])->with('success', 'Rate Card Added Sucessfully');
         }else{
 
         }
@@ -982,7 +982,8 @@ class CustomerController extends Controller
 
 
         
-            return \Redirect::route('admin.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
+        return \Redirect::route('admin.customer.customer_rate_card' ,  
+        ['id' =>  $customer_rate_card->customer_id ])->with('success', 'Rate Card Edited Sucessfully');
         
 
     }

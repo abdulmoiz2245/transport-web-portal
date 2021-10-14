@@ -9,10 +9,8 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <div class="d-flex mb-3" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.customer.customer_rate_card_add') }}" class="">
-            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
-        </a>
+    <div class="d-flex mb-3" style="justify-content: end;">
+      
 
         
         <div class=""> 
@@ -22,24 +20,17 @@ use App\Models\User;
             </a>
 
             <a href="{{ route( 'admin.customer.customer_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
 
             <a href="{{ route( 'admin.customer.trash_customer_rate_card') }}" class="ml-3" target="_blank">
-                <button class="btn btn-primary">
-                    Customer Rate Card Trash
-                </button>
+                <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
-
         
     </div>
 
-        <!-- <a href="{{ route( 'admin.customer.customer_rate_card') }}" class="">
-            <button class="btn btn-primary">
-                Customer Rate card
-            </button>
-        </a> -->
+        
     
     <div class="row mt-3">
         <div class="col-12">

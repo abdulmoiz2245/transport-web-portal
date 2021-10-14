@@ -12,6 +12,8 @@ use App\Models\Company_name;
 use App\Models\Approvals;
 use App\Models\Sub_contractor_info;
 use App\Models\Customer_info;
+use App\Models\Sub_contractor_new_department;
+
 
 use App\Models\Sub_contractor_department;
 use App\Models\Sub_contractor_rate_card;
@@ -92,6 +94,26 @@ class Sub_contractorController extends Controller
         return true;
     }
 
+    public function save_department(Request $request){
+           
+        $department_name = new Sub_contractor_new_department;
+        $department_name->name = $request->input('new_dep_name');
+        $department_name->save();
+
+        $department_names =  Sub_contractor_new_department::all();
+        $row = '';
+        $row .= " <select name='department_name' class='form-control'>";
+        foreach($department_names as $department){
+            $row .= "<option value='".$department->id ."'>". $department->name . "</option>";
+        }
+
+        $row .= "</select>";
+
+        
+        return response()->json(['status'=>'1' , 'row'=> $row]);
+
+    }
+
     public function sub_contractor(){
 
         $data['modules']= DB::table('modules')->get();
@@ -99,6 +121,15 @@ class Sub_contractorController extends Controller
 
         $data['page_title'] = "Sub Contractor";
         $data['view'] = 'admin.sub_contractor.sub_contractor';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_sub_contractor(){   
+        $data['modules']= DB::table('modules')->get();
+        $data['sub_contractor_rate_card'] = Sub_contractor_info::All();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Sub Contractor  Trash";
+        $data['view'] = 'admin.sub_contractor.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
@@ -340,9 +371,9 @@ class Sub_contractorController extends Controller
             $customer_dep->accountant_name = $request->input('accountant_name');
         }
 
-        if($request->input('logistic_department') != ''){
-            $customer_dep->logistic_department = $request->input('logistic_department');
-        }
+       
+            $customer_dep->logistic_department =' ';
+        
         
         if($request->input('concerned_person_name') != ''){
             $customer_dep->concerned_person_name = $request->input('concerned_person_name');
@@ -703,6 +734,74 @@ class Sub_contractorController extends Controller
             return response()->json(['status'=>'0']);
 
         }
+    }
+
+    public function delete_sub_contractor_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+       
+            $customer_info->action = 'delete';
+        
+
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_sub_contractor(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Sub_contractor_info::where('id' , $id)->first();
+        
+        $customer_info->status_message = $request->input('status_message');
+        if( $customer_info->user_id != 0){
+            $user_id  = $customer_info->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $customer_info->row_status = 'active';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        
+            $customer_info->action = 'restored';
+        
+        $customer_info->save();
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        $customer_info->action = 'nill';
+        $customer_info->save();
+      
+           
+            return response()->json(['status'=>'1']);
+        
     }
 
     public function sub_contractor_history(){

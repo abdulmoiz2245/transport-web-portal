@@ -1,6 +1,8 @@
 <?php 
 use App\Models\Company_name;
 use App\Models\Customer_info;
+use App\Models\Sub_contractor_info;
+use App\Models\Sub_contractor_new_department;
 
 use App\Models\User;
 
