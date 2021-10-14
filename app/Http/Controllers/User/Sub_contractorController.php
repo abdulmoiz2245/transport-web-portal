@@ -709,7 +709,7 @@ class Sub_contractorController extends Controller
 
         $data['page_title'] = "Sub Contractor Rate Card";
         $data['view'] = 'sub_contractor.sub_contractor_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function trash_sub_contractor_rate_card(){
@@ -718,7 +718,7 @@ class Sub_contractorController extends Controller
         // dd( $data['customer_info']);
         $data['page_title'] = "Sub Contractor Rate Card Trash";
         $data['view'] = 'sub_contractor.deleted_data_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function sub_contractor_rate_card_add(){
@@ -732,7 +732,7 @@ class Sub_contractorController extends Controller
 
         $data['page_title'] = "Add Sub Contractor Rate Card";
         $data['view'] = 'sub_contractor.add_sub_contractor_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_sub_contractor_rate_card(Request $request){
@@ -751,7 +751,7 @@ class Sub_contractorController extends Controller
 
         $data['page_title'] = "Edit Sub Contractor Rate Card";
         $data['view'] = 'sub_contractor.edit_sub_contractor_rate_card';
-        return view('user.layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function save_sub_contractor_rate_card(Request $request){
