@@ -12,6 +12,7 @@ use App\Models\Company_name;
 use App\Models\Approvals;
 use App\Models\Supplier_info;
 use App\Models\Supplier_department;
+use App\Models\Supplier_new_department;
 
 
 use Illuminate\Support\Facades\File;
@@ -814,5 +815,25 @@ class SupplierController extends Controller
         $data['page_title'] = "History | Supplier ";
         $data['view'] = 'admin.hr_pro.history';
         return view('layout', ["data"=>$data]);
+    }
+
+    public function save_department(Request $request){
+           
+        $department_name = new Supplier_new_department;
+        $department_name->name = $request->input('new_dep_name');
+        $department_name->save();
+
+        $department_names =  Supplier_new_department::all();
+        $row = '';
+        $row .= " <select name='department_name' class='form-control'>";
+        foreach($department_names as $department){
+            $row .= "<option value='".$department->id ."'>". $department->name . "</option>";
+        }
+
+        $row .= "</select>";
+
+        
+        return response()->json(['status'=>'1' , 'row'=> $row]);
+
     }
 }
