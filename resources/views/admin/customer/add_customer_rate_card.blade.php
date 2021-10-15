@@ -10,7 +10,7 @@ use App\Models\User;
 
 <div class="container">
     <div class="mb-4 text-right">
-        <a href="{{ route( 'admin.customer.customer') }}">
+        <a href="{{ route( 'admin.customer.customer' $data['customer_rate_card']->customer_id) }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -81,7 +81,34 @@ use App\Models\User;
                 
                     <label >Driver Comission </label>
                     <input type="number" name="driver_comission" class="form-control" >
-                </div>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                
+                    <label >With Fuel / Without Fuel</label>
+                    <select name="trip" class="form-control" id="with_fuel">
+                        <option value="with_fuel">With Fuel</option>
+                        <option value="without_fuel">Without Fuel </option>
+                    </select>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                
+                    <label >Ap Fuel as per trip</label>
+                    <input id="ap_fuel" type="number" name="ap_fuel" class="form-control" >
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                
+                    <label >Ap Km as per trip</label>
+                    <input  id="ap_km" type="number" name="ap_km" class="form-control" >
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                
+                    <label >Ap Diesel as per trip</label>
+                    <input  id="ap_diesel" type="number" name="ap_diesel" class="form-control" >
+            </div>
 
             <div class="col-12">
                 <hr>
@@ -109,29 +136,34 @@ use App\Models\User;
                     <input type="number" name="charges" class="form-control">
                 </div>
 
-            <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Select Trip</label>
-                    <select name="trip" class="form-control" >
-                        <option value="round_trip">ROUND TRIP </option>
-                        <option value="single_trip">SINGLE TRIP </option>
-                        <option value="return_trip">RETURN TRIP </option>
-                    </select>
-                </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Ap Km as per trip</label>
-                    <input type="number" name="ap_km" class="form-control">
-                </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Ap Diesel as per trip</label>
-                    <input type="number" name="ap_diesel" class="form-control">
-                </div>
+            
             
         </div>
         <input name="submit" type="submit" value="Submit" class="btn ">
     </form>
 </div>
+
+<script>
+
+    $( document ).ready(function() {
+        $('#Ap_Fuel_as_per_trip').attr('required' , true);
+        $('#Ap_Km_as_per_trip').attr('required' , true);
+        $('#Ap_Diesel_as_per_trip').attr('required' , true);
+
+        $('#with_fuel').change(function() {
+            if($(this).val() == 'with_fuel'){
+
+                $('#Ap_Fuel_as_per_trip').attr('required' , true);
+                $('#Ap_Km_as_per_trip').attr('required' , true);
+                $('#Ap_Diesel_as_per_trip').attr('required' , true);
+
+            }else if($(this).val() == 'without_fuel'){
+                $('#Ap_Fuel_as_per_trip').attr('required' , false);
+                $('#Ap_Km_as_per_trip').attr('required' , false);
+                $('#Ap_Diesel_as_per_trip').attr('required' , false);
+            }
+        });
+    });
+
+   
+</script>

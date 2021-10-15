@@ -1,4 +1,5 @@
 <?php 
+use App\Models\Sub_contractor_new_department;
 use App\Models\Company_name;
 
 ?>
@@ -305,24 +306,25 @@ use App\Models\Company_name;
 
        <div id="step-2" class="tab-pane" role="tabpanel">
            <div class="container">
+               
                 @if($data['customer_department'] != null)
+                <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                    Add Department
+                </button>
                 <form action="" method="post" id="customer_dep">
                     @csrf
                     <input type="text" name="id" value="{{ $data['customer_department']->id }}" class="d-none">
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Accountant Name </label>
-                            <input type="text" name="accountant_name" value="{{ $data['customer_department']->accountant_name}}" class="form-control" required>
-                        </div>
-
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Logistic Department Name </label>
-                            <select name="logistic_department" class="form-control" required>
-                                <option value="accounts"  <?php if($data['customer_info']->logistic_department == 'accounts') echo 'selected="selected"' ?> >ACCOUNTS</option>
-                                <option value="operations"  <?php if($data['customer_info']->status == 'operations') echo 'selected="selected"' ?> >OPERATIONS </option>
+                            <label >Select Department </label>
+                            <select name="accountant_name" id="Select_Department_" class="form-control">
+                                @foreach(Sub_contractor_new_department::all() as $department)
+                                    <option value="{{ $department->id }}"  <?php if($data['customer_department']->accountant_name == $department->id) echo 'selected="selected"' ?>> {{ $department->name }} </option>
+                                @endforeach
                             </select>
+                            
                         </div>
-
+                        
                         <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON NAME </label>
                             <input type="text" value="{{ $data['customer_department']->concerned_person_name}}" name="concerned_person_name" class="form-control" required>
@@ -415,6 +417,35 @@ use App\Models\Company_name;
                 @endif
                 
            </div>
+           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" method="post" id="department_add">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="">Department Name</label>
+                                    <input type="text" name="new_dep_name" class="form-control">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="form-group" href='#'>
+                                    <input type="submit" class="btn" value="Submit">
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
           
        </div>
 
@@ -546,6 +577,32 @@ use App\Models\Company_name;
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Rate Card Added Successfully");
                         window.location.replace("{{ route('admin.sub_contractor.sub_contractor') }}");
+                    }
+                },
+                error: function (){    
+                    alert('Technical Error (contact to web master)');
+                }
+            });
+
+        });
+
+        $('#department_add').on('submit', function (e) {
+
+            e.preventDefault();
+            var formData = new FormData($('#department_add')[0]);
+            // formData.append('customer_id', id);
+            formData.append( '_token' , '{{ csrf_token() }}')
+            $.ajax({
+                type: 'post',
+                url: "{{ route( 'admin.sub_contractor.save_sub_contractor_new_department') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        // console.log($("#    "));
+                        $("#Select_Department_").html(data.row);
+                        toastr.success("Customer Department Added Successfully");
                     }
                 },
                 error: function (){    

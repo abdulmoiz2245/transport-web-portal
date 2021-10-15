@@ -1,25 +1,22 @@
 <?php 
 use App\Models\Company_name;
 use App\Models\Customer_info;
-use App\Models\Sub_contractor_info;
-use App\Models\Sub_contractor_new_department;
 
 use App\Models\User;
 
 
 ?>
 <div class="container">
-    <div class="mb-5 text-left">
-        <a href="{{ route( 'admin.sub_contractor.sub_contractor') }}">
+    <div class="mb-5 text-right">
+        <a href="{{ route( 'user.customer.customer_rate_card') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-        </a>
+         </a>
     </div>
     <div class="table-responsive">
         <table class="display table responsive nowrap  " style="width:100%">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Sub Contractor</th>
                     <th>Customer Name</th>
                     <th>From</th>
                     <th>To</th>
@@ -28,29 +25,23 @@ use App\Models\User;
                     <th>Rate </th>
                     <th>Other Charges </th>
                     <th>Other Charges Description</th>
+                    <th>Driver Comission </th>
+                    <th>DETENTION </th>
+                    <th>Days / Hours </th>
+                    <th>Per Days Charges / Per Hours Charges</th>
+                    <th>Trip Type </th>
                     <th>Ap Km as per trip: </th>
+                    <th>Ap Diesel as per trip</th>
+
+
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($data['sub_contractor_rate_card'] as $customer_rate_card)
-                @if($customer_rate_card->row_status == 'deleted')
-                @if(Sub_contractor_info::find($customer_rate_card->sub_contractor_id) != null)
-                @if(Sub_contractor_info::find($customer_rate_card->sub_contractor_id)->row_status != 'deleted')
+                @foreach($data['customer_rate_card'] as $customer_rate_card)
+                @if( $customer_rate_card->row_status == 'deleted')
                 <tr>
                     <td>{{ $customer_rate_card->id }}</td>
-                    <td>
-                            @if($customer_rate_card->sub_contractor_id == 0)
-                            Sub Contractor Deleted
-                            @else
-                                @if(Sub_contractor_info::find($customer_rate_card->sub_contractor_id))
-                                    {{ Sub_contractor_info::find($customer_rate_card->sub_contractor_id)->name}}
-                                @else
-                                    Sub Contractor Deleted
-                                @endif
-                            
-                            @endif
-                    </td>
                     <td>
                             @if($customer_rate_card->customer_id == 0)
                             Customer Deleted
@@ -66,26 +57,33 @@ use App\Models\User;
                     <!-- <td>{{ $customer_rate_card->customer_id }}</td> -->
                     <td>{{ $customer_rate_card->from }}</td>
                     <td>{{ $customer_rate_card->to }}</td>
+
                     <td>{{ $customer_rate_card->vechicle_type }}</td>
+                    
                     <td>{{ $customer_rate_card->rate }}</td>
                     <td>{{ $customer_rate_card->rate_price }}</td>
                     <td>{{ $customer_rate_card->other_des }}</td>
                     <td>{{ $customer_rate_card->other_carges }}</td>
+                    <td>{{ $customer_rate_card->driver_comission }}</td>
+                    <td>{{ $customer_rate_card->detention }}</td>
+                    <td>{{ $customer_rate_card->time }}</td>
+                    <td>{{ $customer_rate_card->charges }}</td>
+                    <td>{{ $customer_rate_card->trip }}</td>
                     <td>{{ $customer_rate_card->ap_km }}</td>
-
-                    
+                    <td>{{ $customer_rate_card->ap_diesel }}</td>
                     <td>
-                         
+                            
+                        <a href="#" id="{{ $customer_rate_card->id }}" onclick="delete_fun(this.id)" class="delete-file">
+                            <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                        </a>
 
-                        <a href="#" id="{{ $customer_rate_card->id }}"  class="restore-file"  >
+                        <a href="#" id="{{ $customer_rate_card->id }}" onclick="restore_fun(this.id)" class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->
                             <button class="btn btn-success">Restore</button>
                         </a>
                     </td>
                     
                 </tr>
-                @endif
-                @endif
                 @endif
                 @endforeach
             </tbody>         
@@ -124,7 +122,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.sub_contractor.restore_sub_contractor_rate_card') }}",
+                url:"{{ route( 'user.customer.restore_customer_rate_card') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -161,7 +159,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.sub_contractor.delete_sub_contractor_rate_card') }}",
+                url:"{{ route( 'user.customer.delete_customer_rate_card') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

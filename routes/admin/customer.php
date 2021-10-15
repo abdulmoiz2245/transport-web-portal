@@ -10,7 +10,7 @@ use App\Http\Controllers\User\Hr_ProController;
 
 use Illuminate\Support\Facades\Route;
 
-    ute::group(['prefix'=>'/admin/customer','as'=>'admin.customer.'], function(){
+    Route::group(['prefix'=>'/admin/customer','as'=>'admin.customer.'], function(){
         Route::get('/', [CustomerController::class, 'customer']) 
         ->name('customer');
 
@@ -69,6 +69,9 @@ use Illuminate\Support\Facades\Route;
         Route::post('/table-history/clear', [CustomerController::class, 'table_history_clear']) 
         ->name('table_history_clear');
 
+
+        /////
+        
         Route::get('/customer-rate-card/{id}/', [CustomerController::class, 'customer_rate_card']) 
         ->name('customer_rate_card');
 

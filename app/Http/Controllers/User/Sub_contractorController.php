@@ -16,6 +16,7 @@ use App\Models\Customer_info;
 use App\Models\Sub_contractor_department;
 use App\Models\Sub_contractor_rate_card;
 use App\Models\Customer_rate_card;
+use App\Models\Sub_contractor_new_department;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
@@ -695,8 +696,8 @@ class Sub_contractorController extends Controller
 
     /////////
     
-    public function sub_contractor_rate_card (){
-        $data['sub_contractor_rate_cards'] = Sub_contractor_rate_card::All();
+    public function sub_contractor_rate_card ($id){
+        $data['sub_contractor_rate_cards'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' ,$id)->get();
         // dd($data['customer_rate_cards']);
         $data['modules']= DB::table('modules')->get();
 
@@ -721,7 +722,7 @@ class Sub_contractorController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
-    public function sub_contractor_rate_card_add(){
+    public function sub_contractor_rate_card_add($id){
         $data['modules']= DB::table('modules')->get();
 
         //dd($data['modules']);
@@ -729,6 +730,7 @@ class Sub_contractorController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
         $data['company_names']= DB::table('company_names')->get();
+        $data['sub_contractor_id'] = $id;
 
         $data['page_title'] = "Add Sub Contractor Rate Card";
         $data['view'] = 'sub_contractor.add_sub_contractor_rate_card';
@@ -738,7 +740,7 @@ class Sub_contractorController extends Controller
     public function edit_sub_contractor_rate_card(Request $request){
         // $data['customer_info'] = Customer_info::find($request->input('id'));
         // $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
-        $data['sub_contractor_rate_card'] = Sub_contractor_rate_card::where('id' ,'=' , $request->input('id'))->first();
+        $data['customer_rate_card'] = Sub_contractor_rate_card::where('id' ,'=' , $request->input('id'))->first();
 
         $data['modules']= DB::table('modules')->get();
 
@@ -757,7 +759,6 @@ class Sub_contractorController extends Controller
     public function save_sub_contractor_rate_card(Request $request){
 
         $customer_rate_card = new Sub_contractor_rate_card;
-        $customer_info = Sub_contractor_info::where('id' , $request->input('sub_contractor_id'))->first();
         
         if($request->input('customer_id') != ''){
             $customer_rate_card->customer_id = $request->input('customer_id');
@@ -831,25 +832,25 @@ class Sub_contractorController extends Controller
 
         
 
-        $this->add_aprovals('sub_contractor_info');
+        $this->add_aprovals('sub_contractor_infos');
 
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
+        $customer_rate_card->status = 'pending';
+        $customer_rate_card->action = 'Add Rate Card';
         if($request->input('status_message') != ''){
 
-            $customer_info->status_message = $request->input('status_message');
+            $customer_rate_card->status_message = $request->input('status_message');
 
         }
 
-        $customer_info->user_id = Auth::id();
+        $customer_rate_card->user_id = Auth::id();
 
         if($customer_rate_card->save()){
-            $customer_info->save();
-
-            return response()->json(['status'=>'1']);
+            
+            return \Redirect::route('user.sub_contractor.sub_contractor_rate_card' ,  
+            $request->input('sub_contractor_id') )->with('success', 'Rate Card Added Sucessfully');
         }else{
-
-            return response()->json(['status'=>'0']);
+            return \Redirect::route('user.sub_contractor.sub_contractor_rate_card' ,  
+            $request->input('sub_contractor_id') )->with('error', 'Rate Card not Added ');
         }
 
 
@@ -858,7 +859,7 @@ class Sub_contractorController extends Controller
     public function update_sub_contractor_rate_card(Request $request){
         $id =  (int)$request->input('id');
         $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
-        $customer_info = Sub_contractor_info::where('id' ,  $customer_rate_card->sub_contractor_id )->first();
+        
        
         // dd($request->input('customers_id'));
         if($request->input('customers_id') != ''){
@@ -929,23 +930,23 @@ class Sub_contractorController extends Controller
 
 
 
-        $this->add_aprovals('sub_contractor_info');
+        $this->add_aprovals('customer_info');
 
-        $customer_info->status = 'pending';
-        $customer_info->action = 'add';
+        $customer_rate_card->status = 'pending';
+        $customer_rate_card->action = 'Edit Rate Card';
         if($request->input('status_message') != ''){
 
-            $customer_info->status_message = $request->input('status_message');
+            $customer_rate_card->status_message = $request->input('status_message');
 
         }
 
-        $customer_info->user_id = Auth::id();
+        $customer_rate_card->user_id = Auth::id();
 
         $customer_rate_card->save();
 
 
-
-        return response()->json(['status'=>'1']);
+    
+        return \Redirect::route('user.sub_contractor.sub_contractor_rate_card' ,  $request->input('sub_contractor_id'))->with('success', 'Rate Card Edited Sucessfully');
 
     }
 
@@ -964,4 +965,26 @@ class Sub_contractorController extends Controller
             return response()->json(['status'=>'0']);
         }
     }
+
+    public function save_department(Request $request){
+           
+        $department_name = new Sub_contractor_new_department;
+        $department_name->name = $request->input('new_dep_name');
+        $department_name->save();
+
+        $department_names =  Sub_contractor_new_department::all();
+        $row = '';
+        $row .= " <select name='department_name' class='form-control'>";
+        foreach($department_names as $department){
+            $row .= "<option value='".$department->id ."'>". $department->name . "</option>";
+        }
+
+        $row .= "</select>";
+
+        
+        return response()->json(['status'=>'1' , 'row'=> $row]);
+
+    }
+
+
 }

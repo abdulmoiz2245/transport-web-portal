@@ -63,10 +63,12 @@ Route::middleware(['auth:user'])->group(function () {
         Route::post('/table-history/clear', [CustomerController::class, 'table_history_clear']) 
         ->name('table_history_clear');
 
-        Route::get('/customer-rate-card', [CustomerController::class, 'customer_rate_card']) 
+        //
+
+        Route::get('/customer-rate-card/{id}/', [CustomerController::class, 'customer_rate_card']) 
         ->name('customer_rate_card');
 
-        Route::get('/customer-rate-card/add', [CustomerController::class, 'customer_rate_card_add']) 
+        Route::get('/customer-rate-card/add/{id}', [CustomerController::class, 'customer_rate_card_add']) 
         ->name('customer_rate_card_add');
 
         Route::post('/customer-rate-card/edit', [CustomerController::class, 'edit_customer_rate_card']) 

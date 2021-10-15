@@ -13,7 +13,7 @@ use App\Models\User;
 <div class="container">
     <div class="d-flex mb-3" style="justify-content: space-between;">
         <div class="">
-            <a href="{{ route( 'admin.sub_contractor.sub_contractor') }}">
+            <a href="{{ route( 'user.sub_contractor') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
@@ -22,13 +22,10 @@ use App\Models\User;
         <div class=""> 
            
 
-            <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
+            <a href="{{ route( 'user.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
 
-            <a href="{{ route( 'admin.sub_contractor.trash_sub_contractor_rate_card') }}" class="ml-3" target="_blank">
-                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
-            </a>
         </div>
 
         
@@ -128,7 +125,7 @@ use App\Models\User;
 
                                     
                                     <td>
-                                        <form action="{{ route( 'admin.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
+                                        <form action="{{ route( 'user.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_rate_card->id}}" placeholder="Enter id" >
                                             <button type="submit" class="border-0 " style="background-color: #fff;">
@@ -213,7 +210,7 @@ use App\Models\User;
 
                                     
                                     <td>
-                                        <form action="{{ route( 'admin.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
+                                        <form action="{{ route( 'user.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_rate_card->id}}" placeholder="Enter id" >
                                             <button type="submit" class="border-0 .bg-white" style="background-color: #fff;">
@@ -298,7 +295,7 @@ use App\Models\User;
 
                                     
                                     <td>
-                                        <form action="{{ route( 'admin.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
+                                        <form action="{{ route( 'user.sub_contractor.edit_sub_contractor_rate_card') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_rate_card->id}}" placeholder="Enter id" >
                                             <button type="submit" class="border-0 .bg-white" style="background-color: #fff;">
@@ -340,40 +337,40 @@ use App\Models\User;
     });
 
     function delete_fun(clicked_id) {
+                var file_id = clicked_id;
+                swal({
+                    title: 'Are you sure?',
+                    text: "You want to delete this Data.",
+                    type: 'warning',
+                    input:"text",
+                    inputPlaceholder:"Admin Notes",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',  
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function (result) {
+                    $.ajax({
+                        type:'POST',
+                        url:"{{ route( 'user.sub_contractor.delete_sub_contractor_rate_card') }}",
+                        data:{id:file_id, _token :"{{ csrf_token() }}" ,status_message : result},
+                        success:function(data){
+                                if (data.status == 1) {
+                                    swal({
+                                        title: "Deleted! Request to Admin",
+                                        text: "Request has been sent to Admin. You saw that in pending tab",
+                                        type: "success"
+                                    }).then(function () {
+                                        window.location.href = '';
+                                    });
+                                }else{
+                                    toastr.error("Some thing went wrong. ");
 
-        console.log(clicked_id);
-        var file_id = clicked_id;
-        swal({
-            title: 'Are you sure?',
-            text: "You want to delete this Data.",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',  
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(function () {
-            $.ajax({
-                type:'POST',
-                url:"{{ route( 'admin.sub_contractor.delete_sub_contractor_rate_card_status') }}",
-                data:{id:file_id, _token :"{{ csrf_token() }}"},
-                success:function(data){
-                        if (data.status == 1) {
-                            swal({
-                                title: "Deleted!",
-                                text: "Data has been mover to trash.",
-                                type: "success"
-                            }).then(function () {
-                                window.location.href = '';
-                            });
-                        }else{
-                            toastr.error("Some thing went wrong. ");
-
+                                }
                         }
-                }
-                });
-            
+                    });
+                
 
-        })
+                })
     }
   
     var date = new Date();

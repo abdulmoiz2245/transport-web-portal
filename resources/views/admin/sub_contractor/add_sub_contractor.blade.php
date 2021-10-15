@@ -373,7 +373,8 @@ use App\Models\Sub_contractor_new_department;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Department Added Successfully");
-                        $('#smartwizard').smartWizard("next");
+                        window.location.replace("{{ route( 'admin.sub_contractor.sub_contractor') }}");
+
                     }
                 },
                 error: function (){    
@@ -400,7 +401,6 @@ use App\Models\Sub_contractor_new_department;
                         // console.log($("#    "));
                         $("#Select_Department_").html(data.row);
                         toastr.success("Customer Department Added Successfully");
-                        // window.location.replace("{{ route( 'user.customer') }}");
                     }
                 },
                 error: function (){    

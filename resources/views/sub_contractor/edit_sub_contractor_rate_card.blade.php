@@ -1,15 +1,24 @@
+<?php 
+use App\Models\Company_name;
+use App\Models\Customer_info;
+
+use App\Models\User;
+
+
+?>
 <div class="container">
-    <div class="mb-4 text-right">
-        <a href="{{ route( 'admin.customer.customer_rate_card' ,$data['customer_rate_card']->customer_id ) }}">
+    <div class="mb-4 text-left">
+        <a href="{{ route( 'user.sub_contractor.sub_contractor_rate_card' ,  $data['customer_rate_card']->sub_contractor_id )  }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 </div>
 <div class="container">
-    <form action="{{ route('admin.customer.update_customer_rate_card') }}" method="post" id="customer_rate_card">
+    @if($data['customer_rate_card'] != null)
+    <form action="{{ route('user.sub_contractor.update_sub_contractor_rate_card') }}" method="post" id="sub_contractor_rate_card">
         @csrf
         <input type="text" name="id" value="{{ $data['customer_rate_card']->id }}" class="d-none">
-        <input type="text" name="customer_id" value="{{ $data['customer_rate_card']->customer_id }}" class="d-none">
+        <input type="text" name="sub_contractor_id" value="{{ $data['customer_rate_card']->sub_contractor_id }}" class="d-none">
 
         <div class="row">
             <div class="col-md-6 col-12">
@@ -19,30 +28,38 @@
                     
                 </div>
             </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="status" class="form-control">
-                        <option value='pending' <?php if($data['customer_rate_card']->status == 'pending') echo 'selected="selected"' ?> >Pending</option>
-                        <option value='approved' <?php if($data['customer_rate_card']->status == 'approved') echo 'selected="selected"' ?> >Approved</option>
-                        <option value='rejected' <?php if($data['customer_rate_card']->status == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
-                    </select>
-                </div>
-            </div>
         </div>
+
         <div class="row">
-            
+
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
-                    <label >From Location </label>
-                    <input type="text" value="{{ $data['customer_rate_card']->from}}" name="from" class="form-control" >
+                    <label >Select Customer</label>
+                    <select name="customer_id" class="form-control customer" id="customer_id" required>
+                        @foreach(Customer_info::all() as $customer)
+                        @if($customer->status == 'approved')
+                        <option value="{{ $customer->id }}" <?php if($data['customer_rate_card']->customer_id == $customer->id ) echo 'selected' ?> >{{ $customer->name }}</option>
+                        @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
-                    <label >To Location </label>
-                    <input type="text" value="{{ $data['customer_rate_card']->to}}" name="to" class="form-control" >
+                    <label >From</label>
+                    <select name="from" class="form-control customer" id="from_select" required>
+                      
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >To</label>
+                    <select name="to" class="form-control customer" id="to_select" required>
+                        
+                    </select>
                 </div>
             </div>
 
@@ -94,41 +111,10 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-12 mb-3">
+            <!-- <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
                     <label >Driver Comission </label>
                     <input type="number" value="{{ $data['customer_rate_card']->driver_comission}}" name="driver_comission" class="form-control" >
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >With Fuel / Without Fuel</label>
-                    <select name="trip" class="form-control" >
-                        <option value="with_fuel">With Fuel</option>
-                        <option value="without_fuel">Without Fuel </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Ap Fuel as per trip</label>
-                    <input type="number" id="Ap_Fuel_as_per_trip" value="{{ $data['customer_rate_card']->ap_fuel}}" name="ap_fuel" class="form-control">
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Ap Km as per trip</label>
-                    <input type="number" id="Ap_Km_as_per_trip"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Ap Diesel as per trip</label>
-                    <input type="number" id="Ap_Diesel_as_per_trip"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
                 </div>
             </div>
 
@@ -161,33 +147,130 @@
                 </div>
             </div>
 
-            
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Select Trip</label>
+                    <select name="trip" class="form-control" >
+                        <option value="round_trip" <?php if($data['customer_rate_card']->trip == 'round_trip') echo 'selected' ?>>ROUND TRIP </option>
+                        <option value="single_trip" <?php if($data['customer_rate_card']->trip == 'single_trip') echo 'selected' ?>>SINGLE TRIP </option>
+                        <option value="return_trip" <?php if($data['customer_rate_card']->trip == 'return_trip') echo 'selected' ?>>RETURN TRIP </option>
+                    </select>
+                </div>
+            </div> -->
+
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Ap Km as per trip</label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Ap Diesel as per trip</label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
+                </div>
+            </div> -->
             
         </div>
         <div class="text-center">
             <input name="submit" type="submit" class="btn" value="Update">
         </div>
     </form>
+    @endif
 </div>
 
 <script>
+
     $( document ).ready(function() {
-        $('#Ap_Fuel_as_per_trip').attr('required' , true);
-        $('#Ap_Km_as_per_trip').attr('required' , true);
-        $('#Ap_Diesel_as_per_trip').attr('required' , true);
+        
+    
+    var customer_id = $('.customer').val();
+    var customer = new FormData();
+    customer.append('customer_id', customer_id);
+    customer.append('_token', '{{ csrf_token() }}');
 
-        $('#with_fuel').change(function() {
-            if($(this).val() == 'with_fuel'){
+    $.ajax({
+            type: 'post',
+            url: "{{ route('user.sub_contractor.get_customer_rate_card') }}",
+            data: customer,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if(data){
+                    data.forEach(function (element) { 
+                        document.getElementById("From").add(new Option(element.from, element.from));
+                        document.getElementById("To").add(new Option(element.to, element.to));
+                    });
+                    console.log('call 1');
 
-                $('#Ap_Fuel_as_per_trip').attr('required' , true);
-                $('#Ap_Km_as_per_trip').attr('required' , true);
-                $('#Ap_Diesel_as_per_trip').attr('required' , true);
+                    $('#From option[value="<?= $data['customer_rate_card']->from ?>"]').attr('selected','selected');
 
-            }else if($(this).val() == 'without_fuel'){
-                $('#Ap_Fuel_as_per_trip').attr('required' , false);
-                $('#Ap_Km_as_per_trip').attr('required' , false);
-                $('#Ap_Diesel_as_per_trip').attr('required' , false);
+                    $('#To option[value="<?= $data['customer_rate_card']->to ?>"]').attr('selected','selected');
+
+                }
+                
+            },
+            error: function (){    
+                alert('Technical Error (contact to web master)');
+            }
+    });
+    
+
+    var fist_change = 0;
+
+    $('#customer_id').change(function(e) {
+         if (fist_change < 6) {
+            
+            $('#From option[value="<?= $data['customer_rate_card']->from ?>"]').attr('selected','selected');
+            $('#To option[value="<?= $data['customer_rate_card']->to ?>"]').attr('selected','selected');
+          
+
+            fist_change ++;
+            return;
+        }
+        var customer_id1 = $(this).val();
+        var customer1 = new FormData();
+        customer1.append('customer_id', customer_id1);
+        customer1.append('_token', '{{ csrf_token() }}');
+        $.ajax({
+            type: 'post',
+            url: "{{ route('user.sub_contractor.get_customer_rate_card') }}",
+            data: customer1,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log('data');
+
+                if(data){
+                    $('#From option').remove();
+                    $('#To option').remove();
+
+                    data.forEach(function (element) { 
+                        // console.log(element.from);
+                        // $('#from').append(`<option value="${element.from}">
+                        //                ${element.from}
+                        //           </option>`);
+                        // $('#to').append(`<option value="${element.to}">
+                        //     ${element.to}
+                        // </option>`);
+
+                        document.getElementById("From").add(new Option(element.from, element.from));
+                        document.getElementById("To").add(new Option(element.to, element.to));
+
+                    });
+
+
+                }
+                
+                
+            },
+            error: function (){    
+                alert('Technical Error (contact to web master)');
             }
         });
     });
+
+    });
+
 </script>

@@ -427,17 +427,6 @@ use App\Models\Sub_contractor_new_department;
                             </div>
                         </div>
 
-                        <div class=" col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Logistic Department Name :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_department']->logistic_department }}</p>
-                                </div>
-                            </div>
-                        </div>
                         
                         <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">

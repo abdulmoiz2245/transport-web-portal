@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="mb-4 text-right">
-        <a href="{{ route( 'user.customer.customer_rate_card') }}">
+    <div class="mb-4 text-left">
+        <a href="{{ route( 'user.customer.customer_rate_card' , $data['customer_rate_card']->customer_id  ) }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -91,6 +91,37 @@
                 </div>
             </div>
 
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >With Fuel / Without Fuel</label>
+                    <select name="trip" class="form-control" >
+                        <option value="with_fuel">With Fuel</option>
+                        <option value="without_fuel">Without Fuel </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Ap Fuel as per trip</label>
+                    <input type="number" id="Ap_Fuel_as_per_trip" value="{{ $data['customer_rate_card']->ap_fuel}}" name="ap_fuel" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Ap Km as per trip</label>
+                    <input type="number" id="Ap_Km_as_per_trip"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                <div class=" col-md-6 col-12 mb-3">
+                    <label >Ap Diesel as per trip</label>
+                    <input type="number" id="Ap_Diesel_as_per_trip"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
+                </div>
+            </div>
+
             <div class="col-12">
                 <hr>
                 <h4 class="w-100">DETENTION CHARGE </h4>
@@ -120,30 +151,6 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Select Trip</label>
-                    <select name="trip" class="form-control" >
-                        <option value="round_trip" <?php if($data['customer_rate_card']->trip == 'round_trip') echo 'selected' ?>>ROUND TRIP </option>
-                        <option value="single_trip" <?php if($data['customer_rate_card']->trip == 'single_trip') echo 'selected' ?>>SINGLE TRIP </option>
-                        <option value="return_trip" <?php if($data['customer_rate_card']->trip == 'return_trip') echo 'selected' ?>>RETURN TRIP </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Ap Km as per trip</label>
-                    <input type="number"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Ap Diesel as per trip</label>
-                    <input type="number"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
-                </div>
-            </div>
             
         </div>
         <div class="text-center">
@@ -151,3 +158,29 @@
         </div>
     </form>
 </div>
+
+
+<script>
+
+    $( document ).ready(function() {
+        $('#Ap_Fuel_as_per_trip').attr('required' , true);
+        $('#Ap_Km_as_per_trip').attr('required' , true);
+        $('#Ap_Diesel_as_per_trip').attr('required' , true);
+
+        $('#with_fuel').change(function() {
+            if($(this).val() == 'with_fuel'){
+
+                $('#Ap_Fuel_as_per_trip').attr('required' , true);
+                $('#Ap_Km_as_per_trip').attr('required' , true);
+                $('#Ap_Diesel_as_per_trip').attr('required' , true);
+
+            }else if($(this).val() == 'without_fuel'){
+                $('#Ap_Fuel_as_per_trip').attr('required' , false);
+                $('#Ap_Km_as_per_trip').attr('required' , false);
+                $('#Ap_Diesel_as_per_trip').attr('required' , false);
+            }
+        });
+    });
+
+   
+</script>

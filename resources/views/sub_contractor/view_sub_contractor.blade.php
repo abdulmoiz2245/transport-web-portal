@@ -1,3 +1,16 @@
+<?php
+
+use App\Models\Sub_contractor_new_department;
+
+?>
+<div class="container">
+    <div class="mb-4 text-left">
+        <a href="{{ route( 'user.sub_contractor') }}">
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+        </a>
+    </div>
+</div>
+
 <div class="container">
     <div id="smartwizard" class=" mb-2">
         <ul class="nav">
@@ -9,11 +22,6 @@
             <li>
                 <a class="nav-link" href="#step-2">
                     <h4>Sub Contractor Department</h4>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="#step-3">
-                    <h4>  Sub Contractor Rate Card </h4>
                 </a>
             </li>
         </ul>
@@ -77,7 +85,7 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Sub Contractor Address :</b></h5>
+                                    <h5 class=""><b>Customer Address :</b></h5>
 
                                 </div>
                                 <div class="col-6">
@@ -384,7 +392,7 @@
 
                                         <a  href="{{ asset('main_admin/sub_contractor')}}/{{$data['customer_info']->business_contract_copy}}" download>
                                             <button class="btn">
-                                                Download Document
+                                                Download Documennt
                                             </button>
                                         </a>
                                     @endif
@@ -397,36 +405,36 @@
                 </div>
                 
             </div>
+
             <div id="step-2" class="tab-pane" role="tabpanel">
                 @if($data['customer_department'] != null)
                 <div class="container">
                     <div class="row mt-5">
-                        <div class="col-md-6 col-12 mb-3">
+                        <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Accountant Name :</b></h5>
+                                    <h5 class=""><b>Accounntant Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
                                     <p>{{ $data['customer_department']->accountant_name }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Logistic Department Name :</b></h5>
+                                    <h5 class=""><b>Department Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
-                                    <p>{{ $data['customer_department']->logistic_department }}</p>
+                                    <p> {{ Sub_contractor_new_department::find($data['customer_department']->accountant_name)->name}} </p>
                                 </div>
                             </div>
                         </div>
-                        
-                        
 
+                        
                         <!-- <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
@@ -502,206 +510,14 @@
                     </div>
                     
                 </div>
+
                 @else
 
                 @endif
             </div>
-            <div id="step-3" class="tab-pane" role="tabpanel">
-                @if($data['customer_rate_card'] != null)
-                <div class="container">
-                    <div class="row mt-5">
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Customer Name :</b></h5>
 
-                                </div>
-                                <div class="col-6">
-                                    @foreach($data['customer_infos'] as $customer)
-                                        @if($customer->id ==  $data['customer_rate_card']->customer_id)
-                                            <p>{{ $customer->name }}</p>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                
-                                <div class="col-4">
-                                    <h5 class=""><b>From (Location) :</b></h5>
+            
 
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->from }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>To (Location) :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->to }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>VEHICLE TYPE :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->vechicle_type }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Other Charges :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->other_carges }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Other Charges Description :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->other_des }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Rate Type:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->rate }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Rate :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->rate_price }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Driver Comission :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->driver_comission }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <hr>
-                           <h4>Detention CHARGE</h4> 
-                        </div>
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>DETENTION:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->detention }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Days / Hours:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->time }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Per Days Charges / Per Hours Charges:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->charges }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Trip:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->trip }}</p>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Ap Km as per trip:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->ap_km }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Ap Diesel as per trip:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_rate_card']->ap_diesel }}</p>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
-                @else
-
-                @endif
-            </div>
         </div>
     </div>
 </div>
@@ -712,4 +528,10 @@
            
         });
     });
+
+    var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');
+    $("[type='date']").attr("min",new_date);
+    
 </script>

@@ -12,7 +12,7 @@ use App\Http\Controllers\User\Hr_ProController;
 use Illuminate\Support\Facades\Route;
 
     Route::group(['prefix'=>'/admin/sub-contractor','as'=>'admin.sub_contractor.'], function(){
-        Route::get('/', [Sub_contractorController::class, 'sub-contrator']) 
+        Route::get('/', [Sub_contractorController::class, 'sub_contractor']) 
         ->name('sub_contractor');
 
         //company 
@@ -91,6 +91,9 @@ use Illuminate\Support\Facades\Route;
         Route::post('/sub-contrator-rate-card/delete-status', [Sub_contractorController::class, 'delete_sub_contractor_rate_card_status']) 
         ->name('delete_sub_contractor_rate_card_status');
         
+
+        Route::post('/sub-contrator-rate-card/get-customer-rate-card', [Sub_contractorController::class, 'get_customer_rate_card']) 
+        ->name('get_customer_rate_card');
 
         Route::post('/new-department', [Sub_contractorController::class, 'save_department']) 
         ->name('save_sub_contractor_new_department');

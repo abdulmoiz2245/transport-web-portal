@@ -11,15 +11,19 @@ use App\Models\User;
 <div class="container">
     
     <div class="d-flex mb-3" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.sub_contractor.add_sub_contractor') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
-        
-        <div class=""> 
+        <div class="">
             <a href="{{ route( 'admin.dashboard') }}">
                 <img src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
+            <a href="{{ route( 'admin.sub_contractor.add_sub_contractor') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
+        
+
+        
+        <div class=""> 
+           
 
             <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
                 <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
@@ -52,16 +56,15 @@ use App\Models\User;
             @endif
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  Sub_contractor_info::where('status', '=', 'approved')->where('row_status', '!=', 'deleted')->count() }}) </b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Sub_contractor_info::where('status', '=', 'pending')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Sub_contractor_info::where('status', '=', 'rejected')->where('row_status', '!=', 'deleted')->count() }})</b> </a>
+                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">
@@ -118,9 +121,13 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
                                     </td>
                                     
                                 </tr>
@@ -188,9 +195,14 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
+                                         
                                     </td>
                                     
                                 </tr>
@@ -257,10 +269,15 @@ use App\Models\User;
                                         <a href="#" id="{{ $customer_info->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
-
-                                        <a href="{{ route( 'admin.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('admin.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
+                                         
                                     </td>
                                     
                                 </tr>

@@ -16,7 +16,7 @@ use App\Models\User;
     </div>
 </div>
 <div class="container">
-    <form action="{{ route('admin.sub_contractor.save_sub_contractor_rate_card') }}" method="post" id="sub_contractor_rate_card">
+    <form action="{{ route( 'user.sub_contractor.save_sub_contractor_rate_card') }}" method="post" id="sub_contractor_rate_card">
         @csrf
 
         <input type="text" name="sub_contractor_id" value="{{ $data['sub_contractor_id'] }}" class="d-none" required >
@@ -97,7 +97,7 @@ use App\Models\User;
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
                     <label >Rate </label>
-                    <input type="number" name="rate_price" class="form-control" required >
+                    <input type="number" name="rate_price" class="form-control"  required>
                 </div>
             </div>
 
@@ -127,7 +127,7 @@ use App\Models\User;
 
     $.ajax({
             type: 'post',
-            url: "{{ route('admin.sub_contractor.get_customer_rate_card') }}",
+            url: "{{ route( 'user.sub_contractor.get_customer_rate_card') }}",
             data: customer,
             processData: false,
             contentType: false,
@@ -159,7 +159,7 @@ use App\Models\User;
         customer1.append('_token', '{{ csrf_token() }}');
         $.ajax({
             type: 'post',
-            url: "{{ route('admin.sub_contractor.get_customer_rate_card') }}",
+            url: "{{ route( 'user.sub_contractor.get_customer_rate_card') }}",
             data: customer1,
             processData: false,
             contentType: false,

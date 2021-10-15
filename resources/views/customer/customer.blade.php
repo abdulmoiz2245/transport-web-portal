@@ -9,15 +9,19 @@ use App\Models\User;
     
 
     <div class="d-flex mb-3" style="justify-content: space-between;">
-        <a href="{{ route( 'user.customer.add_customer') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
+        <div class="">
+            <a href="{{ route( 'user.dashboard') }}">
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+            <a href="{{ route( 'user.customer.add_customer') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+            
+        </div>
+        
         
         <div class=""> 
-            <a href="{{ route( 'user.dashboard') }}">
-                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
+            
             <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
@@ -109,11 +113,11 @@ use App\Models\User;
                                         </a>
 
                                         <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" height="40" width="40">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <a class="dropdown-item" href="#">Add Rate Card</a>
-                                            <a class="dropdown-item" href="#">View Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
                                         </div>
 
                     
@@ -181,12 +185,12 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <button class="p-0  btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" height="40" width="40">
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <a class="dropdown-item" href="#">Add Rate Card</a>
-                                            <a class="dropdown-item" href="#">View Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
                                         </div>
 
                                        
@@ -254,12 +258,12 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <button class="p-0  btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" height="40" width="40">
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <a class="dropdown-item" href="#">Add Rate Card</a>
-                                            <a class="dropdown-item" href="#">View Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.customer.customer_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
                                         </div>
 
                                         

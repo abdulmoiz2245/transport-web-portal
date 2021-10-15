@@ -866,6 +866,10 @@ class CustomerController extends Controller
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
 
+        if($request->input('ap_fuel') != ''){
+            $customer_rate_card->ap_fuel = $request->input('ap_fuel');
+        }
+
         $customer_rate_card->status = 'approved';
         $customer_rate_card->user_id = 0;
 
@@ -874,7 +878,7 @@ class CustomerController extends Controller
         if($customer_rate_card->save()){
 
             return \Redirect::route('admin.customer.customer_rate_card' ,  
-            ['id' =>  $request->input('customer_id') ])->with('success', 'Rate Card Added Sucessfully');
+           $request->input('customer_id') )->with('success', 'Rate Card Added Sucessfully');
         }else{
 
         }
@@ -949,6 +953,10 @@ class CustomerController extends Controller
         if($request->input('ap_diesel') != ''){
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
+
+        if($request->input('ap_fuel') != ''){
+            $customer_rate_card->ap_fuel = $request->input('ap_fuel');
+        }
       
         if( $customer_rate_card->user_id != 0){
             $user_id  = $customer_rate_card->user_id;
@@ -982,8 +990,7 @@ class CustomerController extends Controller
 
 
         
-        return \Redirect::route('admin.customer.customer_rate_card' ,  
-        ['id' =>  $customer_rate_card->customer_id ])->with('success', 'Rate Card Edited Sucessfully');
+        return \Redirect::route('admin.customer.customer_rate_card',  $request->input('customer_id') )->with('success', 'Rate Card Edited Sucessfully');
         
 
     }

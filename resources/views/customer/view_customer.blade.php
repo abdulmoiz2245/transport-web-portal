@@ -3,7 +3,7 @@
 use App\Models\Erp_department;
 ?>
 <div class="container">
-    <div class="mb-4 text-right">
+    <div class="mb-4 text-left">
         <a href="{{ route( 'user.customer') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -477,7 +477,7 @@ use App\Models\Erp_department;
 <script>
     $(document).ready(function(){
         $('#smartwizard').smartWizard({
-            theme: 'dots'
+            theme: 'default'
            
         });
     });

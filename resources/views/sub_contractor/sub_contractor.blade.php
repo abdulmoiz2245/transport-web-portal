@@ -8,9 +8,27 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <a href="{{ route( 'user.sub_contractor.add_sub_contractor') }}" class="mb-5">
-        <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-    </a>
+    <div class="d-flex mb-3" style="justify-content: space-between;">
+        <div class="">
+            <a href="{{ route( 'user.sub_contractor') }}">
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+            <a href="{{ route( 'user.sub_contractor.add_sub_contractor') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+            
+        </div>
+        
+        
+        <div class=""> 
+            
+            <a href="{{ route( 'user.sub_contractor.sub_contractor_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
+            </a>
+        </div>
+
+        
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             @if (session('success'))
@@ -31,16 +49,15 @@ use App\Models\User;
             @endif
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  Sub_contractor_info::where('status', '=', 'approved')->count() }}) </b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved  </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Sub_contractor_info::where('status', '=', 'pending')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Sub_contractor_info::where('status', '=', 'rejected')->count() }})</b> </a>
+                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">
@@ -59,6 +76,7 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'approved')
+                                @if($customer_info->row_status != 'deleted')
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -95,12 +113,18 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
+                                          
                                     </td>
                                     
                                 </tr>
+                                @endif
                                 @endif
                                 @endforeach
                             </tbody>         
@@ -124,6 +148,8 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'pending')
+                                @if($customer_info->row_status != 'deleted')
+
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -162,12 +188,19 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
+
+                                          
                                     </td>
                                     
                                 </tr>
+                                @endif
                                 @endif
                                 @endforeach
                             </tbody>         
@@ -191,6 +224,8 @@ use App\Models\User;
                             <tbody>
                                 @foreach($data['customer_info'] as $customer_info)
                                 @if($customer_info->status == 'rejected')
+                                @if($customer_info->row_status != 'deleted')
+
                                 <tr>
                                     <td>{{ $customer_info->id }}</td>
                                     <td>{{ $customer_info->name }}</td>
@@ -229,12 +264,19 @@ use App\Models\User;
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         </a>
 
-                                        <a href="{{ route( 'user.sub_contractor.sub_contractor_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a>
+                                        <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
+                                            <a class="dropdown-item" href="{{ route('user.sub_contractor.sub_contractor_rate_card',  $customer_info->id  ) }}">View Rate Card</a>
+                                        </div>
+
+                                          
                                     </td>
                                     
                                 </tr>
+                                @endif
                                 @endif
                                 @endforeach
                             </tbody>         

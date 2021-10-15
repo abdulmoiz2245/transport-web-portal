@@ -849,8 +849,8 @@ class CustomerController extends Controller
    /////
 
 
-    public function customer_rate_card (){
-        $data['customer_rate_cards'] = Customer_rate_card::All();
+    public function customer_rate_card ($id){
+        $data['customer_rate_cards'] = Customer_rate_card::where('customer_id' ,'=' ,$id)->get();
         // dd($data['customer_rate_cards']);
         $data['modules']= DB::table('modules')->get();
 
@@ -875,7 +875,7 @@ class CustomerController extends Controller
         return view('users.layout', ["data"=>$data]);
     }
 
-    public function customer_rate_card_add(){
+    public function customer_rate_card_add($id){
         $data['modules']= DB::table('modules')->get();
 
         //dd($data['modules']);
@@ -883,6 +883,7 @@ class CustomerController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
         $data['company_names']= DB::table('company_names')->get();
+        $data['customer_id'] = $id;
 
         $data['page_title'] = "Add Customer Rate Card";
         $data['view'] = 'customer.add_customer_rate_card';
@@ -978,6 +979,10 @@ class CustomerController extends Controller
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
 
+        if($request->input('ap_fuel') != ''){
+            $customer_rate_card->ap_fuel = $request->input('ap_fuel');
+        }
+
         $this->add_aprovals('customer_info');
 
         $customer_rate_card->status = 'pending';
@@ -992,7 +997,8 @@ class CustomerController extends Controller
 
         if($customer_rate_card->save()){
 
-            return \Redirect::route('user.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
+            return \Redirect::route('user.customer.customer_rate_card' ,  
+            $request->input('customer_id') )->with('success', 'Rate Card Added Sucessfully');
         }else{
 
         }
@@ -1067,6 +1073,10 @@ class CustomerController extends Controller
         if($request->input('ap_diesel') != ''){
             $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         }
+
+        if($request->input('ap_fuel') != ''){
+            $customer_rate_card->ap_fuel = $request->input('ap_fuel');
+        }
     
         $this->add_aprovals('customer_info');
 
@@ -1084,7 +1094,7 @@ class CustomerController extends Controller
 
 
         
-            return \Redirect::route('user.customer.customer_rate_card')->with('success', 'Rate Card Added Sucessfully');
+            return \Redirect::route('user.customer.customer_rate_card' ,  $request->input('customer_id'))->with('success', 'Rate Card Edited Sucessfully');
         
 
     }

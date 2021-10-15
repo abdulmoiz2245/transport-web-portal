@@ -32,6 +32,7 @@
 
        
         
+        <!-- <script src="<?= asset('assets') ?>/js/vendor/sweetalert2.js"></script> -->
         
         <script src="<?= asset('assets') ?>/js/vendor/sweetalert2.min.js"></script>
           <script src="<?= asset('assets') ?>/js/vendor/jquery-3.3.1.min.js"></script>

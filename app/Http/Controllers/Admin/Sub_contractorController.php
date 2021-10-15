@@ -410,8 +410,6 @@ class Sub_contractorController extends Controller
 
     }
 
-    
-
     public function update_sub_contractor_info(Request $request){
         $id =  (int)$request->input('id');
         $customer_info = Sub_contractor_info::where('id' , $id)->first();
@@ -549,9 +547,6 @@ class Sub_contractorController extends Controller
         }
 
 
-        $customer_info->status = $request->input('status');
-
-
         $customer_info->status_message = $request->input('status_message');
         if( $customer_info->user_id != 0){
             $user_id  = $customer_info->user_id;
@@ -561,9 +556,10 @@ class Sub_contractorController extends Controller
         }
 
         if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
-
             $customer_info->action = 'edit';
         }
+
+        $customer_info->status = $request->input('status');
 
         $customer_info->save();
 
@@ -646,8 +642,6 @@ class Sub_contractorController extends Controller
         return response()->json(['status'=>'1']);
 
     }
-
-    
 
     public function delete_sub_contractor (Request $request){
         $id =  (int)$request->input('id');
@@ -832,9 +826,10 @@ class Sub_contractorController extends Controller
     //////////// Rate Card ///////////
 
     
-    public function sub_contractor_rate_card (){
-        $data['sub_contractor_rate_cards'] = Sub_contractor_rate_card::All();
-        // dd($data['customer_rate_cards']);
+    public function sub_contractor_rate_card ($id){
+        // dd($id);
+        $data['sub_contractor_rate_cards'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' ,$id)->get();
+        // dd($data['sub_contractor_rate_cards']);
         $data['modules']= DB::table('modules')->get();
 
         //dd($data['modules']);
@@ -852,21 +847,23 @@ class Sub_contractorController extends Controller
     public function trash_sub_contractor_rate_card(){   
         $data['modules']= DB::table('modules')->get();
         $data['sub_contractor_rate_card'] = Sub_contractor_rate_card::All();
+        // $data['sub_contractor_id'] = Sub_contractor_rate_card::All();
+
         // dd( $data['customer_info']);
         $data['page_title'] = "Sub Contractor Rate Card Trash";
         $data['view'] = 'admin.sub_contractor.deleted_data_rate_card';
         return view('layout', ["data"=>$data]);
     }
 
-    public function sub_contractor_rate_card_add(){
+    public function sub_contractor_rate_card_add($id){
         $data['modules']= DB::table('modules')->get();
 
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+        $data['sub_contractor_id'] = $id;
         $data['page_title'] = "Add Sub Contractor Rate Card";
         $data['view'] = 'admin.sub_contractor.add_sub_contractor_rate_card';
         return view('layout', ["data"=>$data]);
@@ -964,24 +961,29 @@ class Sub_contractorController extends Controller
         // if($request->input('ap_diesel') != ''){
         //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         // }
+        $customer_rate_card->status = 'approved';
+        $customer_rate_card->user_id = 0;
 
-        $this->history_table('sub_contractor_histories', 'add' , 0);
+        $this->history_table('sub_contractor_histories', 'Add Rate Card' , 0);
+
+        // $this->history_table('sub_contractor_histories', 'add' , 0);
 
         if($customer_rate_card->save()){
 
-            return response()->json(['status'=>'1']);
+            return \Redirect::route('admin.sub_contractor.sub_contractor_rate_card',  $request->input('sub_contractor_id') )->with('success', 'Rate Card Added Sucessfully');
         }else{
 
-            return response()->json(['status'=>'0']);
+            return \Redirect::route('admin.sub_contractor.sub_contractor_rate_card',  $request->input('sub_contractor_id') )->with('success', 'Rate Card Added Sucessfully');
         }
 
 
     }
 
     public function update_sub_contractor_rate_card(Request $request){
+        // dd((int)$request->input('id'));
         $id =  (int)$request->input('id');
         $customer_rate_card = Sub_contractor_rate_card::where('id' , $id)->first();
-        $customer_info = Sub_contractor_info::where('id' , $customer_rate_card->sub_contractor_id)->first();
+        // $customer_info = Sub_contractor_info::where('id' , $customer_rate_card->sub_contractor_id)->first();
 
         if($request->input('customer_id') != ''){
             $customer_rate_card->customer_id = $request->input('customer_id');
@@ -1021,7 +1023,7 @@ class Sub_contractorController extends Controller
         }
 
         if($request->input('rate_price') != ''){
-            $customer_rate_card->rate = $request->input('rate_price');
+            $customer_rate_card->rate_price = $request->input('rate_price');
         }
 
         // if($request->input('detention') != ''){
@@ -1049,16 +1051,21 @@ class Sub_contractorController extends Controller
         //     $customer_rate_card->ap_diesel = $request->input('ap_diesel');
         // }
       
-        if( $customer_info->user_id != 0){
-            $user_id  = $customer_info->user_id;
+        if( $customer_rate_card->user_id != 0){
+            $user_id  = $customer_rate_card->user_id;
             
         }else{
             $user_id  = 0;
         }
 
-        if($customer_info->action == null || $customer_info->status == 'approved' || $customer_info->action == 'nill' ){
+        $status = $customer_rate_card->status;
+        // dd($customer_rate_card->action);
+        // dd($status);
+        $customer_rate_card->status = $request->input('status');
 
-            $customer_info->action = 'edit';
+        if($customer_rate_card->action == null || $status == 'approved' || $customer_rate_card->action == 'nill' ){
+
+            $customer_rate_card->action = 'Edit Rate Card';
         }
 
         $customer_rate_card->save();
@@ -1066,12 +1073,12 @@ class Sub_contractorController extends Controller
         // if($request->input('status') == 'approved'){
         //     $this->remove_table_name('customer_rate_card');
         // }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        if($customer_rate_card->status == 'approved' || $customer_rate_card->user_id == 0 ){
+             $this->history_table('sub_contractor_histories', $customer_rate_card->action , $user_id);
         }
 
 
-        return response()->json(['status'=>'1']);
+        return \Redirect::route('admin.sub_contractor.sub_contractor_rate_card',  $customer_rate_card->sub_contractor_id )->with('success', 'Rate Card Edited Sucessfully');
 
     }
 
@@ -1096,7 +1103,7 @@ class Sub_contractorController extends Controller
         }
 
        
-            $customer_rate_card->action = 'delete';
+            $customer_rate_card->action = 'Delete Rate Card';
         
         $customer_rate_card->save();
 
@@ -1129,7 +1136,7 @@ class Sub_contractorController extends Controller
         }
 
        
-        $customer_info->action = 'delete';
+        $customer_info->action = 'Delete Rate Card';
         
 
         $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
@@ -1164,7 +1171,7 @@ class Sub_contractorController extends Controller
         // }
 
         
-        $customer_info->action = 'restored';
+        $customer_info->action = 'Restore Rate Card';
         
         $customer_info->save();
         $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
