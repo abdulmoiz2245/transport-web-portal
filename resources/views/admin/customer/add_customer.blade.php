@@ -226,7 +226,7 @@ use App\Models\Erp_department;
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Select Department </label>
-                            <select name="department_name" id="Select_Department_" class="form-control">
+                            <select name="department_name" id="Select_Department_" class="form-control" required>
                                 @foreach(Erp_department::all() as $department)
                                     <option value="{{ $department->id }}"> {{ $department->name }} </option>
                                 @endforeach

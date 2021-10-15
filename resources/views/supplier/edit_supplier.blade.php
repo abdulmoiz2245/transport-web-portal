@@ -1,17 +1,18 @@
 <?php 
 use App\Models\Company_name;
+use App\Models\Supplier_new_department;
+
 
 ?>
-
 <div class="container">
     <div class="mb-4 text-right">
-        <a href="{{ route( 'user.supplier') }}">
+        <a href="{{ route('user.supplier.supplier') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 </div>
-
 <div id="smartwizard">
+    
     <ul class="nav">
        <li>
            <a class="nav-link" href="#step-1">
@@ -27,7 +28,7 @@ use App\Models\Company_name;
  
     <div class="tab-content">
         
-       <div id="step-1" class="tab-pane" role="tabpanel">
+        <div id="step-1" class="tab-pane" role="tabpanel">
             <div class="container">
                 
                 <form action="" method="post" id="customer_info"  enctype="multipart/form-data">
@@ -41,7 +42,16 @@ use App\Models\Company_name;
                                 
                             </div>
                         </div>
-                        
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="status" class="form-control">
+                                    <option value='pending' <?php if($data['customer_info']->status == 'pending') echo 'selected="selected"' ?> >Pending</option>
+                                    <option value='approved' <?php if($data['customer_info']->status == 'approved') echo 'selected="selected"' ?> >Approved</option>
+                                    <option value='rejected' <?php if($data['customer_info']->status == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
@@ -147,7 +157,7 @@ use App\Models\Company_name;
                          </div>         
                         <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >Portal Site Login</label>
-                            <textarea name="portal_login" cols="30" rows="2" class="form-control">{{ $data['customer_info']->portal_login}}</textarea>
+                            <textarea name="portal_login" cols="30" rows="10" class="form-control">{{ $data['customer_info']->portal_login}}</textarea>
                         </div> -->
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -220,7 +230,7 @@ use App\Models\Company_name;
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input"   name="guaranty_reciving" >
-                                        <label class="custom-file-label">Choose file</label>
+                                        <label class="custom-file-label" >Choose file</label>
                                     </div>
                                 </div>
                             </div>
@@ -354,18 +364,31 @@ use App\Models\Company_name;
        </div>
 
        <div id="step-2" class="tab-pane" role="tabpanel">
+            <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                Add Department
+            </button>
            <div class="container">
                 @if($data['customer_department'] != null)
                 <form action="" method="post" id="customer_dep">
                     @csrf
                     <input type="text" name="id" value="{{ $data['customer_department']->id }}" class="d-none">
                     <div class="row">
-                        <div class=" col-md-6 col-12 mb-3">
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >Account Name </label>
                             <input type="text" name="account_name" value="{{ $data['customer_department']->account_name}}" class="form-control" required>
-                        </div>
+                        </div> -->
 
                         <div class=" col-md-6 col-12 mb-3">
+                            <label >Select Department </label>
+                            <select name="account_name" id="Select_Department_" class="form-control">
+                                @foreach(Supplier_new_department::all() as $department)
+                                    <option value="{{ $department->id }}"  <?php if($data['customer_department']->account_name == $department->id) echo 'selected="selected"' ?>> {{ $department->name }} </option>
+                                @endforeach
+                            </select>
+                            
+                        </div>
+
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >Delivery/Order </label>
                             <input type="text" name="delivery_order" value="{{ $data['customer_department']->delivery_order}}" class="form-control" required>
                         </div>
@@ -378,7 +401,7 @@ use App\Models\Company_name;
                         <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON DESIGNATION </label>
                             <input type="text" value="{{ $data['customer_department']->concerned_person_designation}}" name="concerned_person_designation" class="form-control" required>
-                        </div>
+                        </div> -->
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Tell</label>
@@ -412,28 +435,28 @@ use App\Models\Company_name;
                     @csrf
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Account Name </label>
-                            <input type="text" name="account_name"  class="form-control" required>
+                            <label >Select Department </label>
+                            <select name="account_name" id="Select_Department_1" class="form-control">
+                                @foreach(Supplier_new_department::all() as $department)
+                                    <option value="{{ $department->id }}"> {{ $department->name }} </option>
+                                @endforeach
+                            </select>
+                            
                         </div>
 
-                        <div class=" col-md-6 col-12 mb-3">
-                            <label >Delivery/Order </label>
-                            <input type="text" name="delivery_order"  class="form-control" required>
-                        </div>
-
-                        <div class=" col-md-6 col-12 mb-3">
+                        <!-- <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON NAME </label>
                             <input type="text" name="concerned_person_name" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON DESIGNATION </label>
-                            <input type="text" name="concerned_person_designation" class="form-control" required>
-                        </div>
+                            <input type="text" name="concerned_person_designation" class="form-control" required >
+                        </div> -->
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Tell</label>
-                            <input type="text" name="tell" class="form-control" >required
+                            <input type="text" name="tell" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
@@ -448,7 +471,7 @@ use App\Models\Company_name;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Email</label>
-                            <input type="text" name="email" class="form-control" required>
+                            <input type="text" name="email" class="form-control"required >
                         </div>
                     
                         
@@ -459,6 +482,36 @@ use App\Models\Company_name;
                 @endif
                 
            </div>
+           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" method="post" id="department_add">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="">Department Name</label>
+                                    <input type="text" name="new_dep_name" class="form-control" required>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="form-group" href='#'>
+                                    <input type="submit" class="btn" value="Submit">
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+ 
           
        </div>
     </div>
@@ -539,7 +592,7 @@ use App\Models\Company_name;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Supplier Department Updated Successfully");
-                        window.location.replace("{{ route('user.supplier') }}");
+                        $('#smartwizard').smartWizard("next");
                     }
                 },
                 error: function (){    
@@ -563,7 +616,35 @@ use App\Models\Company_name;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Supplier Department Added Successfully");
-                        window.location.replace("{{ route('user.supplier') }}");
+                        window.location.replace("{{ route('user.supplier.supplier') }}");
+                    }
+                },
+                error: function (){    
+                    alert('Technical Error (contact to web master)');
+                }
+            });
+
+        });
+
+        $('#department_add').on('submit', function (e) {
+
+            e.preventDefault();
+            var formData = new FormData($('#department_add')[0]);
+            // formData.append('customer_id', id);
+            formData.append( '_token' , '{{ csrf_token() }}')
+            $.ajax({
+                type: 'post',
+                url: "{{ route('user.supplier.save_supplier_new_department') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        // console.log($("#    "));
+                        $("#Select_Department_").html(data.row);
+                        $("#Select_Department_1").html(data.row);
+
+                        toastr.success("Customer Department Added Successfully");
                     }
                 },
                 error: function (){    
@@ -587,14 +668,10 @@ use App\Models\Company_name;
         });
 
         $('#smartwizard').smartWizard("reset");
-
-    });
-</script>
-<script>
-    var date = new Date();
+        var date = new Date();
     date.setDate(date.getDate() + 10);
     var new_date = date.toLocaleDateString('en-CA');
     
     console.log($("[type='date']").attr("min",new_date) );
-
+    });
 </script>
