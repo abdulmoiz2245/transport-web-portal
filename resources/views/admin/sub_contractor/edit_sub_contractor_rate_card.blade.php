@@ -47,7 +47,7 @@ use App\Models\User;
                     <label >Select Customer</label>
                     <select name="customer_id" class="form-control customer" id="customer_id" required>
                         @foreach(Customer_info::all() as $customer)
-                        @if($customer->status == 'approved')
+                        @if($customer->status == 'approved' && $customer->row_status != 'deleted')
                         <option value="{{ $customer->id }}" <?php if($data['customer_rate_card']->customer_id == $customer->id ) echo 'selected' ?> >{{ $customer->name }}</option>
                         @endif
                         @endforeach

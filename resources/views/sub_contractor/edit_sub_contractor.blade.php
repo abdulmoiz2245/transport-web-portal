@@ -430,7 +430,7 @@ use App\Models\Company_name;
                             <div class="container">
                                 <div class="form-group">
                                     <label for="">Department Name</label>
-                                    <input type="text" name="new_dep_name" class="form-control">
+                                    <input type="text" name="new_dep_name" class="form-control" required>
                                 </div>
                                 
                             </div>

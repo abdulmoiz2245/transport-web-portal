@@ -287,7 +287,7 @@ use App\Models\Erp_department;
        <div id="step-2" class="tab-pane" role="tabpanel">
            <div class="container">
                @if($data['customer_department'] != null)
-               <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
+                <button type="button" class="btn btn-primary mb-3 mt-3" data-toggle="modal" data-target="#exampleModal" >
                     Add Department
                 </button>
                 <form action="" method="post" id="customer_dep">
@@ -410,7 +410,7 @@ use App\Models\Erp_department;
                             <div class="container">
                                 <div class="form-group">
                                     <label for="">Department Name</label>
-                                    <input type="text" name="new_dep_name" class="form-control">
+                                    <input type="text" name="new_dep_name" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn" value="Submit">
