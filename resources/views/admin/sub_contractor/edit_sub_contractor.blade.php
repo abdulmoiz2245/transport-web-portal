@@ -552,7 +552,8 @@ use App\Models\Company_name;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Department Added Successfully");
-                        $('#smartwizard').smartWizard("next");
+                        // $('#smartwizard').smartWizard("next");
+                        window.location.replace("{{ route('admin.sub_contractor.sub_contractor') }}");
                     }
                 },
                 error: function (){    
@@ -576,7 +577,7 @@ use App\Models\Company_name;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Rate Card Added Successfully");
-                        window.location.replace("{{ route('admin.sub_contractor.sub_contractor') }}");
+                        
                     }
                 },
                 error: function (){    

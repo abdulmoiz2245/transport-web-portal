@@ -552,6 +552,7 @@ use App\Models\Company_name;
                     if (data.status == 1) {
                         toastr.success("Sub Contractor Department Added Successfully");
                         $('#smartwizard').smartWizard("next");
+                        window.location.replace("{{ route('user.sub_contractor') }}");
                     }
                 },
                 error: function (){    
