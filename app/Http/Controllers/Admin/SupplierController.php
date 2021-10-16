@@ -755,7 +755,7 @@ class SupplierController extends Controller
             $customer_info->action = 'delete';
         
 
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('supplier_histories', $customer_info->action , $user_id);
  
         if( $customer_info->save()){
            
@@ -790,7 +790,7 @@ class SupplierController extends Controller
             $customer_info->action = 'restored';
         
         $customer_info->save();
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('supplier_histories', $customer_info->action , $user_id);
         $customer_info->action = 'nill';
         $customer_info->save();
       

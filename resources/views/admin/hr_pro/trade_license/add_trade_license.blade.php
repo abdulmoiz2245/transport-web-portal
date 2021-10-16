@@ -6,17 +6,13 @@ use App\Models\Company_name;
    
     <div class="row mb-5">
         <div class="col-4">
-            <a href="{{ route( 'admin.hr_pro.add_comany_name') }}">
-                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
-        </div>
-            
-        <div class="col-8">
-            <div class="text-right">
-                <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
-                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-                </a>
-            </div>
+
+            <a href="{{ route( 'admin.hr_pro.add_comany_name') }}" class="ml-3">
+                <button class="btn btn-primary">Add Company</button>
+            </a>
         </div>
     </div>
     <form action="{{route('admin.hr_pro.save_trade_license__sponsors__partners')}}" method="post"    enctype="multipart/form-data">

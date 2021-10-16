@@ -1,3 +1,6 @@
+<?php 
+ use App\Models\Supplier_new_department;
+?>
 <div class="container">
     <div class="mb-4">
         <a href="{{ route( 'admin.supplier.supplier') }}">
@@ -449,50 +452,15 @@
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">
                                 <div class="col-4">
-                                    <h5 class=""><b>Account Name :</b></h5>
+                                    <h5 class=""><b>Department Name :</b></h5>
 
                                 </div>
                                 <div class="col-6">
-                                    <p>{{ $data['customer_department']->account_name }}</p>
+                                    <p> {{ Supplier_new_department::find($data['customer_department']->account_name)->name}} </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>Delivery/Order :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_department']->delivery_order }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>CONCERNED PERSON NAME :</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_department']->concerned_person_name }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <h5 class=""><b>CONCERNED PERSON DESIGNATION:</b></h5>
-
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ $data['customer_department']->concerned_person_designation }}</p>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="col-md-6 col-12 mb-3">
                             <div class="row">

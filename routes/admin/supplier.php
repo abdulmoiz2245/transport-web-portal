@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\Route;
         ->name('table_history_clear');
 
         Route::post('/new-department', [SupplierController::class, 'save_department']) 
-        ->name('save_sub_contractor_new_department');
+        ->name('save_supplier_new_department');
     });
 
     

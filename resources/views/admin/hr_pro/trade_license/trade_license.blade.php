@@ -15,20 +15,20 @@ use App\Models\Office_Land_contract;
     </a> -->
 
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="">
-            <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-
-        </a>
-
-        <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}" class="ml-3">
+        <div>
+            <a href="{{ route( 'admin.dashboard') }}" class="ml-3">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
+            <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="ml-3">
+                <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
+        
 
+        <div class=""> 
             <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a> 
-
             <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="ml-3" target="_blank">
                 <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>

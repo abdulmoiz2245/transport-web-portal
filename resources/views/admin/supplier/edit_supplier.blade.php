@@ -634,7 +634,7 @@ use App\Models\Supplier_new_department;
             formData.append( '_token' , '{{ csrf_token() }}')
             $.ajax({
                 type: 'post',
-                url: "{{ route( 'admin.sub_contractor.save_sub_contractor_new_department') }}",
+                url: "{{ route( 'admin.supplier.save_supplier_new_department') }}",
                 data: formData,
                 processData: false,
                 contentType: false,

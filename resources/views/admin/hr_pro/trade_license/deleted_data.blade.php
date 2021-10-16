@@ -5,7 +5,7 @@ use App\Models\Trade_license;
 use App\Models\Office_Land_contract;
 ?>
 <div class="container">
-     <div class="mb-5 text-right"> 
+     <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -24,7 +24,7 @@ use App\Models\Office_Land_contract;
                     <th>Company</th>
                     <th>Expiary Date</th>
                     <th>User Name</th>
-                    <!-- <th>User Action</th> -->
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -70,6 +70,7 @@ use App\Models\Office_Land_contract;
                         @endif
                     </td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trade_license->action }}</span></td> -->
+                    <td>{{ $trade_license->updated_at}}</td>
                     <td>
                         <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                             @csrf
@@ -81,9 +82,9 @@ use App\Models\Office_Land_contract;
 
                        
                             
-                        <a href="#" id="{{ $trade_license->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
                         <a href="#" id="{{ $trade_license->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

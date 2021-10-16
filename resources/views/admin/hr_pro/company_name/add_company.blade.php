@@ -1,3 +1,8 @@
+<div class="mb-5"> 
+    <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
+        <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+    </a>
+</div>
 <div class="container">
     <form action="{{ route('admin.hr_pro.save_company') }}" method="post">
     @csrf

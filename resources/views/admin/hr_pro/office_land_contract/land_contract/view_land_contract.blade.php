@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <div class="mb-5 text-right"> 
+    <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.land_contracts') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>

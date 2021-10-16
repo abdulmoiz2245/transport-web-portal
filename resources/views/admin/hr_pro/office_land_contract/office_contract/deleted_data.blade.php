@@ -5,14 +5,11 @@ use App\Models\Trade_license;
 use App\Models\Office_Land_contract;
 ?>
 <div class="container">
-     <div class="mb-5 text-right"> 
+     <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.office_contracts') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
-
-    
-
 
     <div class="table-responsive">
         <table class="display table responsive nowrap  " style="width:100%">
@@ -25,6 +22,7 @@ use App\Models\Office_Land_contract;
                     <th>Contract Expiary Date</th>
                     <th>Ijari Number</th>
                     <th>Username</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -52,6 +50,7 @@ use App\Models\Office_Land_contract;
                                 @endif
                     </td>                                                                
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$office_contract->action }}</span></td> -->
+                    <td>{{ $office_contract->updated_at }}</td>
                     <td>
                         <form action="{{ route( 'admin.hr_pro.view_office_contracts') }}" method="post" class="d-inline">
                             @csrf
@@ -63,12 +62,11 @@ use App\Models\Office_Land_contract;
 
                        
                             
-                        <a href="#" id="{{ $office_contract->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $office_contract->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
-                        <a href="#" id="{{ $office_contract->id }}"  class="restore-file"  >
-                            <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->
+                        <a href="#" id="{{ $office_contract->id }}"  class="restore-file"  onclick="restore_fun(this.id)">
                             <button class="btn btn-success">Restore</button>
                         </a>
                     </td>
@@ -97,8 +95,10 @@ use App\Models\Office_Land_contract;
         } );
     });
 
-    $('.restore-file').click(function () {
-        var file_id = this.id;
+    function restore_fun(clicked_id) {
+        console.log(clicked_id);
+        // $('.restore-file').click(function () {
+        var file_id = clicked_id;
         swal({
             title: 'Are you sure?',
             text: "You want to Restore this Data.",
@@ -130,7 +130,7 @@ use App\Models\Office_Land_contract;
             
 
         })
-    });
+    }
 
     $('.delete-file').click(function () {
         var file_id = this.id;

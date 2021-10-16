@@ -1,6 +1,6 @@
 <div class="container   ">
 
-    <div class="mb-5 text-right"> 
+    <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
