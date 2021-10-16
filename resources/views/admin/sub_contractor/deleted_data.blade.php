@@ -4,7 +4,7 @@ use App\Models\Sub_contractor_info;
 
 ?>
 <div class="container">
-    <div class="mb-5 text-right">
+    <div class="mb-5">
         <a href="{{ route('admin.sub_contractor.sub_contractor') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>
@@ -17,6 +17,7 @@ use App\Models\Sub_contractor_info;
                     <th>Sub Contractor Name</th>
                     <th>Sub Contractor Email</th>
                     <th>Username</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ use App\Models\Sub_contractor_info;
                         
                         @endif
                     </td>
+                    <td>{{ $customer_info->updated_at }}</td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
                     <td>
                             

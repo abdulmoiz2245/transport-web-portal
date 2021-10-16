@@ -77,7 +77,7 @@ use App\Models\User;
                     <td>
                          
 
-                        <a href="#" id="{{ $customer_rate_card->id }}"  class="restore-file"  >
+                        <a href="#" id="{{ $customer_rate_card->id }}"  class="restore-file"  onclick="restore_fun(this.id)">
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->
                             <button class="btn btn-success">Restore</button>
                         </a>

@@ -4,7 +4,7 @@ use App\Models\Supplier_new_department;
 
 ?>
 <div class="container">
-    <div class="mb-4 text-right">
+    <div class="mb-4">
         <a href="{{ route( 'admin.supplier.supplier') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -454,7 +454,7 @@ use App\Models\Supplier_new_department;
             formData.append( '_token' , '{{ csrf_token() }}')
             $.ajax({
                 type: 'post',
-                url: "{{ route( 'admin.supplier.save_supplier_new_department') }}",
+                url: "{{ route( 'admin.sub_contractor.save_sub_contractor_new_department') }}",
                 data: formData,
                 processData: false,
                 contentType: false,

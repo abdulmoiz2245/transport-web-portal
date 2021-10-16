@@ -7,7 +7,7 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <div class="mb-5 text-right">
+    <div class="mb-5">
         <a href="{{ route('admin.customer.customer') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>
@@ -32,6 +32,7 @@ use App\Models\User;
                     <th>Trip Type </th>
                     <th>Ap Km as per trip: </th>
                     <th>Ap Diesel as per trip</th>
+                    <th>Date</th>
 
 
                     <th>Action</th>
@@ -71,6 +72,7 @@ use App\Models\User;
                     <td>{{ $customer_rate_card->trip }}</td>
                     <td>{{ $customer_rate_card->ap_km }}</td>
                     <td>{{ $customer_rate_card->ap_diesel }}</td>
+                    <td>{{ $customer_rate_card->updated_at }}</td>
                     <td>
                                 
 

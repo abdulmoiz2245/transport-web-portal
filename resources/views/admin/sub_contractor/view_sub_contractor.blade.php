@@ -5,6 +5,11 @@ use App\Models\Sub_contractor_new_department;
 ?>
 
 <div class="container">
+<div class="mb-4">
+        <a href="{{ route( 'admin.sub_contractor.sub_contractor') }}">
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+        </a>
+    </div>
     <div id="smartwizard" class=" mb-2">
         <ul class="nav">
             <li>

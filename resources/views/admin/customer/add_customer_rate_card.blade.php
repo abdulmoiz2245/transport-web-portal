@@ -9,8 +9,8 @@ use App\Models\User;
 ?>
 
 <div class="container">
-    <div class="mb-4 text-right">
-        <a href="{{ route( 'admin.customer.customer' $data['customer_rate_card']->customer_id) }}">
+    <div class="mb-4">
+        <a href="{{ route( 'admin.customer.customer', $data['customer_id']) }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -25,13 +25,13 @@ use App\Models\User;
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >From Location </label>
-                    <input type="text" name="from" class="form-control" >
+                    <input type="text" name="from" class="form-control" required>
                 </div>
 
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >To Location </label>
-                    <input type="text" name="to" class="form-control" >
+                    <input type="text" name="to" class="form-control" required>
                 </div>
 
             <div class="col-md-6 col-12 mb-3">
@@ -74,13 +74,13 @@ use App\Models\User;
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Rate </label>
-                    <input type="number" name="rate_price" class="form-control"  >
+                    <input type="number" name="rate_price" class="form-control"  required>
                 </div>
 
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Driver Comission </label>
-                    <input type="number" name="driver_comission" class="form-control" >
+                    <input type="number" name="driver_comission" class="form-control" required>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
@@ -95,13 +95,13 @@ use App\Models\User;
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Ap Fuel as per trip</label>
-                    <input id="ap_fuel" type="number" name="ap_fuel" class="form-control" >
+                    <input id="ap_fuel" type="number" name="ap_fuel" class="form-control">
             </div>
 
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Ap Km as per trip</label>
-                    <input  id="ap_km" type="number" name="ap_km" class="form-control" >
+                    <input  id="ap_km" type="number" name="ap_km" class="form-control">
             </div>
 
             <div class="col-md-6 col-12 mb-3">
@@ -127,13 +127,13 @@ use App\Models\User;
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Days / Hours</label>
-                    <input type="number" name="time" class="form-control">
+                    <input type="number" name="time" class="form-control" required>
                 </div>
 
             <div class="col-md-6 col-12 mb-3">
                 
                     <label >Per Days Charges / Per Hours Charges</label>
-                    <input type="number" name="charges" class="form-control">
+                    <input type="number" name="charges" class="form-control" required>
                 </div>
 
             

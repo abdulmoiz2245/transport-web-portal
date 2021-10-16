@@ -2,7 +2,7 @@
 use App\Models\User;
 ?>
 <div class="container">
-    <div class="mb-5 text-right">
+    <div class="mb-5">
         <a href="{{ route('admin.supplier.supplier') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>
@@ -16,6 +16,7 @@ use App\Models\User;
                     <th>Supplier Name</th>
                     <th>Supplier Email</th>
                     <th>Username</th>
+                    <th>Date</th>
                     <!-- <th>User Action</th> -->
                     <th>Action</th>
                 </tr>
@@ -41,6 +42,7 @@ use App\Models\User;
                     </td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_info->action }}</span></td> -->
+                    <td>{{ $customer_info->updated_at }}</td>
                     <td>
                         <form action="{{ route( 'admin.supplier.view_supplier') }}" method="post" class="d-inline">
                             @csrf
@@ -58,9 +60,9 @@ use App\Models\User;
                             </button>
                         </form> -->
                             
-                        <a href="#" id="{{ $customer_info->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $customer_info->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
                         <a href="#" id="{{ $customer_info->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="mb-4 text-right">
+    <div class="mb-4">
         <a href="{{ route( 'admin.customer.customer_rate_card' ,$data['customer_rate_card']->customer_id ) }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -150,14 +150,14 @@
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
                     <label >Days / Hours</label>
-                    <input  type="number"  value="{{ $data['customer_rate_card']->time}}" name="time" class="form-control">
+                    <input  type="number"  value="{{ $data['customer_rate_card']->time}}" name="time" class="form-control" required>
                 </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
                     <label >Per Days Charges / Per Hours Charges</label>
-                    <input type="number"  value="{{ $data['customer_rate_card']->charges}}" name="charges" class="form-control">
+                    <input type="number"  value="{{ $data['customer_rate_card']->charges}}" name="charges" class="form-control" required>
                 </div>
             </div>
 
