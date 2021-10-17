@@ -7,7 +7,7 @@ use App\Models\User;
 <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'user.hr_pro.mobile_trained_individual') }}">
+            <a href="{{ route( 'user.hr_pro.mobiles_fuel_tanks_renewals') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
             <a href="{{ route( 'user.hr_pro.add_mobiles_trained_individual') }}" class="ml-3">

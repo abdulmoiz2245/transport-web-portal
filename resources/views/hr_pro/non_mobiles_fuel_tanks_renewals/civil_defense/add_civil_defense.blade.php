@@ -24,14 +24,14 @@
                     <span class="input-group-text" >Upload CIVIL DEFENSE DOCUMENT</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="document">
+                    <input type="file" class="custom-file-input" name="document" required>
                     <label class="custom-file-label">Choose file</label>
                 </div>
             </div>
         </div>
         <div class="form-group col-md-6 col-12">
             <label for="admin-status">Expiary Date</label>
-            <input type="date" name="expiary_date" class="form-control">
+            <input type="date" name="expiary_date" class="form-control" required>
         </div>
         <div class="form-group col-md-6 col-12">
             <button type="submit" class="btn btn-primary">Submit</button>

@@ -2569,7 +2569,7 @@ class Hr_ProController extends Controller
 
         $trained_individual->save();
 
-        return \Redirect::route('user.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
+        return \Redirect::route('user.hr_pro.mobile_trained_individual')->with('success', 'Data Added Sucessfully');
 
     }
 

@@ -58,7 +58,7 @@ use App\Models\Company_name;
            <div class="col-6">
                 <div class="form-group">
                     <label>Expiary Date</label>
-                    <input name="expiary_date" class="form-control" type="date" >
+                    <input name="expiary_date" class="form-control" type="date" required>
 
                 </div>
            </div>

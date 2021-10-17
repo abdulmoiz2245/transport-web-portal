@@ -5,7 +5,7 @@
     <div class="container">
         <div class="d-flex" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}" class="mr-3">
+                <a href="{{ route( 'user.dashboard') }}" class="mr-3">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 <a href="{{ route( 'user.hr_pro.add_trade_license__sponsors__partners') }}" class="">
