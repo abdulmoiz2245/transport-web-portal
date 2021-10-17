@@ -5,7 +5,7 @@ use App\Models\Trade_license;
 use App\Models\Office_Land_contract;
 ?>
 <div class="container">
-     <div class="mb-5 text-right"> 
+     <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.mobile_trained_individual') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -26,6 +26,7 @@ use App\Models\Office_Land_contract;
                     <th class="d-none">Pass Card</th>
                     <th class="d-none">Front Pic</th>
                     <th class="d-none">Back Pic</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -50,21 +51,22 @@ use App\Models\Office_Land_contract;
                                 
                                 @endif
                     </td>
+                    <td>{{ $trained_individual->updated_at }}</td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trained_individual->action }}</span></td> -->
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_mobiles_trained_individual') }}" method="post" class="d-inline">
+                        <!-- <form action="{{ route( 'admin.hr_pro.view_mobiles_trained_individual') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$trained_individual->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
-                        </form>
+                        </form> -->
 
                        
                             
-                        <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
                         <a href="#" id="{{ $trained_individual->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

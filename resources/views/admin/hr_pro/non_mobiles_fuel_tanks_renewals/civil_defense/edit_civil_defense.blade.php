@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="mb-4 text-right">
+    <div class="mb-4">
         <a href="{{ route( 'admin.hr_pro.non_mobile_civil_defence') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>

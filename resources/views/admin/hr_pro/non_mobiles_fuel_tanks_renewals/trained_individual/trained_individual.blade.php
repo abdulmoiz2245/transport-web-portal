@@ -11,16 +11,17 @@ use App\Models\User;
     </a> -->
 
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.hr_pro.add_non_mobile_trained_individual') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
-        
-
-        <div class=""> 
+        <div>
             <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
+            <a href="{{ route( 'admin.hr_pro.add_non_mobile_trained_individual') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
+
+        <div class=""> 
+            
 
             <a href="{{ route( 'admin.hr_pro.non_mobile_trained_individual_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
@@ -83,7 +84,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'approved' && $trained_individual->status != 'deleted')
+                                @if($trained_individual->status == 'approved' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -161,7 +162,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'pending' && $trained_individual->status != 'deleted')
+                                @if($trained_individual->status == 'pending' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>
@@ -236,7 +237,7 @@ use App\Models\User;
                             </thead>
                             <tbody>
                                 @foreach($data['trained_individual'] as $trained_individual)
-                                @if($trained_individual->status == 'rejected' && $trained_individual->status != 'deleted')
+                                @if($trained_individual->status == 'rejected' && $trained_individual->row_status != 'deleted')
                                 <tr>
                                     
                                 <td>{{ $trained_individual->id }}</td>

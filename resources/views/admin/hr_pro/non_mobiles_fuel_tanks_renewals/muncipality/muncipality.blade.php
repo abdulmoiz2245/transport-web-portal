@@ -9,16 +9,15 @@ use App\Models\User;
     
 
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.hr_pro.add_non_mobile_muncipality') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
-        
-
-        <div class=""> 
+        <div>
             <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-
+            <a href="{{ route( 'admin.hr_pro.add_non_mobile_muncipality') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
+        
+        <div class=""> 
             <a href="{{ route( 'admin.hr_pro.non_mobile_muncipality_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>

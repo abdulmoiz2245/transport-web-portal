@@ -1,6 +1,6 @@
 <div class="container">
-<div class="mb-5 text-right">
-            <a href="{{ route( 'user.hr_pro.mobiles_fuel_tanks_renewals') }}">
+<div class="mb-5">
+            <a href="{{ route( 'user.hr_pro.mobile_muncipality') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
     </div>

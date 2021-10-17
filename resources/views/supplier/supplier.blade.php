@@ -8,17 +8,18 @@ use App\Models\User;
 ?>
 <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'user.supplier.add_supplier') }}" class="">
+    <div>
+        <a href="{{ route( 'user.dashboard') }}">
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+        </a>
+        <a href="{{ route( 'user.supplier.add_supplier') }}" class="ml-3">
             <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
-
         
+    </div>
 
-        <div class=""> 
-            <a href="{{ route( 'user.dashboard') }}">
-                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
-
+    <div class=""> 
+            
             <a href="{{ route( 'user.supplier.supplier_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>

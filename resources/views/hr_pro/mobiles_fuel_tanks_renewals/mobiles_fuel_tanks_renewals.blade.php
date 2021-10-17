@@ -28,7 +28,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('user.hr_pro.mobiles_trained_individual') }}">
+            <a href="{{ route('user.hr_pro.mobile_trained_individual') }}">
             <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Financial"></i>

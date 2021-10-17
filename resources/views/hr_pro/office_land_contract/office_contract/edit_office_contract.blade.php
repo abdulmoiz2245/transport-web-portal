@@ -1,6 +1,6 @@
 <div class="container">
 
-    <div class="mb-5 text-rights"> 
+    <div class="mb-5"> 
         <a href="{{ route( 'user.hr_pro.office_contracts') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>

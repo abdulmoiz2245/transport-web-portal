@@ -4,19 +4,16 @@
     ?>
     <div class="container">
         <div class="d-flex" style="justify-content: space-between;">
-            <a href="{{ route( 'user.hr_pro.add_trade_license__sponsors__partners') }}" class="">
-                <button class="btn btn-primary">
-                Add Trade License
-                </button>
-            </a>
+            <div>
+                <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}" class="mr-3">
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+                </a>
+                <a href="{{ route( 'user.hr_pro.add_trade_license__sponsors__partners') }}" class="">
+                    <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+                </a>
+            </div>
 
             <div class=""> 
-                <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}" class="ml-3">
-                    <button class="btn btn-primary">
-                        Back
-                    </button>
-                </a>
-
                 <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
                 </a> 

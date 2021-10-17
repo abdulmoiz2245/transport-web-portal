@@ -6,17 +6,17 @@ use App\Models\Office_Land_contract;
   
 ?>
 <div class="container">
-<div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'user.hr_pro.add_office_contracts') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
-        
-        <div class=""> 
+    <div class="d-flex" style="justify-content: space-between;">
+        <div>
             <a href="{{ route( 'user.hr_pro.office_contracts__land_contracts') }}">
                 <img src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
-
+            <a href="{{ route( 'user.hr_pro.add_office_contracts') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>  
+        </div>
+               
+        <div class=""> 
             <a href="{{ route( 'user.hr_pro.office_contracts_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a> 

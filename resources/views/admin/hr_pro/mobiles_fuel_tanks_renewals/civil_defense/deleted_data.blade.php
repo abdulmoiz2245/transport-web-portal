@@ -5,7 +5,7 @@ use App\Models\Trade_license;
 use App\Models\Office_Land_contract;
 ?>
 <div class="container">
-     <div class="mb-5 text-right"> 
+     <div class="mb-5"> 
         <a href="{{ route( 'admin.hr_pro.mobile_civil_defence') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -21,7 +21,8 @@ use App\Models\Office_Land_contract;
                     <th>ID</th>
                     <th>Document</th>
                     <th>Expiary Date</th>
-                    <!-- <th>Username</th> -->
+                    <th>Username</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -29,7 +30,7 @@ use App\Models\Office_Land_contract;
             @foreach($data['civil_defenses'] as $civil_defense)
             @if($civil_defense->row_status == 'deleted')
             <tr>
-                
+                <td>{{ $civil_defense->id }}</td>
                 <td>
                     <a  target="_blank" href="{{ asset('main_admin') }}/hr_pro/non_mobile_fuel_tank_renewals/{{$civil_defense->document}}">
                         <button class="btn">View</button>
@@ -53,6 +54,7 @@ use App\Models\Office_Land_contract;
                         
                         @endif
                 </td>
+                <td>{{ $civil_defense->updated_at }}</td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$civil_defense->action }}</span></td> -->
                     <td>
                         <!-- <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
@@ -65,9 +67,9 @@ use App\Models\Office_Land_contract;
 
                        
                             
-                        <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
+                        <!-- <a href="#" id="{{ $civil_defense->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a>
+                        </a> -->
 
                         <a href="#" id="{{ $civil_defense->id }}"  class="restore-file"  >
                             <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->

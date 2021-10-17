@@ -7,7 +7,7 @@ use App\Models\User;
 
 ?>
 <div class="container">
-    <div class="mb-5 text-right">
+    <div class="mb-5">
         <a href="{{ route( 'user.customer.customer_rate_card') }}" class="mb-5">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
          </a>

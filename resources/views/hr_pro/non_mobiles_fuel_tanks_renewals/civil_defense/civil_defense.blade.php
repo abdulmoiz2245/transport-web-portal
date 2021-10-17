@@ -5,16 +5,16 @@ use App\Models\Civil_defense_documents;
 ?>
 <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'user.hr_pro.add_non_mobile_civil_defence') }}" class="">
-            <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-        </a>
-
-        
-        <div class=""> 
+        <div>
             <a href="{{ route( 'user.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
+            <a href="{{ route( 'user.hr_pro.add_non_mobile_civil_defence') }}" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
 
+        <div class=""> 
             <a href="{{ route( 'user.hr_pro.non_mobile_civil_defence_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a>
@@ -42,17 +42,15 @@ use App\Models\Civil_defense_documents;
             @endif
             <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved ({{  
-                        Civil_defense_documents::where('status', '=', 'approved')->where('type', '=', 'non_mobile')->count() }})</b> </a>
+                    <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved </b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending ({{  Civil_defense_documents::where('status', '=', 'pending')->where('type', '=', 'non_mobile')->count() }})</b> </a>
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending</b> </a>
                 </li>
                 <li class="nav-item">
                     
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected ({{  
-                        Civil_defense_documents::where('status', '=', 'rejected')->where('type', '=', 'non_mobile')->count() }})</b> </a>
+                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected</b> </a>
                 </li>
             </ul>
             <div class="tab-content profile-tab" id="myTabContent">

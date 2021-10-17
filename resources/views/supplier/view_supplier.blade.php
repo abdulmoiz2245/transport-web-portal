@@ -2,7 +2,7 @@
  use App\Models\Supplier_new_department;
 ?>
 <div class="container">
-    <div class="mb-4 text-right">
+    <div class="mb-4">
         <a href="{{ route( 'user.supplier') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>

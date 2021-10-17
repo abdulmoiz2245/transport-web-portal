@@ -1,9 +1,10 @@
-<div class="mb-5 text-right"> 
-        <a href="{{ route( 'user.hr_pro.non_mobile_muncipality') }}">
-            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-        </a>
-</div>
+
 <div class="container">
+    <div class="mb-5"> 
+            <a href="{{ route( 'user.hr_pro.non_mobile_muncipality') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+    </div>
     <form action="{{ route('user.hr_pro.save_non_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
     @csrf
         <div class="row">

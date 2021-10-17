@@ -5,8 +5,8 @@ use App\Models\Supplier_new_department;
 
 ?>
 <div class="container">
-    <div class="mb-4 text-right">
-        <a href="{{ route('user.supplier.supplier') }}">
+    <div class="mb-4">
+        <a href="{{ route('user.supplier') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -616,7 +616,7 @@ use App\Models\Supplier_new_department;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Supplier Department Added Successfully");
-                        window.location.replace("{{ route('user.supplier.supplier') }}");
+                        window.location.replace("{{ route('user.supplier') }}");
                     }
                 },
                 error: function (){    

@@ -1,4 +1,4 @@
-<div class="mb-5 text-right"> 
+<div class="mb-5"> 
     <a href="{{ route( 'admin.hr_pro.non_mobile_muncipality') }}">
         <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
     </a>

@@ -13,15 +13,20 @@ use App\Models\User;
         </button>
     </a> -->
     <div class="d-flex" style="justify-content: space-between;">
-        <a href="{{ route( 'admin.hr_pro.add_non_mobile_civil_defence') }}" class="">
+    <div>
+        <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+        <a href="{{ route( 'admin.hr_pro.add_non_mobile_civil_defence') }}" class="ml-3">
             <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
         </a>
 
+    </div>
+        
+
         
         <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.non_mobiles_fuel_tanks_renewals') }}">
-                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
+            
 
             <a href="{{ route( 'admin.hr_pro.non_mobile_civil_defence_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">

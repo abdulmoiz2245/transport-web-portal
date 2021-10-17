@@ -2,9 +2,7 @@
 
     <div class="mb-5"> 
         <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}">
-            <button class="btn btn-primary">
-                Back
-            </button>
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">      
         </a>
     </div>
 
