@@ -103,8 +103,8 @@
 
             <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
-                    <label >With Fuel / Without Fuel</label>
-                    <select name="trip" class="form-control" >
+                    <label for="with_fuel">With Fuel / Without Fuel</label>
+                    <select name="trip" class="form-control" id="with_fuel">
                         <option value="with_fuel">With Fuel</option>
                         <option value="without_fuel">Without Fuel </option>
                     </select>

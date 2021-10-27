@@ -37,6 +37,8 @@ Route::middleware(['auth:user'])->group(function () {
 
     require __DIR__.'/sub_contractor.php';
 
+    require __DIR__.'/purchase.php';
+
     
 
     Route::get('/employee/inventory', [UserController::class, 'inventory']) 
@@ -48,8 +50,8 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/employee/reports', [UserController::class, 'historys']) 
     ->name('user.reports');
 
-    Route::get('/employee/purchaser', [UserController::class, 'purchaser']) 
-    ->name('user.purchase');
+    // Route::get('/employee/purchaser', [UserController::class, 'purchaser']) 
+    // ->name('user.purchase');
 
     // Route::get('/employee/sub-contractor', [UserController::class, 'sub_contractor']) 
     // ->name('user.sub_contractors');

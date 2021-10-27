@@ -63,6 +63,7 @@ Route::middleware(['auth:admin'])->group(function () {
     require __DIR__.'/customer.php';
     require __DIR__.'/supplier.php';
     require __DIR__.'/sub_contractor.php';
+    require __DIR__.'/purchase.php';
 
 
 

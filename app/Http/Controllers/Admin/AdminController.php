@@ -74,58 +74,61 @@ class AdminController extends Controller
         $data['online_user'] = $online_user ;
 
         //Hr-pro
-        $data['trade_license']=  Trade_license::count();
-        $data['land_contract']=  Office_Land_contract::where('type', '=', 'land')->get();
-        $data['office_contract']=  Office_Land_contract::where('type', '=', 'office')->get();
-        $data['non_mobile_civil']=  Civil_defense_documents::where('type', '=', 'non_mobile')->get();
-        $data['mobile_civil']=  Civil_defense_documents::where('type', '=', 'mobile')->get();
-        $data['non_mobile_defence']=  Muncipality_documents::where('type', '=', 'non_mobile')->get();
-        $data['mobile_defence']=  Muncipality_documents::where('type', '=', 'mobile')->get();
-        $data['mobile_individules']=  Trained_individual::where('type', '=', 'mobile')->get();
-        $data['non_mobile_individules']=  Trained_individual::where('type', '=', 'non_mobile')->get();
+        $data['trade_license']=  Trade_license::where('row_status', '!=', 'deleted')->count();
+        $data['land_contract']=  Office_Land_contract::where('type', '=', 'land')->where('row_status', '!=', 'deleted')->get();
 
-        $data['trade_license_pending']=  Trade_license::where('status' , '=', 'pending')->count();
-        $data['land_contract_pending']=  Office_Land_contract::where('type', '=', 'land')->where('status' , '=', 'pending')->count();
-        $data['office_contract_pending']=  Office_Land_contract::where('type', '=', 'office')->where('status' , '=', 'pending')->count();
-        $data['non_mobile_civil_pending']=  Civil_defense_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->count();
-        $data['mobile_civil_pending']=  Civil_defense_documents::where('type', '=', 'mobile')->where('status' , '=', 'pending')->count();
-        $data['non_mobile_defence_pending']=  Muncipality_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->count();
-        $data['mobile_defence_pending']=  Muncipality_documents::where('type', '=', 'mobile')->where('status' , '=', 'pending')->count();
-        $data['mobile_individules_pending']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->count();
-        $data['non_mobile_individules_pending']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->count();
+        // $data['land_contract']= DB::table('office__land_contracts')->where('type', '=', 'land')->where('row_status', '!=', 'deleted')->get();
+        // dd($data['trade_license']);
+        $data['office_contract']=  Office_Land_contract::where('type', '=', 'office')->where('row_status', '!=', 'deleted')->get();
+        $data['non_mobile_civil']=  Civil_defense_documents::where('type', '=', 'non_mobile')->where('row_status', '!=', 'deleted')->get();
+        $data['mobile_civil']=  Civil_defense_documents::where('type', '=', 'mobile')->where('row_status', '!=', 'deleted')->get();
+        $data['non_mobile_defence']=  Muncipality_documents::where('type', '=', 'non_mobile')->where('row_status', '!=', 'deleted')->get();
+        $data['mobile_defence']=  Muncipality_documents::where('type', '=', 'mobile')->where('row_status', '!=', 'deleted')->get();
+        $data['mobile_individules']=  Trained_individual::where('type', '=', 'mobile')->where('row_status', '!=', 'deleted')->get();
+        $data['non_mobile_individules']=  Trained_individual::where('type', '=', 'non_mobile')->where('row_status', '!=', 'deleted')->get();
+
+        $data['trade_license_pending']=  Trade_license::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['land_contract_pending']=  Office_Land_contract::where('type', '=', 'land')->where('row_status', '!=', 'deleted')->where('status' , '=', 'pending')->count();
+        $data['office_contract_pending']=  Office_Land_contract::where('type', '=', 'office')->where('row_status', '!=', 'deleted')->where('status' , '=', 'pending')->count();
+        $data['non_mobile_civil_pending']=  Civil_defense_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_civil_pending']=  Civil_defense_documents::where('type', '=', 'mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['non_mobile_defence_pending']=  Muncipality_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_defence_pending']=  Muncipality_documents::where('type', '=', 'mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_individules_pending']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['non_mobile_individules_pending']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
 
         $data['total_pending'] = $data['trade_license_pending'] + $data['land_contract_pending'] + $data['office_contract_pending'] +   $data['non_mobile_civil_pending'] + $data['mobile_civil_pending'] + $data['non_mobile_defence_pending'] + $data['mobile_defence_pending'] + $data['mobile_individules_pending'] ;
 
        
 
 
-        $data['trade_license_rejected']=  Trade_license::where('status' , '=', 'rejected')->count();
-        $data['land_contract_rejected']=  Office_Land_contract::where('type', '=', 'land')->where('status' , '=', 'rejected')->count();
-        $data['office_contract_rejected']=  Office_Land_contract::where('type', '=', 'office')->where('status' , '=', 'rejected')->count();
-        $data['non_mobile_civil_rejected']=  Civil_defense_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->count();
-        $data['mobile_civil_rejected']=  Civil_defense_documents::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->count();
-        $data['non_mobile_defence_rejected']=  Muncipality_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->count();
-        $data['mobile_defence_rejected']=  Muncipality_documents::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->count();
-        $data['mobile_individules_rejected']=  Trained_individual::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->count();
-        $data['non_mobile_individules_rejected']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->count();
+        $data['trade_license_rejected']=  Trade_license::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['land_contract_rejected']=  Office_Land_contract::where('type', '=', 'land')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['office_contract_rejected']=  Office_Land_contract::where('type', '=', 'office')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['non_mobile_civil_rejected']=  Civil_defense_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_civil_rejected']=  Civil_defense_documents::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['non_mobile_defence_rejected']=  Muncipality_documents::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_defence_rejected']=  Muncipality_documents::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['mobile_individules_rejected']=  Trained_individual::where('type', '=', 'mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['non_mobile_individules_rejected']=  Trained_individual::where('type', '=', 'non_mobile')->where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
 
         $data['total_rejected'] = $data['trade_license_rejected'] + $data['land_contract_rejected'] + $data['office_contract_rejected'] +   $data['non_mobile_civil_rejected'] + $data['mobile_civil_rejected'] + $data['non_mobile_defence_rejected'] + $data['mobile_defence_rejected'] + $data['mobile_individules_rejected'] ;
 
 
         //Customer
-        $data['total_rejected_customer'] = Customer_info::where('status' , '=', 'rejected')->count();
-        $data['total_pending_customer'] = Customer_info::where('status' , '=', 'pending')->count();
-        $data['total_customer'] = Customer_info::count();
+        $data['total_rejected_customer'] = Customer_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['total_pending_customer'] = Customer_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['total_customer'] = Customer_info::where('row_status', '!=', 'deleted')->count();
 
         //suplllier
-        $data['total_rejected_supplier'] = Supplier_info::where('status' , '=', 'rejected')->count();
-        $data['total_pending_supplier'] = Supplier_info::where('status' , '=', 'pending')->count();
-        $data['total_supplier'] = Supplier_info::count();
+        $data['total_rejected_supplier'] = Supplier_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->where('row_status', '!=', 'deleted')->count();
+        $data['total_pending_supplier'] = Supplier_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->where('row_status', '!=', 'deleted')->count();
+        $data['total_supplier'] = Supplier_info::where('row_status', '!=', 'deleted')->count();
 
         //sub_contractor
-        $data['total_rejected_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'rejected')->count();
-        $data['total_pending_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'pending')->count();
-        $data['total_sub_contractor'] = Sub_contractor_info::count();
+        $data['total_rejected_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['total_pending_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
+        $data['total_sub_contractor'] = Sub_contractor_info::where('row_status', '!=', 'deleted')->count();
 
         return view('layout', ["data"=>$data]);
     }
