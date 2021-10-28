@@ -158,7 +158,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
@@ -166,7 +166,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
@@ -284,7 +284,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
@@ -292,7 +292,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
@@ -409,7 +409,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
@@ -417,7 +417,7 @@ use App\Models\Office_Land_contract;
                                             <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
+                                                <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>

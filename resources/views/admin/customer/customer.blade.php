@@ -103,14 +103,14 @@ use App\Models\User;
                                         <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <button type="submit" class="border-0 bg-white">
                                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                             </button>
                                         </form>
                                         <form action="{{ route( 'admin.customer.edit_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                             </button>
                                         </form>
@@ -174,7 +174,7 @@ use App\Models\User;
                                         <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <button type="submit" class="border-0 bg-white">
                                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                             </button>
                                         </form>
@@ -182,7 +182,7 @@ use App\Models\User;
                                         <form action="{{ route( 'admin.customer.edit_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                             </button>
                                         </form>
@@ -246,7 +246,7 @@ use App\Models\User;
                                         <form action="{{ route( 'admin.customer.view_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <button type="submit" class="border-0 bg-white">
                                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                             </button>
                                         </form>
@@ -254,7 +254,7 @@ use App\Models\User;
                                         <form action="{{ route( 'admin.customer.edit_customer') }}" method="post" class="d-inline">
                                             @csrf
                                             <input type="text" class="form-control d-none" name="id" value ="{{$customer_info->id}}" placeholder="Enter id" >
-                                            <button  type="submit" class="border-0 .bg-white">
+                                            <button  type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                             </button>
                                         </form>
