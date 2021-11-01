@@ -47,6 +47,7 @@ class CreatePurchasesTable extends Migration
             $table->string('status_account');
 
             $table->string('action')->nullable();
+            $table->string('row_status')->nullable();
             $table->string('status_message')->nullable();
             $table->string('user_id')->default('0'); 
             $table->timestamps();
