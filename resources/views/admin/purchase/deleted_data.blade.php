@@ -18,13 +18,15 @@ use App\Models\Office_Land_contract;
         <table class="display table responsive nowrap  " style="width:100%">
             <thead>
                 <tr>
+                    
                     <th>ID</th>
-                    <th>Trade Name</th>
-                    <th>License Number</th>
-                    <th>Company</th>
-                    <th>Expiary Date</th>
-                    <th>User Name</th>
-                    <th>Date</th>
+                    <th>TRN Number</th>
+                    <th>Company Name</th>
+                    <th>Delivery Date</th>
+                    <th>PO Number</th>
+                    <th>Deleted At </th>
+
+
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,46 +35,15 @@ use App\Models\Office_Land_contract;
                 @if($trade_license->row_status == 'deleted')
                 <tr>
                     <td>{{ $trade_license->id }}</td>
-                    <td>{{ $trade_license->trade_name }}</td>
-                    <td>{{ $trade_license->license_number }}</td>
+                    <td>{{ $trade_license->trn }}</td>
+                    <td>{{ $trade_license->company_name }}</td>
+                    <td>{{ $trade_license->delivery_date }}</td>
+                    <td>{{ $trade_license->po_number }}</td>
                     
-                    <td>
-                        
-                        <?php if(Company_name::all()->count() > 0){ ?>
-                            <?php $check = 0; ?>
-                        @foreach($data['company_names'] as $company_name)
-                            @if($company_name->id == $trade_license->company_id)
-                                <?php $check = 1 ?>
-                                <span class="badge badge-pill badge-dark p-2 m-1">{{ $company_name->name}}</span>
-                            @endif
-                        @endforeach
-                        <?php if($check == 0){ ?>
-                            <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                        <?php } ?>
-                
-                    <?php }else{ ?>
-                            <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                        <?php } ?>
-                    </td>
-
-                    <td>{{ $trade_license->expiary_date }}</td>
-
-                    <td>
-                        @if($trade_license->user_id == 0)
-                            Admin
-                        @else
-                            @if(User::find($trade_license->user_id))
-                                {{ User::find($trade_license->user_id)->username}}
-                            @else
-                                User Deleted
-                            @endif
-                        
-                        @endif
-                    </td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trade_license->action }}</span></td> -->
                     <td>{{ $trade_license->updated_at}}</td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
@@ -129,7 +100,7 @@ use App\Models\Office_Land_contract;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.restore_trade_license__sponsors__partners') }}",
+                url:"{{ route( 'admin.purchase.restore_purchase') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -164,7 +135,7 @@ use App\Models\Office_Land_contract;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.delete_trade_license__sponsors__partners') }}",
+                url:"{{ route( 'admin.purchase.delete_purchase') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

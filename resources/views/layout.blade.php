@@ -24,7 +24,6 @@
 
         <link rel="stylesheet" href="<?= asset('assets') ?>\styles\vendor\smart.wizard\smart_wizard_theme_dots.min.css">
 
-        <link rel="stylesheet" href="<?= asset('assets') ?>/styles/vendor/select2.min.css">
         <link rel="stylesheet" href="<?= asset('assets') ?>/styles/vendor/toastr.css">
 
         <link rel="stylesheet" href="<?= asset('assets') ?>/styles/vendor/select2-bootstrap.min.css">
@@ -36,6 +35,7 @@
         
         <script src="<?= asset('assets') ?>/js/vendor/sweetalert2.min.js"></script>
           <script src="<?= asset('assets') ?>/js/vendor/jquery-3.3.1.min.js"></script>
+          
         <script src="<?= asset('assets') ?>/js/vendor/bootstrap.bundle.min.js"></script>
         
         <link rel="stylesheet" href="<?= asset('assets') ?>/include/jquery_ui/themes/start/jquery-ui.min.css">
@@ -45,8 +45,16 @@
         <script src="<?= asset('assets') ?>/js/vendor/jquery.mask.min.js"></script>
         <script src="<?= asset('assets') ?>\js\vendor\jquery.smartWizard.min.js"></script>
         <link rel="stylesheet" href="<?= asset('assets') ?>/js/vendor/tags/bootstrap_tagsinput.css">
+        
 
-<script src="<?= asset('assets') ?>/js/vendor/tags/bootstrap_tagsinput.js"></script>
+        <script src="<?= asset('assets') ?>/js/vendor/tags/bootstrap_tagsinput.js"></script>
+           <!-- Select2 CSS --> 
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> 
+
+<!-- jQuery <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  -->
+
+<!-- Select2 JS --> 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     </head>
 
@@ -384,9 +392,15 @@
         <script src="<?= asset('assets') ?>/js/vendor/toastr.min.js"></script>
         <script src="<?= asset('assets') ?>/js/vendor/dropzone.min.js"></script>
         <script src="<?= asset('assets') ?>/js/vendor/bootstrap-datepicker.min.js"></script>
-        <script src="<?= asset('assets') ?>/js/vendor/select2.min.js"></script>
         <script src="<?= asset('assets') ?>/js/scripts.js"></script>
         <script src="<?= asset('assets') ?>\js\sidebar.script.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#Material_Data").select2({
+                    tags: true
+                });
+            });
+        </script>
     </body>
 
 </html>

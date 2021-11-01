@@ -67,60 +67,23 @@ use App\Models\Office_Land_contract;
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Company</th>
+                                        <th>PO Number</th>
+                                        <th>Company Name</th>
                                         <th>TRN Number</th>
-                                        <th>Material Data</th>
                                         <th>Delivery Date</th>
                                         <th>Action By</th>
-
-                                        <th style="display:none">Manager Visa</th>
-                                        <th style="display:none">Sponsor Visa</th>
-                                        <th style="display:none">Partners Visa</th>
-
-                                        <th style="display:none"> Manager Passport</th>
-                                        <th style="display:none"> Sponsor Passport</th>
-                                        <th style="display:none"> Partners Passport</th>
-
-                                        <th style="display:none"> Manager Id</th>
-                                        <th style="display:none">Sponsor Id</th>
-                                        <th style="display:none">Partners Id</th>
-
-                                        <th style="display:none">Sponsor Page</th>
-                                        <th style="display:none">Membership Certificate</th>
-                                        <th style="display:none">Trade License Copy</th>
-
-
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'approved' && $trade_license->row_status != 'deleted')
+                                    @foreach($data['purchases'] as $trade_license)
+                                    @if($trade_license->status_admin == 'approved' && $trade_license->status_account == 'approved' && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
-                                        <td>{{ $trade_license->trade_name }}</td>
-                                        <td>{{ $trade_license->license_number }}</td>
-                                        
-                                        <td>
-                                            
-                                            <?php if(Company_name::all()->count() > 0){ ?>
-                                                <?php $check = 0; ?>
-                                            @foreach($data['company_names'] as $company_name)
-                                                @if($company_name->id == $trade_license->company_id)
-                                                    <?php $check = 1 ?>
-                                                    <span class="badge badge-pill badge-dark p-2 m-1">{{ $company_name->name}}</span>
-                                                @endif
-                                            @endforeach
-                                            <?php if($check == 0){ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                    
-                                        <?php }else{ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                        </td>
-
-                                        <td>{{ $trade_license->expiary_date }}</td>
+                                        <td>{{ $trade_license->po_number }}</td>
+                                        <td>{{ $trade_license->company_name }}</td>
+                                        <td>{{ $trade_license->trn }}</td>
+                                        <td>{{ $trade_license->delivery_date }}</td>
 
                                         <td>
                                             @if($trade_license->user_id == 0)
@@ -134,25 +97,6 @@ use App\Models\Office_Land_contract;
                                             
                                             @endif
                                         </td>
-
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_visa }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_passport }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_id_card }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_page }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->member_ship_certificate }}</td>
-                                        
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->trade_license_copy }}</td>
 
                                         <td>
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
@@ -193,61 +137,31 @@ use App\Models\Office_Land_contract;
                             <table   class="display table1 table responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Company</th>
+                                        <th>ID</th>
                                         <th>TRN Number</th>
-                                        <th>Material Data</th>
+                                        <th>Company Name</th>
                                         <th>Delivery Date</th>
                                         <th>Action By</th>
-                                        <th>User Action</th>
+                                        <th>Pending By</th>
 
-                                        <th style="display:none">Manager Visa</th>
-                                        <th style="display:none">Sponsor Visa</th>
-                                        <th style="display:none">Partners Visa</th>
-
-                                        <th style="display:none"> Manager Passport</th>
-                                        <th style="display:none"> Sponsor Passport</th>
-                                        <th style="display:none"> Partners Passport</th>
-
-                                        <th style="display:none"> Manager Id</th>
-                                        <th style="display:none">Sponsor Id</th>
-                                        <th style="display:none">Partners Id</th>
-
-                                        <th style="display:none">Sponsor Page</th>
-                                        <th style="display:none">Membership Certificate</th>
-                                        <th style="display:none">Trade License Copy</th>
-
+                                        <!-- <th>User Action</th> -->
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'pending' && $trade_license->row_status != 'deleted')
+                                    @foreach($data['purchases'] as $trade_license)
+                                    <?php 
+                                       $check = false;
+                                       if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
+                                            $check = true;
+                                    ?>
+                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
                                     <tr>
-                                        
-                                        <td>{{ $trade_license->trade_name }}</td>
-                                        <td>{{ $trade_license->license_number }}</td>
-                                        
-                                        <td>
-                                            
-                                            <?php if(Company_name::all()->count() > 0){ ?>
-                                                <?php $check = 0; ?>
-                                            @foreach($data['company_names'] as $company_name)
-                                                @if($company_name->id == $trade_license->company_id)
-                                                    <?php $check = 1 ?>
-                                                    <span class="badge badge-pill badge-dark p-2 m-1">{{ $company_name->name}}</span>
-                                                @endif
-                                            @endforeach
-                                            <?php if($check == 0){ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                    
-                                        <?php }else{ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                        </td>
-
-                                        <td>{{ $trade_license->expiary_date }}</td>
+                                        <td>{{ $trade_license->id }}</td>
+                                        <td>{{ $trade_license->trn }}</td>
+                                        <td>{{ $trade_license->company_name }}</td>
+                                        <td>{{ $trade_license->delivery_date }}</td>
                                         <td>
                                             @if($trade_license->user_id == 0)
                                                 Admin
@@ -260,25 +174,18 @@ use App\Models\Office_Land_contract;
                                             
                                             @endif
                                         </td>
-                                        <td><span class="badge badge-pill badge-success p-2 m-1">{{$trade_license->action }}</span></td>
-                        
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_visa }}</td>
+                                        <td>
+                                            @if($trade_license->status_admin == 'pending')
+                                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
+                                            @elseif($trade_license->status_account == 'pending')
+                                                
+                                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
+                                            @endif
+                                        </td>
 
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_passport }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_id_card }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_page }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->member_ship_certificate }}</td>
                                         
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->trade_license_copy }}</td>
+                                        
+                                        
 
                                         <td>
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
@@ -314,64 +221,34 @@ use App\Models\Office_Land_contract;
                     </div>
                     <div class="tab-pane fade show " id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
                         <div class="table-responsive">
-                            <table   class="display table1 table responsive nowrap " style="width:100%">
+                            <table   class="display table1 table responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Company</th>
+                                        <th>ID</th>
                                         <th>TRN Number</th>
-                                        <th>Material Data</th>
+                                        <th>Company Name</th>
                                         <th>Delivery Date</th>
                                         <th>Action By</th>
-                                        <th>User Action</th>
+                                        <th>Pending By</th>
 
-                                        <th style="display:none">Manager Visa</th>
-                                        <th style="display:none">Sponsor Visa</th>
-                                        <th style="display:none">Partners Visa</th>
-
-                                        <th style="display:none"> Manager Passport</th>
-                                        <th style="display:none"> Sponsor Passport</th>
-                                        <th style="display:none"> Partners Passport</th>
-
-                                        <th style="display:none"> Manager Id</th>
-                                        <th style="display:none">Sponsor Id</th>
-                                        <th style="display:none">Partners Id</th>
-
-                                        <th style="display:none">Sponsor Page</th>
-                                        <th style="display:none">Membership Certificate</th>
-                                        <th style="display:none">Trade License Copy</th>
-
+                                        <!-- <th>User Action</th> -->
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($data['trade_licenses'] as $trade_license)
-                                    @if($trade_license->status == 'rejected' && $trade_license->row_status != 'deleted')
+                                    @foreach($data['purchases'] as $trade_license)
+                                    <?php 
+                                       $check = false;
+                                       if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
+                                            $check = true;
+                                    ?>
+                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
                                     <tr>
-                                        
-                                        <td>{{ $trade_license->trade_name }}</td>
-                                        <td>{{ $trade_license->license_number }}</td>
-                                        
-                                        <td>
-                                            
-                                            <?php if(Company_name::all()->count() > 0){ ?>
-                                                <?php $check = 0; ?>
-                                            @foreach($data['company_names'] as $company_name)
-                                                @if($company_name->id == $trade_license->company_id)
-                                                    <?php $check = 1 ?>
-                                                    <span class="badge badge-pill badge-dark p-2 m-1">{{ $company_name->name}}</span>
-                                                @endif
-                                            @endforeach
-                                            <?php if($check == 0){ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                    
-                                        <?php }else{ ?>
-                                                <span class="badge badge-pill badge-danger p-2 m-1">No Company Selected</span>
-                                            <?php } ?>
-                                        </td>
-
-                                        <td>{{ $trade_license->expiary_date }}</td>
+                                        <td>{{ $trade_license->id }}</td>
+                                        <td>{{ $trade_license->trn }}</td>
+                                        <td>{{ $trade_license->company_name }}</td>
+                                        <td>{{ $trade_license->delivery_date }}</td>
                                         <td>
                                             @if($trade_license->user_id == 0)
                                                 Admin
@@ -384,26 +261,18 @@ use App\Models\Office_Land_contract;
                                             
                                             @endif
                                         </td>
+                                        <td>
+                                            @if($trade_license->status_admin == 'pending')
+                                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
+                                            @elseif($trade_license->status_account == 'pending')
+                                                
+                                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
+                                            @endif
+                                        </td>
+
                                         
-                                        <td><span class="badge badge-pill badge-success p-2 m-1">{{$trade_license->action }}</span></td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_visa }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_visa }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_passport }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_passport }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->manager_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_id_card }}</td>
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->partners_id_card }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->sponsor_page }}</td>
-
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->member_ship_certificate }}</td>
                                         
-                                        <td style="display:none">{{ asset('main_admin/hr_pro/trade_license/')}}/{{ $trade_license->trade_license_copy }}</td>
+                                        
 
                                         <td>
                                             <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
@@ -446,57 +315,7 @@ use App\Models\Office_Land_contract;
     $(document).ready(function() {
             $('.table2').DataTable( {
                 dom: 'Bfrtip',
-                "columnDefs": [
-                    {
-                        "targets": [ 6 ],
-                        "visible": false,
-                        "searchable": false
-                    },
-                    {
-                        "targets": [ 7 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 8 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 9 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 10 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 11 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 12 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 13 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 14 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 15 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 16 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 17 ],
-                        "visible": false
-                    }
-                ],
+                
                 responsive: true,
                 buttons: [
                 
@@ -511,63 +330,7 @@ use App\Models\Office_Land_contract;
         $(document).ready(function() {
             $('.table1').DataTable( {
                 dom: 'Bfrtip',
-                "columnDefs": [
-                    
-                    {
-                        "targets": [ 6 ],
-                        "visible": false,
-                        "searchable": false
-                    },
-                    {
-                        "targets": [ 6 ],
-                        "visible": false,
-                        "searchable": false
-                    },
-                    {
-                        "targets": [ 7 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 8 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 9 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 10 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 11 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 12 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 13 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 14 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 15 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 16 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 17 ],
-                        "visible": false
-                    }
-                ],
+                
                 responsive: true,
                 buttons: [
                 
@@ -596,7 +359,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_trade_license__sponsors__partners_status') }}",
+                    url:"{{ route( 'admin.purchase.delete_purchase_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
