@@ -365,6 +365,11 @@ class Hr_ProController extends Controller
 
         }
 
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
+
+        }
+
         if ($request->hasFile('partners_passport')) {
 
             // $request->validate([
@@ -830,6 +835,10 @@ class Hr_ProController extends Controller
 
         }
 
+        if($request->input('amount') != ''){
+            $office_contract->amount = $request->input('amount');
+        }
+
         $office_contract->type = 'office';
 
         
@@ -1090,6 +1099,10 @@ class Hr_ProController extends Controller
             }
             //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
 
+        }
+
+        if($request->input('amount') != ''){
+            $office_contract->amount = $request->input('amount');
         }
 
         $office_contract->type = 'land';

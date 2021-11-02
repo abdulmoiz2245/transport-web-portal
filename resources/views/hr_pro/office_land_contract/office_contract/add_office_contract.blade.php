@@ -87,6 +87,13 @@
                     </div>
                 </div>
            </div>
+           <div class="col-6">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input name="amount" class="form-control" type="text">
+
+                </div>
+           </div>
        </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

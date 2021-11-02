@@ -348,6 +348,13 @@ use App\Models\Company_name;
                 </div>
                 @endif
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Sponsorship Fee</label>
+                    <input name="sponsorship_fee" class="form-control" type="text" value="{{ $data['trade_license']->sponsorship_fee }}">
+
+                </div>
+            </div>
         </div>
 
         <hr>

@@ -14,9 +14,7 @@
                 <div class="col-6">
                     <p>{{ $data['land_contract']->contract_number }}</p>
                 </div>
-            </div>
-            
-            
+            </div> 
         </div>
         <div class="col-6">
         <div class="row">
@@ -123,6 +121,18 @@
                     
                 </div>
             </div>
+        </div>
+
+        <div class="col-6">
+            <div class="row">
+                <div class="col-5">
+                    <h5 class="font-weight-bold">Amount :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['land_contract']->amount }}</p>
+                </div>
+            </div> 
         </div>
         
     </div>

@@ -322,6 +322,11 @@ class Hr_ProController extends Controller
 
         }
 
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
+
+        }
+
         if ($request->hasFile('manager_id_card')) {
 
             // $request->validate([
@@ -1101,6 +1106,10 @@ class Hr_ProController extends Controller
 
         }
 
+        if($request->input('amount') != ''){
+            $office_contract->amount = $request->input('amount');
+        }
+
         $office_contract->status = 'approved';
         $office_contract->user_id = 0;
         $this->history_table_type('office__land_contract_histories', 'add' , 0 ,'office');
@@ -1489,6 +1498,11 @@ class Hr_ProController extends Controller
             //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
 
         }
+
+        if($request->input('amount') != ''){
+            $office_contract->amount = $request->input('amount');
+        }
+
         $office_contract->status = 'approved';
  
         $office_contract->user_id = 0;

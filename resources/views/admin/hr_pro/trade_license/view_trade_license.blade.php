@@ -310,6 +310,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Sponsorship Fee :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->sponsorship_fee }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr>

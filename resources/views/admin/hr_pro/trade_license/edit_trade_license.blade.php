@@ -298,8 +298,8 @@ use App\Models\Company_name;
                 </div>
             </div>
             @endif
-    </div>
-    <div class="col-md-6 col-12">
+        </div>
+        <div class="col-md-6 col-12">
             @if( $data['trade_license']->sponsor_passport != 'null')
             <div class="form-group">
                 <label>Replace Passport </label>
@@ -327,8 +327,8 @@ use App\Models\Company_name;
                 </div>
             </div>
             @endif
-    </div>
-    <div class="col-md-6 col-12">
+        </div>
+        <div class="col-md-6 col-12">
             @if( $data['trade_license']->sponsor_visa != 'null')
             <div class="form-group">
                 <label>Replace Visa </label>
@@ -357,7 +357,14 @@ use App\Models\Company_name;
                 </div>
             </div>
             @endif
-    </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label>Sponsorship Fee</label>
+                <input name="sponsorship_fee" class="form-control" type="text" value="{{ $data['trade_license']->sponsorship_fee }}">
+
+            </div>
+        </div>
     </div>
 
     <hr>

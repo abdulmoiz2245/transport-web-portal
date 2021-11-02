@@ -124,6 +124,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-6">
+            <div class="row">
+                <div class="col-5">
+                    <h5 class="font-weight-bold">Amount :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['office_contract']->amount }}</p>
+                </div>
+            </div> 
+        </div>
         
     </div>
 </div>

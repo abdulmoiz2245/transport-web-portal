@@ -205,6 +205,13 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Sponsorship Fee</label>
+                    <input name="sponsorship_fee" class="form-control" type="text" required>
+
+                </div>
+           </div>
        </div>
        
        <hr>
