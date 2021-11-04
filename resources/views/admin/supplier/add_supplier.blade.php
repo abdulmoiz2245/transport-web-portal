@@ -55,13 +55,13 @@ use App\Models\Supplier_new_department;
                     <div class="form-group col-md-6 col-12 mb-3">
                         <label for="post_tag">Products</label>
                         <br>
-                        <input type="text" name="product"  class="form-control w-100" value="" data-role="tagsinput" required>
+                        <input type="text" name="product"  class="form-control w-100" value="" data-role="tagsinput" >
                     </div>
 
                     <div class="form-group col-md-6 col-12 mb-3">
                         <label for="post_tag">Services</label>
                         <br>
-                        <input type="text" name="services" value="" data-role="tagsinput"  class="form-control w-100" required>
+                        <input type="text" name="services" value="" data-role="tagsinput"  class="form-control w-100" >
                     </div>
 
                     <div class=" col-md-6 col-12 mb-3">

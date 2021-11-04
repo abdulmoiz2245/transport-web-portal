@@ -63,7 +63,7 @@ use App\Models\User;
             <div class="tab-content profile-tab" id="myTabContent">
                 <div class="tab-pane fade show active" id="approved" role="tabpanel" aria-labelledby="approved-tab">
                     <div class="table-responsive">
-                        <table id="trade_license" class="display table responsive nowrap  " style="width:100%">
+                        <table id="trade_license" class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -137,7 +137,7 @@ use App\Models\User;
                 </div>
                 <div class="tab-pane fade show " id="pending" role="tabpanel" aria-labelledby="pending-tab">
                 <div class="table-responsive">
-                        <table id="trade_license" class="display table responsive nowrap  " style="width:100%">
+                        <table id="trade_license" class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -212,7 +212,7 @@ use App\Models\User;
 
                 <div class="tab-pane fade show " id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
                 <div class="table-responsive">
-                        <table id="trade_license" class="display table responsive nowrap  " style="width:100%">
+                        <table id="trade_license" class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>

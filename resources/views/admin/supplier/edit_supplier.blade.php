@@ -78,12 +78,12 @@ use App\Models\Supplier_new_department;
 
                         <div class="form-group col-md-6 col-12 mb-3">
                             <label for="post_tag">Products</label>
-                            <input type="text " value="{{ $data['customer_info']->product}}" name="product" value="" data-role="tagsinput" required>
+                            <input type="text " value="{{ $data['customer_info']->product}}" name="product" value="" data-role="tagsinput" >
                         </div>
 
                         <div class="form-group col-md-6 col-12 mb-3">
                             <label for="post_tag">Services</label>
-                            <input type="text" value="{{ $data['customer_info']->services}}" name="services" value="" data-role="tagsinput" required>
+                            <input type="text" value="{{ $data['customer_info']->services}}" name="services" value="" data-role="tagsinput" >
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">

@@ -91,8 +91,8 @@ class PurchaseController extends Controller
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
-        $data['trade_licenses_history']= DB::table('trade_license_histories')->get();
-        $data['table_name']= 'trade_license_histories';
+        $data['purchase_history']= DB::table('purchase_histories')->get();
+        $data['table_name']= 'purchase_histories';
 
         $data['page_title'] = "History | PURCHASE ";
         $data['view'] = 'admin.purchase.purchase_history';

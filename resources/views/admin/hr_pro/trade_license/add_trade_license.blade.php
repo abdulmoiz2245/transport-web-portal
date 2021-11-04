@@ -73,6 +73,13 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="company_other" class="form-control" type="text">
+                </div>
+           </div>
+
            
        </div>
        
@@ -152,6 +159,12 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="manager_other" class="form-control" type="text">
+                </div>
+           </div>
        </div>
 
        <hr>
@@ -206,6 +219,12 @@ use App\Models\Company_name;
 
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="sponsor_other" class="form-control" type="text">
+                </div>
+           </div>
        </div>
        
        <hr>
@@ -251,6 +270,12 @@ use App\Models\Company_name;
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
+                </div>
+           </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="partners_other" class="form-control" type="text">
                 </div>
            </div>
        </div>

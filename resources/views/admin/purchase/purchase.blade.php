@@ -63,7 +63,7 @@ use App\Models\Office_Land_contract;
                  <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="approved" role="tabpanel" aria-labelledby="approved-tab">
                         <div class="table-responsive">
-                            <table  class="display table2 table responsive nowrap " style="width:100%">
+                            <table  class="display table2 table  nowrap " style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -134,7 +134,7 @@ use App\Models\Office_Land_contract;
                     </div>
                     <div class="tab-pane fade show " id="pending" role="tabpanel" aria-labelledby="pending-tab">
                         <div class="table-responsive">
-                            <table   class="display table1 table responsive nowrap" style="width:100%">
+                            <table   class="display table1 table  nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -221,7 +221,7 @@ use App\Models\Office_Land_contract;
                     </div>
                     <div class="tab-pane fade show " id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
                         <div class="table-responsive">
-                            <table   class="display table1 table responsive nowrap" style="width:100%">
+                            <table   class="display table1 table  nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -243,7 +243,7 @@ use App\Models\Office_Land_contract;
                                        if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
                                             $check = true;
                                     ?>
-                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
+                                    @if( $check == true && ($trade_license->status_admin == 'rejected' || $trade_license->status_account == 'rejected') && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
                                         <td>{{ $trade_license->trn }}</td>

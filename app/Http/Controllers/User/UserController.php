@@ -26,6 +26,7 @@ use App\Models\Muncipality_documents;
 use App\Models\Trained_individual;
 
 use App\Http\Controllers\Redirect;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,11 +55,15 @@ class UserController extends Controller
         $data['non_mobile_individules']=  Trained_individual::where('type', '=', 'mobile')->get();
 
         //Customer
-        $data['customer']=  Customer_info::count();
+        $data['customer']=  Customer_info::where('row_status', '!=', 'deleted')->count();
         //supplier
-        $data['supplier']=  Supplier_info::count();
+        $data['supplier']=  Supplier_info::where('row_status', '!=', 'deleted')->count();
         //sub contractor
-        $data['sub_contractor']=  Sub_contractor_info::count();
+        $data['sub_contractor']=  Sub_contractor_info::where('row_status', '!=', 'deleted')->count();
+
+        //sub contractor
+        $data['purchase'] = Purchase::where('row_status', '!=', 'deleted')->count();
+
 
 
         

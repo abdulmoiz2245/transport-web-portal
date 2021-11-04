@@ -110,66 +110,72 @@ use App\Models\Company_name;
                 </div>
             @endif
         </div>
-    <div class="col-md-6 col-12">
-            @if( $data['trade_license']->member_ship_certificate != 'null')
-            <div class="form-group">
-                <label>Replace Membership Certificate </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Membership Certificate</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="membership_certificate">
-                        <label class="custom-file-label">Choose file</label>
+        <div class="col-md-6 col-12">
+                @if( $data['trade_license']->member_ship_certificate != 'null')
+                <div class="form-group">
+                    <label>Replace Membership Certificate </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Membership Certificate</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="membership_certificate">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            @else
-            <div class="form-group">
-                <label>Membership Certificate Upload</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Membership Certificate</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="membership_certificate">
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
-                </div>
-            </div>
-            @endif
-    </div>
-    <div class="col-md-6 col-12">
-            @if( $data['trade_license']->sponsor_page != 'null')
-            <div class="form-group">
-                <label>Replace Sponsor Page</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Sponsor Page</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="sponsor_page">
-                        <label class="custom-file-label">Choose file</label>
+                @else
+                <div class="form-group">
+                    <label>Membership Certificate Upload</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Membership Certificate</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="membership_certificate">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
+        </div>
+        <div class="col-md-6 col-12">
+                @if( $data['trade_license']->sponsor_page != 'null')
+                <div class="form-group">
+                    <label>Replace Sponsor Page</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Sponsor Page</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="sponsor_page">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
+                </div>
 
-            @else
-            <div class="form-group">
-                <label>Sponsor Page Upload</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Sponsor Page</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="sponsor_page">
-                        <label class="custom-file-label">Choose file</label>
+                @else
+                <div class="form-group">
+                    <label>Sponsor Page Upload</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Sponsor Page</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="sponsor_page">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                @endif
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label>Other</label>
+                <input name="company_other" class="form-control" type="text" value="{{ $data['trade_license']->company_other  }}">
             </div>
-            @endif
-    </div>
+        </div>
     </div>
 
     <hr>
@@ -204,66 +210,73 @@ use App\Models\Company_name;
                 </div>
             </div>
             @endif
-    </div>
-    <div class="col-md-6 col-12">
-            @if( $data['trade_license']->manager_passport != 'null')
-            <div class="form-group">
-                <label>Replace Passport </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Passport</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="manager_passport">
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="form-group">
-                <label>Passport Upload</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Passport</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="manager_passport">
-                        <label class="custom-file-label">Choose file</label>
+        </div>
+        <div class="col-md-6 col-12">
+                @if( $data['trade_license']->manager_passport != 'null')
+                <div class="form-group">
+                    <label>Replace Passport </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Passport</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="manager_passport">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endif
-    </div>
-    <div class="col-md-6 col-12">
-            @if( $data['trade_license']->manager_visa != 'null')
-            <div class="form-group">
-                <label>Replace Visa </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload visa</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="manager_visa">
-                        <label class="custom-file-label">Choose file</label>
+                @else
+                <div class="form-group">
+                    <label>Passport Upload</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Passport</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="manager_passport">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
+        </div>
+        <div class="col-md-6 col-12">
+                @if( $data['trade_license']->manager_visa != 'null')
+                <div class="form-group">
+                    <label>Replace Visa </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload visa</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="manager_visa">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
+                </div>
 
-            @else
-            <div class="form-group">
-                <label>Upload Visa </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload visa</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="manager_visa">
-                        <label class="custom-file-label">Choose file</label>
+                @else
+                <div class="form-group">
+                    <label>Upload Visa </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload visa</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="manager_visa">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                @endif
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label>Other</label>
+                <input name="manager_other" class="form-control" type="text" value="{{ $data['trade_license']->manager_other  }}">
             </div>
-            @endif
-    </div>
+        </div>
     </div>
 
     <hr>
@@ -365,6 +378,12 @@ use App\Models\Company_name;
 
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label>Other</label>
+                <input name="sponsor_other" class="form-control" type="text" value="{{ $data['trade_license']->sponsor_other  }}">
+            </div>
+        </div>
     </div>
 
     <hr>
@@ -459,6 +478,12 @@ use App\Models\Company_name;
             </div>
             @endif
     </div>
+    <div class="col-md-6 col-12">
+        <div class="form-group">
+            <label>Other</label>
+            <input name="partners_other" class="form-control" type="text" value="{{ $data['trade_license']->partners_other  }}">
+        </div>
+    </div>
     </div>
 
 
@@ -475,6 +500,6 @@ use App\Models\Company_name;
     date.setDate(date.getDate() + 10);
     var new_date = date.toLocaleDateString('en-CA');
     
-    console.log($("[type='date']").attr("min",new_date) );
+    $("[type='date']").attr("min",new_date) ;
 
 </script>

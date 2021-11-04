@@ -3,30 +3,24 @@ use App\Models\Company_name;
 
 ?>
 <div class="container">
-    <div class="mb-5">
-        <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}">
-            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">      
-        </a>
-        <a href="{{ route( 'user.hr_pro.add_comany_name') }}" class="ml-3">
-            <button class="btn btn-primary">
-                Add New Company
-            </button>
-        </a>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label> <h4> Admin Notes </h4> </label>
-                <input type="text" name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes" >
-            </div>
+   
+    <div class="row mb-5">
+        <div class="col-4">
+            <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+
+            <a href="{{ route( 'user.hr_pro.add_comany_name') }}" class="ml-3">
+                <button class="btn btn-primary">Add Company</button>
+            </a>
         </div>
     </div>
-    <hr>
     <form action="{{route('user.hr_pro.save_trade_license__sponsors__partners')}}" method="post"    enctype="multipart/form-data">
     @csrf
+
         <h2>Company</h2>
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label >Select Company</label>
                     <?php if(Company_name::all()->count() > 0){ ?>
@@ -41,7 +35,7 @@ use App\Models\Company_name;
                     <?php } ?>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Trade Name</label>
                     <input type="text" name="trade_name" class="form-control form-control-rounded"  placeholder="Enter Trade Name" required>
@@ -49,23 +43,23 @@ use App\Models\Company_name;
             </div>
         </div>
        <div class="row">
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>License Number</label>
                     <input type="text" name="license_number" class="form-control form-control-rounded"  placeholder="Enter License number" required>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Expiary Date</label>
-                    <input name="expiary_date" class="form-control" type="date" required>
+                    <input name="expiary_date" class="form-control" type="date">
 
                 </div>
            </div>
        </div>
 
        <div class="row">
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Trade License Copy Upload</label>
                     <div class="input-group mb-3">
@@ -79,11 +73,18 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="company_other" class="form-control" type="text">
+                </div>
+           </div>
+
            
        </div>
        
        <div class="row">
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Membership Certificate Upload</label>
                     <div class="input-group mb-3">
@@ -97,7 +98,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Sponsor Page Upload</label>
                     <div class="input-group mb-3">
@@ -116,7 +117,7 @@ use App\Models\Company_name;
        <hr>
        <h2>Manager</h2>
        <div class="row">
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Upload ID</label>
                     <div class="input-group mb-3">
@@ -130,7 +131,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Passport Upload</label>
                     <div class="input-group mb-3">
@@ -144,7 +145,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Visa Upload</label>
                     <div class="input-group mb-3">
@@ -158,12 +159,18 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="manager_other" class="form-control" type="text">
+                </div>
+           </div>
        </div>
-       
+
        <hr>
        <h2>Sponsor</h2>
        <div class="row">
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Upload ID</label>
                     <div class="input-group mb-3">
@@ -177,7 +184,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Passport Upload</label>
                     <div class="input-group mb-3">
@@ -191,7 +198,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Visa Upload</label>
                     <div class="input-group mb-3">
@@ -208,8 +215,14 @@ use App\Models\Company_name;
            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Sponsorship Fee</label>
-                    <input name="sponsorship_fee" class="form-control" type="text" required>
+                    <input name="sponsorship_fee" class="form-control" type="text">
 
+                </div>
+           </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="sponsor_other" class="form-control" type="text">
                 </div>
            </div>
        </div>
@@ -217,7 +230,7 @@ use App\Models\Company_name;
        <hr>
        <h2>Partners</h2>
        <div class="row">
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Upload ID</label>
                     <div class="input-group mb-3">
@@ -231,7 +244,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Passport Upload</label>
                     <div class="input-group mb-3">
@@ -245,7 +258,7 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Visa Upload</label>
                     <div class="input-group mb-3">
@@ -259,8 +272,14 @@ use App\Models\Company_name;
                     </div>
                 </div>
            </div>
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Other</label>
+                    <input name="partners_other" class="form-control" type="text">
+                </div>
+           </div>
        </div>
-        <hr>
+
         
         
         <div class="text-center mt-5">

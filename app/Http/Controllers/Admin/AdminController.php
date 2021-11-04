@@ -26,6 +26,7 @@ use App\Models\Sub_contractor_info;
 
 
 use App\Http\Controllers\Redirect;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -120,15 +121,20 @@ class AdminController extends Controller
         $data['total_pending_customer'] = Customer_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
         $data['total_customer'] = Customer_info::where('row_status', '!=', 'deleted')->count();
 
-        //suplllier
-        $data['total_rejected_supplier'] = Supplier_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->where('row_status', '!=', 'deleted')->count();
-        $data['total_pending_supplier'] = Supplier_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->where('row_status', '!=', 'deleted')->count();
+        //supplier
+        $data['total_rejected_supplier'] = Supplier_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['total_pending_supplier'] = Supplier_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
         $data['total_supplier'] = Supplier_info::where('row_status', '!=', 'deleted')->count();
 
         //sub_contractor
         $data['total_rejected_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
         $data['total_pending_sub_contractor'] = Sub_contractor_info::where('status' , '=', 'pending')->where('row_status', '!=', 'deleted')->count();
         $data['total_sub_contractor'] = Sub_contractor_info::where('row_status', '!=', 'deleted')->count();
+
+        //Purchase
+        $data['total_rejected_purchase'] = Purchase::where('status_admin' , '=', 'rejected')->where('row_status', '!=', 'deleted')->count();
+        $data['total_pending_purchase'] = Purchase::where('row_status', '!=', 'deleted')->count();
+        $data['total_purchase'] = Purchase::where('row_status', '!=', 'deleted')->count();
 
         return view('layout', ["data"=>$data]);
     }

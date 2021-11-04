@@ -65,11 +65,13 @@ class SupplierController extends Controller
         }
     }
 
-    public function history_table($table_name , $action , $user_id){
+    public function history_table($table_name , $action , $user_id, $data_id, $route_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
+            'route_name' => $route_name,
+            'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -334,7 +336,8 @@ class SupplierController extends Controller
         if($customer_info->save()){
 
             if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-                $this->history_table('supplier_histories', $customer_info->action , $customer_info->user_id);
+              
+                $this->history_table('supplier_histories', $customer_info->action , $customer_info->user_id,  $customer_info->id, "supplier.view_supplier");
             }
 
             return response()->json(['status'=>'1' , 'id'=>$customer_info->id]);
@@ -585,7 +588,8 @@ class SupplierController extends Controller
             $this->remove_table_name('supplier_infos');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('supplier_histories', $customer_info->action , $user_id);
+             
+             $this->history_table('supplier_histories', $customer_info->action , $user_id,  $customer_info->id, "supplier.view_supplier");
         }
 
 
@@ -650,7 +654,7 @@ class SupplierController extends Controller
             $this->remove_table_name('supplier_department');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('supplier_histories', $customer_info->action , $user_id );
+             //$this->history_table('supplier_histories', $customer_info->action , $user_id );
         }
 
 
@@ -718,7 +722,8 @@ class SupplierController extends Controller
             $customer_info->action = 'delete';
         }
 
-        $this->history_table('supplier_histories', $customer_info->action , $user_id);
+        // $this->history_table('supplier_histories', $customer_info->action , $user_id);
+        $this->history_table('supplier_histories', $customer_info->action , $user_id,  $customer_info->id, "supplier.view_supplier");
  
         if($customer_info->delete() ){
             if($customer_department != null)
@@ -755,8 +760,8 @@ class SupplierController extends Controller
             $customer_info->action = 'delete';
         
 
-        $this->history_table('supplier_histories', $customer_info->action , $user_id);
- 
+        // $this->history_table('supplier_histories', $customer_info->action , $user_id);
+        $this->history_table('supplier_histories', $customer_info->action , $user_id,  $customer_info->id, "supplier.view_supplier");
         if( $customer_info->save()){
            
             return response()->json(['status'=>'1']);
@@ -790,7 +795,8 @@ class SupplierController extends Controller
             $customer_info->action = 'restored';
         
         $customer_info->save();
-        $this->history_table('supplier_histories', $customer_info->action , $user_id);
+        // $this->history_table('supplier_histories', $customer_info->action , $user_id);
+        $this->history_table('supplier_histories', $customer_info->action , $user_id,  $customer_info->id, "supplier.view_supplier");
         $customer_info->action = 'nill';
         $customer_info->save();
       

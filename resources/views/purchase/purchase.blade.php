@@ -148,7 +148,7 @@
                                        if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
                                             $check = true;
                                     ?>
-                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
+                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending' ) && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
                                         <td>{{ $trade_license->trn }}</td>
@@ -235,7 +235,7 @@
                                        if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
                                             $check = true;
                                     ?>
-                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
+                                    @if( $check == true && ($trade_license->status_admin == 'rejected' || $trade_license->status_account == 'rejected') && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
                                         <td>{{ $trade_license->trn }}</td>

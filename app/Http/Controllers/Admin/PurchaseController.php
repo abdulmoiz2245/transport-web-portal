@@ -49,7 +49,7 @@ class PurchaseController extends Controller
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-            // 'table_name' => $tab_name,
+            'table_name' => $tab_name,
             'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -316,7 +316,7 @@ class PurchaseController extends Controller
 
         if($purchase->save()){
 
-            $this->history_table('purchase_histories', 'add' , 0,  $purchase->id , "purchase");
+            $this->history_table('purchase_histories', 'Add' , 0,  $purchase->id , "purchase.view_purchase");
            
             return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Added Sucessfully');
         }
@@ -457,8 +457,8 @@ class PurchaseController extends Controller
 
         $purchase->save();
 
-        if($purchase->status == 'approved' || $purchase->user_id == 0 ){
-            $this->history_table('purchase_histories', $purchase->action , $user_id,  $purchase->id, "purchase");
+        if($purchase->status_admin == 'approved' || $purchase->user_id == 0 ){
+            $this->history_table('purchase_histories', $purchase->action , $user_id,  $purchase->id, "purchase.view_purchase");
        }
 
         
@@ -492,7 +492,7 @@ class PurchaseController extends Controller
             $trade_license->action = 'add';
         }
 
-        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
 
         //dd($trade_license->id); 
         if($trade_license->delete()){
@@ -534,7 +534,7 @@ class PurchaseController extends Controller
  
         if( $trade_license->save()){
 
-            // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
 
             return response()->json(['status'=>'1']);
         }else{
@@ -566,7 +566,7 @@ class PurchaseController extends Controller
             $trade_license->action = 'restored';
         
         $trade_license->save();
-        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
  
         $trade_license->action = 'deleted';
         $trade_license->save();

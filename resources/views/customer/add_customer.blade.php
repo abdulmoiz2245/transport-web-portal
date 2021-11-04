@@ -229,7 +229,7 @@ use App\Models\Erp_department;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >CONCERNED PERSON NAME </label>
-                            <input type="text" name="concerned_person_name" class="form-control" >
+                            <input type="text" name="concerned_person_name" class="form-control" re>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">

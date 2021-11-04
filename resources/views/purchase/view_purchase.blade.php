@@ -1,3 +1,7 @@
+<?php 
+    use App\Models\Purchase_mertial_data;
+
+?>
 <div class="container   ">
 
     <div class="mb-5"> 
@@ -58,8 +62,12 @@
                 <div class="col-4">
                     <h5 class="">Material Data :</h5>
                 </div>
-                <div class="col-8">     
-                        <p>Spare Parts</p>                   
+                <div class="col-8"> 
+                        @if(Purchase_mertial_data::find($data['purchase']->meterial_data_id ) != null)    
+                        <p> {{ Purchase_mertial_data::find($data['purchase']->meterial_data_id )->name }}</p> 
+                        @else
+                        <p>Meterial Deleted</p>
+                        @endif
                 </div>
             </div>
         </div>

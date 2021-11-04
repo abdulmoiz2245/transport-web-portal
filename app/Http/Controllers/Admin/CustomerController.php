@@ -67,15 +67,13 @@ class CustomerController extends Controller
         }
     }
 
-    public function history_table($table_name , $action , $user_id, $route_name, $data_id){
-
-       
+    public function history_table($table_name , $action , $user_id, $data_id, $route_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-            'data_id' => $data_id,
             'route_name' => $route_name,
+            'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -332,6 +330,7 @@ class CustomerController extends Controller
 
 
         if($customer_info->save()){
+             $this->history_table('customer_histories', 'Add', $customer_info->user_id,  $customer_info->id, "customer.view_customer");
             return response()->json(['status'=>'1' , 'id'=>$customer_info->id]);
         }else{
             return response()->json(['status'=>'0']);
@@ -539,7 +538,8 @@ class CustomerController extends Controller
             $this->remove_table_name('customer_info');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_info->action , $user_id, "route('admin.customer.view_customer')", $customer_info->id);
+            //  $this->history_table('customer_histories', $customer_info->action , $user_id, "route('admin.customer.view_customer')", $customer_info->id);
+             $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer.view_customer");
         }
 
 
@@ -602,7 +602,8 @@ class CustomerController extends Controller
             $this->remove_table_name('customer_department');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_info->action , $user_id );
+            //  $this->history_table('customer_histories', $customer_info->action , $user_id );
+            $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer");
         }
 
 
@@ -638,7 +639,8 @@ class CustomerController extends Controller
         
         $customer_info->save();
 
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer.view_customer");
  
         if($customer_info->delete() ){
             if($customer_department != null)
@@ -676,7 +678,8 @@ class CustomerController extends Controller
             $customer_info->action = 'delete';
         
 
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer.view_customer");
  
         if( $customer_info->save()){
            
@@ -711,7 +714,8 @@ class CustomerController extends Controller
             $customer_info->action = 'restored';
         
         $customer_info->save();
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer.view_customer");
         $customer_info->action = 'nill';
         $customer_info->save();
       
@@ -875,7 +879,7 @@ class CustomerController extends Controller
         $customer_rate_card->status = 'approved';
         $customer_rate_card->user_id = 0;
 
-        $this->history_table('customer_histories', 'Add Rate Card' , 0);
+        // $this->history_table('customer_histories', 'Add Rate Card' , 0);
 
         if($customer_rate_card->save()){
 
@@ -987,7 +991,7 @@ class CustomerController extends Controller
             $this->remove_table_name('customer_rate_card');
         }
         if($customer_rate_card->status == 'approved' || $customer_rate_card->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
+            //  $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
         }
 
 
@@ -1026,7 +1030,7 @@ class CustomerController extends Controller
         
         $customer_rate_card->save();
 
-        $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
+        // $this->history_table('customer_histories', $customer_rate_card->action , $user_id);
  
         if($customer_rate_card->delete() ){
             return response()->json(['status'=>'1']);
@@ -1060,7 +1064,7 @@ class CustomerController extends Controller
             $customer_info->action = 'delete';
         
 
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
  
         if( $customer_info->save()){
            
@@ -1095,7 +1099,7 @@ class CustomerController extends Controller
             $customer_info->action = 'restored';
         
         $customer_info->save();
-        $this->history_table('customer_histories', $customer_info->action , $user_id);
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
         $customer_info->action = 'nill';
         $customer_info->save();
       

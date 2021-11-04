@@ -2,13 +2,13 @@
 use App\Models\User;
 ?>
 <div class="container">
-    @if(Auth::guard('admin')->check())
+    <!-- @if(Auth::guard('admin')->check())
     <div class="mb-5">
         <a class="delete-file">
             <button class="btn btn-danger"> Clean table </button>
         </a>
     </div>
-    @endif
+    @endif -->
     
 <div class="table-responsive">
     <table   class="display table responsive nowrap " style="width:100%">
@@ -41,7 +41,15 @@ use App\Models\User;
                                             @endif
                 </td> 
                 <td>
-                    <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+
+                @if(Auth::guard('admin')->check())
+                        <?php $route = 'admin.purchase.view_purchase'?>
+                    @endif
+
+                    @if(Auth::guard('user')->check())
+                        <?php $route = 'user.purchase.view_purchase' ?>
+                    @endif
+                    <form action="{{ route( $route ) }}" method="post" class="d-inline">
                         @csrf
                         <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" >
                         <button type="submit" class="border-0 bg-white">

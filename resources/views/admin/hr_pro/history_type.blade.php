@@ -2,13 +2,13 @@
 use App\Models\User;
 ?>
 <div class="container">
-    @if(Auth::guard('admin')->check())
+    <!-- @if(Auth::guard('admin')->check())
     <div class="mb-5">
         <a class="delete-file">
             <button class="btn btn-danger"> Clean table </button>
         </a>
     </div>
-    @endif
+    @endif -->
     
 <div class="table-responsive">
     <table   class="display table responsive nowrap " style="width:100%">
@@ -16,6 +16,7 @@ use App\Models\User;
             <tr>
                 <th>Action </th>
                 <th>Username</th>
+                <th>Link</th>
                 <th>Date</th>
             </tr>
         </thead>
@@ -32,6 +33,24 @@ use App\Models\User;
                     {{ User::find($trade_licenses_history->user_id)->username}}
                     @endif
                 </td> 
+                <td>
+                    @if(Auth::guard('admin')->check())
+                        <?php $route = 'admin.'.$trade_licenses_history->route_name?>
+                    @endif
+
+                    @if(Auth::guard('user')->check())
+                        <?php $route = 'user.'.$trade_licenses_history->route_name?>
+                    @endif
+
+                    <form action="{{ route($route) }}" method="post" class="d-inline">
+                        @csrf
+                        <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" placeholder="Enter id" >
+                        <button type="submit" class="border-0 bg-white">
+                            <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                        </button>
+                    </form>
+                </td>
+
                 <td>{{ $trade_licenses_history->date }}</td>
 
             </tr>

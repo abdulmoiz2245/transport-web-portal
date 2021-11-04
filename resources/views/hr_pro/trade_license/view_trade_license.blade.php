@@ -1,8 +1,8 @@
-<div class="container ">
+<div class="container   ">
 
     <div class="mb-5"> 
         <a href="{{ route( 'user.hr_pro.trade_license__sponsors__partners') }}">
-            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">      
+            <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 
@@ -57,6 +57,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->company_other }}</p>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
@@ -224,6 +237,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->manager_other }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr>
@@ -314,9 +338,21 @@
             <div class="row">
                 <div class="col-4">
                     <h5 class="">Sponsorship Fee :</h5>
+
                 </div>
                 <div class="col-6">
-                    <p>{{ $data['trade_license']->sponsorship_fee}}</p>
+                    <p>{{ $data['trade_license']->sponsorship_fee }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->sponsor_other }}</p>
                 </div>
             </div>
         </div>
@@ -406,6 +442,26 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->partners_other }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
+
+<script>
+    var date = new Date();
+    date.setDate(date.getDate() + 10);
+    var new_date = date.toLocaleDateString('en-CA');
+    
+    console.log($("[type='date']").attr("min",new_date) );
+
+</script>

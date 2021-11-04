@@ -69,11 +69,13 @@ class Sub_contractorController extends Controller
         }
     }
 
-    public function history_table($table_name , $action , $user_id){
+    public function history_table($table_name , $action , $user_id, $data_id, $route_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
+            'route_name' => $route_name,
+            'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -352,6 +354,7 @@ class Sub_contractorController extends Controller
 
 
         if($customer_info->save()){
+            $this->history_table('sub_contractor_histories', 'Add', $customer_info->user_id,  $customer_info->id, "sub_contractor.view_sub_contractor");
             return response()->json(['status'=>'1' , 'id'=>$customer_info->id]);
         }else{
             return response()->json(['status'=>'0']);
@@ -567,7 +570,8 @@ class Sub_contractorController extends Controller
             $this->remove_table_name('sub_contractor_infos');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+            //  $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+              $this->history_table('sub_contractor_histories', $customer_info->action , $user_id,  $customer_info->id, "sub_contractor.view_sub_contractor");
         }
 
 
@@ -635,7 +639,7 @@ class Sub_contractorController extends Controller
         // }
         
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_info->action , $user_id );
+            //  $this->history_table('sub_contractor_histories', $customer_info->action , $user_id );
         }
 
 
@@ -712,7 +716,8 @@ class Sub_contractorController extends Controller
             $customer_info->action = 'delete';
         }
 
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id,  $customer_info->id, "sub_contractor.view_sub_contractor");
  
         if($customer_info->delete() ){
             if(!empty( $customer_department)){
@@ -754,7 +759,8 @@ class Sub_contractorController extends Controller
             $customer_info->action = 'delete';
         
 
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id,  $customer_info->id, "sub_contractor.view_sub_contractor");
  
         if( $customer_info->save()){
            
@@ -789,7 +795,8 @@ class Sub_contractorController extends Controller
             $customer_info->action = 'restored';
         
         $customer_info->save();
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id,  $customer_info->id, "sub_contractor.view_sub_contractor");
         $customer_info->action = 'nill';
         $customer_info->save();
       
@@ -964,7 +971,7 @@ class Sub_contractorController extends Controller
         $customer_rate_card->status = 'approved';
         $customer_rate_card->user_id = 0;
 
-        $this->history_table('sub_contractor_histories', 'Add Rate Card' , 0);
+        // $this->history_table('sub_contractor_histories', 'Add Rate Card' , 0);
 
         // $this->history_table('sub_contractor_histories', 'add' , 0);
 
@@ -1074,7 +1081,7 @@ class Sub_contractorController extends Controller
         //     $this->remove_table_name('customer_rate_card');
         // }
         if($customer_rate_card->status == 'approved' || $customer_rate_card->user_id == 0 ){
-             $this->history_table('sub_contractor_histories', $customer_rate_card->action , $user_id);
+            //  $this->history_table('sub_contractor_histories', $customer_rate_card->action , $user_id);
         }
 
 
@@ -1107,7 +1114,7 @@ class Sub_contractorController extends Controller
         
         $customer_rate_card->save();
 
-        $this->history_table('sub_contractor_histories', $customer_rate_card->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_rate_card->action , $user_id);
  
         if($customer_rate_card->delete() ){
             return response()->json(['status'=>'1']);
@@ -1139,7 +1146,7 @@ class Sub_contractorController extends Controller
         $customer_info->action = 'Delete Rate Card';
         
 
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
  
         if( $customer_info->save()){
            
@@ -1174,7 +1181,8 @@ class Sub_contractorController extends Controller
         $customer_info->action = 'Restore Rate Card';
         
         $customer_info->save();
-        $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id);
+        // $this->history_table('sub_contractor_histories', $customer_info->action , $user_id,  $customer_info->id, "sub_contractor");
         $customer_info->action = 'nill';
         $customer_info->save();
       

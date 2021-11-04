@@ -17,7 +17,7 @@ class CreatePurchaseHistoriesTable extends Migration
             $table->id();
             $table->string('action');
             $table->integer('user_id');
-            $table->date('date');
+            $table->timestamp('date');
             $table->string('table_name');
             $table->integer('data_id');
             $table->timestamps();

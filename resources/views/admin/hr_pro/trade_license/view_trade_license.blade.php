@@ -57,6 +57,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->company_other }}</p>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
@@ -224,6 +237,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->manager_other }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr>
@@ -321,6 +345,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->sponsor_other }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr>
@@ -404,6 +439,17 @@
                         </a>
                     @endif
                     
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
+                    <h5 class="">Others :</h5>
+
+                </div>
+                <div class="col-6">
+                    <p>{{ $data['trade_license']->partners_other }}</p>
                 </div>
             </div>
         </div>

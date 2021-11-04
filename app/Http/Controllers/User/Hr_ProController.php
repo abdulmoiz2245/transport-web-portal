@@ -242,6 +242,25 @@ class Hr_ProController extends Controller
             $trade_license->expiary_date = $request->input('expiary_date');
         }
 
+        if($request->input('company_other') != ''){
+            $trade_license->company_other = $request->input('company_other');
+        }
+
+        if($request->input('manager_other') != ''){
+            $trade_license->manager_other = $request->input('manager_other');
+        }
+
+        if($request->input('sponsor_other') != ''){
+            $trade_license->sponsor_other = $request->input('sponsor_other');
+        }
+
+        if($request->input('partners_other') != ''){
+            $trade_license->partners_other = $request->input('partners_other');
+        }
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
+        }
+
         if ($request->hasFile('trade_license')) {
 
             // $request->validate([
@@ -467,6 +486,24 @@ class Hr_ProController extends Controller
         }
         if($request->input('expiary_date') != ''){
             $trade_license->expiary_date = $request->input('expiary_date');
+        }
+
+        if($request->input('company_other') != ''){
+            $trade_license->company_other = $request->input('company_other');
+        }
+
+        if($request->input('manager_other') != ''){
+            $trade_license->manager_other = $request->input('manager_other');
+        }
+
+        if($request->input('sponsor_other') != ''){
+            $trade_license->sponsor_other = $request->input('sponsor_other');
+        }
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
+        }
+        if($request->input('partners_other') != ''){
+            $trade_license->partners_other = $request->input('partners_other');
         }
 
         if ($request->hasFile('trade_license')) {

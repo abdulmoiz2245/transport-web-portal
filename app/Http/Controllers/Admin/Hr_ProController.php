@@ -113,11 +113,13 @@ class Hr_ProController extends Controller
     ///////// History Record ///////////
     /////////////////////////////////////
 
-    public function history_table($table_name , $action , $user_id){
+    public function history_table($table_name , $action , $user_id, $data_id, $route_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
+            'route_name' => $route_name,
+            'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -125,12 +127,14 @@ class Hr_ProController extends Controller
         return true;
     }
 
-    public function history_table_type($table_name , $action , $user_id , $type){
+    public function history_table_type($table_name , $action , $user_id , $type , $data_id, $route_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
             'type' => $type,
+            'route_name' => $route_name,
+            'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -275,6 +279,26 @@ class Hr_ProController extends Controller
         }
         if($request->input('expiary_date') != ''){
             $trade_license->expiary_date = $request->input('expiary_date');
+        }
+
+        if($request->input('company_other') != ''){
+            $trade_license->company_other = $request->input('company_other');
+        }
+
+        if($request->input('manager_other') != ''){
+            $trade_license->manager_other = $request->input('manager_other');
+        }
+
+        if($request->input('sponsor_other') != ''){
+            $trade_license->sponsor_other = $request->input('sponsor_other');
+        }
+
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
+        }
+
+        if($request->input('partners_other') != ''){
+            $trade_license->partners_other = $request->input('partners_other');
         }
 
         if ($request->hasFile('trade_license')) {
@@ -473,10 +497,12 @@ class Hr_ProController extends Controller
         $trade_license->user_id = 0;
         // dd('working');
 
-        $this->history_table('trade_license_histories', 'add' , 0);
+        // $this->history_table('trade_license_histories', 'add' , 0);
+        
+
 
         if($trade_license->save()){
-           
+            $this->history_table('trade_license_histories', 'Add' , 0 , $trade_license->id , 'hr_pro.view_trade_license__sponsors__partners');
             return \Redirect::route('admin.hr_pro.trade_license__sponsors__partners')->with('success', 'Data Added Sucessfully');
         }
         
@@ -501,6 +527,25 @@ class Hr_ProController extends Controller
         }
         if($request->input('expiary_date') != ''){
             $trade_license->expiary_date = $request->input('expiary_date');
+        }
+
+        if($request->input('company_other') != ''){
+            $trade_license->company_other = $request->input('company_other');
+        }
+
+        if($request->input('manager_other') != ''){
+            $trade_license->manager_other = $request->input('manager_other');
+        }
+
+        if($request->input('sponsor_other') != ''){
+            $trade_license->sponsor_other = $request->input('sponsor_other');
+        }
+
+        if($request->input('partners_other') != ''){
+            $trade_license->partners_other = $request->input('partners_other');
+        }
+        if($request->input('sponsorship_fee') != ''){
+            $trade_license->sponsorship_fee = $request->input('sponsorship_fee');
         }
 
         if ($request->hasFile('trade_license')) {
@@ -713,7 +758,8 @@ class Hr_ProController extends Controller
             $this->remove_table_name('trade_licenses');
         }
         if($trade_license->status == 'approved' || $trade_license->user_id == 0 ){
-             $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            //  $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+             $this->history_table('trade_license_histories', $trade_license->action , $user_id , $trade_license->id , 'hr_pro.view_trade_license__sponsors__partners');
         }
 
 
@@ -867,8 +913,8 @@ class Hr_ProController extends Controller
             $trade_license->action = 'add';
         }
 
-        $this->history_table('trade_license_histories', $trade_license->action , $user_id);
-
+        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('trade_license_histories', $trade_license->action , $user_id , $trade_license->id , 'hr_pro.view_trade_license__sponsors__partners');
         //dd($trade_license->id); 
         if($trade_license->delete()){
 
@@ -909,7 +955,8 @@ class Hr_ProController extends Controller
  
         if( $trade_license->save()){
 
-            $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            $this->history_table('trade_license_histories', $trade_license->action , $user_id , $trade_license->id , 'hr_pro.view_trade_license__sponsors__partners');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -941,7 +988,8 @@ class Hr_ProController extends Controller
             $trade_license->action = 'restored';
         
         $trade_license->save();
-        $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('trade_license_histories', $trade_license->action , $user_id , $trade_license->id , 'hr_pro.view_trade_license__sponsors__partners');
  
         $trade_license->action = 'deleted';
         $trade_license->save();
@@ -1109,14 +1157,16 @@ class Hr_ProController extends Controller
         if($request->input('amount') != ''){
             $office_contract->amount = $request->input('amount');
         }
-
         $office_contract->status = 'approved';
         $office_contract->user_id = 0;
-        $this->history_table_type('office__land_contract_histories', 'add' , 0 ,'office');
+        // $this->history_table_type('office__land_contract_histories', 'add' , 0 ,'office');
+        
 
-
+        $office_contract->action = 'Add';
         $office_contract->type = 'office';
         $office_contract->save();
+
+        $this->history_table_type('office__land_contract_histories', $office_contract->action ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_office_contracts');
 
         return \Redirect::route('admin.hr_pro.office_contracts')->with('success', 'Data Added Sucessfully');
 
@@ -1197,17 +1247,19 @@ class Hr_ProController extends Controller
 
         
         $office_contract->type = 'office';
-        $office_contract->save();
         // dd($office_contract->status);
         if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
             $office_contract->action = 'edit';
         }
 
         $office_contract->status = $request->input('status');
+        $office_contract->save();
 
 
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id , 'office');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id , 'office');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_office_contracts');
 
         }
 
@@ -1260,7 +1312,10 @@ class Hr_ProController extends Controller
                 $this->remove_table_name('office__land_contracts');
             }
     
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_office_contracts');
+
             if($office_contract->delete()){
                 return response()->json(['status'=>'1']);
             }else{
@@ -1296,11 +1351,13 @@ class Hr_ProController extends Controller
             $office_contract->action = 'deleted';
         
         // dd($office_contract->action );
-        
+        $office_contract->type = 'office';
  
         if( $office_contract->save()){
             // dd($office_contract->action);
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_office_contracts');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -1332,7 +1389,10 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+        // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'office');
+
+        $this->history_table_type('office__land_contract_histories', $office_contract->action ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_office_contracts');
+
         $office_contract->action = 'nill';
         $office_contract->save();
       
@@ -1340,8 +1400,6 @@ class Hr_ProController extends Controller
             return response()->json(['status'=>'1']);
         
     }
-
-    
 
     public function view_office_contract(Request $request){
         $data['office_contract'] = Office_Land_contract::where('type', '=', 'office')->where('id' ,'=' , $request->input('id'))->first();
@@ -1510,7 +1568,8 @@ class Hr_ProController extends Controller
         $office_contract->type = 'land';
         $office_contract->save();
 
-        $this->history_table_type('office__land_contract_histories', 'add' , 0 ,'land');
+        // $this->history_table_type('office__land_contract_histories', 'add' , 0 ,'land');
+        $this->history_table_type('office__land_contract_histories', 'Add' ,  $office_contract->user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_land_contracts');
 
         return \Redirect::route('admin.hr_pro.land_contracts')->with('success', 'Data Added Sucessfully');
 
@@ -1571,12 +1630,11 @@ class Hr_ProController extends Controller
 
         }
 
-        
-
-        
+   
         if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill'){
             $office_contract->action = 'edit';
         }
+
         $office_contract->status = $request->input('status');
 
         $office_contract->status_message = $request->input('status_message');
@@ -1601,7 +1659,9 @@ class Hr_ProController extends Controller
             $office_contract->action = 'none';
         }
         if($office_contract->status == 'approved' || $office_contract->user_id == 0 ){
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id , 'land');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id , 'land');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_land_contracts');
 
         }
 
@@ -1653,7 +1713,9 @@ class Hr_ProController extends Controller
                 $this->remove_table_name('office__land_contracts');
             }
     
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_land_contracts');
             if($office_contract->delete()){
                 return response()->json(['status'=>'1']);
             }else{
@@ -1693,7 +1755,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+            // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+
+            $this->history_table_type('office__land_contract_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_land_contracts');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -1725,7 +1789,11 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+
+        // $this->history_table_type('office__land_contract_histories', $office_contract->action , $user_id ,'land');
+
+        $this->history_table_type('office__land_contract_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_land_contracts');
+
         $office_contract->action = 'nill';
         $office_contract->save();
       
@@ -1891,7 +1959,9 @@ class Hr_ProController extends Controller
 
         $civil_defense->save();
         
-        $this->history_table_type('civil_defense_documents_histories', 'add' , 0 ,'non_mobile');
+        // $this->history_table_type('civil_defense_documents_histories', 'add' , 0 ,'non_mobile');
+
+        $this->history_table_type('civil_defense_documents_histories', 'Add' ,   $civil_defense->user_id, 'non_mobile', $civil_defense->id , 'hr_pro.view_non_mobile_civil_defence');
 
         return \Redirect::route('admin.hr_pro.non_mobile_civil_defence')->with('success', 'Data Added Sucessfully');
 
@@ -1948,7 +2018,9 @@ class Hr_ProController extends Controller
         $civil_defense->save();
 
         if($civil_defense->status == 'approved' || $civil_defense->user_id == 0 ){
-            $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id , 'non_mobile');
+            // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id , 'non_mobile');
+
+            $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_non_mobile_civil_defence');
 
         }
 
@@ -1976,7 +2048,9 @@ class Hr_ProController extends Controller
             $this->remove_table_name('civil_defense_files');
         }
 
-        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'non_mobile');
+        // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'non_mobile');
+
+        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_non_mobile_civil_defence');
 
        if($civil_defense->delete()){
            return response()->json(['status'=>'1']);
@@ -2013,7 +2087,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+            // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_civil_defence');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -2045,7 +2121,9 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+        // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+        $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_civil_defence');
  
         $office_contract->action = 'nill';
         $office_contract->save();
@@ -2172,7 +2250,9 @@ class Hr_ProController extends Controller
 
         $muncipality->save();
 
-        $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'non_mobile');
+        // $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'non_mobile');
+
+        $this->history_table_type('muncipality_documents_histories', 'Add',   $muncipality->user_id , $muncipality->type , $muncipality->id , 'hr_pro.view_non_mobile_muncipality');
 
         return \Redirect::route('admin.hr_pro.non_mobile_muncipality')->with('success', 'Data Added Sucessfully');
 
@@ -2226,7 +2306,11 @@ class Hr_ProController extends Controller
         $muncipality->save();
 
         if($muncipality->status == 'approved' || $muncipality->user_id == 0 ){
-            $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'non_mobile');
+            // $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'non_mobile');
+
+            $this->history_table_type('muncipality_documents_histories', $muncipality->action ,   $user_id, $muncipality->type , $muncipality->id , 'hr_pro.view_non_mobile_muncipality');
+
+            
 
         }
 
@@ -2254,7 +2338,9 @@ class Hr_ProController extends Controller
             $this->remove_table_name('muncipality_documents');
         }
 
-        $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'non_mobile');
+        // $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'non_mobile');
+
+        $this->history_table_type('muncipality_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_non_mobile_muncipality');
 
        if($civil_defense->delete()){
            return response()->json(['status'=>'1']);
@@ -2291,7 +2377,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+            // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_muncipality');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -2323,7 +2411,9 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+        // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'non_mobile');
+
+        $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_muncipality');
  
         $office_contract->action = 'nill';
         $office_contract->save();
@@ -2472,9 +2562,13 @@ class Hr_ProController extends Controller
  
         $civil_defense->user_id = 0;
 
-        $this->history_table_type('civil_defense_documents_histories', 'add' , 0 ,'mobile');
+        // $this->history_table_type('civil_defense_documents_histories', 'add' , 0 ,'mobile');
+
+        
 
         $civil_defense->save();
+
+        $this->history_table_type('civil_defense_documents_histories', 'Add' ,   $civil_defense->user_id, 'mobile', $civil_defense->id , 'hr_pro.view_mobile_civil_defence');
 
         return \Redirect::route('admin.hr_pro.mobile_civil_defence')->with('success', 'Data Added Sucessfully');
 
@@ -2528,7 +2622,9 @@ class Hr_ProController extends Controller
         $civil_defense->type = 'mobile';
         $civil_defense->save();
         if($civil_defense->status == 'approved' || $civil_defense->user_id == 0 ){
-            $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id , 'mobile');
+            // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id , 'mobile');
+
+            $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_mobile_civil_defence');
 
         }
 
@@ -2556,7 +2652,9 @@ class Hr_ProController extends Controller
             $this->remove_table_name('civil_defense_files');
         }
 
-        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'mobile');
+        // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'mobile');
+
+        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_mobile_civil_defence');
 
 
        if($civil_defense->delete()){
@@ -2594,7 +2692,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+            // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+            $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_civil_defence');
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -2625,7 +2725,9 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+        // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+        $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_civil_defence');
  
         $office_contract->action = 'nill';
         $office_contract->save();
@@ -2750,7 +2852,9 @@ class Hr_ProController extends Controller
 
         $muncipality->save();
 
-        $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'mobile');
+        // $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'mobile');
+
+        $this->history_table_type('muncipality_documents_histories', 'Add',   $muncipality->user_id , $muncipality->type , $muncipality->id , 'hr_pro.view_mobile_muncipality');
 
         return \Redirect::route('admin.hr_pro.mobile_muncipality')->with('success', 'Data Added Sucessfully');
 
@@ -2805,7 +2909,9 @@ class Hr_ProController extends Controller
         $muncipality->save();
 
         if($muncipality->status == 'approved' || $muncipality->user_id == 0 ){
-            $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'mobile');
+            // $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'mobile');
+
+            $this->history_table_type('muncipality_documents_histories', $muncipality->action ,   $user_id, $muncipality->type , $muncipality->id , 'hr_pro.view_mobile_muncipality');
 
         }
 
@@ -2834,7 +2940,9 @@ class Hr_ProController extends Controller
             $this->remove_table_name('muncipality_documents');
         }
 
-        $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'mobile');
+        // $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'mobile');
+
+        $this->history_table_type('muncipality_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.view_mobile_muncipality');
 
        if($civil_defense->delete()){
            return response()->json(['status'=>'1']);
@@ -2871,7 +2979,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+            // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+            $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_muncipality');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -2903,7 +3013,10 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+        // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+
+        
+        $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_muncipality');
 
         
         $office_contract->action = 'nill';
@@ -3128,7 +3241,10 @@ class Hr_ProController extends Controller
 
         $trained_individual->save();
 
-        $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'non_mobile');
+        // $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'non_mobile');
+
+        
+        $this->history_table_type('trained_individuals_histories', 'Add',  0 , $trained_individual->type , $trained_individual->id , 'hr_pro.view_non_mobile_trained_individual');
 
 
         return \Redirect::route('admin.hr_pro.non_mobile_trained_individual')->with('success', 'Data Added Sucessfully');
@@ -3226,7 +3342,9 @@ class Hr_ProController extends Controller
         $trained_individual->save();
 
         if($trained_individual->status == 'approved' || $trained_individual->user_id == 0 ){
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'non_mobile');
+            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'non_mobile');
+
+            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_non_mobile_trained_individual');
 
         }
 
@@ -3290,7 +3408,9 @@ class Hr_ProController extends Controller
                 $this->remove_table_name('trained_individuals');
             }
     
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'non_mobile');
+            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'non_mobile');
+
+            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_non_mobile_trained_individual');
     
             if($trained_individual->delete()){
                 return response()->json(['status'=>'1']);
@@ -3328,7 +3448,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+            // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+
+            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_trained_individual');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -3360,7 +3482,10 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+        // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'non_mobile');
+
+
+        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_non_mobile_trained_individual');
 
         $office_contract->action = 'nill';
         $office_contract->save();
@@ -3548,7 +3673,9 @@ class Hr_ProController extends Controller
 
         $trained_individual->save();
 
-        $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'mobile');
+        // $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'mobile');
+
+        $this->history_table_type('trained_individuals_histories', 'Add' ,0 , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
 
         return \Redirect::route('admin.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
 
@@ -3647,7 +3774,9 @@ class Hr_ProController extends Controller
         $trained_individual->save();
 
         if($trained_individual->status == 'approved' || $trained_individual->user_id == 0 ){
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'mobile');
+            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'mobile');
+
+            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
 
         }
 
@@ -3710,7 +3839,9 @@ class Hr_ProController extends Controller
                 $this->remove_table_name('trained_individuals');
             }
     
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'mobile');
+            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'mobile');
+
+            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
     
             if($trained_individual->delete()){
                 return response()->json(['status'=>'1']);
@@ -3748,7 +3879,9 @@ class Hr_ProController extends Controller
  
         if( $office_contract->save()){
 
-            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+            // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+
+            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
 
             return response()->json(['status'=>'1']);
         }else{
@@ -3780,7 +3913,11 @@ class Hr_ProController extends Controller
             $office_contract->action = 'restored';
         
         $office_contract->save();
-        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+        // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+
+        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
+
+
         $office_contract->action = 'nill';
         $office_contract->save();
  
