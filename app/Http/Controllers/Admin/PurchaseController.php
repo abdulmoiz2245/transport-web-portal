@@ -44,6 +44,51 @@ class PurchaseController extends Controller
     //     return view('layout', ["data"=>$data]);
     // }
 
+    public function history_table($table_name , $action , $user_id, $data_id, $tab_name){
+        DB::table($table_name)->insert([
+            'action' => $action,
+            'date' => date("Y-m-d  H:i:s"),
+            'user_id' => $user_id,
+            // 'table_name' => $tab_name,
+            'data_id' => $data_id,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return true;
+    }
+
+    public function history_table_type($table_name , $action , $user_id , $type){
+        DB::table($table_name)->insert([
+            'action' => $action,
+            'date' => date("Y-m-d  H:i:s"),
+            'user_id' => $user_id,
+            'type' => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return true;
+    }
+    
+    public function table_history_clear(Request $request){
+        
+        if(DB::table($request->input('table_name'))->truncate()){
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'1']);
+        }
+    }
+
+    public function table_history_type_clear(Request $request){
+        // die()
+        if(DB::table($request->input('table_name'))->where('type' , '=' , $request->input('type'))->delete()){
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'1']);
+        }
+    }
+
     /////////////////////////////////
     ///////// Purchase /////////
     /////////////////////////////////
@@ -90,8 +135,8 @@ class PurchaseController extends Controller
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
 
-        $data['trade_licenses_history']= DB::table('trade_license_histories')->get();
-        $data['table_name']= 'trade_license_histories';
+        $data['purchase_history']= DB::table('purchase_histories')->get();
+        $data['table_name']= 'purchase_histories';
 
         $data['page_title'] = "History | PURCHASE ";
         $data['view'] = 'admin.purchase.purchase_history';
@@ -267,9 +312,11 @@ class PurchaseController extends Controller
         $purchase->user_id = 0;
         // dd('working');
 
-        // $this->history_table('trade_license_histories', 'add' , 0);
+        
 
         if($purchase->save()){
+
+            $this->history_table('purchase_histories', 'add' , 0,  $purchase->id , "purchase");
            
             return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Added Sucessfully');
         }
@@ -409,6 +456,10 @@ class PurchaseController extends Controller
 
 
         $purchase->save();
+
+        if($purchase->status == 'approved' || $purchase->user_id == 0 ){
+            $this->history_table('purchase_histories', $purchase->action , $user_id,  $purchase->id, "purchase");
+       }
 
         
 

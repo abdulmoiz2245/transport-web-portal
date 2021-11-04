@@ -16,6 +16,7 @@ use App\Models\User;
             <tr>
                 <th>Action </th>
                 <th>Username</th>
+                <th>Link</th>
                 <th>Date</th>
             </tr>
         </thead>
@@ -39,6 +40,15 @@ use App\Models\User;
                                             
                                             @endif
                 </td> 
+                <td>
+                    <form action="{{ {{$trade_licenses_history->route_name}} }}" method="post" class="d-inline">
+                        @csrf
+                        <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" placeholder="Enter id" >
+                        <button type="submit" class="border-0 bg-white">
+                            <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                        </button>
+                    </form>
+                </td>
                 <td>{{ $trade_licenses_history->date }}</td>
 
             </tr>

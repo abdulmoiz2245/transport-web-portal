@@ -67,13 +67,15 @@ class CustomerController extends Controller
         }
     }
 
-    public function history_table($table_name , $action , $user_id){
+    public function history_table($table_name , $action , $user_id, $route_name, $data_id){
 
        
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
+            'data_id' => $data_id,
+            'route_name' => $route_name,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -537,7 +539,7 @@ class CustomerController extends Controller
             $this->remove_table_name('customer_info');
         }
         if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-             $this->history_table('customer_histories', $customer_info->action , $user_id);
+             $this->history_table('customer_histories', $customer_info->action , $user_id, "route('admin.customer.view_customer')", $customer_info->id);
         }
 
 

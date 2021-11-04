@@ -16,11 +16,12 @@ use App\Models\User;
             <tr>
                 <th>Action </th>
                 <th>Username</th>
-                <th>Date</th>
+                <th>Link</th>
+                <th>Date</th>     
             </tr>
         </thead>
         <tbody>
-            @foreach($data['trade_licenses_history'] as $trade_licenses_history)
+            @foreach($data['purchase_history'] as $trade_licenses_history)
             <tr>
                 
                 <td>{{ ucfirst($trade_licenses_history->action) }}</td>
@@ -39,8 +40,16 @@ use App\Models\User;
                                             
                                             @endif
                 </td> 
+                <td>
+                    <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                        @csrf
+                        <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" >
+                        <button type="submit" class="border-0 bg-white">
+                            <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                        </button>
+                    </form>
+                </td>
                 <td>{{ $trade_licenses_history->date }}</td>
-
             </tr>
             @endforeach
         </tbody>         
