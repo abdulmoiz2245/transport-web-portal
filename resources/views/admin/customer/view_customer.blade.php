@@ -267,13 +267,13 @@ use App\Models\Erp_department;
                                     @else
                                         <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}">
                                             <button class="btn">
-                                                View Documennt
+                                                View Document
                                             </button>
                                         </a>
 
                                         <a  href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}" download>
                                             <button class="btn">
-                                                Download Documennt
+                                                Download Document
                                             </button>
                                         </a>
                                     @endif

@@ -166,6 +166,23 @@ use App\Models\Erp_department;
 
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->trn_copy != null)
+                                <div class="col-4">
+                                    <h5 class=""><b> TRN Copy :</b></h5>
+
+                                </div>
+                                <p class="mb-0"> TRN Copy :</p>
+                                <div class="col-8 mt-1 mb-3" id="trn_copy">
+                                    <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}">
+                                        <button class="btn">
+                                            View Document
+                                        </button>
+                                    </a>
+                                    <a  href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}" download>
+                                        <button class="btn">
+                                            Download Document
+                                        </button>
+                                    </a>                                   
+                                </div>
                             <div class="form-group">
                                 <label>Replace TRN Copy</label>
                                 <div class="input-group mb-3">
@@ -436,6 +453,11 @@ use App\Models\Erp_department;
     $(document).ready(function(){
         var id = {{ $data['customer_info']->id }};
        
+        $('#trn_copy').on('click', function (e) {
+
+            e.preventDefault();
+
+        });
 
         $('#customer_info').on('submit', function (e) {
 
