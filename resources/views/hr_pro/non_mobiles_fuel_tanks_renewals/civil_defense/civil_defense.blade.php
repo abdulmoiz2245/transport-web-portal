@@ -70,7 +70,7 @@ use App\Models\Civil_defense_documents;
                                 <tr>
                                     
                                     <td>
-                                        <a  target="_blank" href="{{ asset('main_admin') }}/hr_pro/mobile_fuel_tank_renewals/{{$civil_defense->document}}">
+                                        <a  target="_blank" href="{{ asset('main_admin') }}/hr_pro/non_mobile_fuel_tank_renewals/{{$civil_defense->document}}">
                                             <button class="btn">View</button>
                                         </a>
 

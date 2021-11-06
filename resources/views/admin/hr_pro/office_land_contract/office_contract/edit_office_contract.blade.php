@@ -6,7 +6,7 @@
     </div>
     <form action="{{ route('admin.hr_pro.update_office_contracts') }}" method="post" enctype="multipart/form-data">
     @csrf
-    <input type="text" name="id" value="{{ $data['office_contract']->id }}" class="d-none">
+        <input type="text" name="id" value="{{ $data['office_contract']->id }}" class="d-none">
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="form-group">
@@ -67,21 +67,34 @@
                 </div>
            </div>
            <div class="col-6">
+                @if($data['office_contract']->lease_rent != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Lease/Rent Copy</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Lease/Rent Copy</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="lease_rent">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/office_land_contract/')}}/{{$data['office_contract']->lease_rent}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    @if($data['office_contract']->lease_rent != NULL)
-                    <label>Replace Lease/Rent Copy</label>
-
-                    @else
                     <label>Lease/Rent Copy</label>
-
-                    @endif
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            @if($data['office_contract']->lease_rent != NULL)
-                            <span class="input-group-text" >Replace Lease/Rent Copy</span>
-                            @else
                             <span class="input-group-text" >Lease/Rent Copy</span>
-                            @endif
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input"   name="lease_rent">
@@ -89,25 +102,41 @@
                         </div>
                     </div>
                 </div>
-           </div>
-       </div>
+            </div>
+            @endif
+        </div>
+        </div>
 
        <div class="row">
            <div class="col-6">
+                @if($data['office_contract']->ijari_certificate != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Ijari Certificate</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Ijari Certificate</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="ijari_certificate">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/office_land_contract/')}}/{{$data['office_contract']->ijari_certificate}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    @if($data['office_contract']->ijari_certificate != NULL)
-                    <label>Replace Ijari Certificate</label>
-                    @else
-                    <label>Ijari Certificate</label>
-                    @endif
-                    
+                    <label>Ijari Certificate</label>                 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            @if($data['office_contract']->ijari_certificate != NULL)
-                            <span class="input-group-text" >Replace Ijari Certificate</span>
-                            @else
                             <span class="input-group-text" >Ijari Certificate</span>
-                            @endif
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input"   name="ijari_certificate">
@@ -115,6 +144,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
            </div>
            <div class="col-6">
                 <div class="form-group">

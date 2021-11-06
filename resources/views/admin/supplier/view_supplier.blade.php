@@ -284,13 +284,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->guaranty_cheque}}">
+                                        <a target="_blank" href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->guaranty_cheque}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->guaranty_cheque}}" download>
+                                        <a  href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->guaranty_cheque}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -357,13 +357,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->trn_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer/')}}/{{$data['customer_info']->trn_copy}}" download>
+                                        <a  href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->trn_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -402,13 +402,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_license_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_license_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_license_copy}}" download>
+                                        <a  href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_license_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>
@@ -447,13 +447,13 @@
                                     
                                         <p>No File Found</p>
                                     @else
-                                        <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_contract_copy}}">
+                                        <a target="_blank" href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_contract_copy}}">
                                             <button class="btn">
                                                 View Documennt
                                             </button>
                                         </a>
 
-                                        <a  href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_contract_copy}}" download>
+                                        <a  href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_contract_copy}}" download>
                                             <button class="btn">
                                                 Download Documennt
                                             </button>

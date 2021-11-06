@@ -184,21 +184,34 @@ use App\Models\Supplier_new_department;
                         </div>
 
                         <div class="cheque_copy col-md-6 col-12 mb-3">
-                            <div class="form-group">
-                                @if($data['customer_info']->guaranty_cheque == null):
+                            @if($data['customer_info']->guaranty_cheque != null)
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace CHEQUE COPY </label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Replace CHEQUE COPY</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="guaranty_cheque" >
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->guaranty_cheque}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>
+                            </div>
+                            @else
+                            <div class="form-group"> 
                                 <label>UPLOAD CHEQUE COPY </label>
-                                @else
-                                <label>Replace CHEQUE COPY </label>
-                                @endif
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" >
-                                            @if($data['customer_info']->guaranty_cheque == null):
-                                                <label>UPLOAD CHEQUE COPY </label>
-                                            @else
-                                                <label>Replace CHEQUE COPY </label>
-                                            @endif
-                                        </span>
+                                        <span class="input-group-text" >UPLOAD CHEQUE COPY</span>
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input"   name="guaranty_cheque" >
@@ -206,27 +219,38 @@ use App\Models\Supplier_new_department;
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                         <div class="reciving_copy col-md-6 col-12 mb-3">
-                            <div class="form-group">
-                                <label>
-                                    @if($data['customer_info']->guaranty_reciving == null):
-                                        <label>UPLOAD RECEIVING COPY </label>
-                                    @else
-                                        <label>Replace RECEIVING COPY </label>
-                                    @endif
-                                    
-                                </label>
+                            @if($data['customer_info']->guaranty_reciving != null)
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace RECEIVING COPY </label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Replace RECEIVING COPY</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="guaranty_reciving" >
+                                            <label class="custom-file-label" >Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->guaranty_reciving}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>
+                            </div>
+                            @else
+                            <div class="form-group"> 
+                                <label>UPLOAD RECEIVING COPY </label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" >
-                                            @if($data['customer_info']->guaranty_reciving == null):
-                                                <label>UPLOAD RECEIVING COPY </label>
-                                            @else
-                                                <label>Replace RECEIVING COPY </label>
-                                            @endif
-                                        </span>
+                                        <span class="input-group-text" >UPLOAD RECEIVING COPY</span>
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input"   name="guaranty_reciving" >
@@ -234,6 +258,7 @@ use App\Models\Supplier_new_department;
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                         <div class="col-12">
@@ -248,18 +273,27 @@ use App\Models\Supplier_new_department;
 
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->trn_copy != null)
-                            <div class="form-group">
-                                <label>Replace TRN Copy</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload TRN Copy</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="trn_copy" >
-                                        <label class="custom-file-label">Choose file</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace TRN Copy</label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Upload TRN Copy</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="trn_copy" >
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/supplier/')}}/{{$data['customer_info']->trn_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>
+                            </div>  
                             @else
                                 <div class="form-group">
                                     <label>TRN Copy Upload</label>
@@ -283,21 +317,11 @@ use App\Models\Supplier_new_department;
 
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->business_license_copy != null)
-                            <div class="form-group">
-                                <label>Replace BUSINESS LICENCE Copy</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_license_copy" >
-                                        <label class="custom-file-label">Choose file</label>
-                                    </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace BUSINESS LICENCE Copy</label>
                                 </div>
-                            </div>
-                            @else
-                                <div class="form-group">
-                                    <label>BUSINESS LICENCE Upload</label>
+                                <div class="col-11 form-group">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
@@ -308,6 +332,25 @@ use App\Models\Supplier_new_department;
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_license_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>      
+                            </div>
+                            @else
+                            <div class="form-group">
+                                <label>BUSINESS LICENCE Upload</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input"   name="business_license_copy" >
+                                        <label class="custom-file-label">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
                             @endif
                         </div>
                         
@@ -322,16 +365,25 @@ use App\Models\Supplier_new_department;
                         </div>
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->business_contract_copy != null)
-                            <div class="form-group">
-                                <label>Replace BUSINESS CONTRACT Copy</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload BUSINESS CONTRACT Copy</span>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace BUSINESS CONTRACT Copy</label>
+                                </div>
+                                <div class="col-11 form-group">  
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Upload BUSINESS CONTRACT Copy</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="business_contract_copy">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_contract_copy">
-                                        <label class="custom-file-label">Choose file</label>
-                                    </div>
+                                </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/supplier')}}/{{$data['customer_info']->business_contract_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
                                 </div>
                             </div>
                             @else
@@ -592,7 +644,8 @@ use App\Models\Supplier_new_department;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Supplier Department Updated Successfully");
-                        $('#smartwizard').smartWizard("next");
+                        window.location.replace("{{ route('user.supplier') }}");
+                        // $('#smartwizard').smartWizard("next");
                     }
                 },
                 error: function (){    

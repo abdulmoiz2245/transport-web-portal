@@ -146,17 +146,27 @@ use App\Models\Erp_department;
 
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->trn_copy != null)
-                            <div class="form-group">
-                                <label>Replace TRN Copy</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload TRN Copy</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="trn_copy">
-                                        <label class="custom-file-label">Choose file</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace  Contract/Project Based Copy</label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Upload Contract/Project Based Copy</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="business_contract_copy">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->trn_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>
+
                             </div>
                             @else
                                 <div class="form-group">
@@ -181,16 +191,25 @@ use App\Models\Erp_department;
 
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->business_license_copy != null)
-                            <div class="form-group">
-                                <label>Replace BUSINESS LICENCE Copy</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace BUSINESS LICENCE Copy</label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Upload BUSINESS LICENCE Copy</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="business_license_copy">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_license_copy">
-                                        <label class="custom-file-label">Choose file</label>
-                                    </div>
+                                </div>  
+                                <div col="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_license_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
                                 </div>
                             </div>
                             @else
@@ -227,17 +246,27 @@ use App\Models\Erp_department;
                         </div>
                         <div class="col-md-6 col-12">
                             @if( $data['customer_info']->business_contract_copy != null)
-                            <div class="form-group">
-                                <label>Replace  Contract/Project Based Copy<</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" >Upload Contract/Project Based Copy<</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input"   name="business_contract_copy">
-                                        <label class="custom-file-label">Choose file</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Replace  Contract/Project Based Copy</label>
+                                </div>
+                                <div class="col-11 form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" >Upload Contract/Project Based Copy</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"   name="business_contract_copy">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-1 p-0">
+                                    <a target="_blank" href="{{ asset('main_admin/customer')}}/{{$data['customer_info']->business_contract_copy}}">
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div>
+
                             </div>
                             @else
                                 <div class="form-group">

@@ -66,8 +66,31 @@
                     <label>Ijari Number</label>
                     <input type="text" name="ijari_number" class="form-control form-control-rounded"  placeholder="Enter Ijari Number"value="{{ $data['land_contract']->ijari_number }}" >
                 </div>
-           </div>
-           <div class="col-md-6 col-12">
+            </div>
+            <div class="col-md-6 col-12">
+                @if($data['land_contract']->lease_rent != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Lease/Rent Copy</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Lease/Rent Copy</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="lease_rent">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/office_land_contract/')}}/{{$data['land_contract']->lease_rent}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
                     <label>Lease/Rent Copy</label>
                     <div class="input-group mb-3">
@@ -80,13 +103,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            @endif
            </div>
        </div>
 
        <div class="row">
            <div class="col-md-6 col-12">
+           @if($data['land_contract']->ijari_certificate != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Ijari Certificate</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Ijari Certificate</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="ijari_certificate">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/office_land_contract/')}}/{{$data['land_contract']->ijari_certificate}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    <label>Ijari Certificate</label>
+                    <label>Ijari Certificate</label>                 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Ijari Certificate</span>
@@ -97,6 +145,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
            </div>
            <div class="col-6">
                 <div class="form-group">

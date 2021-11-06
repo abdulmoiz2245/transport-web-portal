@@ -83,21 +83,11 @@ use App\Models\Company_name;
     <div class="row">
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->trade_license_copy != 'null')
-            <div class="form-group">
-                <label>Replace Trade License Copy Upload</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Trade License</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="trade_license">
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Trade License Copy Upload</label>
                 </div>
-            </div>
-            @else
-                <div class="form-group">
-                    <label>Trade License Copy Upload</label>
+                <div class="col-11 form-group">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Upload Trade License</span>
@@ -108,12 +98,34 @@ use App\Models\Company_name;
                         </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->trade_license_copy}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
+            </div>
+            @else
+            <div class="form-group">
+                <label>Trade License Copy Upload</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" >Upload Trade License</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"   name="trade_license">
+                        <label class="custom-file-label">Choose file</label>
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
         <div class="col-md-6 col-12">
-                @if( $data['trade_license']->member_ship_certificate != 'null')
-                <div class="form-group">
+            @if( $data['trade_license']->member_ship_certificate != 'null')
+            <div class="row">
+                <div class="col-12">
                     <label>Replace Membership Certificate </label>
+                </div>
+                <div class="col-11 form-group">                   
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Upload Membership Certificate</span>
@@ -124,26 +136,34 @@ use App\Models\Company_name;
                         </div>
                     </div>
                 </div>
-
-                @else
-                <div class="form-group">
-                    <label>Membership Certificate Upload</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Upload Membership Certificate</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="membership_certificate">
-                            <label class="custom-file-label">Choose file</label>
-                        </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->member_ship_certificate}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
+            </div>
+            @else
+            <div class="form-group">
+                <label>Membership Certificate Upload</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" >Upload Membership Certificate</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"   name="membership_certificate">
+                        <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
-                @endif
+            </div>
+            @endif
         </div>
         <div class="col-md-6 col-12">
-                @if( $data['trade_license']->sponsor_page != 'null')
-                <div class="form-group">
+            @if( $data['trade_license']->sponsor_page != 'null')
+            <div class="row">
+                <div class="col-12">
                     <label>Replace Sponsor Page</label>
+                </div>
+                <div class="col-11 form-group">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Upload Sponsor Page</span>
@@ -154,21 +174,26 @@ use App\Models\Company_name;
                         </div>
                     </div>
                 </div>
-
-                @else
-                <div class="form-group">
-                    <label>Sponsor Page Upload</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Upload Sponsor Page</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="sponsor_page">
-                            <label class="custom-file-label">Choose file</label>
-                        </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->sponsor_page}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
+            </div>
+            @else
+            <div class="form-group">
+                <label>Sponsor Page Upload</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" >Upload Sponsor Page</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"   name="sponsor_page">
+                        <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
-                @endif
+            </div>
+            @endif
         </div>
         <div class="col-md-6 col-12">
             <div class="form-group">
@@ -183,19 +208,27 @@ use App\Models\Company_name;
     <div class="row">
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->manager_id_card != 'null')
-            <div class="form-group">
-                <label>Replace Id Card </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Id Card</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="manager_id_card">
-                        <label class="custom-file-label">Choose file</label>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Id Card </label>
+                </div>
+                <div class="col-11 form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Id Card</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="manager_id_card">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->manager_id_card}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
             </div>
-
             @else
             <div class="form-group">
                 <label>Upload Id Card </label>
@@ -213,16 +246,25 @@ use App\Models\Company_name;
         </div>
         <div class="col-md-6 col-12">
                 @if( $data['trade_license']->manager_passport != 'null')
-                <div class="form-group">
-                    <label>Replace Passport </label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Upload Passport</span>
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Passport </label>
+                    </div>
+                    <div class="col-11 form-group"> 
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Upload Passport</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="manager_passport">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
                         </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="manager_passport">
-                            <label class="custom-file-label">Choose file</label>
-                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->manager_passport}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
                     </div>
                 </div>
                 @else
@@ -241,9 +283,12 @@ use App\Models\Company_name;
                 @endif
         </div>
         <div class="col-md-6 col-12">
-                @if( $data['trade_license']->manager_visa != 'null')
-                <div class="form-group">
+            @if( $data['trade_license']->manager_visa != 'null')
+            <div class="row">
+                <div class="col-12">
                     <label>Replace Visa </label>
+                </div>
+                <div class="col-11 form-group">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Upload visa</span>
@@ -254,21 +299,26 @@ use App\Models\Company_name;
                         </div>
                     </div>
                 </div>
-
-                @else
-                <div class="form-group">
-                    <label>Upload Visa </label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Upload visa</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="manager_visa">
-                            <label class="custom-file-label">Choose file</label>
-                        </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->manager_visa}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
+            </div>
+            @else
+            <div class="form-group">
+                <label>Upload Visa </label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" >Upload visa</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"   name="manager_visa">
+                        <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
-                @endif
+            </div>
+            @endif
         </div>
 
         <div class="col-md-6 col-12">
@@ -284,19 +334,27 @@ use App\Models\Company_name;
     <div class="row">
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->sponsor_id_card != 'null')
-            <div class="form-group">
-                <label>Replace Id Card </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Id Card</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="sponsor_id_card">
-                        <label class="custom-file-label">Choose file</label>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Id Card </label>
+                </div>
+                <div class="col-11 form-group"> 
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Id Card</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="sponsor_id_card">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->sponsor_id_card}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
             </div>
-
             @else
             <div class="form-group">
                 <label>Upload Id Card </label>
@@ -314,16 +372,25 @@ use App\Models\Company_name;
         </div>
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->sponsor_passport != 'null')
-            <div class="form-group">
-                <label>Replace Passport </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Passport</span>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Passport </label>
+                </div>
+                <div class="col-11 form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Passport</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="sponsor_passport">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="sponsor_passport">
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
+                </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->sponsor_passport}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
                 </div>
             </div>
             @else
@@ -343,19 +410,27 @@ use App\Models\Company_name;
         </div>
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->sponsor_visa != 'null')
-            <div class="form-group">
-                <label>Replace Visa </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload visa</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="sponsor_visa">
-                        <label class="custom-file-label">Choose file</label>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Visa </label>
+                </div>
+                <div class="col-11 form-group"> 
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload visa</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="sponsor_visa">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->sponsor_visa}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
             </div>
-
             @else
             <div class="form-group">
                 <label>Upload Visa </label>
@@ -391,19 +466,27 @@ use App\Models\Company_name;
     <div class="row">
         <div class="col-md-6 col-12">
             @if( $data['trade_license']->partners_id_card != 'null')
-            <div class="form-group">
-                <label>Replace Id Card </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Id Card</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="partners_id_card">
-                        <label class="custom-file-label">Choose file</label>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Id Card </label>
+                </div>
+                <div class="col-11 form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Id Card</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="partners_id_card">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->partners_id_card}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
             </div>
-
             @else
             <div class="form-group">
                 <label>Upload Id Card </label>
@@ -421,16 +504,25 @@ use App\Models\Company_name;
     </div>
     <div class="col-md-6 col-12">
             @if( $data['trade_license']->partners_passport != 'null')
-            <div class="form-group">
-                <label>Replace Passport </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload Passport</span>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Passport </label>
+                </div>
+                <div class="col-11 form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Passport</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="partners_passport">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="partners_passport">
-                        <label class="custom-file-label">Choose file</label>
-                    </div>
+                </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->partners_passport}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
                 </div>
             </div>
             @else
@@ -450,19 +542,27 @@ use App\Models\Company_name;
     </div>
     <div class="col-md-6 col-12">
             @if( $data['trade_license']->partners_visa != 'null')
-            <div class="form-group">
-                <label>Replace Visa </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >Upload visa</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input"   name="partners_visa">
-                        <label class="custom-file-label">Choose file</label>
+            <div class="row">
+                <div class="col-12">
+                    <label>Replace Visa </label>
+                </div>
+                <div class="col-11 form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload visa</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="partners_visa">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
+                <div class="col-1 p-0">
+                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trade_license/')}}/{{$data['trade_license']->partners_visa}}">
+                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                    </a>
+                </div>
             </div>
-
             @else
             <div class="form-group">
                 <label>Upload Visa </label>
