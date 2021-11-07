@@ -45,8 +45,10 @@ use App\Models\User;
                     <form action="{{ route($route) }}" method="post" class="d-inline">
                         @csrf
                         <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" placeholder="Enter id" >
-                        <button type="submit" class="border-0 bg-white">
-                            <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                        <button type="submit" class="border-0 bg-white" style="
+                            width: 30px;
+                        ">
+                            <img src="<?= asset('assets') ?>/images/export.png" alt="" >
                         </button>
                     </form>
                 </td>

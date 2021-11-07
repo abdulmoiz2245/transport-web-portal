@@ -1,6 +1,8 @@
 <?php 
 use App\Models\Company_name;
 use App\Models\Customer_info;
+use App\Models\Customer_rate_card;
+
 
 use App\Models\User;
 
@@ -120,7 +122,20 @@ use App\Models\User;
                                         </a>
 
                                         <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php
+                                                $check = 0;
+                                                foreach(Customer_rate_card::where('customer_id' ,'=',$customer_info->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                    if($rate->status == 'pending'){
+                                                        $check = 1;
+                                                    }
+                                                }
+                                            
+                                            ?>
+                                            @if($check == 1)
+                                            <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                            @else
                                             <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                            @endif
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a class="dropdown-item" href="{{ route('admin.customer.customer_rate_card_add',  $customer_info->id  ) }}">Add Rate Card</a>
@@ -192,7 +207,20 @@ use App\Models\User;
                                         </a>
 
                                         <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php
+                                                $check = 0;
+                                                foreach(Customer_rate_card::where('customer_id' ,'=',$customer_info->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                    if($rate->status == 'pending'){
+                                                        $check = 1;
+                                                    }
+                                                }
+                                            
+                                            ?>
+                                            @if($check == 1)
+                                            <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                            @else
                                             <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                            @endif
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a class="dropdown-item" href="{{ route('admin.customer.customer_rate_card_add', $customer_info->id  ) }}">Add Rate Card</a>
@@ -264,7 +292,20 @@ use App\Models\User;
                                         </a>
 
                                         <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php
+                                                $check = 0;
+                                                foreach(Customer_rate_card::where('customer_id' ,'=',$customer_info->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                    if($rate->status == 'pending'){
+                                                        $check = 1;
+                                                    }
+                                                }
+                                            
+                                            ?>
+                                            @if($check == 1)
+                                            <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                            @else
                                             <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                            @endif
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a class="dropdown-item" href="{{ route('admin.customer.customer_rate_card_add',  $customer_info->id  ) }}">Add Rate Card</a>

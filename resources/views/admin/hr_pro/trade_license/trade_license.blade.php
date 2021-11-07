@@ -3,6 +3,8 @@ use App\Models\Company_name;
 use App\Models\User;
 use App\Models\Trade_license;
 use App\Models\Office_Land_contract;
+use App\Models\Trade_license_partners;
+
 
 
   
@@ -182,6 +184,26 @@ use App\Models\Office_Land_contract;
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+                                            <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <?php
+                                                    $check = 0;
+                                                    foreach(Trade_license_partners::where('trade_license_id' ,'=',$trade_license->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                        if($rate->status == 'pending'){
+                                                            $check = 1;
+                                                        }
+                                                    }
+                                                
+                                                ?>
+                                                @if($check == 1)
+                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                @else
+                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                @endif
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners_add',  $trade_license->id  ) }}">Add Partner</a>
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners', $trade_license->id ) }}">View Partner</a>
+                                            </div>
 
                                               
                                         </td>
@@ -308,6 +330,26 @@ use App\Models\Office_Land_contract;
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+                                            <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php
+                                                    $check = 0;
+                                                    foreach(Trade_license_partners::where('trade_license_id' ,'=',$trade_license->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                        if($rate->status == 'pending'){
+                                                            $check = 1;
+                                                        }
+                                                    }
+                                                
+                                                ?>
+                                                @if($check == 1)
+                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                @else
+                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                @endif
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners_add',  $trade_license->id  ) }}">Add Partner</a>
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners', $trade_license->id ) }}">View Partner</a>
+                                            </div>
                                         </td>
                                         
                                     </tr>
@@ -433,6 +475,26 @@ use App\Models\Office_Land_contract;
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>
+                                            <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php
+                                                    $check = 0;
+                                                    foreach(Trade_license_partners::where('trade_license_id' ,'=',$trade_license->id)->where('row_status' , '!=' , 'deleted')->get() as $rate){
+                                                        if($rate->status == 'pending'){
+                                                            $check = 1;
+                                                        }
+                                                    }
+                                                
+                                                ?>
+                                                @if($check == 1)
+                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                @else
+                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                @endif
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners_add',  $trade_license->id  ) }}">Add Partner</a>
+                                                <a class="dropdown-item" href="{{ route('admin.hr_pro.trade_license_partners', $trade_license->id ) }}">View Partner</a>
+                                            </div>
                                         </td>
                                         
                                     </tr>

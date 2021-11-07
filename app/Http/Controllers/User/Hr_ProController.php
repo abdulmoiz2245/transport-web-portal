@@ -17,6 +17,7 @@ use App\Models\Civil_defense_documents;
 use App\Models\Muncipality_documents;
 use App\Models\Trained_individual;
 use App\Models\Approvals;
+use App\Models\Trade_license_partners;
 
 
 
@@ -726,6 +727,210 @@ class Hr_ProController extends Controller
         }else{
             return response()->json(['status'=>'0']);
 
+        }
+    }
+
+    //////
+    public function trade_license_partners ($id){
+        $data['trade_license_partners'] = Trade_license_partners::where('trade_license_id' ,'=' ,$id)->get();
+
+        // dd( $data['trade_license_partners']);
+       
+        $data['modules']= DB::table('modules')->get();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        
+        $data['page_title'] = "Trade License Partners";
+        $data['view'] = 'hr_pro.trade_license.trade_license_partner';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function trash_trade_license_partners(){
+        $data['modules']= DB::table('modules')->get();
+        $data['trade_license_partners'] = Trade_license_partners::All();
+       
+        $data['page_title'] = "Trade License Partners Trash";
+        $data['view'] = 'hr_pro.trade_license.deleted_data_partners';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function trade_license_partners_add($id){
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+        $data['trade_id'] = $id;
+        $data['page_title'] = "Add Trade License Partners";
+        $data['view'] = 'hr_pro.trade_license.add_trade_license_partner';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function edit_trade_license_partners(Request $request){
+        $data['trade_license_partners'] = Trade_license_partners::where('id' ,'=' , $request->input('id'))->first();
+
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Edit Trade License Partnerss";
+        $data['view'] = 'hr_pro.trade_license.edit_trade_license_partner';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function save_trade_license_partners(Request $request){
+
+        $customer_rate_card = new Trade_license_partners;
+        // dd($request->input('other'));
+        
+        if($request->input('other') != ''){
+            $customer_rate_card->other = $request->input('other');
+        }
+
+        if($request->input('trade_id') != ''){
+            $customer_rate_card->trade_license_id = $request->input('trade_id');
+        }
+
+        if ($request->hasFile('id_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->id_copy->getClientOriginalName());
+            $file = $request->file('id_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+                $customer_rate_card->id_copy = $name;
+
+            }  
+        }
+
+        if ($request->hasFile('visa_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->visa_copy->getClientOriginalName());
+            $file = $request->file('visa_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+                $customer_rate_card->visa_copy = $name;
+
+            }  
+        }
+
+        if ($request->hasFile('passport_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->passport_copy->getClientOriginalName());
+            $file = $request->file('passport_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+                $customer_rate_card->passport_copy = $name;
+
+            }  
+        }
+
+        // $this->add_aprovals('customer_info');
+
+        $customer_rate_card->status = 'pending';
+        $customer_rate_card->action = 'add';
+        if($request->input('status_message') != ''){
+
+            $customer_rate_card->status_message = $request->input('status_message');
+
+        }
+
+        $customer_rate_card->user_id = Auth::id();
+
+        if($customer_rate_card->save()){
+
+            return \Redirect::route('user.hr_pro.trade_license_partners' ,  
+           $request->input('trade_id') )->with('success', 'Partner Added Sucessfully');
+        }else{
+
+        }
+
+
+    }
+
+    public function update_trade_license_partners(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_rate_card = Trade_license_partners::where('id' , $id)->first();
+        // $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
+
+       
+        if($request->input('other') != ''){
+            $customer_rate_card->other = $request->input('other');
+        }
+
+        if ($request->hasFile('id_copy')) {
+            $name = time().'_'.str_replace(" ", "_", $request->id_copy->getClientOriginalName());
+            $file = $request->file('id_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+               
+
+                $customer_rate_card->id_copy = $name;
+               
+            }  
+        }
+        
+
+
+        if ($request->hasFile('visa_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->visa_copy->getClientOriginalName());
+            $file = $request->file('visa_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+                $customer_rate_card->visa_copy = $name;
+
+            }  
+        }
+
+        if ($request->hasFile('passport_copy')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->passport_copy->getClientOriginalName());
+            $file = $request->file('passport_copy');
+            if($file->storeAs('/main_admin/hr_pro/trade_license/', $name , ['disk' => 'public_uploads'])){
+                $customer_rate_card->passport_copy = $name;
+
+            }  
+        }
+    
+        // $this->add_aprovals('customer_info');
+
+            $customer_rate_card->status = 'pending';
+            $customer_rate_card->action = 'edit';
+            if($request->input('status_message') != ''){
+
+                $customer_rate_card->status_message = $request->input('status_message');
+
+            }
+
+            $customer_rate_card->user_id = Auth::id();
+            DB::enableQueryLog();
+            $customer_rate_card->save();
+            dd(DB::getQueryLog());
+
+        
+            return \Redirect::route('user.hr_pro.trade_license_partners',  $request->input('trade_id') )->with('success', 'Partner Edited Sucessfully');
+        
+
+    }
+
+    public function delete_trade_license_partners(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_rate_card = Trade_license_partners::where('id' , $id)->first();
+        
+        $customer_rate_card->status = 'pending';
+        $customer_rate_card->status_message = $request->input('status_message');
+        $customer_rate_card->user_id = Auth::id();
+        $customer_rate_card->action = 'delete';
+
+        if( $customer_rate_card->save()){
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
         }
     }
 

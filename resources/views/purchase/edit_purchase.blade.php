@@ -64,9 +64,6 @@ use App\Models\Purchase_mertial_data;
                         <option value="{{$purchase_meterial->id}}">{{ $purchase_meterial->name }}</option>
                         @endforeach
                         @endif
-                        <!-- <option value="sd">asa</option>
-                        <option value="sd">asda</option> -->
-
                     </select>
                 </div>
             </div>

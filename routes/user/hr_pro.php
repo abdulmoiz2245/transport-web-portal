@@ -56,6 +56,36 @@ use Illuminate\Support\Facades\Route;
         Route::post('/trade-license-sponsors-partners/save', [Hr_ProController::class, 'save_trade_license']) 
         ->name('save_trade_license__sponsors__partners');
 
+    //Trade license partner
+    /////
+        
+    Route::get('/trade-license-partners/{id}/', [Hr_ProController::class, 'trade_license_partners']) 
+    ->name('trade_license_partners');
+
+    Route::get('/trade-license-partners/add/{id}', [Hr_ProController::class, 'trade_license_partners_add']) 
+    ->name('trade_license_partners_add');
+
+    Route::post('/trade-license-partners/save', [Hr_ProController::class, 'save_trade_license_partners']) 
+        ->name('save_trade_license_partners');
+    
+    Route::post('/trade-license-partners/update', [Hr_ProController::class, 'update_trade_license_partners']) 
+    ->name('update_trade_license_partners');
+
+    Route::post('/trade-license-partners/edit', [Hr_ProController::class, 'edit_trade_license_partners']) 
+    ->name('edit_trade_license_partners');
+
+    Route::post('/trade-license-partners/delete', [Hr_ProController::class, 'delete_trade_license_partners']) 
+    ->name('delete_trade_license_partners');
+
+    Route::get('/trade-license-partners/trash/all', [Hr_ProController::class, 'trash_trade_license_partners']) 
+    ->name('trash_trade_license_partners');
+
+    Route::post('/trade-license-partners/restor-delete', [Hr_ProController::class, 'restore_trade_license_partners']) 
+    ->name('restore_trade_license_partners');
+
+    Route::post('/trade-license-partners/delete-status', [Hr_ProController::class, 'delete_trade_license_partners_status']) 
+    ->name('delete_trade_license_partners_status');
+
         //company 
         Route::get('/trade-license-sponsors-partners/add-company', [Hr_ProController::class, 'add_comany_name']) 
         ->name('add_comany_name');

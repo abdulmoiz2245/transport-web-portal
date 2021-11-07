@@ -26,6 +26,21 @@
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
+                    <h5 class="">PO Number : </h5>
+
+                </div>
+                <div class="col-6">
+                    @if($data['purchase']->po_number != null)
+                    <p>{{ $data['purchase']->po_number }}</p>
+                    @else
+                    <p>Not Assigned </p>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
                     <h5 class="">TRN Number :</h5>
 
                 </div>

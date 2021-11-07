@@ -42,7 +42,13 @@
         <script src="<?= asset('assets') ?>\js\vendor\jquery.smartWizard.min.js"></script>
         <link rel="stylesheet" href="<?= asset('assets') ?>/js/vendor/tags/bootstrap_tagsinput.css">
         <script src="<?= asset('assets') ?>/js/vendor/tags/bootstrap_tagsinput.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> 
 
+<!-- jQuery <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  -->
+
+<!-- Select2 JS --> 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+        
     </head>
 
     <body>
@@ -318,6 +324,13 @@
         <script src="<?= asset('assets') ?>\js\sidebar.script.js"></script>
         <script>
             $(document).ready(function(){$("#picker2, #picker3").pickadate()});
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#Material_Data").select2({
+                    tags: true
+                });
+            });
         </script>
     </body>
 

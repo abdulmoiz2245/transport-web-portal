@@ -1001,8 +1001,6 @@ class CustomerController extends Controller
 
     }
 
-    
-
     public function delete_customer_rate_card(Request $request){
         $id =  $request->input('id');
     

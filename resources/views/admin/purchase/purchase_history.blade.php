@@ -53,7 +53,7 @@ use App\Models\User;
                         @csrf
                         <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" >
                         <button type="submit" class="border-0 bg-white">
-                            <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                            <img src="<?= asset('assets') ?>/images/view_file.png" alt="" width="34">
                         </button>
                     </form>
                 </td>
