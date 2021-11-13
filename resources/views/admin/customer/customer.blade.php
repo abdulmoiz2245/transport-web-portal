@@ -298,11 +298,19 @@ use App\Models\User;
                                                     if($rate->status == 'pending'){
                                                         $check = 1;
                                                     }
+                                                    // elseif($rate->row_status == 'deleted'){
+                                                    //     $check = -1;
+                                                    // }
+                                                    // else{
+                                                    //     $check = 0;
+                                                    // }
                                                 }
                                             
                                             ?>
                                             @if($check == 1)
                                             <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                            <!-- @elseif($check == -1)
+                                            <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40"> -->
                                             @else
                                             <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
                                             @endif

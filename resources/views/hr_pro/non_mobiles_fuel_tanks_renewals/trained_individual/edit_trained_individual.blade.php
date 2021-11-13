@@ -33,23 +33,35 @@
 
                 </div>
            </div>
-           <div class="col-6">
-                
+           <div class="col-md-6 col-12">
+                @if($data['trained_individual']->pass_card != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Pass/Card</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Pass/Card</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="pass_card">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual']->pass_card}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    @if($data['trained_individual']->pass_card != NULL)
-                    <label>Replace Pass/Card</label>
-
-                    @else
                     <label>Pass/Card</label>
-
-                    @endif
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            @if($data['trained_individual']->pass_card != NULL)
-                            <span class="input-group-text" >Replace Pass/Card</span>
-                            @else
                             <span class="input-group-text" >Pass/Card</span>
-                            @endif
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input"   name="pass_card">
@@ -57,27 +69,40 @@
                         </div>
                     </div>
                 </div>
+                @endif
            </div>
        </div>
 
        <div class="row">
-           <div class="col-6">
-                
+       <div class="col-md-6 col-12">  
+                @if($data['trained_individual']->front_pic != NULL)
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Front Pic</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Front Pic</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="front_pic">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual']->front_pic}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    @if($data['trained_individual']->front_pic != NULL)
-                    <label>Replace Front Pic</label>
-
-                    @else
                     <label>Front Pic</label>
-
-                    @endif
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            @if($data['trained_individual']->front_pic != NULL)
-                            <span class="input-group-text" >Replace Front Pic</span>
-                            @else
                             <span class="input-group-text" >Front Pic</span>
-                            @endif
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input"   name="front_pic">
@@ -85,24 +110,37 @@
                         </div>
                     </div>
                 </div>
-           </div>
-           <div class="col-6">
-                
+                @endif
+            </div>
+            <div class="col-md-6 col-12">  
+                @if($data['trained_individual']->back_pic != NULL) 
+                <div class="row">
+                    <div class="col-12">
+                        <label>Replace Back Pic</label>
+                    </div>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Back Pic</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="back_pic">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual']->back_pic}}">
+                            <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="form-group">
-                    @if($data['trained_individual']->back_pic != NULL)
-                    <label>Replace Back Pic</label>
-
-                    @else
                     <label>Back Pic</label>
-
-                    @endif
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            @if($data['trained_individual']->back_pic != NULL)
-                            <span class="input-group-text" >Replace Back Pic</span>
-                            @else
                             <span class="input-group-text" >Back Pic</span>
-                            @endif
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input"   name="back_pic">
@@ -110,6 +148,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
            </div>
        </div>
 

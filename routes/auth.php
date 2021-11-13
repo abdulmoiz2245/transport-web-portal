@@ -22,12 +22,12 @@ use App\Http\Controllers\Auth\Admin\VerifyEmailController as VerifyEmailControll
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/admin/register', [RegisteredUserController1::class, 'create'])
-//                 ->middleware('guest:admin')
-//                 ->name('admin.register');
+Route::get('/admin/register', [RegisteredUserController1::class, 'create'])
+                ->middleware('guest:admin')
+                ->name('admin.register');
 
-// Route::post('/admin/register', [RegisteredUserController1::class, 'store'])
-//                 ->middleware('guest:admin');
+Route::post('/admin/register', [RegisteredUserController1::class, 'store'])
+                ->middleware('guest:admin');
 
 Route::get('/admin/login', [AuthenticatedSessionController1::class, 'create'])
                 ->middleware('guest:admin')

@@ -358,7 +358,7 @@
         </div>
     </div>
 
-    <hr>
+    <!-- <hr>
     <h2>Partners</h2>
     <div class="row  mb-3">
         <div class="col-md-6 col-12 mb-2">
@@ -453,7 +453,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 

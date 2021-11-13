@@ -461,7 +461,7 @@ use App\Models\Company_name;
         </div>
     </div>
 
-    <hr>
+    <!-- <hr>
     <h2>Partners</h2>
     <div class="row">
         <div class="col-md-6 col-12">
@@ -584,7 +584,7 @@ use App\Models\Company_name;
                 <input name="partners_other" class="form-control" type="text" value="{{ $data['trade_license']->partners_other  }}">
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 

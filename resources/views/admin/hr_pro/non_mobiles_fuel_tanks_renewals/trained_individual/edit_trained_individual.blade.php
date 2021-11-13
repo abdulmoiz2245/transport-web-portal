@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="col-1 p-0">
-                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual']->pass_card}}">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual']->front_pic}}">
                             <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
                         </a>
                     </div>
@@ -137,14 +137,15 @@
                     <div class="col-12">
                         <label>Replace Back Pic</label>
                     </div>
-                    <div class="form-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Replace Back Pic</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="back_pic">
-                            <label class="custom-file-label">Choose file</label>
+                    <div class="col-11 form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Replace Back Pic</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input"   name="back_pic">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-1 p-0">

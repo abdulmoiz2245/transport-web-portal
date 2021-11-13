@@ -32,7 +32,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-12">
-                @if( $data['trade_license_partners']->partners_id_card != 'null')
+                @if( $data['trade_license_partners']->id_copy != '')
                 <div class="row">
                     <div class="col-12">
                         <label>Replace Id Card </label>
@@ -70,7 +70,7 @@
                 @endif
             </div>
             <div class="col-md-6 col-12">
-                    @if( $data['trade_license_partners']->passport_copy != 'null')
+                    @if( $data['trade_license_partners']->passport_copy != '')
                     <div class="row">
                         <div class="col-12">
                             <label>Replace Passport </label>
@@ -108,7 +108,7 @@
                     @endif
             </div>
             <div class="col-md-6 col-12">
-                    @if( $data['trade_license_partners']->visa_copy != 'null')
+                    @if( $data['trade_license_partners']->visa_copy != '')
                     <div class="row">
                         <div class="col-12">
                             <label>Replace Visa </label>

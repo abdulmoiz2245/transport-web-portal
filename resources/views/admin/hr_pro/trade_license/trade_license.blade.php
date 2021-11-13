@@ -29,10 +29,10 @@ use App\Models\Trade_license_partners;
 
         <div class=""> 
             <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
             </a> 
             <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="ml-3" target="_blank">
-                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
+                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" title="Trash" width="30">
             </a>
         </div>
     </div>
@@ -165,23 +165,23 @@ use App\Models\Trade_license_partners;
                                             <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" title="View" width="34">
                                                 </button>
                                             </form>
 
                                             <form action="{{ route( 'admin.hr_pro.edit_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" title="Edit" alt="" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
                                             <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                                                 
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         
                                             </a>
                                             <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -195,9 +195,9 @@ use App\Models\Trade_license_partners;
                                                 
                                                 ?>
                                                 @if($check == 1)
-                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner-red.png" alt="" title="Pending Partners" width="40">
                                                 @else
-                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner.png" alt="" title="Partners" width="40">
                                                 @endif
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -311,23 +311,23 @@ use App\Models\Trade_license_partners;
                                             <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" title="View" width="34">
                                                 </button>
                                             </form>
 
                                             <form action="{{ route( 'admin.hr_pro.edit_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" title="Edit" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
                                             <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                                                 
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         
                                             </a>
                                             <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -341,9 +341,9 @@ use App\Models\Trade_license_partners;
                                                 
                                                 ?>
                                                 @if($check == 1)
-                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner-red.png" alt="" title="Pending Partners" width="40">
                                                 @else
-                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner.png" alt="" title="Partners" width="40">
                                                 @endif
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -456,23 +456,23 @@ use App\Models\Trade_license_partners;
                                             <form action="{{ route( 'admin.hr_pro.view_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" title="View" width="34">
                                                 </button>
                                             </form>
 
                                             <form action="{{ route( 'admin.hr_pro.edit_trade_license__sponsors__partners') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 .bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                                <button type="submit" class="border-0 bg-white">
+                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" title="Edit" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
                                             <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                                                 
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         
                                             </a>
                                             <button class="p-0 btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -486,9 +486,9 @@ use App\Models\Trade_license_partners;
                                                 
                                                 ?>
                                                 @if($check == 1)
-                                                <img src="<?= asset('assets') ?>/images/rate-card-red.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner-red.png" alt="" title="Pending Partners" width="40">
                                                 @else
-                                                <img src="<?= asset('assets') ?>/images/rate-card.png" alt="" width="40">
+                                                <img src="<?= asset('assets') ?>/images/partner.png" alt="" title="Partners" width="40">
                                                 @endif
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
