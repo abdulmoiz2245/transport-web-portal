@@ -423,8 +423,8 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     // ->name('login_access_and_passwords');
 
     ///////////////////////////////////////////////////
-      ///////// Login access /////////////
-      ///////////////////////////////////////////////////
+    //////////////////// Login access /////////////////
+    ///////////////////////////////////////////////////
       Route::get('/login-access-passwords', [Hr_ProController::class, 'login_password']) 
       ->name('login_access_and_passwords');
 

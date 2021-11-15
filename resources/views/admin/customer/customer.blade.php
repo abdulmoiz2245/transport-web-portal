@@ -72,7 +72,7 @@ use App\Models\User;
             <div class="tab-content profile-tab" id="myTabContent">
                 <div class="tab-pane fade show active" id="approved" role="tabpanel" aria-labelledby="approved-tab">
                     <div class="table-responsive">
-                        <table class="display table responsive nowrap  " style="width:100%">
+                        <table class="display table nowrap  " style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id</th>

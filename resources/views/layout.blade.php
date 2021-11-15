@@ -190,7 +190,7 @@
                     </li>
 
                     <li class="nav-item " data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.inventory.inventory') }}">
                             <i class="nav-icon i-Box-Full  "></i>
                             <span class="nav-text">Inventory</span>
                         </a>
