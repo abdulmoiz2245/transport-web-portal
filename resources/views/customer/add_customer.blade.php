@@ -130,7 +130,7 @@ use App\Models\Erp_department;
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Trn Number</label>
-                            <input type="integer" name="trn" class="form-control" >
+                            <input type="number" name="trn" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">

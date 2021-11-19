@@ -601,10 +601,10 @@ class CustomerController extends Controller
         if($request->input('status') == 'customer_department'){
             $this->remove_table_name('customer_department');
         }
-        if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
-            //  $this->history_table('customer_histories', $customer_info->action , $user_id );
-            $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer");
-        }
+        // if($customer_info->status == 'approved' || $customer_info->user_id == 0 ){
+        //     //  $this->history_table('customer_histories', $customer_info->action , $user_id );
+        //     $this->history_table('customer_histories', $customer_info->action , $user_id,  $customer_info->id, "customer.view_customer");
+        // }
 
 
         return response()->json(['status'=>'1']);

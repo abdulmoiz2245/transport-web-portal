@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -31,62 +31,29 @@ class InventoryController extends Controller
 {
     
     public function __construct() {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:user');
     }
 
-    // public function purchase(){
+      
+    ///////////////////////////////////////////////
+    ///////// Add table name to approvals /////////
+    ///////////////////////////////////////////////
 
-    //     $data['modules']= DB::table('modules')->get();
-    //     //dd($data['modules']);
-        
-    //     $data['page_title'] = "Purchase";
-    //     $data['view'] = 'admin.purchase.purchase';
-    //     return view('layout', ["data"=>$data]);
-    // }
-
-    public function history_table($table_name , $action , $user_id, $data_id, $tab_name){
-        DB::table($table_name)->insert([
-            'action' => $action,
-            'date' => date("Y-m-d  H:i:s"),
-            'user_id' => $user_id,
-            'table_name' => $tab_name,
-            'data_id' => $data_id,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        return true;
-    }
-
-    public function history_table_type($table_name , $action , $user_id , $type){
-        DB::table($table_name)->insert([
-            'action' => $action,
-            'date' => date("Y-m-d  H:i:s"),
-            'user_id' => $user_id,
-            'type' => $type,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-
-        return true;
-    }
-    
-    public function table_history_clear(Request $request){
-        
-        if(DB::table($request->input('table_name'))->truncate()){
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'1']);
+    public function add_aprovals($table_name){
+        $check = false;
+        foreach (Approvals::all() as $approvals_table) {
+           
+            if($approvals_table->table_name == $table_name){
+                $check = true;
+            }
         }
-    }
-
-    public function table_history_type_clear(Request $request){
-        // die()
-        if(DB::table($request->input('table_name'))->where('type' , '=' , $request->input('type'))->delete()){
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'1']);
+        
+        if(!$check){
+            $approvals_table = new Approvals;
+            $approvals_table->table_name = $table_name;
+            $approvals_table->save();
         }
+        return true;
     }
 
     /////////////////////////////////
@@ -111,7 +78,7 @@ class InventoryController extends Controller
         // $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Inventory";
-        $data['view'] = 'user.inventory.inventory';
+        $data['view'] = 'admin.inventory.inventory';
         return view('layout', ["data"=>$data]);
     }
 
@@ -593,7 +560,7 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Fuel - Inventory";
-        $data['view'] = 'user.inventory.fuel.fuel';
+        $data['view'] = 'admin.inventory.fuel.fuel';
         return view('layout', ["data"=>$data]);
     }
 
@@ -610,7 +577,7 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Purchased Fuel";
-        $data['view'] = 'user.inventory.fuel.purchased_fuel';
+        $data['view'] = 'admin.inventory.fuel.purchased_fuel';
         return view('layout', ["data"=>$data]);
     }
 
@@ -1087,7 +1054,10 @@ class InventoryController extends Controller
 
     }
 
-    //spare parts
+    ///////////////////////////////////////////////////
+    ///////////// Spare Parts - Inventory /////////////
+    ///////////////////////////////////////////////////
+
     public function spare_parts(){
         $data['modules']= DB::table('modules')->get();
 
@@ -1207,7 +1177,10 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    //tools
+    ///////////////////////////////////////////////////
+    ///////////// Tools - Inventory /////////////
+    ///////////////////////////////////////////////////
+
     public function tools(){
         $data['modules']= DB::table('modules')->get();
 
@@ -1259,674 +1232,4 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    
-
-    public function trash_mobile_muncipality(){
-        $data['modules']= DB::table('modules')->get();
-        $data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
-        $data['company_names']= DB::table('company_names')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "MOBILE FUEL TANK RENEWALS (Muncipality) Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.muncipality.deleted_data';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function mobile_muncipality_history(){
-
-        $data['modules']= DB::table('modules')->get();
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-     
-
-        $data['trade_licenses_history']= DB::table('muncipality_documents_histories')->where('type' , '=' ,'mobile' )->get();
-        $data['table_name']= 'muncipality_documents_histories';
-        $data['type']= 'mobile';
-        
-
-        $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Muncipality)
-        ";
-        $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function save_mobile_muncipality(Request $request){
-        $muncipality = new Muncipality_documents;
-
-        if($request->input('expiary_date') != ''){
-            $muncipality->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $muncipality->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-        $muncipality->type = 'mobile';
-
-        $muncipality->status = 'approved';
- 
-        $muncipality->user_id = 0;
-
-        $muncipality->save();
-
-        // $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'mobile');
-
-        $this->history_table_type('muncipality_documents_histories', 'Add',   $muncipality->user_id , $muncipality->type , $muncipality->id , 'hr_pro.edit_mobile_muncipality');
-
-        return \Redirect::route('admin.hr_pro.mobile_muncipality')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function update_mobile_muncipality(Request $request){
-        $muncipality = Muncipality_documents::find($request->input('id'));
-
-        if($request->input('expiary_date') != ''){
-            $muncipality->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $muncipality->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-
-        
-        if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->action == 'nill'){
-            $muncipality->action = 'edit';
-        }
-        $muncipality->status = $request->input('status');
-
-
-        $muncipality->status_message = $request->input('status_message');
-        if( $muncipality->user_id != 0){
-            $user_id  = $muncipality->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        $muncipality->type = 'mobile';
-        $muncipality->save();
-
-        if($muncipality->status == 'approved' || $muncipality->user_id == 0 ){
-            // $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'mobile');
-
-            $this->history_table_type('muncipality_documents_histories', $muncipality->action ,   $user_id, $muncipality->type , $muncipality->id , 'hr_pro.edit_mobile_muncipality');
-
-        }
-
-
-        return \Redirect::route('admin.hr_pro.mobile_muncipality')->with('success', 'Data Updated Sucessfully');
-    }
-
-    public function delete_mobile_muncipality(Request $request){
-        $civil_defense = Muncipality_documents::find($request->input('id'));
-
-        $civil_defense->status_message = $request->input('status_message');
-        if( $civil_defense->user_id != 0){
-            $user_id  = $civil_defense->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $civil_defense->save();
-        
-        // if($civil_defense->action == null){
-            $civil_defense->action = 'delete';
-        // }
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        // $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'mobile');
-
-        $this->history_table_type('muncipality_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.edit_mobile_muncipality');
-
-       if($civil_defense->delete()){
-           return response()->json(['status'=>'1']);
-       }else{
-           return response()->json(['status'=>'0']);
-       }
-    }
-
-    public function delete_mobile_muncipality_status(Request $request){
-        $id =  (int)$request->input('id');
-        $office_contract = Muncipality_documents::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id  = $office_contract->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'deleted';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
-            $office_contract->action = 'delete';
-        // }
-
-        
- 
-        if( $office_contract->save()){
-
-            // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
-
-            $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_muncipality');
-
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'0']);
-
-        }
-    }
-
-    public function restore_mobile_muncipality(Request $request){
-        $id =  (int)$request->input('id');
-        $office_contract = Muncipality_documents::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id = $office_contract->user_id  ;   
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'active';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        
-            $office_contract->action = 'restored';
-        
-        $office_contract->save();
-        // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
-
-        
-        $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_muncipality');
-
-        
-        $office_contract->action = 'nill';
-        $office_contract->save();
- 
-      
-           
-            return response()->json(['status'=>'1']);
-        
-    }
-
-    ///////////////////////////////////////////////////
-    ///////////// Spare Parts - Inventory /////////////
-    ///////////////////////////////////////////////////
-
-    //trained indidulas
-    public function mobiles_trained_individual(){
-        $data['modules']= DB::table('modules')->get();
-        $data['trained_individual'] = Trained_individual::where('type', '=', 'mobile')->get();
-        
-       
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        
-        $data['page_title'] = "Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function trash_mobiles_trained_individual(){
-        $data['modules']= DB::table('modules')->get();
-        $data['trained_individual'] = Trained_individual::where('type', '=', 'mobile')->get();
-        $data['company_names']= DB::table('company_names')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "Trained Individual Mobile Fuel Tank Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.deleted_data';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function mobiles_trained_individual_history(){
-
-        $data['modules']= DB::table('modules')->get();
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-     
-
-        $data['trade_licenses_history']= DB::table('trained_individuals_histories')->where('type' , '=' ,'mobile' )->get();
-        $data['table_name']= 'trained_individuals_histories';
-        $data['type']= 'mobile';
-        
-
-        $data['page_title'] = "History | MOBILE FUEL TANK Trained Individual
-        ";
-        $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function add_mobiles_trained_individual(){
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-       
-
-        $data['page_title'] = "Add Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.add_trained_individual';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function edit_mobiles_trained_individual(Request $request){
-
-        $data['trained_individual'] = Trained_individual::where('id' ,'=' , $request->input('id'))->first();
-
-        
-        $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        //  $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Edit Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.edit_trained_individual';
-        return view('layout', ["data"=>$data]);
-
-    }
-
-    public function save_mobiles_trained_individual(Request $request){
-        $trained_individual = new Trained_individual;
-
-        if($request->input('card_number') != ''){
-            $trained_individual->card_number = $request->input('card_number');
-        }
-
-        if($request->input('employee_name') != ''){
-            $trained_individual->employee_name = $request->input('employee_name');
-        }
-
-
-        if($request->input('expiary_date') != ''){
-            $trained_individual->expiary_date = $request->input('expiary_date');
-        }
-
-        
-        
-        if ($request->hasFile('front_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->front_pic->getClientOriginalName());
-            $file = $request->file('front_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->front_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('back_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->back_pic->getClientOriginalName());
-            $file = $request->file('back_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->back_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('pass_card')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->pass_card->getClientOriginalName());
-            $file = $request->file('pass_card');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->pass_card = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        $trained_individual->type = 'mobile';
-
-        $trained_individual->status = 'approved';
- 
-        $trained_individual->user_id = 0;
-
-        $trained_individual->save();
-
-        // $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'mobile');
-
-        $this->history_table_type('trained_individuals_histories', 'Add' ,0 , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-
-        return \Redirect::route('admin.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function update_mobiles_trained_individual(Request $request){
-        $trained_individual = Trained_individual::find($request->input('id'));
-
-        if($request->input('card_number') != ''){
-            $trained_individual->card_number = $request->input('card_number');
-        }
-
-        if($request->input('employee_name') != ''){
-            $trained_individual->employee_name = $request->input('employee_name');
-        }
-
-
-        if($request->input('expiary_date') != ''){
-            $trained_individual->expiary_date = $request->input('expiary_date');
-        }
-
-        
-        
-        if ($request->hasFile('front_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->front_pic->getClientOriginalName());
-            $file = $request->file('front_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->front_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('back_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->back_pic->getClientOriginalName());
-            $file = $request->file('back_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->back_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('pass_card')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->pass_card->getClientOriginalName());
-            $file = $request->file('pass_card');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->pass_card = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-
-        
-        if($trained_individual->action == null || $trained_individual->status == 'approved' ||  $trained_individual->action == 'nill'){
-            $trained_individual->action = 'edit';
-        }
-
-        $trained_individual->status = $request->input('status');
-
-
-        $trained_individual->status_message = $request->input('status_message');
-        if( $trained_individual->user_id != 0){
-            $user_id  = $trained_individual->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
-
-        $trained_individual->type = 'mobile';
-        $trained_individual->save();
-
-        if($trained_individual->status == 'approved' || $trained_individual->user_id == 0 ){
-            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-
-        }
-
-        return \Redirect::route('admin.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function delete_mobiles_trained_individual(Request $request){
-             $trained_individual = Trained_individual::find($request->input('id'));
-        
-           
-    
-            if($trained_individual->pass_card != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->pass_card;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-
-            if($trained_individual->back_pic != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->back_pic;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-
-            if($trained_individual->front_pic != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->front_pic;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-            $trained_individual->status_message = $request->input('status_message');
-            if( $trained_individual->user_id != 0){
-                $user_id  = $trained_individual->user_id;
-                
-            }else{
-                $user_id  = 0;
-            }
-    
-            $trained_individual->save();
-            
-            // if($trained_individual->action == null){
-                $trained_individual->action = 'delete';
-            // }
-    
-            if($request->input('status') == 'approved'){
-                $this->remove_table_name('trained_individuals');
-            }
-    
-            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-    
-            if($trained_individual->delete()){
-                return response()->json(['status'=>'1']);
-            }else{
-                return response()->json(['status'=>'0']);
-    
-            }
-    }
-
-    public function delete_mobiles_trained_individual_status(Request $request){
-        $id =  (int)$request->input('id');
-        $office_contract = Trained_individual::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id  = $office_contract->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'deleted';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
-
-        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
-            $office_contract->action = 'delete';
-        // }
-
-        
- 
-        if( $office_contract->save()){
-
-            // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
-
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'0']);
-
-        }
-    }
-
-    public function restore_mobiles_trained_individual(Request $request){
-        $id =  (int)$request->input('id');
-        $office_contract = Trained_individual::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id = $office_contract->user_id  ;          
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'active';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
-
-        
-            $office_contract->action = 'restored';
-        
-        $office_contract->save();
-        // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
-
-        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
-
-
-        $office_contract->action = 'nill';
-        $office_contract->save();
- 
-      
-           
-            return response()->json(['status'=>'1']);
-        
-    }
-
-    public function view_mobiles_trained_individual(Request $request){
-        $data['trained_individual'] = Trained_individual::where('id' ,'=' , $request->input('id'))->first();
-
-        
-        $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        //  $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "View Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.view_trained_individual';
-        return view('layout', ["data"=>$data]);
-    }
 }

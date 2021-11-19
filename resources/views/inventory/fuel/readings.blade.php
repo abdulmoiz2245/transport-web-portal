@@ -11,53 +11,58 @@ use App\Models\Office_Land_contract;
 
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'admin.inventory.fuel') }}" class="ml-3">
+            <a href="{{ route( 'user.inventory.fuel') }}" class="ml-3">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+            <a href="{{ route( 'user.inventory.fuel.readings.add_fuel_reading') }}" class="ml-3">
+                <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
+            </a>
+        </div>
+        
+
+        <div class=""> 
+            <a href="{{ route( 'user.purchase.purchase_history') }}"target="_blank" class="ml-3">
+                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
+            </a> 
+            <a href="{{ route( 'user.purchase.trash_purchase') }}" class="ml-3" target="_blank">
+                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
     </div>
-
-    <div class="row mt-4 mb-4">
-        <!-- ICON BG-->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="card o-hidden">
-                <div class="card-body text-center">
-                    <h4 class="card-title">Fuel in Storage</h4>   
-                    <p class="text-primary text-24 line-height-1">205</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="card o-hidden">
-                <div class="card-body text-center">
-                    <h4 class="card-title">Fuel Purchased</h4>   
-                    <p class="text-primary text-24 line-height-1">205</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="card o-hidden">
-                <div class="card-body text-center">
-                    <h4 class="card-title">Fuel Consumption</h4>   
-                    <p class="text-primary text-24 line-height-1">205</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row mt-5">
-        <div class="col-12"> 
+        <div class="col-12">
+            @if (session('success'))
+            <div class="alert alert-success mb-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger mb-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @endif
                  <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="approved" role="tabpanel" aria-labelledby="approved-tab">
+                    <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="approved-tab">
                         <div class="table-responsive">
-                            <table  class="display table2 table  nowrap " style="width:100%">
+                            <table  class="display table table2  nowrap " style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>PO Number</th>
-                                        <th>Company Name</th>
-                                        <th>TRN Number</th>
-                                        <th>Delivery Date</th>
+                                        <th>Date</th>
+                                        <th>Daily Reading - Non Mobile Tank 01</th>
+                                        <th>Refill Amount - Non Mobile Tank 01</th>
+                                        <th>Daily Reading - Non Mobile Tank 02</th>
+                                        <th>Refill Amount - Non Mobile Tank 02</th>
+                                        <th>Daily Reading - Mobile Tank 01</th>
+                                        <th>Refill Amount - Mobile Tank 01</th>
+                                        <th>Daily Reading - Mobile Tank 02</th>
+                                        <th>Refill Amount - Mobile Tank 02</th>
                                         <th>Action By</th>
                                         <th>Action</th>
                                     </tr>
@@ -65,40 +70,32 @@ use App\Models\Office_Land_contract;
                                 <tbody>
                                     <tr>
                                         <td>01</td>
-                                        <td>3422</td>
-                                        <td>eklfwl</td>
-                                        <td>erwr54345535</td>
-                                        <td>24-01-2021</td>
-
-                                        <td>admin</td>
-
+                                        <td>22-02-2022</td>
+                                        <td>000 Galans</td>
+                                        <td>111 Galans</td>
+                                        <td>000 Galans</td>
+                                        <td>111 Galans</td>
+                                        <td>000 Galans</td>
+                                        <td>111 Galans</td>
+                                        <td>000 Galans</td>
+                                        <td>111 Galans</td>
+                                        <td>Admin</td>
                                         <td>
-                                            <!-- <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                                            <form action="{{ route( 'user.inventory.fuel.readings.edit_fuel_reading') }}" method="post" class="d-inline">
                                                 @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="01" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                                </button>
-                                            </form> -->
-
-                                            <form action="" method="" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="01" placeholder="Enter id" >
+                                                <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
-                                            <a href="#" id="01" class="delete-file">
+                                            <a href="#" id="" class="delete-file">
                                                 
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
-                                            </a>
-
-                                              
-                                        </td>
-                                        
+                                            </a>  
+                                        </td>  
                                     </tr>
                                 </tbody>         
                             </table>
@@ -107,7 +104,6 @@ use App\Models\Office_Land_contract;
                 </div>
         </div>
     </div>
-    
 </div>
 
 <script>
@@ -115,7 +111,7 @@ use App\Models\Office_Land_contract;
             $('.table2').DataTable( {
                 dom: 'Bfrtip',
                 
-                responsive: true,
+                
                 buttons: [
                 
                     'copyHtml5',
@@ -130,7 +126,7 @@ use App\Models\Office_Land_contract;
             $('.table1').DataTable( {
                 dom: 'Bfrtip',
                 
-                responsive: true,
+            
                 buttons: [
                 
                     'copyHtml5',
@@ -158,7 +154,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.purchase.delete_purchase_status') }}",
+                    url:"{{ route( 'user.purchase.delete_purchase_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

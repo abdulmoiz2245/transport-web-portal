@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.hr_pro.mobile_civil_defence') }}">
+            <a href="{{ route('admin.inventory.tyres') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.hr_pro.mobiles_trained_individual') }}">
+            <a href="{{ route('admin.inventory.spare_parts') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/spare-parts.png" alt="" class="mb-1" width="35">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.hr_pro.mobiles_trained_individual') }}">
+            <a href="{{ route('admin.inventory.tools') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tools.png" alt="" class="mb-1" width="35">

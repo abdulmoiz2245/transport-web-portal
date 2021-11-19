@@ -38,15 +38,6 @@ use Illuminate\Support\Facades\Route;
         Route::post('/inventory/civil-defense/history/clear', [InventoryController::class, 'inventory_history_clean']) 
         ->name('inventory_history_clean');
 
-        Route::post('/inventory/civil-defense/save', [InventoryController::class, 'save_inventory']) 
-        ->name('save_inventory');
-
-        Route::post('/inventory/civil-defense/update', [InventoryController::class, 'update_inventory']) 
-        ->name('update_inventory');
-
-        Route::post('/inventory/civil-defense/delete', [InventoryController::class, 'delete_inventory']) 
-        ->name('delete_inventory');
-
         Route::get('/inventory/civil-defense/trash', [InventoryController::class, 'trash_inventory']) 
         ->name('trash_inventory');
 
@@ -56,86 +47,76 @@ use Illuminate\Support\Facades\Route;
         Route::post('/inventory/civil-defense/delete-status', [InventoryController::class, 'delete_inventory_status']) 
         ->name('delete_inventory_status');
 
-        //  mobile MUNCIPALITY
+        //  tyres - inventory
 
-        Route::get('/inventory/muncipality', [InventoryController::class, 'mobile_muncipality']) 
-        ->name('mobile_muncipality');
+        Route::get('/tyres', [InventoryController::class, 'tyres']) 
+        ->name('tyres');
 
-        Route::get('/inventory/muncipality/history', [InventoryController::class, 'mobile_muncipality_history']) 
-        ->name('mobile_muncipality_history');
+        //  new/used tyres - tyres - inventory
+        Route::get('/tyres/new_used_tyres', [InventoryController::class, 'new_used_tyres']) 
+        ->name('tyres.new_used_tyres');
 
-        Route::post('/inventory/muncipality/history/clear', [InventoryController::class, 'mobile_muncipality_history_clear']) 
-        ->name('mobile_muncipality_history_clear');
+        Route::get('/tyres/add_used_tyres', [InventoryController::class, 'add_used_tyres']) 
+        ->name('tyres.add_used_tyres');
 
+        Route::post('/tyres/edit_used_tyres', [InventoryController::class, 'edit_used_tyres']) 
+        ->name('tyres.edit_used_tyres');
 
+        //  complain tyres - tyres - inventory
+        Route::get('/tyres/complain_tyres', [InventoryController::class, 'complain_tyres']) 
+        ->name('tyres.complain_tyres');
 
-        Route::get('/inventory/muncipality/add', [InventoryController::class, 'add_mobile_muncipality']) 
-        ->name('add_mobile_muncipality');
+        Route::get('/tyres/add_complain_tyres', [InventoryController::class, 'add_complain_tyres']) 
+        ->name('tyres.add_complain_tyres');
 
-        Route::post('/inventory/muncipality/save', [InventoryController::class, 'save_mobile_muncipality']) 
-        ->name('save_mobile_muncipality');
+        Route::post('/tyres/edit_complain_tyres', [InventoryController::class, 'edit_complain_tyres']) 
+        ->name('tyres.edit_complain_tyres');
 
-        Route::post('/inventory/muncipality/update', [InventoryController::class, 'update_mobile_muncipality']) 
-        ->name('update_mobile_muncipality');
+        //  tyres entry - tyres - inventory
+        Route::get('/tyres/tyres_entry', [InventoryController::class, 'tyres_entry']) 
+        ->name('tyres.tyres_entry');
 
-        Route::post('/inventory/muncipality/edit', [InventoryController::class, 'edit_mobile_muncipality']) 
-        ->name('edit_mobile_muncipality');
+        Route::get('/tyres/add_tyres_entry', [InventoryController::class, 'add_tyres_entry']) 
+        ->name('tyres.add_tyres_entry');
 
-        Route::post('/inventory/muncipality/delete', [InventoryController::class, 'delete_mobile_muncipality']) 
-        ->name('delete_mobile_muncipality');
+        Route::post('/tyres/edit_tyres_entry', [InventoryController::class, 'edit_tyres_entry']) 
+        ->name('tyres.edit_tyres_entry');
 
-        Route::get('/inventory/muncipality/trash', [InventoryController::class, 'trash_mobile_muncipality']) 
-        ->name('trash_mobile_muncipality');
+        //  spare parts - inventory
 
-        Route::post('/inventory/muncipality/restor-delete', [InventoryController::class, 'restore_mobile_muncipality']) 
-        ->name('restore_mobile_muncipality');
+        Route::get('/spare_parts', [InventoryController::class, 'spare_parts']) 
+        ->name('spare_parts');
 
-        Route::post('/inventory/muncipality/delete-status', [InventoryController::class, 'delete_mobile_muncipality_status']) 
-        ->name('delete_mobile_muncipality_status');
+        //  spare parts in storage - spare parts - inventory
+        Route::get('/spare_parts/spare_parts_in_storage', [InventoryController::class, 'spare_parts_in_storage']) 
+        ->name('spare_parts.spare_parts_in_storage');
 
-        // mobile trained individules 
+        Route::get('/spare_parts/add_spare_parts_in_storage', [InventoryController::class, 'add_spare_parts_in_storage']) 
+        ->name('spare_parts.add_spare_parts_in_storage');
 
-        Route::get('/inventory/trained-individual', [InventoryController::class, 'mobiles_trained_individual']) 
-        ->name('mobile_trained_individual');
+        Route::post('/spare_parts/edit_spare_parts_in_storage', [InventoryController::class, 'edit_spare_parts_in_storage']) 
+        ->name('spare_parts.edit_spare_parts_in_storage');
 
-        Route::get('/inventory/trained-individuals', [InventoryController::class, 'mobiles_trained_individual']) 
-        ->name('mobiles_trained_individual');
+        //  spare parts entry - spare parts - inventory
+        Route::get('/spare_parts/spare_parts_entry', [InventoryController::class, 'spare_parts_entry']) 
+        ->name('spare_parts.spare_parts_entry');
 
-        Route::get('/inventory/trained-individual/history', [InventoryController::class, 'mobiles_trained_individual_history']) 
-        ->name('mobile_trained_individual_history');
+        Route::get('/spare_parts/add_spare_parts_entry', [InventoryController::class, 'add_spare_parts_entry']) 
+        ->name('spare_parts.add_spare_parts_entry');
 
-        Route::post('/inventory/trained-individual/history/clear', [InventoryController::class, 'mobiles_trained_individual_history_clear']) 
-        ->name('mobile_trained_individual_clear');
+        Route::post('/spare_parts/edit_spare_parts_entry', [InventoryController::class, 'edit_spare_parts_entry']) 
+        ->name('spare_parts.edit_spare_parts_entry');
 
-        Route::get('/inventory/trained-individual/add', [InventoryController::class, 'add_mobiles_trained_individual']) 
-        ->name('add_mobiles_trained_individual');
+        //  spare parts - inventory
 
-        Route::post('/mobile-fuel-tanks-renewals/trained-individual/save', [InventoryController::class, 'save_mobiles_trained_individual']) 
-        ->name('save_mobiles_trained_individual');
+        Route::get('/tools', [InventoryController::class, 'tools']) 
+        ->name('tools');
 
-        Route::post('/inventory/trained-individual/edit', [InventoryController::class, 'edit_mobiles_trained_individual'])
-        ->name('edit_mobiles_trained_individual');
+        Route::get('/tools/add_tools', [InventoryController::class, 'add_tools']) 
+        ->name('tools.add_tools');
 
-        Route::post('/inventory/trained-individual/update', [InventoryController::class, 'update_mobiles_trained_individual']) 
-        ->name('update_mobiles_trained_individual');
-
-        Route::post('/inventory/trained-individual/delete', [InventoryController::class, 'delete_mobiles_trained_individual']) 
-        ->name('delete_mobiles_trained_individual');
-
-        
-
-        Route::get('/inventory/trained-individual/trash', [InventoryController::class, 'trash_mobiles_trained_individual']) 
-        ->name('trash_mobiles_trained_individual');
-
-        Route::post('/inventory/trained-individual/restor-delete', [InventoryController::class, 'restore_mobiles_trained_individual']) 
-        ->name('restore_mobiles_trained_individual');
-
-        Route::post('/inventory/trained-individual/delete-status', [InventoryController::class, 'delete_mobiles_trained_individual_status']) 
-        ->name('delete_mobiles_trained_individual_status');
-
-        Route::post('/inventory/trained-individual/view', [InventoryController::class, 'view_mobiles_trained_individual']) ->name('view_mobiles_trained_individual');
-
-        //
+        Route::post('/tools/edit_tools', [InventoryController::class, 'edit_tools']) 
+        ->name('tools.edit_tools');
     
 
     });

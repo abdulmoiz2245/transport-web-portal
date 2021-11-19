@@ -11,7 +11,7 @@ use App\Models\Office_Land_contract;
 
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'admin.inventory.fuel') }}" class="ml-3">
+            <a href="{{ route( 'user.inventory.fuel') }}" class="ml-3">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
@@ -73,7 +73,7 @@ use App\Models\Office_Land_contract;
                                         <td>admin</td>
 
                                         <td>
-                                            <!-- <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                                            <!-- <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="01" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
@@ -158,7 +158,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.purchase.delete_purchase_status') }}",
+                    url:"{{ route( 'user.purchase.delete_purchase_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
