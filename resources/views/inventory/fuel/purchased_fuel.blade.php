@@ -158,7 +158,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'user.purchase.delete_purchase_status') }}",
+                    url:"",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

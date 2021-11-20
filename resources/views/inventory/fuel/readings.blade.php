@@ -24,7 +24,7 @@ use App\Models\Office_Land_contract;
             <a href="{{ route( 'user.purchase.purchase_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a> 
-            <a href="{{ route( 'user.purchase.trash_purchase') }}" class="ml-3" target="_blank">
+            <a href="" class="ml-3" target="_blank">
                 <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
@@ -154,7 +154,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'user.purchase.delete_purchase_status') }}",
+                    url:"",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

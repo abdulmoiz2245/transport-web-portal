@@ -2,7 +2,7 @@
 
 
     <div class="mb-5">
-            <a href="{{ route( 'admin.inventory.fuel.readings') }}">
+            <a href="{{ route( 'user.inventory.fuel.readings') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
     </div>

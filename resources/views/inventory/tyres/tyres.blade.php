@@ -16,23 +16,34 @@ use App\Models\User;
 
     <div class="row mt-4">
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('user.inventory.fuel.purchased_fuel') }}">
+            <a href="{{ route('user.inventory.tyres.new_used_tyres') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
-                        <h4 class="mt-2 mb-2"><strong>Purchased Fuel</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
+                        <h4 class="mt-2 mb-2"><strong>New/Used Tyres</strong></h4>
+                        <p class="lead text-22 m-0">00</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('user.inventory.fuel.readings') }}">
+            <a href="{{ route('user.inventory.tyres.complain_tyres') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
-                        <h4 class="mt-2 mb-2"><strong>Readings</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
+                        <h4 class="mt-2 mb-2"><strong>Complain Tyres</strong></h4>
+                        <p class="lead text-22 m-0">00</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <a href="{{ route('user.inventory.tyres.tyres_entry') }}">
+                <div class="card card-icon mb-4">
+                    <div class="card-body text-center">
+                        <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
+                        <h4 class="mt-2 mb-2"><strong>Tyres Entry</strong></h4>
+                        <p class="lead text-22 m-0">00</p>
                     </div>
                 </div>
             </a>
@@ -69,7 +80,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"",
+                url:"{{ route( 'admin.hr_pro.delete_mobile_civil_defence_status') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

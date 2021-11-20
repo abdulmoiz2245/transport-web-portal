@@ -16,36 +16,35 @@ use App\Models\User;
 
     <div class="row mt-4">
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('user.inventory.fuel.purchased_fuel') }}">
+            <a href="{{ route('user.inventory.spare_parts.spare_parts_in_storage') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
-                        <h4 class="mt-2 mb-2"><strong>Purchased Fuel</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
+                        <h4 class="mt-2 mb-2"><strong>Spare Parts in Storage</strong></h4>
+                        <p class="lead text-22 m-0">00</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('user.inventory.fuel.readings') }}">
+            <a href="{{ route('user.inventory.spare_parts.spare_parts_entry') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
-                        <h4 class="mt-2 mb-2"><strong>Readings</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
+                        <h4 class="mt-2 mb-2"><strong>Spare Parts Entry</strong></h4>
+                        <p class="lead text-22 m-0">00</p>
                     </div>
                 </div>
             </a>
         </div>
     </div>
-    
 </div>
 
 <script>
     $(document).ready(function() {
         $('.table').DataTable( {
             dom: 'Bfrtip',
-            responsive: true,
+            //responsive: true,
             buttons: [
               
                 'copyHtml5',
@@ -69,7 +68,7 @@ use App\Models\User;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"",
+                url:"{{ route( 'admin.hr_pro.delete_mobile_civil_defence_status') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

@@ -78,8 +78,8 @@ class InventoryController extends Controller
         // $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Inventory";
-        $data['view'] = 'admin.inventory.inventory';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.inventory';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function trash_purchase(){
@@ -88,8 +88,8 @@ class InventoryController extends Controller
         // $data['company_names']= DB::table('company_names')->get();
         // dd( $data['customer_info']);
         $data['page_title'] = "Purchase Trash";
-        $data['view'] = 'admin.purchase.deleted_data';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'purchase.deleted_data';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function purchase_history(){
@@ -106,8 +106,8 @@ class InventoryController extends Controller
         $data['table_name']= 'purchase_histories';
 
         $data['page_title'] = "History | PURCHASE ";
-        $data['view'] = 'admin.purchase.purchase_history';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'purchase.purchase_history';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_purchase(){
@@ -122,8 +122,8 @@ class InventoryController extends Controller
          $data['material_data']= DB::table('purchase_mertial_datas')->get();
 
         $data['page_title'] = "Add Purchase";
-        $data['view'] = 'admin.purchase.add_purchase';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'purchase.add_purchase';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function view_purchase(Request $request){
@@ -139,8 +139,8 @@ class InventoryController extends Controller
          $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "PURCHASE";
-        $data['view'] = 'admin.purchase.view_purchase';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'purchase.view_purchase';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_purchase (Request $request){
@@ -156,8 +156,8 @@ class InventoryController extends Controller
          $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Purchase";
-        $data['view'] = 'admin.purchase.edit_purchase';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'purchase.edit_purchase';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function save_purchase(Request $request){
@@ -285,7 +285,7 @@ class InventoryController extends Controller
 
             $this->history_table('purchase_histories', 'Add' , 0,  $purchase->id , "purchase.view_purchase");
            
-            return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Added Sucessfully');
+            return \Redirect::route('purchase.purchase')->with('success', 'Data Added Sucessfully');
         }
     }
 
@@ -431,7 +431,7 @@ class InventoryController extends Controller
         
 
 
-        return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Edited Sucessfully');
+        return \Redirect::route('purchase.purchase')->with('success', 'Data Edited Sucessfully');
 
     }
 
@@ -560,8 +560,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Fuel - Inventory";
-        $data['view'] = 'admin.inventory.fuel.fuel';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.fuel.fuel';
+        return view('users.layout', ["data"=>$data]);
     }
 
      //purchased fuel - fuel - inventory
@@ -577,8 +577,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Purchased Fuel";
-        $data['view'] = 'admin.inventory.fuel.purchased_fuel';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.fuel.purchased_fuel';
+        return view('users.layout', ["data"=>$data]);
     }
 
      //readings - fuel - inventory
@@ -597,8 +597,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Readings";
-        $data['view'] = 'admin.inventory.fuel.readings';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.fuel.readings';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_fuel_reading(){
@@ -614,8 +614,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Fuel Reading
         ";
-        $data['view'] = 'admin.inventory.fuel.add_fuel_reading';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.fuel.add_fuel_reading';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_fuel_reading(Request $request){
@@ -632,9 +632,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Edit Fuel Reading
         ";
-        $data['view'] = 'admin.inventory.fuel.edit_fuel_reading';
-        return view('layout', ["data"=>$data]);
-
+        $data['view'] = 'inventory.fuel.edit_fuel_reading';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function trash_mobile_civil_defence(){
@@ -643,8 +642,8 @@ class InventoryController extends Controller
         $data['company_names']= DB::table('company_names')->get();
         // dd( $data['customer_info']);
         $data['page_title'] = "MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE) Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.civil_defense.deleted_data';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'hr_pro.mobiles_fuel_tanks_renewals.civil_defense.deleted_data';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function mobile_civil_defence_history(){
@@ -664,8 +663,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Civial Defence)
         ";
-        $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'hr_pro.history_type';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function save_mobile_civil_defence(Request $request){
@@ -704,7 +703,7 @@ class InventoryController extends Controller
 
         $this->history_table_type('civil_defense_documents_histories', 'Add' ,   $civil_defense->user_id, 'mobile', $civil_defense->id , 'hr_pro.edit_mobile_civil_defence');
 
-        return \Redirect::route('admin.hr_pro.mobile_civil_defence')->with('success', 'Data Added Sucessfully');
+        return \Redirect::route('hr_pro.mobile_civil_defence')->with('success', 'Data Added Sucessfully');
 
     }
 
@@ -762,7 +761,7 @@ class InventoryController extends Controller
 
         }
 
-        return \Redirect::route('admin.hr_pro.mobile_civil_defence')->with('success', 'Data Updated Sucessfully');
+        return \Redirect::route('hr_pro.mobile_civil_defence')->with('success', 'Data Updated Sucessfully');
     }
     
     public function delete_mobile_civil_defence(Request $request){
@@ -888,8 +887,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Tyres - Inventory
         ";
-        $data['view'] = 'admin.inventory.tyres.tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.tyres';
+        return view('users.layout', ["data"=>$data]);
     }
 
      //new_tyres - tyres - inventory
@@ -905,8 +904,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "New/Used Tyres";
-        $data['view'] = 'admin.inventory.tyres.new_used_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.new_used_tyres';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_used_tyres(){
@@ -922,8 +921,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Used Tyres
         ";
-        $data['view'] = 'admin.inventory.tyres.add_used_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.add_used_tyres';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -941,8 +940,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Edit Used Tyres
         ";
-        $data['view'] = 'admin.inventory.tyres.edit_used_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.edit_used_tyres';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -959,8 +958,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Complain Tyres";
-        $data['view'] = 'admin.inventory.tyres.complain_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.complain_tyres';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_complain_tyres(){
@@ -976,8 +975,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Complain Tyres
         ";
-        $data['view'] = 'admin.inventory.tyres.add_complain_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.add_complain_tyres';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -995,8 +994,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Edit Complain Tyres
         ";
-        $data['view'] = 'admin.inventory.tyres.edit_complain_tyres';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.edit_complain_tyres';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1013,8 +1012,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Tyres Entry ";
-        $data['view'] = 'admin.inventory.tyres.tyres_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.tyres_entry';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_tyres_entry(){
@@ -1030,8 +1029,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Tyres Entry
         ";
-        $data['view'] = 'admin.inventory.tyres.add_tyres_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.add_tyres_entry';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1049,8 +1048,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Edit Tyres Entry
         ";
-        $data['view'] = 'admin.inventory.tyres.edit_tyres_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tyres.edit_tyres_entry';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1071,8 +1070,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Spare Parts - Inventory
         ";
-        $data['view'] = 'admin.inventory.spare_parts.spare_parts';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.spare_parts';
+        return view('users.layout', ["data"=>$data]);
     }
 
     //spare parts in storage - spare parts - inventory
@@ -1088,8 +1087,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Spare Parts in Stoarge";
-        $data['view'] = 'admin.inventory.spare_parts.spare_parts_in_storage';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.spare_parts_in_storage';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_spare_parts_in_storage(){
@@ -1105,8 +1104,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Spare Part in Storage
         ";
-        $data['view'] = 'admin.inventory.spare_parts.add_spare_parts_in_storage';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.add_spare_parts_in_storage';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1123,8 +1122,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Edit Spare Part in Storage
         ";
-        $data['view'] = 'admin.inventory.spare_parts.edit_spare_parts_in_storage';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.edit_spare_parts_in_storage';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1141,8 +1140,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Spare Parts Entry";
-        $data['view'] = 'admin.inventory.spare_parts.spare_parts_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.spare_parts_entry';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_spare_parts_entry(){
@@ -1157,8 +1156,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Add Spare Parts Entry";
-        $data['view'] = 'admin.inventory.spare_parts.add_spare_parts_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.add_spare_parts_entry';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_spare_parts_entry(){
@@ -1173,8 +1172,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Spare Parts Entry";
-        $data['view'] = 'admin.inventory.spare_parts.edit_spare_parts_entry';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.spare_parts.edit_spare_parts_entry';
+        return view('users.layout', ["data"=>$data]);
     }
 
     ///////////////////////////////////////////////////
@@ -1194,8 +1193,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Tools in Workshop - Inventory
         ";
-        $data['view'] = 'admin.inventory.tools.tools';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tools.tools';
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_tools(){
@@ -1211,8 +1210,8 @@ class InventoryController extends Controller
 
         $data['page_title'] = "Add Tools in Workshop
         ";
-        $data['view'] = 'admin.inventory.tools.add_tools';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tools.add_tools';
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -1228,8 +1227,8 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Tools";
-        $data['view'] = 'admin.inventory.tools.edit_tools';
-        return view('layout', ["data"=>$data]);
+        $data['view'] = 'inventory.tools.edit_tools';
+        return view('users.layout', ["data"=>$data]);
     }
 
 }
