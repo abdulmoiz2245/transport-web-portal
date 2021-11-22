@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/purchase/add', [PurchaseController::class, 'add_purchase']) 
         ->name('add_purchase');
+        
 
         Route::post('/purchase/edit', [PurchaseController::class, 'edit_purchase']) 
         ->name('edit_purchase');

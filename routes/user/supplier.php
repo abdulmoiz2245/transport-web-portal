@@ -20,7 +20,10 @@ Route::middleware(['auth:user'])->group(function () {
     
         Route::post('/view', [SupplierController::class, 'view_supplier']) 
         ->name('view_supplier');
-    
+        
+        Route::get('/get-supplier-products/{id}', [SupplierController::class, 'get_supplier_services_product']) 
+        ->name('get_supplier_services_product');
+
         Route::get('/add', [SupplierController::class, 'add_supplier']) 
         ->name('add_supplier');
     

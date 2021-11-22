@@ -4,7 +4,7 @@
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
     </div>
-    <form action="{{ route('admin.hr_pro.save_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.hr_pro.save_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
     @csrf
         <div class="form-group">
             <label for="">Date</label>

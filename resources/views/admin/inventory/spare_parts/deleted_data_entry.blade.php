@@ -6,7 +6,7 @@ use App\Models\Office_Land_contract;
 ?>
 <div class="container">
      <div class="mb-5"> 
-        <a href="{{ route( 'admin.hr_pro.mobile_trained_individual') }}">
+        <a href="{{ route( 'admin.inventory.spare_parts.spare_parts_entry') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -15,68 +15,51 @@ use App\Models\Office_Land_contract;
 
 
     <div class="table-responsive">
-        <table class="display table responsive nowrap  " style="width:100%">
+        <table class="display table  nowrap  " style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Card Number</th>
-                    <th>Employee Name</th>
-                    <th>Expiary Date</th>
-                    <th>Username</th>
-                    <th class="d-none">Pass Card</th>
-                    <th class="d-none">Front Pic</th>
-                    <th class="d-none">Back Pic</th>
+                    <th>Id</th>
+                    <th>Part Description</th>
+                    <th>Vehicle Number</th>
                     <th>Date</th>
+                    <th>Spare Part Consumer</th>
+                    <th>Driver Name</th>
+                    <th>Forman Name</th>
+                    <th>Requisition</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach($data['trained_individual'] as $trained_individual)
-                    @if($trained_individual->status == 'approved' && $trained_individual->row_status == 'deleted')
-                    <tr>
-                        
-                    <td>{{ $trained_individual->id }}</td>
-                    <td>{{ $trained_individual->card_number }}</td>
-                    <td>{{ $trained_individual->employee_name }}</td>
-                    <td>{{ $trained_individual->expiary_date }}</td>
-                    <td>
-                        @if($trained_individual->user_id == 0)
-                                    Admin
-                                @else
-                                    @if(User::find($trained_individual->user_id))
-                                        {{ User::find($trained_individual->user_id)->username}}
-                                    @else
-                                        User Deleted
-                                    @endif
-                                
-                                @endif
-                    </td>
-                    <td>{{ $trained_individual->updated_at }}</td>
-                    <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trained_individual->action }}</span></td> -->
-                    <td>
-                        <!-- <form action="{{ route( 'admin.hr_pro.view_mobiles_trained_individual') }}" method="post" class="d-inline">
-                            @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$trained_individual->id}}" placeholder="Enter id" >
-                            <button type="submit" class="border-0 .bg-white">
-                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                            </button>
-                        </form> -->
+                @foreach($data['spare_parts'] as $spare_parts)
+                    @if($spare_parts->row_status == 'deleted')
+                    <tr> 
+                        <td>{{ $spare_parts->id }}</td>
+                        <td>{{ $spare_parts->part_description_id }}</td>
+                        <td>{{ $spare_parts->vechicle }}</td>
+                        <td>{{ $spare_parts->date }}</td>
+                        <td>{{ $spare_parts->person }}</td>
+                        <td>{{ $spare_parts->driver_name }} </td>
+                        <td>{{ $spare_parts->forman_name }} </td>
+                        <td>
+                            @if($spare_parts->requisition)
+                            <a  target="_blank" href="{{ asset('main_admin\inventory\spare_part\requisition')}}/{{$spare_parts->requisition}}">
+                                <button class="btn">View</button>
+                            </a>
 
-                       
-                            
-                        <!-- <a href="#" id="{{ $trained_individual->id }}" class="delete-file">
-                            <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                        </a> -->
-
-                        <a href="#" id="{{ $trained_individual->id }}"  class="restore-file"  >
-                            <!-- <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34"> -->
-                            <button class="btn btn-success">Restore</button>
-                        </a>
-                    </td>
-                    
-                </tr>
-                @endif
-                @endforeach
+                            <a  download href="{{ asset('main_admin\inventory\spare_part\requisition')}}/{{$spare_parts->requisition}}">
+                                <button class="btn">Download</button>
+                            </a>
+                            @else
+                                NO File Found
+                            @endif
+                        </td>
+                        <td>
+                            <a href="#" id="{{ $spare_parts->id }}"  class="restore-file"  >
+                                <button class="btn btn-success">Restore</button>
+                            </a>
+                        </td>
+                        @endif
+                    @endforeach
             </tbody>         
         </table>
     </div>
@@ -87,7 +70,7 @@ use App\Models\Office_Land_contract;
     $(document).ready(function() {
         $('.table').DataTable( {
             dom: 'Bfrtip',
-            responsive: true,
+            // responsive: true,
             buttons: [
               
                 'copyHtml5',
@@ -111,7 +94,7 @@ use App\Models\Office_Land_contract;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.restore_mobiles_trained_individual') }}",
+                url:"{{ route( 'admin.inventory.spare_parts.restore_spare_parts_entry') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

@@ -4,42 +4,31 @@
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
     </div>
-    <form action="{{ route('admin.hr_pro.save_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.inventory.spare_parts.update_spare_parts_in_storage') }}" method="post" enctype="multipart/form-data">
     @csrf
-        <div class="form-group">
-            <label for="">Date</label>
-            <input type="date" name="date" class="form-control" required>
-        </div>
+        <input type="text" name="id" value="{{ $data['spare_part']->id }}" class="form-control d-none" required>
         <div class="form-group">
             <label for="">Spare Part Condition</label>
-            <select name="for_condition" id="for_condition" class="form-control" >
-                    <option value="">New</option>
-                    <option value=""  selected="selected">Used</option>
+            <select name="condition" id="for_condition" class="form-control" >
+                    <option value="new" <?php  if( $data['spare_part']->condition == 'new' || $data['spare_part']->condition != null){ ?> selected="selected" <?php  }?> >New</option>
+                    <option value="used" <?php  if( $data['spare_part']->condition != 'new' && $data['spare_part']->condition != null && $data['tyre']->condition == 'old'){ ?> selected="selected" <?php }?> >Used</option>
             </select>
         </div>
         <div class="form-group">
             <label >For</label>
-            <select name="for_which" id="for_which" class="form-control" required>
-                    <option value="0" selected="selected">Vehicle</option>
-                    <option value="1">Trailer</option>
-                    <option value="2">Others</option>
+            <select name="for" id="for_which" class="form-control" required>
+                    <option value="vechicle" <?php  if( $data['spare_part']->for == 'vechicle'){ ?> selected="selected" <?php  }?>>Vehicle</option>
+                    <option value="trailer"<?php  if( $data['spare_part']->for == 'trailer'){ ?> selected="selected" <?php  }?>>Trailer</option>
             </select>  
         </div>
-        <div class="form-group other" >
-            <label>Other</label>
-            <input type="text" name="other" class="form-control">
-        </div>
+       
         <div class="form-group">
             <label for="">Brand Name</label>
-            <input type="text" name="brand" class="form-control" required>
+            <input type="text" name="brand_name" value="{{ $data['spare_part']->brand_name }}" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="">Part Description</label>
-            <input type="text" name="part_description" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="">Quantity</label>
-            <input type="text" name="quantity" class="form-control" required>
+            <input type="text" name="part_description" value="{{ $data['spare_part']->part_description }}" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

@@ -1,6 +1,10 @@
 <div class="container mt-3">
-    <!-- s -->
-    <form action="{{ route('admin.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
+    <div class="mb-5">
+            <a href="{{ route( 'user.inventory.fuel.readings') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
+            </a>
+    </div>
+    <form action="{{ route('user.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="row">
@@ -12,11 +16,11 @@
                 <h4 class="w-100">Non-Mobile Tank 1 </h4>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Daily Readings</label>
+                <label for="user-status">Daily Readings</label>
                 <input type="text" name="non_mob1_daily_readings" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Refill Amount</label>
+                <label for="user-status">Refill Amount</label>
                 <input type="text" name="non_mob1_refill_amount" class="form-control" required>
             </div>
             <div class="col-12">
@@ -32,7 +36,7 @@
                 </select>
             </div>
             <div class="transfer_amount form-group col-md-6 col-12">
-                <label for="admin-status">Transfer Amount</label>
+                <label for="user-status">Transfer Amount</label>
                 <input type="text" name="transfer_amount" class="form-control" required>
             </div>
             <div class="col-12">
@@ -40,11 +44,11 @@
                 <h4 class="w-100">Non-Mobile Tank 2 </h4>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Daily Readings</label>
+                <label for="user-status">Daily Readings</label>
                 <input type="text" name="non_mob2_daily_readings" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Refill Amount</label>
+                <label for="user-status">Refill Amount</label>
                 <input type="text" name="non_mob2_refill_amount" class="form-control" required>
             </div>
             <div class="col-12">
@@ -52,11 +56,11 @@
                 <h4 class="w-100">Mobile Tank 1 </h4>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Daily Readings</label>
+                <label for="user-status">Daily Readings</label>
                 <input type="text" name="mob1_daily_readings" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Refill Amount</label>
+                <label for="user-status">Refill Amount</label>
                 <input type="text" name="mob1_refill_amount" class="form-control" required>
             </div>
             <div class="col-12">
@@ -64,22 +68,22 @@
                 <h4 class="w-100">Mobile Tank 2 </h4>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Daily Readings</label>
+                <label for="user-status">Daily Readings</label>
                 <input type="text" name="mob2_daily_readings" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Refill Amount</label>
+                <label for="user-status">Refill Amount</label>
                 <input type="text" name="mob2_refill_amount" class="form-control" required>
             </div>
             <div class="col-12">
                 <hr>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Fuel Entry</label>
+                <label for="user-status">Fuel Entry</label>
                 <input type="text" name="fuel_entry" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="admin-status">Vehicle Fuel Consumption Details</label>
+                <label for="user-status">Vehicle Fuel Consumption Details</label>
                 <input type="text" name="fuel_entry" class="form-control" required>
             </div>
         </div>

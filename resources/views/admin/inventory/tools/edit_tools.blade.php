@@ -6,7 +6,7 @@
 
     </div>
     <form action="{{ route('admin.hr_pro.update_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
-    @csrf
+        @csrf
         <div class="form-group">
             <label for="">Date</label>
             <input type="date" name="date" class="form-control" required>

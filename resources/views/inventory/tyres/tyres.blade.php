@@ -8,7 +8,7 @@ use App\Models\User;
 <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'user.inventory.inventory') }}">
+            <a href="{{ route( 'user.inventory') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
@@ -21,7 +21,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
                         <h4 class="mt-2 mb-2"><strong>New/Used Tyres</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{ $data['total_tyre']  }}</p>
                     </div>
                 </div>
             </a>
@@ -32,7 +32,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Complain Tyres</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{$data['complain_tyre']}}</p>
                     </div>
                 </div>
             </a>
@@ -43,7 +43,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Tyres Entry</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{$data['tyre_enterd'] }}</p>
                     </div>
                 </div>
             </a>
@@ -67,40 +67,7 @@ use App\Models\User;
         } );
     });
 
-    $('.delete-file').click(function () {
-        var file_id = this.id;
-        swal({
-            title: 'Are you sure?',
-            text: "You want to delete this Data.",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',  
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(function () {
-            $.ajax({
-                type:'POST',
-                url:"{{ route( 'admin.hr_pro.delete_mobile_civil_defence_status') }}",
-                data:{id:file_id, _token :"{{ csrf_token() }}"},
-                success:function(data){
-                        if (data.status == 1) {
-                            swal({
-                                title: "Deleted!",
-                                text: "Data has been deleted.",
-                                type: "success"
-                            }).then(function () {
-                                window.location.href = '';
-                            });
-                        }else{
-                            toastr.error("Some thing went wrong. ");
-
-                        }
-                }
-                });
-            
-
-        })
-    });
+    
 
     var date = new Date();
     date.setDate(date.getDate() + 10);

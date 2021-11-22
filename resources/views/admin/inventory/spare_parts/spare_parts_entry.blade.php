@@ -1,7 +1,7 @@
 <?php 
 use App\Models\Company_name;
 use App\Models\Muncipality_documents;
-use App\Models\User;
+use App\Models\Inventory_spare_parts;
 
 
 ?>
@@ -17,10 +17,10 @@ use App\Models\User;
         </div>
 
         <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.mobile_muncipality_history') }}"target="_blank" class="ml-3">
+            <a href="{{ route( 'admin.inventory.spare_parts.spare_parts_entry_history') }}"target="_blank" class="ml-3">
                 <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
             </a>
-            <a href="{{ route( 'admin.hr_pro.trash_mobile_muncipality') }}" class="ml-3" title="Trash" target="_blank">
+            <a href="{{ route( 'admin.inventory.spare_parts.spare_parts_entry_trash') }}" class="ml-3" title="Trash" target="_blank">
                 <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
@@ -49,9 +49,10 @@ use App\Models\User;
                         <table class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
+                                    <th>Id</th>
                                     <th>Part Description</th>
                                     <th>Vehicle Number</th>
+                                    <th>Date</th>
                                     <th>Spare Part Consumer</th>
                                     <th>Driver Name</th>
                                     <th>Forman Name</th>
@@ -60,48 +61,52 @@ use App\Models\User;
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($data['spare_parts'] as $spare_parts)
+                                @if($spare_parts->row_status != 'deleted')
                                 <tr> 
-                                    <td>23-11-2021</td>
-                                    <td>Spare Part 1</td>
-                                    <td>LER1234</td>
-                                    <td>Vehicle</td>
-                                    <td>Roger</td>
-                                    <td>Ellen Walker</td>
+                                    <td>{{ $spare_parts->id }}</td>
                                     <td>
-                                        <a  target="_blank" href="">
+                                    @if(Inventory_spare_parts::find($spare_parts->part_description_id) != null)
+                                        {{Inventory_spare_parts::find($spare_parts->part_description_id)->part_description }}</td>
+                                    @else
+                                    Part Deleted
+                                    @endif</td>
+                                    <td>{{ $spare_parts->vechicle }}</td>
+                                    <td>{{ $spare_parts->date }}</td>
+                                    <td>{{ $spare_parts->person }}</td>
+                                    <td>{{ $spare_parts->driver_name }} </td>
+                                    <td>{{ $spare_parts->forman_name }} </td>
+                                    <td>
+                                        @if($spare_parts->requisition)
+                                        <a  target="_blank" href="{{ asset('main_admin\inventory\spare_part\requisition')}}/{{$spare_parts->requisition}}">
                                             <button class="btn">View</button>
                                         </a>
 
-                                        <a  download href="">
+                                        <a  download href="{{ asset('main_admin\inventory\spare_part\requisition')}}/{{$spare_parts->requisition}}">
                                             <button class="btn">Download</button>
                                         </a>
+                                        @else
+                                            NO File Found
+                                        @endif
                                     </td>
                                     <td>
-                                        <!-- <form action="{{ route( 'admin.hr_pro.edit_non_mobile_civil_defence') }}" method="post" class="d-inline">
-                                            @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
-                                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                            </button>
-                                        </form> -->
 
                                         <form action="{{ route( 'admin.inventory.spare_parts.edit_spare_parts_entry') }}" method="post" class="d-inline">
                                             @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
+                                            <input type="text" class="form-control d-none" name="id" value ="{{ $spare_parts->id }}" placeholder="Enter id" >
                                             <button type="submit" class="border-0 .bg-white">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" title="Edit" width="34">
                                             </button>
                                         </form>
                                             
                                     
-                                        <a href="#" id="" class="delete-file">
+                                        <a href="#" id="{{ $spare_parts->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         </a>
 
-                                        <!-- <a href="{{ route( 'admin.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a> -->
                                     </td>
+                                    @endif
+                                    @endforeach
                                     
                                 </tr>
                             </tbody>         
@@ -144,7 +149,7 @@ use App\Models\User;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_mobile_muncipality_status') }}",
+                    url:"{{ route( 'admin.inventory.spare_parts.delete_spare_parts_entry_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

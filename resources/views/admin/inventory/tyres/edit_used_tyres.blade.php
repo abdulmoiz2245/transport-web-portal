@@ -4,23 +4,20 @@
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
     </div>
-    <form action="{{ route('admin.hr_pro.update_mobile_muncipality') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.inventory.tyres.update_new_used_tyres') }}" method="post" enctype="multipart/form-data">
     @csrf
-        <div class="form-group">
-            <label for="">Date</label>
-            <input type="date" name="date" class="form-control" required>
-        </div>
+        <input type="text" name="id" class="form-control d-none" value="{{ $data['tyre']->id}}">
         <div class="form-group">
             <label for="">Tyre Storage Location</label>
-            <input type="text" name="storage_loc" class="form-control" required>
+            <input type="text" name="storage_location" class="form-control" value="{{ $data['tyre']->storage_location}}">
         </div>
         <div class="form-group">
             <label for="">Tyre Serial Number</label>
-            <input type="text" name="tyre_serial_no" class="form-control" required>
+            <input type="text" name="tyre_serial" class="form-control" value="{{ $data['tyre']->tyre_serial}}">
         </div>
         <div class="form-group">
             <label for="">Tyre Brand</label>
-            <input type="text" name="brand" class="form-control" required>
+            <input type="text" name="brand" class="form-control" value="{{ $data['tyre']->brand}}">
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

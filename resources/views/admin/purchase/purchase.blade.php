@@ -68,7 +68,10 @@ use App\Models\Office_Land_contract;
                                     <tr>
                                         <th>ID</th>
                                         <th>PO Number</th>
-                                        <th>Company Name</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Total Amount</th>
+
                                         <th>TRN Number</th>
                                         <th>Delivery Date</th>
                                         <th>Action By</th>
@@ -81,7 +84,10 @@ use App\Models\Office_Land_contract;
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
                                         <td>{{ $trade_license->po_number }}</td>
-                                        <td>{{ $trade_license->company_name }}</td>
+                                        <td>{{ $trade_license->product_name }}</td>
+                                        <td>{{ $trade_license->quantity }}</td>
+
+                                        <td>{{ $trade_license->total_amount }}</td>
                                         <td>{{ $trade_license->trn }}</td>
                                         <td>{{ $trade_license->delivery_date }}</td>
 
@@ -107,13 +113,13 @@ use App\Models\Office_Land_contract;
                                                 </button>
                                             </form>
 
-                                            <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
+                                            <!-- <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
-                                            </form>
+                                            </form> -->
                                                 
                                         
                                             <a href="#" id="{{ $trade_license->id }}" class="delete-file">
@@ -138,8 +144,12 @@ use App\Models\Office_Land_contract;
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>PO Number</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Total Amount</th>
+
                                         <th>TRN Number</th>
-                                        <th>Company Name</th>
                                         <th>Delivery Date</th>
                                         <th>Action By</th>
                                         <th>Pending By</th>
@@ -159,8 +169,12 @@ use App\Models\Office_Land_contract;
                                     @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
                                     <tr>
                                         <td>{{ $trade_license->id }}</td>
+                                        <td>{{ $trade_license->po_number }}</td>
+                                        <td>{{ $trade_license->product_name }}</td>
+                                        <td>{{ $trade_license->quantity }}</td>
+
+                                        <td>{{ $trade_license->total_amount }}</td>
                                         <td>{{ $trade_license->trn }}</td>
-                                        <td>{{ $trade_license->company_name }}</td>
                                         <td>{{ $trade_license->delivery_date }}</td>
                                         <td>
                                             @if($trade_license->user_id == 0)
@@ -316,7 +330,7 @@ use App\Models\Office_Land_contract;
             $('.table2').DataTable( {
                 dom: 'Bfrtip',
                 
-                responsive: true,
+                // responsive: true,
                 buttons: [
                 
                     'copyHtml5',
@@ -331,7 +345,7 @@ use App\Models\Office_Land_contract;
             $('.table1').DataTable( {
                 dom: 'Bfrtip',
                 
-                responsive: true,
+                // responsive: true,
                 buttons: [
                 
                     'copyHtml5',

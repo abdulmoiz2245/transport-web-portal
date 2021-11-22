@@ -6,7 +6,7 @@ use App\Models\Office_Land_contract;
 ?>
 <div class="container">
      <div class="mb-5"> 
-        <a href="{{ route( 'admin.hr_pro.mobile_trained_individual') }}">
+        <a href="{{ route( 'user.hr_pro.mobile_trained_individual') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -41,7 +41,7 @@ use App\Models\Office_Land_contract;
                     <td>{{ $trained_individual->expiary_date }}</td>
                     <td>
                         @if($trained_individual->user_id == 0)
-                                    Admin
+                                    user
                                 @else
                                     @if(User::find($trained_individual->user_id))
                                         {{ User::find($trained_individual->user_id)->username}}
@@ -54,7 +54,7 @@ use App\Models\Office_Land_contract;
                     <td>{{ $trained_individual->updated_at }}</td>
                     <!-- <td><span class="badge badge-pill badge-success p-2 m-1">{{$trained_individual->action }}</span></td> -->
                     <td>
-                        <!-- <form action="{{ route( 'admin.hr_pro.view_mobiles_trained_individual') }}" method="post" class="d-inline">
+                        <!-- <form action="{{ route( 'user.hr_pro.view_mobiles_trained_individual') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$trained_individual->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
@@ -111,7 +111,7 @@ use App\Models\Office_Land_contract;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.restore_mobiles_trained_individual') }}",
+                url:"{{ route( 'user.hr_pro.restore_mobiles_trained_individual') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {
@@ -146,7 +146,7 @@ use App\Models\Office_Land_contract;
         }).then(function () {
             $.ajax({
                 type:'POST',
-                url:"{{ route( 'admin.hr_pro.delete_mobiles_trained_individual') }}",
+                url:"{{ route( 'user.hr_pro.delete_mobiles_trained_individual') }}",
                 data:{id:file_id, _token :"{{ csrf_token() }}"},
                 success:function(data){
                         if (data.status == 1) {

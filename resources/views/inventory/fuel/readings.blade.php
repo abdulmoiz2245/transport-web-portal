@@ -19,15 +19,15 @@ use App\Models\Office_Land_contract;
             </a>
         </div>
         
-
         <div class=""> 
-            <a href="{{ route( 'user.purchase.purchase_history') }}"target="_blank" class="ml-3">
+            <a href="{{ route( 'user.inventory.fuel.fuel_reading_history') }}"target="_blank" class="ml-3">
                     <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
             </a> 
-            <a href="" class="ml-3" target="_blank">
+            <a href="{{ route( 'user.inventory.fuel.trash_fuel_reading') }}" class="ml-3" target="_blank">
                 <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
+
     </div>
     <div class="row mt-5">
         <div class="col-12">
@@ -63,40 +63,91 @@ use App\Models\Office_Land_contract;
                                         <th>Refill Amount - Mobile Tank 01</th>
                                         <th>Daily Reading - Mobile Tank 02</th>
                                         <th>Refill Amount - Mobile Tank 02</th>
-                                        <th>Action By</th>
+                                        <th>Fuel Enter</th>
+
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($data['fuel_transfers'] as $fuel_transfer)
+                                    @if($fuel_transfer->row_status != 'deleted')
                                     <tr>
-                                        <td>01</td>
-                                        <td>22-02-2022</td>
-                                        <td>000 Galans</td>
-                                        <td>111 Galans</td>
-                                        <td>000 Galans</td>
-                                        <td>111 Galans</td>
-                                        <td>000 Galans</td>
-                                        <td>111 Galans</td>
-                                        <td>000 Galans</td>
-                                        <td>111 Galans</td>
-                                        <td>Admin</td>
+                                        <td class="">{{ $fuel_transfer->id }}</td>
+                                        <td class="">{{ $fuel_transfer->date }}</td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->non_mobile_1_reading }}
+                                        </td>
+                                        <td class="text-center"> 
+                                            <!-- <span style="background-color: forestgreen;"> -->
+                                                <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            <!-- </span> -->
+                                            
+                                            {{ $fuel_transfer->non_mobile_1_refill_amount }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->non_mobile_2_reading }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->non_mobile_2_refill_amount }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->mobile_1_reading }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->mobile_1_refill_amount }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->mobile_2_reading }}
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
+                                                    width: 23px;
+                                                " >
+                                            {{ $fuel_transfer->mobile_2_refill_amount }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $fuel_transfer->fuel_enter }}
+                                        </td>
+
                                         <td>
                                             <form action="{{ route( 'user.inventory.fuel.readings.edit_fuel_reading') }}" method="post" class="d-inline">
                                                 @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
+                                                <input type="text" class="form-control d-none" name="id" value ="{{ $fuel_transfer->id }}" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
-                                            <a href="#" id="" class="delete-file">
+                                            <a href="#" id="{{ $fuel_transfer->id }}" class="delete-file">
                                                 
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>  
                                         </td>  
                                     </tr>
+                                    @endif
+                                    @endforeach
                                 </tbody>         
                             </table>
                         </div>
@@ -154,7 +205,7 @@ use App\Models\Office_Land_contract;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"",
+                    url:"{{ route( 'user.inventory.fuel.delete_fuel_reading_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

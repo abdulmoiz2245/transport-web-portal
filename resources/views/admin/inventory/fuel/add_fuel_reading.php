@@ -1,5 +1,9 @@
 <div class="container mt-3">
-    <!-- s -->
+    <div class="mb-5">
+            <a href="{{ route( 'admin.inventory.fuel.readings') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
+            </a>
+    </div>
     <form action="{{ route('admin.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
         @csrf
 

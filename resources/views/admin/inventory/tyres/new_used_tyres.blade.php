@@ -6,6 +6,7 @@ use App\Models\User;
 
 ?>
 <div class="container">
+    
     <div class="d-flex" style="justify-content: space-between;">
         <div>
             <a href="{{ route( 'admin.inventory.tyres') }}">
@@ -17,10 +18,10 @@ use App\Models\User;
         </div>
 
         <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.mobile_muncipality_history') }}"target="_blank" class="ml-3">
+            <a href="{{ route( 'admin.inventory.tyres.tyres_history') }}"target="_blank" class="ml-3">
                 <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
             </a>
-            <a href="{{ route( 'admin.hr_pro.trash_mobile_muncipality') }}" class="ml-3" title="Trash" target="_blank">
+            <a href="{{ route( 'admin.inventory.tyres.trash_used_tyres') }}" class="ml-3" title="Trash" target="_blank">
                 <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
             </a>
         </div>
@@ -48,50 +49,46 @@ use App\Models\User;
                     <div class="table-responsive">
                         <table class="display table  nowrap  " style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Tyre Storage Location</th>
+                                <tr> 
+                                    <th>Id</th>
                                     <th>Tyre Serial Number</th>
+                                    <th>Tyre Storage Location</th>
                                     <th>Tyre Brand</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr> 
-                                    <td>23-11-2021</td>
-                                    <td>Site</td>
-                                    <td>Service12224</td>
-                                    <td>Service</td>
-                                    <td>New Tyre</td>
-                                    <td>
-                                        <!-- <form action="{{ route( 'admin.hr_pro.edit_non_mobile_civil_defence') }}" method="post" class="d-inline">
-                                            @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
-                                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                            </button>
-                                        </form> -->
+                                @foreach($data['tyres'] as $tyre)
+                                @if($tyre->row_status != 'deleted')
+                                @if($tyre->is_complained == 0)
 
+                                <tr> 
+                                    <td>{{ $tyre->id }}</td>
+                                    <td>{{ $tyre->tyre_serial }}</td>
+                                    <td>{{ $tyre->storage_location }}</td>
+                                    <td>{{ $tyre->brand }}</td>
+                                    <td>{{ $tyre->status }}</td>
+                                    <td>
                                         <form action="{{ route( 'admin.inventory.tyres.edit_used_tyres') }}" method="post" class="d-inline">
                                             @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
+                                            <input type="text" class="form-control d-none" name="id" value ="{{ $tyre->id}}" placeholder="Enter id" >
+                                            <button type="submit" class="border-0 " style="background-color: white;">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" title="Edit" width="34">
                                             </button>
                                         </form>
-                                            
-                                    
-                                        <a href="#" id="" class="delete-file">
+
+                                        <a href="#" id="{{$tyre->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         </a>
-
-                                        <!-- <a href="{{ route( 'admin.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a> -->
+  
                                     </td>
                                     
                                 </tr>
+
+                                @endif
+                                @endif
+                                @endforeach
                             </tbody>         
                         </table>
                     </div>
@@ -106,7 +103,7 @@ use App\Models\User;
 <script>
     $(document).ready(function() {
         $('.table').DataTable( {
-            dom: 'Bfrtip',
+            // dom: 'Bfrtip',
             //responsive: true,
             buttons: [
               
@@ -132,7 +129,7 @@ use App\Models\User;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_mobile_muncipality_status') }}",
+                    url:"{{ route( 'admin.inventory.tyres.delete_used_tyres_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

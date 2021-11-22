@@ -842,4 +842,12 @@ class SupplierController extends Controller
         return response()->json(['status'=>'1' , 'row'=> $row]);
 
     }
+
+    public function get_supplier_services_product($id){
+       $supplier = Supplier_info::find((int)$id);
+       $supplier_product = explode (",", $supplier->product);
+       $supplier_services = explode (",", $supplier->services);
+       return response()->json(['supplier_product'=>$supplier_product  , 'supplier_services'=>  $supplier_services]);
+
+    }
 }

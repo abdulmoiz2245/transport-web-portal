@@ -1,13 +1,14 @@
 <?php 
 use App\Models\Company_name;
 use App\Models\Purchase_mertial_data;
+use App\Models\Supplier_info;
 
 ?>
 <div class="container">
    
     <div class="row mb-5">
         <div class="col-4">
-            <a href="{{ route( 'user.purchase') }}">
+            <a href="{{ route( 'user.purchase.purchase') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
@@ -26,7 +27,7 @@ use App\Models\Purchase_mertial_data;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>TRN Number</label>
-                    <input type="text" name="trn" class="form-control"  placeholder="Enter TRN Number" required>
+                    <input type="number" name="trn" class="form-control"  placeholder="Enter TRN Number" required>
                 </div>
             </div>
         
@@ -49,10 +50,26 @@ use App\Models\Purchase_mertial_data;
                     <input type="text" name="company_address" class="form-control" placeholder="Enter Company Address" required>
                 </div>
             </div>
+
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Select Supplier</label>
+                    <select name="supplier_id" id=""class="form-control as_supplier_id">
+                        @foreach(Supplier_info::all() as $supplier)
+                        @if($supplier->row_status != 'deleted')
+                        @if($supplier->status == 'approved')
+
+                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                        @endif
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label >Material Data</label>
-                    <select name="material_data_id" id="material_data" class="form-control "required >
+                    <select name="material_data_id" id="Material_Data" class="form-control "required >
                         @if(Purchase_mertial_data::all() != null)
                         @foreach(Purchase_mertial_data::all() as $purchase_meterial)
                         <option value="{{$purchase_meterial->id}}">{{ $purchase_meterial->name }}</option>
@@ -126,7 +143,7 @@ use App\Models\Purchase_mertial_data;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="text" name="quantity" class="form-control" placeholder="Enter Quantity" required>
+                    <input type="number" name="quantity" class="form-control" placeholder="Enter Quantity" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
@@ -138,7 +155,7 @@ use App\Models\Purchase_mertial_data;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit Price</label>
-                    <input type="text" name="unit_price" class="form-control" placeholder="Enter Unit Price" required>
+                    <input type="number" name="unit_price" class="form-control" placeholder="Enter Unit Price" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
@@ -156,13 +173,13 @@ use App\Models\Purchase_mertial_data;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Credit Days</label>
-                    <input type="text" name="cerdit_days" class="form-control" placeholder="Enter Credit Days" required>
+                    <input type="number" name="cerdit_days" class="form-control" placeholder="Enter Credit Days" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Total Amount</label>
-                    <input type="text" name="total_amount" class="form-control" placeholder="Enter Total Amount" required>
+                    <input type="number" name="total_amount" class="form-control" placeholder="Enter Total Amount" required>
                 </div>
             </div>
         </div>
@@ -180,9 +197,66 @@ use App\Models\Purchase_mertial_data;
     // var date = new Date();
     // date.setDate(date.getDate() + 10);
     // var new_date = date.toLocaleDateString('en-CA');
+ 
     
-    // console.log($("[type='date']").attr("min",new_date) );
+    
+    $('.as_supplier_id').on('change', function()
+    {
+        console.log(this.value);
+        var studentSelect = $('#Material_Data');
 
+        
+        $.ajax({
+            type: 'GET',
+            url: "{{ url( '/employee/supplier/get-supplier-products/') }}/"+this.value,
+        }).then(function (data) {
+            $("#Material_Data option").each(function() {
+                $(this).remove();
+            });
+            // create the option and append to Select2
+            data.supplier_product.forEach(function(e){ 
+                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
+                        var option = new Option(e, "" , true, true);
+                        studentSelect.append(option).trigger('change');
+
+                    }
+
+            });
+
+            data.supplier_services.forEach(function(e){ 
+                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
+                        var option = new Option(e, "" , true, true);
+                        studentSelect.append(option).trigger('change');
+
+                    }
+
+            });
+
+            <?php if(Purchase_mertial_data::all() != null) { ?>
+                <?php $count =1; ?>
+                <?php foreach(Purchase_mertial_data::all() as $purchase_meterial) { ?>
+                    
+                    var option_<?= $count ?> = new Option("{{$purchase_meterial->name}}", "{{$purchase_meterial->id}}" , true, true) ;
+
+                    studentSelect.append(option_<?= $count ?>).trigger('change');
+
+
+                    <?php $count = $count + 1; ?>
+
+                <?php } ?>
+            <?php } ?>
+
+           
+
+            // // manually trigger the `select2:select` event
+            // studentSelect.trigger({
+            //     type: 'select2:select',
+            //     params: {
+            //         data: data
+            //     }
+            // });
+        });
+    });
     $('#for_stock').on('change', function()
     {
         if(this.value == '0'){

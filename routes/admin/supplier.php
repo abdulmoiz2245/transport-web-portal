@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/add', [SupplierController::class, 'add_supplier']) 
         ->name('add_supplier');
 
+        Route::get('/get-supplier-products/{id}', [SupplierController::class, 'get_supplier_services_product']) 
+        ->name('get_supplier_services_product');
+
         Route::post('/edit', [SupplierController::class, 'edit_supplier']) 
         ->name('edit_supplier');
 

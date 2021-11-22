@@ -21,7 +21,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
                         <h4 class="mt-2 mb-2"><strong>New/Used Tyres</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{ $data['total_tyre']  }}</p>
                     </div>
                 </div>
             </a>
@@ -32,7 +32,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Complain Tyres</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{$data['complain_tyre']}}</p>
                     </div>
                 </div>
             </a>
@@ -43,7 +43,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Tyres Entry</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{$data['tyre_enterd'] }}</p>
                     </div>
                 </div>
             </a>

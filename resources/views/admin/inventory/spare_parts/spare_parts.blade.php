@@ -21,7 +21,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
                         <h4 class="mt-2 mb-2"><strong>Spare Parts in Storage</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{$data['spare_part_in_storage'] }}</p>
                     </div>
                 </div>
             </a>
@@ -32,7 +32,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Spare Parts Entry</strong></h4>
-                        <p class="lead text-22 m-0">00</p>
+                        <p class="lead text-22 m-0">{{ $data['spare_part_entry'] }}</p>
                     </div>
                 </div>
             </a>

@@ -13428,9 +13428,13 @@ table.dataTable-collapse {
 }
 
 .form-group label {
-    font-size: 12px;
+    font-size: 13px;
     color: #70657b;
     margin-bottom: 4px
+}
+
+.form-group span{
+    font-size:11px;
 }
 
 .form-control {

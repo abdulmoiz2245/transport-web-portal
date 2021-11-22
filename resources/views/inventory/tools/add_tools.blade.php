@@ -5,7 +5,7 @@
         </a>
 
     </div>
-    <form action="{{ route('admin.hr_pro.save_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.hr_pro.save_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
     @csrf
         <div class="form-group">
             <label for="">Date</label>

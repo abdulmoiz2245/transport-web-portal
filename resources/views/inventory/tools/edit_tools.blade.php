@@ -5,8 +5,8 @@
         </a>
 
     </div>
-    <form action="{{ route('admin.hr_pro.update_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
-    @csrf
+    <form action="{{ route('user.hr_pro.update_mobiles_trained_individual') }}" method="post" enctype="multipart/form-data">
+        @csrf
         <div class="form-group">
             <label for="">Date</label>
             <input type="date" name="date" class="form-control" required>
@@ -71,7 +71,7 @@
             </div>
         </div>
         @endif
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 

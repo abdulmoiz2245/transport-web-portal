@@ -21,7 +21,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
                         <h4 class="mt-2 mb-2"><strong>Purchased Fuel</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
@@ -32,7 +32,7 @@ use App\Models\User;
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
                         <h4 class="mt-2 mb-2"><strong>Readings</strong></h4>
-                        <p class="lead text-22 m-0">21</p>
+                        <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>

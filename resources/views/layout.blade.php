@@ -400,6 +400,12 @@
                     tags: true
                 });
             });
+
+            $(document).ready(function() {
+                $(".Tyre_Serial_Nummber").select2({
+                    tags: true
+                });
+            });
         </script>
     </body>
 

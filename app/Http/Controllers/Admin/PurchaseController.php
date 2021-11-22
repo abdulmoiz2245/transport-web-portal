@@ -9,6 +9,17 @@ use App\Models\User;
 use App\Models\Roles;
 use App\Models\Purchase;
 use App\Models\Purchase_mertial_data;
+use App\Models\Inventory_Tyre;
+use App\Models\Inventory_spare_parts;
+// use App\Models\Inventory_spare_parts_entery;
+// use App\Models\Inventory_tools_entry;
+use App\Models\Inventory_tools;
+use App\Models\Fuel_transfer;
+use App\Models\Inventory_uncategorized;
+
+use App\Models\Supplier_info;
+
+
 
 use App\Models\Trade_license_history;
 
@@ -25,6 +36,7 @@ use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
@@ -49,7 +61,7 @@ class PurchaseController extends Controller
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-            'table_name' => $tab_name,
+            'route_name' => $tab_name,
             'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -150,9 +162,9 @@ class PurchaseController extends Controller
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-         $data['material_data']= DB::table('purchase_mertial_datas')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
+        $data['material_data']= DB::table('purchase_mertial_datas')->get();
 
         $data['page_title'] = "Add Purchase";
         $data['view'] = 'admin.purchase.add_purchase';
@@ -197,17 +209,33 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase;
         
-        $check = false;
-        foreach(Purchase_mertial_data::all() as $purchase_material){
-            if($purchase_material->id == $request->input('material_data_id')){
-                $check = true;
-            }
+        $check = 0;
+         if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
         }
 
-        if(!$check){
+        foreach(Purchase_mertial_data::all() as $purchase_material){
+            if($purchase_material->id == $request->input('meterial_data_id_1')){
+                $check = 1;
+            }
+        }
+        
+        // dd($request->input('meterial_data_id_1'));
+
+        if($check != 1){
             $meterial = new Purchase_mertial_data;
-            $meterial->name = $request->input('material_data_id');
+            $meterial->name = $request->input('meterial_data_id_1');
             $meterial->save();
+
+            $purchase->meterial_data_id = $meterial->id;
+
+        }else{
+            $purchase->meterial_data_id = $request->input('meterial_data_id_1');
+
+        }
+
+        if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
         }
 
         if($request->input('date') != ''){
@@ -224,13 +252,13 @@ class PurchaseController extends Controller
         if($request->input('company_address') != ''){
             $purchase->company_address = $request->input('company_address');
         }
-        if(!$check){
-            $purchase->meterial_data_id = $meterial->id;
-        }else{
-            if($request->input('meterial_data_id') != ''){
-                $purchase->meterial_data_id = $request->input('meterial_data_id');
-            }
-        }
+        // if(!$check){
+        //     $purchase->meterial_data_id = $meterial->id;
+        // }else{
+        //     if($request->input('meterial_data_id') != ''){
+        //         $purchase->meterial_data_id = $request->input('meterial_data_id');
+        //     }
+        // }
         
         if($request->input('type') != ''){
             $purchase->type = $request->input('type');
@@ -315,6 +343,7 @@ class PurchaseController extends Controller
         
 
         if($purchase->save()){
+           
 
             $this->history_table('purchase_histories', 'Add' , 0,  $purchase->id , "purchase.view_purchase");
            
@@ -325,7 +354,7 @@ class PurchaseController extends Controller
     public function update_purchase(Request $request){
         $id =  (int)$request->input('id');
         $purchase = Purchase::where('id' , $id)->first();
-        // dd($request->input('meterial_data_id'));    
+        
 
         $check = 0;
         foreach(Purchase_mertial_data::all() as $purchase_material){
@@ -333,14 +362,14 @@ class PurchaseController extends Controller
         //     // echo '<br>';
         //     var_dump(  $request->input('meterial_data_id'));
         // die();
-
-            if($purchase_material->id == $request->input('meterial_data_id')){
-
+        
+            if($purchase_material->id == $purchase->meterial_data_id){
+                
                 $check = 1;
             }
             // echo '<br><br>';
         }
-
+        
         if($check ==0){
             $meterial = new Purchase_mertial_data;
             $meterial->name = $request->input('meterial_data_id');
@@ -350,6 +379,10 @@ class PurchaseController extends Controller
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');
         }
+        if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
+        }
+
         if($request->input('trn') != ''){
             $purchase->trn = $request->input('trn');
 
@@ -361,13 +394,13 @@ class PurchaseController extends Controller
         if($request->input('company_address') != ''){
             $purchase->company_address = $request->input('company_address');
         }
-        if($check == 0){
-            $purchase->meterial_data_id = $meterial->id;
-        }else{
-            if($request->input('meterial_data_id') != ''){
-                $purchase->meterial_data_id = $request->input('meterial_data_id');
-            }
-        }
+        // if($check == 0){
+        //     $purchase->meterial_data_id = $meterial->id;
+        // }else{
+        //     if($request->input('meterial_data_id') != ''){
+        //         $purchase->meterial_data_id = $request->input('meterial_data_id');
+        //     }
+        // }
         if($request->input('type') != ''){
             $purchase->type = $request->input('type');
         }
@@ -453,13 +486,105 @@ class PurchaseController extends Controller
             $purchase->action = 'Admin Edit';
         }
         $purchase->status_admin = $request->input('status');
+        $purchase->status_account = $request->input('status_account');
+
 
 
         $purchase->save();
 
+        
+
         if($purchase->status_admin == 'approved' || $purchase->user_id == 0 ){
             $this->history_table('purchase_histories', $purchase->action , $user_id,  $purchase->id, "purchase.view_purchase");
-       }
+        }
+
+        if($purchase->status_admin == 'approved' && $purchase->status_account== 'approved'){
+            $tyre_check =0;
+            $spare_part_check  = 0;
+            $tools_check  = 0;
+            $not_fuel= 0;
+            $fuel= 0;
+
+
+            foreach(Purchase_mertial_data::all() as $material){
+                if($material->id == $purchase->meterial_data_id  ){
+                    var_dump( $material->name);
+                    echo '<br>';
+                    if($material->name == 'tyres' || $material->name == 'tyre' || $material->name == 'Tyre' || $material->name == 'Tyres'){
+                        $tyre_check=  1;
+                        break;
+                    }
+
+                     if($material->name == 'sparepart' || $material->name == 'spareparts' || $material->name == 'Sparepart' || $material->name == 'Spareparts'){
+                        $spare_part_check=  1;
+                        break;
+                    }
+
+                    else if($material->name == 'tool' || $material->name == 'tools' || $material->name == 'Tool' || $material->name == 'Tools'){
+                        $tools_check=  1;
+                        break;
+                    }else if($material->name == 'fuel' || $material->name == 'fuels' || $material->name == 'Fuel' || $material->name == 'Fuels'){
+                        // dd('fuel_callwd');
+                        $fuel=  1;
+                        $not_fuel=  1;
+                       $total_remain =  Fuel_transfer::latest('date')->first()->total_fuel_remaining + $purchase->quantity;
+                       $fuel_t =  Fuel_transfer::latest('date')->first();
+                       $fuel_t->total_fuel_remaining = $total_remain;
+                       $fuel_t->save();
+                        break;
+                    }
+                    
+                }
+            }
+
+            if($tyre_check == 1){
+                $data = [ ];
+                for($i=1 ; $i<=$purchase->quantity ;$i++ ){
+                    array_push($data , ['row_status'=>'active']);
+                }
+                Inventory_Tyre::insert($data);
+                
+            }else if($spare_part_check == 1){
+
+                $Inventory_spare_parts = new Inventory_spare_parts;
+                $Inventory_spare_parts->part_description = $purchase->product_name;
+                $Inventory_spare_parts->quantity = $purchase->quantity;
+                $Inventory_spare_parts->save();
+
+                $this->history_table('inventory_spare_parts_histories', 'Spare Part Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_spare_parts->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+            }else if($tools_check == 1){
+                $Inventory_tools = new Inventory_tools;
+                $Inventory_tools->tools_description = $purchase->product_name;
+                $Inventory_tools->quantity = $purchase->quantity;
+                $Inventory_tools->brand = $purchase->brand;
+                $Inventory_tools->unit = $purchase->unit;
+                $Inventory_tools->po_number = $purchase->po_number;
+                $Inventory_tools->created_at = date("Y-m-d H:i:s");
+                $Inventory_tools->updated_at = date("Y-m-d H:i:s");
+
+                $Inventory_tools->save();
+
+                $this->history_table('inventory_tools_histories', 'Tools Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_tools->id , 'inventory.tools.view_tools_in_storage');
+            }else if(  $fuel != 1 ) {
+                // dd('fuel_not_callwd');
+                $Inventory_uncategorized = new Inventory_uncategorized;
+                $Inventory_uncategorized->product_name = $purchase->product_name;
+                $Inventory_uncategorized->quantity = $purchase->quantity;
+                $Inventory_uncategorized->brand = $purchase->brand;
+                $Inventory_uncategorized->unit = $purchase->unit;
+                $Inventory_uncategorized->made_in = $purchase->made_in;
+                $Inventory_uncategorized->size = $purchase->size;
+
+                $Inventory_uncategorized->po_number = $purchase->po_number;
+                // $Inventory_uncategorized->date = date("Y-m-d");
+                // $Inventory_uncategorized->created_at = date("Y-m-d H:i:s");
+                // $Inventory_uncategorized->updated_at = date("Y-m-d H:i:s");
+
+                $Inventory_uncategorized->save();
+
+                $this->history_table('inventory_uncategorized_histories', 'Uncategorized Data Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_uncategorized->id , 'inventory.uncategorized.view_uncategorized');
+            }
+        }
 
         
 

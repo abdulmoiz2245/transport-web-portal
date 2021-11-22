@@ -1,5 +1,6 @@
 <?php 
 use App\Models\Purchase_mertial_data;
+use App\Models\Supplier_info;
 
 ?>
 
@@ -7,7 +8,7 @@ use App\Models\Purchase_mertial_data;
    
     <div class="row mb-5">
         <div class="col-4">
-            <a href="{{ route( 'user.purchase') }}">
+            <a href="{{ route( 'user.purchase.purchase') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>      
         </div>
@@ -16,18 +17,9 @@ use App\Models\Purchase_mertial_data;
     @csrf
     <input type="text" name="id" value="{{ $data['purchase']->id }}" class="d-none">
 
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <div class="form-group">
-                <label>Admin Notes</label>
-                <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['purchase']->status_message }}</textarea>
-                
-            </div>
-        </div>
-    </div>
-    <hr>
+    
 
-    <h2>LPO</h2>
+        <h2>LPO</h2>
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="form-group">
@@ -57,13 +49,31 @@ use App\Models\Purchase_mertial_data;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
+                    <label>Select Supplier</label>
+                    <select name="supplier_id" id=""class="form-control as_supplier_id">
+                        @foreach(Supplier_info::all() as $supplier)
+                        @if($supplier->row_status != 'deleted')
+                        @if($supplier->status == 'approved')
+
+                            <option value="{{ $supplier->id }}" <?php if($supplier->id == $data['purchase']->supplier_id) {?> selected='selected' <?php } ?>>{{ $supplier->name }}</option>
+                        @endif
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
                     <label >Material Data</label>
-                    <select name="meterial_data_id" id="material_data" class="form-control "required >
+                    <select name="material_data_id" id="Material_Data" class="form-control "required >
                         @if(Purchase_mertial_data::all() != null)
                         @foreach(Purchase_mertial_data::all() as $purchase_meterial)
                         <option value="{{$purchase_meterial->id}}">{{ $purchase_meterial->name }}</option>
                         @endforeach
                         @endif
+                        <!-- <option value="sd">asa</option>
+                        <option value="sd">asda</option> -->
+
                     </select>
                 </div>
             </div>
@@ -169,6 +179,37 @@ use App\Models\Purchase_mertial_data;
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Admin Notes</label>
+                    <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['purchase']->status_message }}</textarea>
+                    
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        <option value='pending' <?php if($data['purchase']->status_admin == 'pending') echo 'selected="selected"' ?> >Pending</option>
+                        <option value='approved' <?php if($data['purchase']->status_admin == 'approved') echo 'selected="selected"' ?> >Approved</option>
+                        <option value='rejected' <?php if($data['purchase']->status_admin == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Accounts Status</label>
+                    <select name="status_account" class="form-control">
+                        <option value='pending' <?php if($data['purchase']->status_admin == 'pending') echo 'selected="selected"' ?> >Pending</option>
+                        <option value='approved' <?php if($data['purchase']->status_admin == 'approved') echo 'selected="selected"' ?> >Approved</option>
+                        <option value='rejected' <?php if($data['purchase']->status_admin == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -185,7 +226,72 @@ use App\Models\Purchase_mertial_data;
 // var new_date = date.toLocaleDateString('en-CA');
 
 // console.log($("[type='date']").attr("min",new_date) );
+
+$('.as_supplier_id').on('change', function()
+    {
+        console.log(this.value);
+        var studentSelect = $('#Material_Data');
+
+        
+        $.ajax({
+            type: 'GET',
+            url: "{{ url( '/employee/supplier/get-supplier-products/') }}/"+this.value,
+        }).then(function (data) {
+            $("#Material_Data option").each(function() {
+                $(this).remove();
+            });
+            // create the option and append to Select2
+            data.supplier_product.forEach(function(e){ 
+                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
+                        var option = new Option(e, "" , true, true);
+                        studentSelect.append(option).trigger('change');
+
+                    }
+
+            });
+
+            data.supplier_services.forEach(function(e){ 
+                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
+                        var option = new Option(e, "" , true, true);
+                        studentSelect.append(option).trigger('change');
+
+                    }
+
+            });
+
+            <?php if(Purchase_mertial_data::all() != null) { ?>
+                <?php $count =1; ?>
+                <?php foreach(Purchase_mertial_data::all() as $purchase_meterial) { ?>
+                    
+                    var option_<?= $count ?> = new Option("{{$purchase_meterial->name}}", "{{$purchase_meterial->id}}" , true, true) ;
+
+                    studentSelect.append(option_<?= $count ?>).trigger('change');
+
+
+                    <?php $count = $count + 1; ?>
+
+                <?php } ?>
+            <?php } ?>
+            $("#Material_Data option").each(function() {
+                // alert(this.text + ' ' + this.value);
+                if(this.value == "{{ $data['purchase']->meterial_data_id }}" ){
+                    $('#Material_Data').find('option[value="'+ this.value +'"]').prop('selected', true);
+                }
+            });
+           
+
+            // // manually trigger the `select2:select` event
+            // studentSelect.trigger({
+            //     type: 'select2:select',
+            //     params: {
+            //         data: data
+            //     }
+            // });
+        });
+    });
+
 $(document).ready(function() {
+
     $("#Material_Data").select2({
         tags: true
     });

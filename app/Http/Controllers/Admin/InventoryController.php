@@ -9,20 +9,27 @@ use App\Models\User;
 use App\Models\Roles;
 use App\Models\Purchase;
 use App\Models\Purchase_mertial_data;
+use App\Models\Fuel_transfer;
+use App\Models\Inventory_spare_parts;
+use App\Models\Inventory_spare_parts_entery;
+use App\Models\Inventory_spare_parts_entery_history;
+use App\Models\Inventory_Tyre;
+use App\Models\Inventory_tools_entry;
+use App\Models\Inventory_tools;
+use App\Models\Inventory_uncategorized;
+use App\Models\Inventory_uncategorized_history;
+
+
 
 use App\Models\Trade_license_history;
-
 use App\Models\Permissions;
 use App\Models\Login_password;
-
 use App\Models\Modules;
-
 use App\Models\Approvals;
-
-
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,22 +41,12 @@ class InventoryController extends Controller
         $this->middleware('auth:admin');
     }
 
-    // public function purchase(){
-
-    //     $data['modules']= DB::table('modules')->get();
-    //     //dd($data['modules']);
-        
-    //     $data['page_title'] = "Purchase";
-    //     $data['view'] = 'admin.purchase.purchase';
-    //     return view('layout', ["data"=>$data]);
-    // }
-
     public function history_table($table_name , $action , $user_id, $data_id, $tab_name){
         DB::table($table_name)->insert([
             'action' => $action,
             'date' => date("Y-m-d  H:i:s"),
             'user_id' => $user_id,
-            'table_name' => $tab_name,
+            'route_name' => $tab_name,
             'data_id' => $data_id,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -97,482 +94,38 @@ class InventoryController extends Controller
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
+
+        $spare_part_in_storage= Inventory_spare_parts::where('row_status' ,'!=' , 'deleted')->get();
+        $quantity_spare_part = 0;
+        foreach($spare_part_in_storage as $spare_part){
+                $quantity_spare_part = $quantity_spare_part+$spare_part->quantity;
+        }
+
+        $tools_in_storage= Inventory_tools::where('row_status' ,'!=' , 'deleted')->get();
+            $quantity_tools = 0;
+        foreach($tools_in_storage as $tools){
+                $quantity_tools = $quantity_tools+$tools->quantity;
+        }
+
+        
+        $data['total_tools'] = $quantity_tools;
+        $data['total_spare_part'] = $quantity_spare_part;
+
+        $data['total_tyre'] = Inventory_Tyre::where('row_status' ,'!=' , 'deleted')->count();
+
+      
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
-          
-        
-        // if($data['permissions']->status != 1 ){
-        //     abort(403);
-        // }
         $data['purchases']= DB::table('purchases')->get();
         // $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Inventory";
-        $data['view'] = 'user.inventory.inventory';
+        $data['view'] = 'admin.inventory.inventory';
         return view('layout', ["data"=>$data]);
-    }
-
-    public function trash_purchase(){
-        $data['modules']= DB::table('modules')->get();
-        $data['trade_licenses']= DB::table('purchases')->get();
-        // $data['company_names']= DB::table('company_names')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "Purchase Trash";
-        $data['view'] = 'admin.purchase.deleted_data';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function purchase_history(){
-
-        $data['modules']= DB::table('modules')->get();
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-     
-
-        $data['purchase_history']= DB::table('purchase_histories')->get();
-        $data['table_name']= 'purchase_histories';
-
-        $data['page_title'] = "History | PURCHASE ";
-        $data['view'] = 'admin.purchase.purchase_history';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function add_purchase(){
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-         $data['material_data']= DB::table('purchase_mertial_datas')->get();
-
-        $data['page_title'] = "Add Purchase";
-        $data['view'] = 'admin.purchase.add_purchase';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function view_purchase(Request $request){
-        $data['purchase'] = Purchase::find($request->input('id'));
-        $data['material_data']= DB::table('purchase_mertial_datas')->get();
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "PURCHASE";
-        $data['view'] = 'admin.purchase.view_purchase';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function edit_purchase (Request $request){
-        $data['purchase'] = Purchase::find($request->input('id'));
-        $data['material_data']= DB::table('purchase_mertial_datas')->get();
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Edit Purchase";
-        $data['view'] = 'admin.purchase.edit_purchase';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function save_purchase(Request $request){
-
-        $purchase = new Purchase;
-        
-        $check = false;
-        foreach(Purchase_mertial_data::all() as $purchase_material){
-            if($purchase_material->id == $request->input('material_data_id')){
-                $check = true;
-            }
-        }
-
-        if(!$check){
-            $meterial = new Purchase_mertial_data;
-            $meterial->name = $request->input('material_data_id');
-            $meterial->save();
-        }
-
-        if($request->input('date') != ''){
-            $purchase->date = $request->input('date');
-        }
-        if($request->input('trn') != ''){
-            $purchase->trn = $request->input('trn');
-
-        }
-        if($request->input('company_name') != ''){
-            $purchase->company_name = $request->input('company_name');
-
-        }
-        if($request->input('company_address') != ''){
-            $purchase->company_address = $request->input('company_address');
-        }
-        if(!$check){
-            $purchase->meterial_data_id = $meterial->id;
-        }else{
-            if($request->input('meterial_data_id') != ''){
-                $purchase->meterial_data_id = $request->input('meterial_data_id');
-            }
-        }
-        
-        if($request->input('type') != ''){
-            $purchase->type = $request->input('type');
-        }
-        if($request->input('made_in') != ''){
-            $purchase->made_in = $request->input('made_in');
-
-        }
-        if($request->input('vechicle_num') != ''){
-            $purchase->vechicle_num = $request->input('vechicle_num');
-        }
-        if($request->input('stock_description') != ''){
-            $purchase->stock_description = $request->input('stock_description');
-
-        }
-        if($request->input('product_name') != ''){
-            $purchase->product_name = $request->input('product_name');
-        }
-
-        if($request->input('brand') != ''){
-            $purchase->brand = $request->input('brand');
-        }
-
-        if($request->input('size') != ''){
-            $purchase->size = $request->input('size');
-        }
-        if($request->input('quantity') != ''){
-            $purchase->quantity = $request->input('quantity');
-
-        }
-        if($request->input('unit') != ''){
-            $purchase->unit = $request->input('unit');
-        }
-
-        if($request->input('unit_price') != ''){
-            $purchase->unit_price = $request->input('unit_price');
-        }
-        if($request->input('delivery_date') != ''){
-            $purchase->delivery_date = $request->input('delivery_date');
-
-        }
-        if($request->input('terms') != ''){
-            $purchase->terms = $request->input('terms');
-        }
-
-        if($request->input('cerdit_days') != ''){
-            $purchase->cerdit_days = $request->input('cerdit_days');
-        }
-        if($request->input('total_amount') != ''){
-            $purchase->total_amount = $request->input('total_amount');
-
-        }
-        if($request->input('po_number') != ''){
-            $purchase->po_number = $request->input('po_number');
-        }
-
-        if($request->input('lpo_ref_num') != ''){
-            $purchase->lpo_ref_num = $request->input('lpo_ref_num');
-        }
-
-        if ($request->hasFile('delivery_proof_copy')) {
-            
-            $name = time().'_'.str_replace(" ", "_", $request->delivery_proof_copy->getClientOriginalName());
-            $file = $request->file('delivery_proof_copy');
-            if($file->storeAs('/main_admin/hr_pro/purchase/', $name , ['disk' => 'public_uploads'])){
-                $purchase->delivery_proof_copy	 = $name;
-
-            }
-
-        }
-        $digits = 5;
-        $purchase->po_number = 'PO'.str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-
-
-        $purchase->status_admin = 'approved';
-        $purchase->status_account = 'pending';
-
- 
-        $purchase->user_id = 0;
-        // dd('working');
-
-        
-
-        if($purchase->save()){
-
-            $this->history_table('purchase_histories', 'Add' , 0,  $purchase->id , "purchase.view_purchase");
-           
-            return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Added Sucessfully');
-        }
-    }
-
-    public function update_purchase(Request $request){
-        $id =  (int)$request->input('id');
-        $purchase = Purchase::where('id' , $id)->first();
-        // dd($request->input('meterial_data_id'));    
-
-        $check = 0;
-        foreach(Purchase_mertial_data::all() as $purchase_material){
-        //     // echo $purchase_material->id;
-        //     // echo '<br>';
-        //     var_dump(  $request->input('meterial_data_id'));
-        // die();
-
-            if($purchase_material->id == $request->input('meterial_data_id')){
-
-                $check = 1;
-            }
-            // echo '<br><br>';
-        }
-
-        if($check ==0){
-            $meterial = new Purchase_mertial_data;
-            $meterial->name = $request->input('meterial_data_id');
-            $meterial->save();
-        }
-
-        if($request->input('date') != ''){
-            $purchase->date = $request->input('date');
-        }
-        if($request->input('trn') != ''){
-            $purchase->trn = $request->input('trn');
-
-        }
-        if($request->input('company_name') != ''){
-            $purchase->company_name = $request->input('company_name');
-
-        }
-        if($request->input('company_address') != ''){
-            $purchase->company_address = $request->input('company_address');
-        }
-        if($check == 0){
-            $purchase->meterial_data_id = $meterial->id;
-        }else{
-            if($request->input('meterial_data_id') != ''){
-                $purchase->meterial_data_id = $request->input('meterial_data_id');
-            }
-        }
-        if($request->input('type') != ''){
-            $purchase->type = $request->input('type');
-        }
-        if($request->input('made_in') != ''){
-            $purchase->made_in = $request->input('made_in');
-
-        }
-        if($request->input('vechicle_num') != ''){
-            $purchase->vechicle_num = $request->input('vechicle_num');
-        }
-        if($request->input('stock_description') != ''){
-            $purchase->stock_description = $request->input('stock_description');
-
-        }
-        if($request->input('product_name') != ''){
-            $purchase->product_name = $request->input('product_name');
-        }
-
-        if($request->input('brand') != ''){
-            $purchase->brand = $request->input('brand');
-        }
-
-        if($request->input('size') != ''){
-            $purchase->size = $request->input('size');
-        }
-        if($request->input('quantity') != ''){
-            $purchase->quantity = $request->input('quantity');
-
-        }
-        if($request->input('unit') != ''){
-            $purchase->unit = $request->input('unit');
-        }
-
-        if($request->input('unit_price') != ''){
-            $purchase->unit_price = $request->input('unit_price');
-        }
-        if($request->input('delivery_date') != ''){
-            $purchase->delivery_date = $request->input('delivery_date');
-
-        }
-        if($request->input('terms') != ''){
-            $purchase->terms = $request->input('terms');
-        }
-
-        if($request->input('cerdit_days') != ''){
-            $purchase->cerdit_days = $request->input('cerdit_days');
-        }
-        if($request->input('total_amount') != ''){
-            $purchase->total_amount = $request->input('total_amount');
-
-        }
-        if($request->input('po_number') != ''){
-            $purchase->po_number = $request->input('po_number');
-        }
-
-        if($request->input('lpo_ref_num') != ''){
-            $purchase->lpo_ref_num = $request->input('lpo_ref_num');
-        }
-
-        if ($request->hasFile('delivery_proof_copy')) {
-            
-            $name = time().'_'.str_replace(" ", "_", $request->delivery_proof_copy->getClientOriginalName());
-            $file = $request->file('delivery_proof_copy');
-            if($file->storeAs('/main_admin/hr_pro/purchase/', $name , ['disk' => 'public_uploads'])){
-                $purchase->delivery_proof_copy	 = $name;
-
-            }
-
-        }
-
-        
-
-        $purchase->status_message = $request->input('status_message');
-        if( $purchase->user_id != 0){
-            $user_id  = $purchase->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-        // dd($purchase->action );
-
-        if($purchase->action == null || $purchase->status_admin == 'approved' || $purchase->action == 'nill'){
-            $purchase->action = 'Admin Edit';
-        }
-        $purchase->status_admin = $request->input('status');
-
-
-        $purchase->save();
-
-        if($purchase->status_admin == 'approved' || $purchase->user_id == 0 ){
-            $this->history_table('purchase_histories', $purchase->action , $user_id,  $purchase->id, "purchase.view_purchase");
-       }
-
-        
-
-
-        return \Redirect::route('admin.purchase.purchase')->with('success', 'Data Edited Sucessfully');
-
-    }
-
-    public function delete_purchase(Request $request){
-        $id =  (int)$request->input('id');
-        $trade_license = Purchase::where('id' , $id)->first();
-
-       
-
-        $trade_license->status_message = $request->input('status_message');
-        if( $trade_license->user_id != 0){
-            $user_id  = $trade_license->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $trade_license->save();
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trade_licenses');
-        }
-
-        if($trade_license->action == null){
-            $trade_license->action = 'add';
-        }
-
-        $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
-
-        //dd($trade_license->id); 
-        if($trade_license->delete()){
-
-            
-
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'0']);
-
-        }
-    }
-
-    public function delete_purchase_status(Request $request){
-        $id =  (int)$request->input('id');
-        $trade_license = Purchase::where('id' , $id)->first();
-        
-        $trade_license->status_message = $request->input('status_message');
-        if( $trade_license->user_id != 0){
-            $user_id  = $trade_license->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $trade_license->row_status = 'deleted';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trade_licenses');
-        }
-
-        // if($trade_license->action == null || $trade_license->status == 'approved'){
-            $trade_license->action = 'delete';
-        // }
-
-        
- 
-        if( $trade_license->save()){
-
-            $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
-
-            return response()->json(['status'=>'1']);
-        }else{
-            return response()->json(['status'=>'0']);
-
-        }
-    }
-
-    public function restore_purchase(Request $request){
-        $id =  (int)$request->input('id');
-        $trade_license = Purchase::where('id' , $id)->first();
-        
-        $trade_license->status_message = $request->input('status_message');
-        if( $trade_license->user_id != 0){
-                        
-        }else{
-            $user_id  = 0;
-        }
-
-        $trade_license->row_status = 'active';
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trade_licenses');
-        }
-
-        
-            $trade_license->action = 'restored';
-        
-        $trade_license->save();
-        $this->history_table('purchase_histories', $trade_license->action , $user_id ,  $trade_license->id, "purchase.view_purchase");
- 
-        $trade_license->action = 'deleted';
-        $trade_license->save();
-           
-            return response()->json(['status'=>'1']);
-        
     }
 
 
@@ -580,20 +133,19 @@ class InventoryController extends Controller
     ///////////////// Fuel - Inventory ////////////////
     ///////////////////////////////////////////////////
 
-    //civil defence
+    
     public function fuel(){
         $data['modules']= DB::table('modules')->get();
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
+      
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        
 
         $data['page_title'] = "Fuel - Inventory";
-        $data['view'] = 'user.inventory.fuel.fuel';
+        $data['view'] = 'admin.inventory.fuel.fuel';
         return view('layout', ["data"=>$data]);
     }
 
@@ -601,8 +153,21 @@ class InventoryController extends Controller
      public function purchased_fuel(){
         $data['modules']= DB::table('modules')->get();
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
+        $all_po = Purchase::all();
+        $fuel_po = [];
+        foreach($all_po as $po){
+            if($po->row_status != 'deleted'){
+                foreach(Purchase_mertial_data::all() as $material){
+                    if($material->id == $po->meterial_data_id){
+                        if($material->name  == 'fuel'){
+                            array_push($fuel_po,$po);
+                        }
+                    }
+                }
+            }
+        }
+        // dd($fuel_po);
+        $data['purchased_fuel'] = $fuel_po;
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -610,7 +175,7 @@ class InventoryController extends Controller
          //$data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Purchased Fuel";
-        $data['view'] = 'user.inventory.fuel.purchased_fuel';
+        $data['view'] = 'admin.inventory.fuel.purchased_fuel';
         return view('layout', ["data"=>$data]);
     }
 
@@ -618,16 +183,22 @@ class InventoryController extends Controller
     public function readings(){
         $data['modules']= DB::table('modules')->get();
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
-        $data['trade_licenses']= DB::table('trade_licenses')->get();
-        // $data['company_names']= DB::table('company_names')->get();
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
+        $data['fuel_transfers']= Fuel_transfer::all();
+        
+        $all_po = Purchase::all();
+        $fuel_po = [];
+        foreach($all_po as $po){
+            if($po->row_status != 'deleted'){
+                foreach(Purchase_mertial_data::all() as $material){
+                    if($material->id == $po->meterial_data_id){
+                        if($material->name  == 'fuel'){
+                            array_push($fuel_po,$po);
+                        }
+                    }
+                }
+            }
+        }
+        $data['purchased_fuel'] = $fuel_po;
 
         $data['page_title'] = "Readings";
         $data['view'] = 'admin.inventory.fuel.readings';
@@ -640,6 +211,10 @@ class InventoryController extends Controller
 
         //dd($data['modules']);
         $user = Auth::user();
+        if(!empty( Fuel_transfer::latest('date')->first())){
+            $data['fuel_entery'] = Fuel_transfer::latest('date')->first(); 
+        }
+
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
@@ -651,9 +226,279 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function edit_fuel_reading(Request $request){
+    public function save_fuel_reading(Request $request){
+        $fuel_reading = new  Fuel_transfer;
+        $fuel_entery = Fuel_transfer::latest('date')->first(); 
 
-        // $data['civil_defense'] = Civil_defense_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
+        if($request->input('reading_date') != ''){
+            $fuel_reading->date = $request->input('reading_date');
+        }
+
+        // dd($request->input('non_mobile_1_reading'));
+
+        if($request->input('non_mobile_1_reading') != '' && $fuel_entery->non_mobile_1_reading <= $request->input('non_mobile_1_reading')){
+            $fuel_reading->non_mobile_1_reading = $request->input('non_mobile_1_reading');
+        }else{
+            $fuel_reading->non_mobile_1_reading = $fuel_entery->non_mobile_1_reading;
+
+        }
+
+        if($request->input('non_mobile_2_reading') != '' && $fuel_entery->non_mobile_2_reading <= $request->input('non_mobile_2_reading')){
+            $fuel_reading->non_mobile_2_reading = $request->input('non_mobile_2_reading');
+        }else{
+            $fuel_reading->non_mobile_2_reading = $fuel_entery->non_mobile_2_reading;
+            
+        }
+
+        if($request->input('mobile_1_reading') != '' && $fuel_entery->mobile_1_reading <= $request->input('mobile_1_reading')){
+            $fuel_reading->mobile_1_reading = $request->input('mobile_1_reading');
+        }else{
+            $fuel_reading->mobile_1_reading = $fuel_entery->mobile_1_reading;
+            
+        }
+
+        if($request->input('mobile_2_reading') != '' && $fuel_entery->mobile_2_reading <= $request->input('mobile_2_reading')){
+            $fuel_reading->mobile_2_reading = $request->input('mobile_2_reading');
+        }else{
+            $fuel_reading->mobile_2_reading = $fuel_entery->mobile_2_reading;
+            
+        }
+
+        if($request->input('non_mobile_1_refill_from') != '' ){
+            $fuel_reading->non_mobile_1_refill_from = $request->input('non_mobile_1_refill_from');
+        }
+
+        if($request->input('non_mobile_1_refill_amount') != '' ){
+            $fuel_reading->non_mobile_1_refill_amount = $request->input('non_mobile_1_refill_amount');
+        }else{
+            $fuel_reading->non_mobile_1_refill_amount = 0;
+        }
+
+        if($request->input('non_mobile_2_refill_amount') != '' ){
+            $fuel_reading->non_mobile_2_refill_amount = $request->input('non_mobile_2_refill_amount');
+        }else{
+            $fuel_reading->non_mobile_2_refill_amount = 0;
+        }
+
+        if($request->input('mobile_1_refill_amount') != '' ){
+            $fuel_reading->mobile_1_refill_amount = $request->input('mobile_1_refill_amount');
+        }else{
+            $fuel_reading->mobile_1_refill_amount = 0;
+        }
+
+        if($request->input('mobile_2_refill_amount') != '' ){
+            $fuel_reading->mobile_2_refill_amount = $request->input('mobile_2_refill_amount');
+        }else{
+            $fuel_reading->mobile_2_refill_amount = 0;
+        }
+
+        if($request->input('fuel_entery_mobile') != '' ){
+            $fuel_reading->fuel_entery_mobile = $request->input('fuel_entery_mobile');
+        }else{
+            $fuel_reading->fuel_entery_mobile = 0;
+        }
+
+        if($request->input('fuel_entery_non_mobile') != '' ){
+            $fuel_reading->fuel_entery_non_mobile = $request->input('fuel_entery_non_mobile');
+        }else{
+            $fuel_reading->fuel_entery_non_mobile = 0;
+        } 
+
+        
+
+        if($request->input('inter_tank_transfer_from') != '' ){
+            $fuel_reading->inter_tank_transfer_from = $request->input('inter_tank_transfer_from');
+        }
+
+        if($request->input('inter_tank_transfer_amount') != '' ){
+            $fuel_reading->inter_tank_transfer_amount = $request->input('inter_tank_transfer_amount');
+        }
+
+        if( $request->input('non_mobile_1_refill_from') != 0){
+            $total_refill_from_storage  =  $request->input('non_mobile_2_refill_amount')  ;
+        }else{
+            $total_refill_from_storage  = $request->input('non_mobile_1_refill_amount')  + $request->input('non_mobile_2_refill_amount')  ;
+
+        }
+
+       
+
+        $fuel_reading->user_id = 0;
+        $fuel_reading->row_status = 'active';
+
+        if($fuel_reading->save()){
+            // $this->history_table('fuel_entery_histories', 'Add' , 0 , $fuel_reading->id , 'hr_pro.edit_trade_license__sponsors__partners');
+            
+            $fuel_reading = Fuel_transfer::find($fuel_reading->id);
+            $pre = $fuel_reading->previous();
+            $fuel_reading->total_fuel_remaining = $pre->total_fuel_remaining - $total_refill_from_storage;
+
+            $fuel_reading->total_fuel_consumed = $pre->total_fuel_consumed + $total_refill_from_storage;
+            $fuel_reading->save();
+
+            $this->history_table('fuel_transfer_histories', 'Add' ,   0 , $fuel_reading->id , 'inventory.fuel.readings.edit_fuel_reading');
+
+            return \Redirect::route('admin.inventory.fuel.readings')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
+    public function update_fuel_reading(Request $request){
+        $fuel_reading =Fuel_transfer::find((int)$request->input('id'));
+        $fuel_entery = Fuel_transfer::latest('date')->first(); 
+
+        if($request->input('reading_date') != ''){
+            $fuel_reading->date = $request->input('reading_date');
+        }
+
+        // dd($request->input('non_mobile_1_reading'));
+
+        if($request->input('non_mobile_1_reading') != '' && $fuel_entery->non_mobile_1_reading <= $request->input('non_mobile_1_reading')){
+            $fuel_reading->non_mobile_1_reading = $request->input('non_mobile_1_reading');
+        }else{
+            $fuel_reading->non_mobile_1_reading = $fuel_entery->non_mobile_1_reading;
+
+        }
+
+        if($request->input('non_mobile_2_reading') != '' && $fuel_entery->non_mobile_2_reading <= $request->input('non_mobile_2_reading')){
+            $fuel_reading->non_mobile_2_reading = $request->input('non_mobile_2_reading');
+        }else{
+            $fuel_reading->non_mobile_2_reading = $fuel_entery->non_mobile_2_reading;
+            
+        }
+
+        if($request->input('mobile_1_reading') != '' && $fuel_entery->mobile_1_reading <= $request->input('mobile_1_reading')){
+            $fuel_reading->mobile_1_reading = $request->input('mobile_1_reading');
+        }else{
+            $fuel_reading->mobile_1_reading = $fuel_entery->mobile_1_reading;
+            
+        }
+
+        if($request->input('mobile_2_reading') != '' && $fuel_entery->mobile_2_reading <= $request->input('mobile_2_reading')){
+            $fuel_reading->mobile_2_reading = $request->input('mobile_2_reading');
+        }else{
+            $fuel_reading->mobile_2_reading = $fuel_entery->mobile_2_reading;
+            
+        }
+
+        if($request->input('non_mobile_1_refill_from') != '' ){
+            $fuel_reading->non_mobile_1_refill_from = $request->input('non_mobile_1_refill_from');
+        }
+
+        if($request->input('non_mobile_1_refill_amount') != '' ){
+            $fuel_reading->non_mobile_1_refill_amount = $request->input('non_mobile_1_refill_amount');
+        }else{
+            $fuel_reading->non_mobile_1_refill_amount = 0;
+        }
+
+        if($request->input('non_mobile_2_refill_amount') != '' ){
+            $fuel_reading->non_mobile_2_refill_amount = $request->input('non_mobile_2_refill_amount');
+        }else{
+            $fuel_reading->non_mobile_2_refill_amount = 0;
+        }
+
+        if($request->input('mobile_1_refill_amount') != '' ){
+            $fuel_reading->mobile_1_refill_amount = $request->input('mobile_1_refill_amount');
+        }else{
+            $fuel_reading->mobile_1_refill_amount = 0;
+        }
+
+        if($request->input('mobile_2_refill_amount') != '' ){
+            $fuel_reading->mobile_2_refill_amount = $request->input('mobile_2_refill_amount');
+        }else{
+            $fuel_reading->mobile_2_refill_amount = 0;
+        }
+
+        if($request->input('fuel_entery_mobile') != '' ){
+            $fuel_reading->fuel_entery_mobile = $request->input('fuel_entery_mobile');
+        }else{
+            $fuel_reading->fuel_entery_mobile = 0;
+        }
+
+        if($request->input('fuel_entery_non_mobile') != '' ){
+            $fuel_reading->fuel_entery_non_mobile = $request->input('fuel_entery_non_mobile');
+        }else{
+            $fuel_reading->fuel_entery_non_mobile = 0;
+        } 
+
+        
+
+        if($request->input('inter_tank_transfer_from') != '' ){
+            $fuel_reading->inter_tank_transfer_from = $request->input('inter_tank_transfer_from');
+        }
+
+        if($request->input('inter_tank_transfer_amount') != '' ){
+            $fuel_reading->inter_tank_transfer_amount = $request->input('inter_tank_transfer_amount');
+        }
+
+        if( $request->input('non_mobile_1_refill_from') != 0){
+            $total_refill_from_storage  =  $request->input('non_mobile_2_refill_amount')  ;
+        }else{
+            $total_refill_from_storage  = $request->input('non_mobile_1_refill_amount')  + $request->input('non_mobile_2_refill_amount')  ;
+
+        }
+
+       
+
+        $fuel_reading->user_id = 0;
+        $fuel_reading->row_status = 'active';
+
+        if($fuel_reading->save()){
+            // $this->history_table('fuel_entery_histories', 'Add' , 0 , $fuel_reading->id , 'hr_pro.edit_trade_license__sponsors__partners');
+            
+            $fuel_reading = Fuel_transfer::find($fuel_reading->id);
+            $pre = $fuel_reading->previous();
+            $fuel_reading->total_fuel_remaining = $pre->total_fuel_remaining - $total_refill_from_storage;
+
+            $fuel_reading->total_fuel_consumed = $pre->total_fuel_consumed + $total_refill_from_storage;
+            $fuel_reading->save();
+
+            $this->history_table('fuel_transfer_histories', 'Edited' ,   0 , $fuel_reading->id , 'inventory.fuel.readings.edit_fuel_reading');
+
+            return \Redirect::route('admin.inventory.fuel.readings')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
+    public function validate_reading_date($date){
+
+        $fuel_readings = Fuel_transfer::all();
+        foreach($fuel_readings as $fuel_reading){
+            if($fuel_reading->date == $date){
+                echo '1';
+                return;
+            }
+        }
+        echo '0';
+    }
+
+    public function edit_fuel_reading(Request $request){
+        $data['all_fuel_transfer'] = Fuel_transfer::where('row_status' ,'!=' ,'deleted')->orderBy('date', 'DESC')->get();
+        $data['fuel_enterd'] = Fuel_transfer::find($request->input('id')); 
+        $data['pre_fuel_enterd'] = $data['fuel_enterd']->previous();
+
+
+        // function check_delete_previous($data){
+        //     if( $data['pre_fuel_enterd'] != null){
+        //         if($data['pre_fuel_enterd']->row_status == 'deleted'){
+        //             if($data['pre_fuel_enterd']->previous() != null){
+        //                 check_delete_previous($data['pre_fuel_enterd']->previous());
+        //             }else{
+        //                 return  $data['pre_fuel_enterd'] = new Fuel_transfer;
+        //             }
+        //         }else{
+        //             return  $data['pre_fuel_enterd'];
+        //         }
+        //     }else if($data['pre_fuel_enterd'] == null){
+        //       return  $data['pre_fuel_enterd'] = new Fuel_transfer;
+        //     } 
+        // }
+
+        // $data['pre_fuel_enterd'] = check_delete_previous($data['pre_fuel_enterd']);
+
+
+        $data['next_fuel_enterd'] = $data['fuel_enterd']->next();
+
         $data['modules']= DB::table('modules')->get();
         // dd($data['civil_defense']->document );
         //dd($data['modules']);
@@ -670,17 +515,17 @@ class InventoryController extends Controller
 
     }
 
-    public function trash_mobile_civil_defence(){
+    public function trash_fuel_reading(){
         $data['modules']= DB::table('modules')->get();
-        $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
+        $data['fuel_transfers'] = Fuel_transfer::all();
         $data['company_names']= DB::table('company_names')->get();
         // dd( $data['customer_info']);
-        $data['page_title'] = "MOBILE FUEL TANK RENEWALS (CIVIL DEFENSE) Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.civil_defense.deleted_data';
+        $data['page_title'] = "Fuel Reading | Trash";
+        $data['view'] = 'admin.inventory.fuel.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 
-    public function mobile_civil_defence_history(){
+    public function fuel_reading_history (){
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
@@ -690,150 +535,21 @@ class InventoryController extends Controller
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
 
-        $data['trade_licenses_history']= DB::table('civil_defense_documents_histories')->where('type' , '=' ,'mobile' )->get();
-        $data['table_name']= 'civil_defense_documents_histories';
-        $data['type']= 'mobile';
+        $data['trade_licenses_history']= DB::table('fuel_transfer_histories')->get();
+        $data['table_name']= 'fuel_transfer_histories';
+        // $data['type']= 'mobile';
         
 
-        $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Civial Defence)
+        $data['page_title'] = "History | Fuel Transfer
         ";
-        $data['view'] = 'admin.hr_pro.history_type';
+        $data['view'] = 'admin.hr_pro.history';
         return view('layout', ["data"=>$data]);
     }
 
-    public function save_mobile_civil_defence(Request $request){
-        $civil_defense = new Civil_defense_documents;
 
-        if($request->input('expiary_date') != ''){
-            $civil_defense->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $civil_defense->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-        $civil_defense->type = 'mobile';
-
-        $civil_defense->status = 'approved';
- 
-        $civil_defense->user_id = 0;
-
-        // $this->history_table_type('civil_defense_documents_histories', 'add' , 0 ,'mobile');
-
-        
-
-        $civil_defense->save();
-
-        $this->history_table_type('civil_defense_documents_histories', 'Add' ,   $civil_defense->user_id, 'mobile', $civil_defense->id , 'hr_pro.edit_mobile_civil_defence');
-
-        return \Redirect::route('admin.hr_pro.mobile_civil_defence')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function update_mobile_civil_defence(Request $request){
-        $civil_defense = Civil_defense_documents::find($request->input('id'));
-
-        if($request->input('expiary_date') != ''){
-            $civil_defense->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $civil_defense->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-
-        
-        if($civil_defense->action == null || $civil_defense->status == 'approved' || $civil_defense->action == 'nill'){
-            $civil_defense->action = 'edit';
-        }
-        $civil_defense->status = $request->input('status');
-
-
-        $civil_defense->status_message = $request->input('status_message');
-        if( $civil_defense->user_id != 0){
-            $user_id  = $civil_defense->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('civil_defense_files');
-        }
-
-        $civil_defense->type = 'mobile';
-        $civil_defense->save();
-        if($civil_defense->status == 'approved' || $civil_defense->user_id == 0 ){
-            // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id , 'mobile');
-
-            $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.edit_mobile_civil_defence');
-
-        }
-
-        return \Redirect::route('admin.hr_pro.mobile_civil_defence')->with('success', 'Data Updated Sucessfully');
-    }
-    
-    public function delete_mobile_civil_defence(Request $request){
-        $civil_defense = Civil_defense_documents::find($request->input('id'));
-
-        $civil_defense->status_message = $request->input('status_message');
-        if( $civil_defense->user_id != 0){
-            $user_id  = $civil_defense->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $civil_defense->save();
-        
-        // if($civil_defense->action == null){
-            $civil_defense->action = 'delete ';
-        // }
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('civil_defense_files');
-        }
-
-        // $this->history_table_type('civil_defense_documents_histories', $civil_defense->action , $user_id ,'mobile');
-
-        $this->history_table_type('civil_defense_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.edit_mobile_civil_defence');
-
-
-       if($civil_defense->delete()){
-           return response()->json(['status'=>'1']);
-       }else{
-           return response()->json(['status'=>'0']);
-       }
-    }
-
-    public function delete_mobile_civil_defence_status(Request $request){
+    public function delete_fuel_reading_status(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        $office_contract = Fuel_transfer::where('id' , $id)->first();
         // dd( $id);
         $office_contract->status_message = $request->input('status_message');
         if( $office_contract->user_id != 0){
@@ -845,23 +561,12 @@ class InventoryController extends Controller
 
         $office_contract->row_status = 'deleted';
 
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('civil_defense_files');
-        }
-
-        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
             $office_contract->action = 'delete';
-        // }
 
-        
  
         if( $office_contract->save()){
 
-            // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
-
-            $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_civil_defence');
+            $this->history_table('fuel_transfer_histories', 'Delete' ,   0, $office_contract->id , 'inventory.fuel.readings.edit_fuel_reading');
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -869,9 +574,9 @@ class InventoryController extends Controller
         }
     }
 
-    public function restore_mobile_civil_defence(Request $request){
+    public function restore_fuel_reading(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Civil_defense_documents::where('id' , $id)->first();
+        $office_contract = Fuel_transfer::where('id' , $id)->first();
         
         $office_contract->status_message = $request->input('status_message');
         if( $office_contract->user_id != 0){
@@ -882,19 +587,12 @@ class InventoryController extends Controller
 
         $office_contract->row_status = 'active';
 
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('civil_defense_files');
-        }
-
         
-            $office_contract->action = 'restored';
+        $office_contract->action = 'restored';
         
         $office_contract->save();
-        // $this->history_table_type('civil_defense_documents_histories', $office_contract->action , $user_id ,'mobile');
 
-        $this->history_table_type('civil_defense_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_civil_defence');
+        $this->history_table('fuel_transfer_histories', 'Restored' ,  0 , $office_contract->id , 'inventory.fuel.readings.edit_fuel_reading');
  
         $office_contract->action = 'nill';
         $office_contract->save();
@@ -910,6 +608,22 @@ class InventoryController extends Controller
     //tyres
     public function tyres(){
         $data['modules']= DB::table('modules')->get();
+        $data['tyres'] = Inventory_Tyre::all();
+        $data['total_tyre'] = Inventory_Tyre::where('row_status' ,'!=' , 'deleted')->count();
+        // dd($data['total_tyre']);
+        $complain_tyre = 0;
+        $tyre_enterd = 0;
+        foreach(Inventory_Tyre::where('row_status' ,'!=' , 'deleted')->get() as $tyre){
+            // dd($ $tyre);
+            if($tyre->is_complained == '1'){
+                $complain_tyre = $complain_tyre +1;
+            }else if($tyre->tyre_entered == '1'){
+                $tyre_enterd = $tyre_enterd+1;
+            }
+        }
+        // dd($tyre_enterd);
+        $data['tyre_enterd']  =  $tyre_enterd;
+        $data['complain_tyre']  =  $complain_tyre;
 
         //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
         //dd($data['modules']);
@@ -931,6 +645,7 @@ class InventoryController extends Controller
 
         // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
         // //dd($data['modules']);
+        $data['tyres'] = Inventory_Tyre::all();
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -942,11 +657,37 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
+    public function trash_used_tyres(){
+        $data['modules']= DB::table('modules')->get();
+        $data['tyres'] = Inventory_Tyre::all();
+        $data['page_title'] = "Inventorty Tyre | Trash";
+        $data['view'] = 'admin.inventory.tyres.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function tyres_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['trade_licenses_history']= DB::table('inventory__tyre_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory__tyre_histories';
+
+        $data['page_title'] = "History | Tyres ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
     public function add_used_tyres(){
 
         $data['modules']= DB::table('modules')->get();
 
-        //dd($data['modules']);
+       
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -962,15 +703,15 @@ class InventoryController extends Controller
 
     public function edit_used_tyres(Request $request){
 
-        //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
+        $data['tyre'] = Inventory_Tyre::find($request->input('id'));
         $data['modules']= DB::table('modules')->get();
         // dd($data['civil_defense']->document );
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Used Tyres
         ";
@@ -979,9 +720,90 @@ class InventoryController extends Controller
 
     }
 
+    public function update_used_tyres(Request $request){
+        $tyre = Inventory_Tyre::find($request->input('id'));
+        if($request->input('storage_location') != ''){
+            $tyre->storage_location = $request->input('storage_location');
+        }
+        if($request->input('brand') != ''){
+            $tyre->brand = $request->input('brand');
+        }
+        if($request->input('tyre_serial') != ''){
+            $tyre->tyre_serial = $request->input('tyre_serial');
+        }
+
+        
+        if($tyre->save()){
+            $this->history_table('inventory__tyre_histories', 'Edit' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+            return \Redirect::route('admin.inventory.tyres.new_used_tyres')->with('success', 'Data Updated Sucessfully');
+        }
+
+    }
+
+    public function save_used_tyres(Request $request){
+        $tyre = new Inventory_Tyre;
+        if($request->input('storage_location') != ''){
+            $tyre->storage_location = $request->input('storage_location');
+        }
+        if($request->input('brand') != ''){
+            $tyre->brand = $request->input('brand');
+        }
+        if($request->input('tyre_serial') != ''){
+            $tyre->tyre_serial = $request->input('tyre_serial');
+        }
+
+        $tyre->status = 'old';
+        if($tyre->save()){
+            $this->history_table('inventory__tyre_histories', 'Add Used' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+            return \Redirect::route('admin.inventory.tyres.new_used_tyres')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
+    public function delete_used_tyres_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_Tyre::where('id' , $id)->first();
+        
+        // $customer_info->status_message = $request->input('status_message');
+       
+
+        $customer_info->row_status = 'deleted';
+
+    
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('inventory__tyre_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.tyres.edit_used_tyres');
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_used_tyres(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_Tyre::where('id' , $id)->first();
+       
+
+        $customer_info->row_status = 'active';
+
+        $customer_info->action = 'restored';
+        
+        $customer_info->save();
+
+        $this->history_table('inventory__tyre_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.tyres.edit_used_tyres');
+
+        $customer_info->save();
+            return response()->json(['status'=>'1']);
+    }
+
+
      //complain_tyres - tyres - inventory
      public function complain_tyres(){
         $data['modules']= DB::table('modules')->get();
+        $data['tyres'] = Inventory_Tyre::all();
 
         // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
         // //dd($data['modules']);
@@ -1000,12 +822,13 @@ class InventoryController extends Controller
 
         $data['modules']= DB::table('modules')->get();
 
+        $data['tyres'] = Inventory_Tyre::all();
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Add Complain Tyres
         ";
@@ -1016,15 +839,17 @@ class InventoryController extends Controller
 
     public function edit_complain_tyres(Request $request){
 
-        //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
+        $data['tyre'] = Inventory_Tyre::find($request->input('id'));
+
+        //  $data['tyres'] = Inventory_Tyre::all();
         $data['modules']= DB::table('modules')->get();
         // dd($data['civil_defense']->document );
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Edit Complain Tyres
         ";
@@ -1033,10 +858,74 @@ class InventoryController extends Controller
 
     }
 
+    public function update_complain_tyres(Request $request){
+        $tyre = Inventory_Tyre::find($request->input('id'));
+        if($request->input('storage_location') != ''){
+            $tyre->storage_location = $request->input('storage_location');
+        }
+        if($request->input('brand') != ''){
+            $tyre->brand = $request->input('brand');
+        }
+        // if($request->input('tyre_serial') != ''){
+        //     $tyre->tyre_serial = $request->input('tyre_serial');
+        // }
+
+        if($request->input('fitting_date') != ''){
+            $tyre->fitting_date = $request->input('fitting_date');
+        }
+
+        if($request->input('complained') != ''){
+            $tyre->complained = $request->input('complained');
+        }
+
+        if($request->input('action') != ''){
+            $tyre->action = $request->input('action');
+        }
+
+        if($tyre->action == 'resolved'){
+            $tyre->is_complained = 0;
+        }
+       
+        if($tyre->save()){
+            $this->history_table('inventory__tyre_histories', 'Edit Complain ' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+            return \Redirect::route('admin.inventory.tyres.complain_tyres')->with('success', 'Data Updated Sucessfully');
+        }
+
+    }
+
+    public function save_complain_tyres(Request $request){
+        $tyre =  Inventory_Tyre::find($request->input('tyre_serial'));
+        if($request->input('storage_location') != ''){
+            $tyre->storage_location = $request->input('storage_location');
+        }
+        if($request->input('brand') != ''){
+            $tyre->brand = $request->input('brand');
+        }
+        // if($request->input('tyre_serial') != ''){
+        //     $tyre->tyre_serial = $request->input('tyre_serial');
+        // }
+
+        if($request->input('fitting_date') != ''){
+            $tyre->fitting_date = $request->input('fitting_date');
+        }
+
+        if($request->input('complained') != ''){
+            $tyre->complained = $request->input('complained');
+        }
+        $tyre->is_complained = 1;
+        // $tyre->status = 'old';
+        $tyre->action = 'pending';
+        if($tyre->save()){
+            $this->history_table('inventory__tyre_histories', 'Add Complain' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+            return \Redirect::route('admin.inventory.tyres.complain_tyres')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
     //tyres entry - tyres - inventory
     public function tyres_entry(){
         $data['modules']= DB::table('modules')->get();
-
+        $data['tyres'] = Inventory_Tyre::all();
         // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
         // //dd($data['modules']);
         $user = Auth::user();
@@ -1053,8 +942,7 @@ class InventoryController extends Controller
     public function add_tyres_entry(){
 
         $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
+        $data['tyres'] = Inventory_Tyre::all();
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1067,13 +955,14 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
 
     }
-
     public function edit_tyres_entry(Request $request){
 
-        //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
+
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        $data['tyre'] = Inventory_Tyre::find($request->input('id'));
+        $data['tyres'] = Inventory_Tyre::all();
+
+     
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1087,10 +976,80 @@ class InventoryController extends Controller
 
     }
 
+
+    public function save_tyres_entry(Request $request){
+        // $myArray = explode(',', $request->input('tyre_serial'));
+        // dd( $request->input('tyre_serial'));
+        foreach($request->input('tyre_serial') as $element )
+        {
+            $tyre =  Inventory_Tyre::find($element);
+
+            if($request->input('storage_location') != ''){
+                $tyre->storage_location = $request->input('storage_location');
+            }
+
+            if($request->input('fitting_date') != ''){
+                $tyre->fitting_date = $request->input('fitting_date');
+            }
+    
+            if($request->input('fitting_place') != ''){
+                $tyre->fitting_place = $request->input('fitting_place');
+            }
+
+            if($request->input('vechicle_numner') != ''){
+                $tyre->vechicle_numner = $request->input('vechicle_numner');
+            }
+            $tyre->status = 'old';
+            $tyre->tyre_entered = 1;
+           
+            if($tyre->save()){
+                $this->history_table('inventory__tyre_histories', 'Add Tyre Entery' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+                
+            }
+        }
+
+        return \Redirect::route('admin.inventory.tyres.tyres_entry')->with('success', 'Data Added Sucessfully');
+
+    }
+
+    public function update_tyres_entry(Request $request){
+        // $myArray = explode(',', $request->input('tyre_serial'));
+        // dd( $request->input('tyre_serial'));
+       
+            $tyre =  Inventory_Tyre::find($request->input('tyre_serial'));
+
+            if($request->input('storage_location') != ''){
+                $tyre->storage_location = $request->input('storage_location');
+            }
+
+            if($request->input('fitting_date') != ''){
+                $tyre->fitting_date = $request->input('fitting_date');
+            }
+    
+            if($request->input('fitting_place') != ''){
+                $tyre->fitting_place = $request->input('fitting_place');
+            }
+
+            if($request->input('vechicle_numner') != ''){
+                $tyre->vechicle_numner = $request->input('vechicle_numner');
+            }
+
+            $tyre->tyre_entered = 1;
+            $tyre->status =  'old';
+           
+            if($tyre->save()){
+                $this->history_table('inventory__tyre_histories', 'Edited Tyre Entery ' ,   0 , $tyre->id , 'inventory.tyres.edit_used_tyres');
+                return \Redirect::route('admin.inventory.tyres.tyres_entry')->with('success', 'Data Added Sucessfully');
+            }
+       
+    }
+
+
     //spare parts
     public function spare_parts(){
         $data['modules']= DB::table('modules')->get();
-
+        $data['spare_part_in_storage']= Inventory_spare_parts::where('row_status' ,'!=' , 'deleted')->count();
+        $data['spare_part_entry']= Inventory_spare_parts_entery::where('row_status' ,'!=' , 'deleted')->count();
         //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
         //dd($data['modules']);
         $user = Auth::user();
@@ -1108,7 +1067,7 @@ class InventoryController extends Controller
     //spare parts in storage - spare parts - inventory
     public function spare_parts_in_storage(){
         $data['modules']= DB::table('modules')->get();
-
+        $data['spareparts']= Inventory_spare_parts::all();
         // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
         // //dd($data['modules']);
         $user = Auth::user();
@@ -1140,9 +1099,10 @@ class InventoryController extends Controller
 
     }
 
-    public function edit_spare_parts_in_storage(){
-
+    public function edit_spare_parts_in_storage(Request $request){
+        $data['spare_part'] = Inventory_spare_parts::find((int)$request->input('id'));
         $data['modules']= DB::table('modules')->get();
+        // dd($data['spare_part']->part_description);
 
         //dd($data['modules']);
         $user = Auth::user();
@@ -1158,17 +1118,106 @@ class InventoryController extends Controller
 
     }
 
-    //spare parts entry - spare parts - inventory
-    public function spare_parts_entry(){
-        $data['modules']= DB::table('modules')->get();
+    public function update_spare_parts_in_storage(Request $request){
+        $spare_part = Inventory_spare_parts::find($request->input('id'));
+        if($request->input('condition') != ''){
+            $spare_part->condition = $request->input('condition');
+        }
+        if($request->input('brand_name') != ''){
+            $spare_part->brand_name = $request->input('brand_name');
+        }
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
+        if($request->input('for') != ''){
+            $spare_part->for = $request->input('for');
+        }
+
+        if($request->input('part_description') != ''){
+            $spare_part->part_description = $request->input('part_description');
+        }
+
+    
+        if($spare_part->save()){
+            $this->history_table('inventory_spare_parts_histories', 'Edit Spare Part In Storage ' ,   0 , $spare_part->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+            return \Redirect::route('admin.inventory.spare_parts.spare_parts_in_storage')->with('success', 'Data Updated Sucessfully');
+        }
+
+    }
+
+    public function delete_spare_parts_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_spare_parts::where('id' , $id)->first();
+        
+        // $customer_info->status_message = $request->input('status_message');
+       
+
+        $customer_info->row_status = 'deleted';
+
+    
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('inventory_spare_parts_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_spare_parts(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_spare_parts::where('id' , $id)->first();
+       
+
+        $customer_info->row_status = 'active';
+
+        $customer_info->action = 'restored';
+        
+        $customer_info->save();
+
+        $this->history_table('inventory_spare_parts_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+
+        $customer_info->save();
+            return response()->json(['status'=>'1']);
+    }
+
+    public function spare_parts_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
+         $data['trade_licenses_history']= DB::table('inventory_spare_parts_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory_spare_parts_histories';
+
+        $data['page_title'] = "History | Spare Parts ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function spare_parts_trash(){
+        $data['modules']= DB::table('modules')->get();
+        $data['spare_parts'] = Inventory_spare_parts::all();
+        $data['page_title'] = "Inventorty Spare Part In Storage | Trash";
+        $data['view'] = 'admin.inventory.spare_parts.deleted_data_in_storage';
+        return view('layout', ["data"=>$data]);
+    }
+
+    //spare parts entry - spare parts - inventory
+    public function spare_parts_entry(){
+        $data['modules']= DB::table('modules')->get();
+        $data['spare_parts'] = Inventory_spare_parts_entery::all();
+        $data['spare_part'] = Inventory_spare_parts::all();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
 
         $data['page_title'] = "Spare Parts Entry";
         $data['view'] = 'admin.inventory.spare_parts.spare_parts_entry';
@@ -1177,9 +1226,8 @@ class InventoryController extends Controller
 
     public function add_spare_parts_entry(){
         $data['modules']= DB::table('modules')->get();
+        $data['spare_parts'] = Inventory_spare_parts::all();
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1191,25 +1239,208 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function edit_spare_parts_entry(){
+    public function save_spare_parts_entry(Request $request){
+
+    
+
+        $spare_part = Inventory_spare_parts::find((int)$request->input('part_description_id'));
+
+        if($request->input('quantity') >= $spare_part->quantity ){
+            return \Redirect::route('admin.inventory.spare_parts.spare_parts_entry')->with('error', 'Product you selected is low in inventory');
+        }
+
+
+        $spare_part_entery =  new Inventory_spare_parts_entery;
+        if($request->input('person') != ''){
+            $spare_part_entery->person = $request->input('person');
+        }
+
+        if($request->input('part_description_id') != ''){
+            $spare_part_entery->part_description_id = $request->input('part_description_id');
+        }
+
+        if($request->input('vechicle') != ''){
+            $spare_part_entery->vechicle = $request->input('vechicle');
+        }
+
+        if($request->input('date') != ''){
+            $spare_part_entery->date = $request->input('date');
+        }
+
+        if($request->input('quantity') != ''){
+            $spare_part_entery->quantity = $request->input('quantity');
+        }
+
+        if($request->input('driver_name') != ''){
+            $spare_part_entery->driver_name = $request->input('driver_name');
+        }
+
+        if($request->input('forman_name') != ''){
+            $spare_part_entery->forman_name = $request->input('forman_name');
+        }
+
+        if ($request->hasFile('requisition')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->requisition->getClientOriginalName());
+            $file = $request->file('requisition');
+            if($file->storeAs('/main_admin/inventory/spare_part/requisition/', $name , ['disk' => 'public_uploads'])){
+                $spare_part_entery->requisition = $name;
+            }
+         
+        }
+        
+
+    
+        if($spare_part_entery->save()){
+            $this->history_table('inventory_spare_parts_entery_histories', 'Sparepart Entery  Added' ,   0 , $spare_part->id , 'inventory.spare_parts.edit_spare_parts_entry');
+
+            $spare_part->quantity = $spare_part->quantity - $spare_part_entery->quantity;
+            $spare_part->save();
+
+            $this->history_table('inventory_spare_parts_histories', $spare_part->quantity.' Sparepart given to driver' ,   0 , $spare_part->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+
+            return \Redirect::route('admin.inventory.spare_parts.spare_parts_entry')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
+    public function update_spare_parts_entry(Request $request){
+
+    
+
+       
+        $spare_part_entery =  Inventory_spare_parts_entery::find((int)$request->input('id'));
+        if($request->input('person') != ''){
+            $spare_part_entery->person = $request->input('person');
+        }
+
+
+        if($request->input('vechicle') != ''){
+            $spare_part_entery->vechicle = $request->input('vechicle');
+        }
+
+        if($request->input('date') != ''){
+            $spare_part_entery->date = $request->input('date');
+        }
+
+        
+
+        if($request->input('driver_name') != ''){
+            $spare_part_entery->driver_name = $request->input('driver_name');
+        }
+
+        if($request->input('forman_name') != ''){
+            $spare_part_entery->forman_name = $request->input('forman_name');
+        }
+
+        if ($request->hasFile('requisition')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->requisition->getClientOriginalName());
+            $file = $request->file('requisition');
+            if($file->storeAs('/main_admin/inventory/spare_part/requisition/', $name , ['disk' => 'public_uploads'])){
+                $spare_part_entery->requisition = $name;
+            }
+         
+        }
+        
+
+    
+        if($spare_part_entery->save()){
+            $this->history_table('inventory_spare_parts_entery_histories', 'Sparepart Entery  Edited' ,   0 , $spare_part_entery->id , 'inventory.spare_parts.edit_spare_parts_entry');
+
+            return \Redirect::route('admin.inventory.spare_parts.spare_parts_entry')->with('success', 'Data Updated Sucessfully');
+        }
+
+    }
+
+    public function edit_spare_parts_entry(Request $request){
+
+        $data['spare_part_entery'] =   Inventory_spare_parts_entery::find((int)$request->input('id'));
+
         $data['modules']= DB::table('modules')->get();
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
 
         $data['page_title'] = "Edit Spare Parts Entry";
         $data['view'] = 'admin.inventory.spare_parts.edit_spare_parts_entry';
         return view('layout', ["data"=>$data]);
     }
 
+    public function spare_parts_entry_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['trade_licenses_history']= DB::table('inventory_spare_parts_entery_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory_spare_parts_entery_histories';
+
+        $data['page_title'] = "History | Spare Parts Entries";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function delete_spare_parts_entry_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_spare_parts_entery::where('id' , $id)->first();
+        
+        // $customer_info->status_message = $request->input('status_message');
+       
+
+        $customer_info->row_status = 'deleted';
+
+    
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('inventory_spare_parts_entery_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.spare_parts.edit_spare_parts_entry');
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_spare_parts_entry(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_spare_parts_entery::where('id' , $id)->first();
+       
+
+        $customer_info->row_status = 'active';
+
+        $customer_info->action = 'restored';
+        
+        $customer_info->save();
+
+        $this->history_table('inventory_spare_parts_entery_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.spare_parts.edit_spare_parts_entry');
+
+        $customer_info->save();
+            return response()->json(['status'=>'1']);
+    }
+
+    public function spare_parts_entry_trash(){
+        $data['modules']= DB::table('modules')->get();
+        $data['spare_parts'] = Inventory_spare_parts_entery::all();
+        $data['page_title'] = "Inventorty Spare Parts Entery | Trash";
+        $data['view'] = 'admin.inventory.spare_parts.deleted_data_entry';
+        return view('layout', ["data"=>$data]);
+    }
+
     //tools
     public function tools(){
         $data['modules']= DB::table('modules')->get();
+        $data['tools_in_storage']= Inventory_tools::where('row_status' ,'!=' , 'deleted')->count();
+        $data['tools_entry']= Inventory_tools_entry::where('row_status' ,'!=' , 'deleted')->count();
 
         //$data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
         //dd($data['modules']);
@@ -1225,7 +1456,27 @@ class InventoryController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function add_tools(){
+
+
+    //
+
+    //Tools in storage - tools - inventory
+    public function tools_in_storage(){
+        $data['modules']= DB::table('modules')->get();
+        $data['tools']= Inventory_tools::all();
+        
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+       
+
+        $data['page_title'] = "Tools in Stoarge";
+        $data['view'] = 'admin.inventory.tools.tools_in_storage';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function add_tools_in_storage(){
 
         $data['modules']= DB::table('modules')->get();
 
@@ -1236,42 +1487,294 @@ class InventoryController extends Controller
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
 
-        $data['page_title'] = "Add Tools in Workshop
+        $data['page_title'] = "Add Tools in Storage
         ";
-        $data['view'] = 'admin.inventory.tools.add_tools';
+        $data['view'] = 'admin.inventory.tools.add_tools_in_storage';
         return view('layout', ["data"=>$data]);
 
     }
 
-    public function edit_tools(){
+    public function edit_tools_in_storage(Request $request){
+        $data['spare_part'] = Inventory_tools::find((int)$request->input('id'));
         $data['modules']= DB::table('modules')->get();
+        // dd($data['spare_part']->part_description);
 
-        // $data['civil_defenses'] = Civil_defense_documents::where('type', '=', 'mobile')->get();
-        // //dd($data['modules']);
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Edit Tools in Storage
+        ";
+        $data['view'] = 'admin.inventory.tools.edit_tools_in_storage';
+        return view('layout', ["data"=>$data]);
+
+    }
+
+    public function view_tools_in_storage(Request $request){
+        $data['tools'] = Inventory_tools::find((int)$request->input('id'));
+        $data['modules']= DB::table('modules')->get();
+        // dd($data['spare_part']->part_description);
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "View Tools in Storage
+        ";
+        $data['view'] = 'admin.inventory.tools.view_tools_in_storage';
+        return view('layout', ["data"=>$data]);
+
+    }
+
+    public function update_tools_in_storage(Request $request){
+        $spare_part = Inventory_tools::find($request->input('id'));
+        if($request->input('condition') != ''){
+            $spare_part->condition = $request->input('condition');
+        }
+        if($request->input('brand_name') != ''){
+            $spare_part->brand_name = $request->input('brand_name');
+        }
+
+        if($request->input('for') != ''){
+            $spare_part->for = $request->input('for');
+        }
+
+        if($request->input('part_description') != ''){
+            $spare_part->part_description = $request->input('part_description');
+        }
+
+    
+        if($spare_part->save()){
+            $this->history_table('inventory_tools_histories', 'Edit Spare Part In Storage ' ,   0 , $spare_part->id , 'inventory.tools.edit_tools_in_storage');
+            return \Redirect::route('admin.inventory.tools.tools_in_storage')->with('success', 'Data Updated Sucessfully');
+        }
+
+    }
+
+    public function delete_tools_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_tools::where('id' , $id)->first();
+        
+        // $customer_info->status_message = $request->input('status_message');
+       
+
+        $customer_info->row_status = 'deleted';
+
+    
+        
+        $this->history_table('inventory_tools_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.tools.view_tools_in_storage');
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_tools(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_tools::where('id' , $id)->first();
+       
+
+        $customer_info->row_status = 'active';
+
+        $customer_info->action = 'restored';
+        
+        $customer_info->save();
+
+        $this->history_table('inventory_tools_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.tools.view_tools_in_storage');
+
+        $customer_info->save();
+            return response()->json(['status'=>'1']);
+    }
+
+    public function tools_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['trade_licenses_history']= DB::table('inventory_tools_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory_tools_histories';
+
+        $data['page_title'] = "History | Tools In Storage ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function tools_trash(){
+        $data['modules']= DB::table('modules')->get();
+        $data['tools'] = Inventory_tools::all();
+        $data['page_title'] = "Inventorty Tools In Storage | Trash";
+        $data['view'] = 'admin.inventory.tools.deleted_data_in_storage';
+        return view('layout', ["data"=>$data]);
+    }
+
+    //tools entry - tools - inventory
+    public function tools_entry(){
+        $data['modules']= DB::table('modules')->get();
+        $data['tools_entry'] = Inventory_tools_entry::all();
+        $data['tools'] = Inventory_tools::all();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+        $data['page_title'] = "Tools Entry";
+        $data['view'] = 'admin.inventory.tools.tools_entry';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function add_tools_entry(){
+        $data['modules']= DB::table('modules')->get();
+        $data['tools'] = Inventory_tools::all();
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          //$data['company_names']= DB::table('company_names')->get();
 
-        $data['page_title'] = "Edit Tools";
-        $data['view'] = 'admin.inventory.tools.edit_tools';
+        $data['page_title'] = "Add Tools Entry";
+        $data['view'] = 'admin.inventory.tools.add_tools_entry';
         return view('layout', ["data"=>$data]);
     }
+
+    public function save_tools_entry(Request $request){
+        $tool_in_storage = Inventory_tools::find((int)$request->input('tools_description'));
+        // dd($tool_in_storage);
+        if($request->input('quantity') > $tool_in_storage->quantity ){
+            return \Redirect::route('admin.inventory.tools.tools_entry')->with('error', 'Product you selected is low in inventory');
+        }
+
+
+        $tools_entery =  new Inventory_tools_entry;
+
+        if($request->input('tools_description') != ''){
+            $tools_entery->tools_description = $request->input('tools_description');
+        }
+
+        if($request->input('date') != ''){
+            $tools_entery->date = $request->input('date');
+        }
+
+        
+        if($request->input('assign_person_name') != ''){
+            $tools_entery->assign_person_name = $request->input('assign_person_name');
+        }
+
+        if($request->input('assign_person_designation') != ''){
+            $tools_entery->assign_person_designation = $request->input('assign_person_designation');
+        }
+
+                
+
+        if($request->input('quantity') != ''){
+            $tools_entery->quantity = $request->input('quantity');
+        }
+
+
+
+        if ($request->hasFile('reciving')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->reciving->getClientOriginalName());
+            $file = $request->file('reciving');
+            if($file->storeAs('/main_admin/inventory/tools/reciving/', $name , ['disk' => 'public_uploads'])){
+                $tools_entery->reciving = $name;
+            }
+         
+        }
+        
 
     
+        if($tools_entery->save()){
+            $this->history_table('Inventory_tools_entry_histories', 'Tools Entery  Added' ,   0 , $tools_entery->id , 'inventory.tools.edit_tools_entry');
 
-    public function trash_mobile_muncipality(){
+            $tool_in_storage->quantity = $tool_in_storage->quantity - $tools_entery->quantity;
+            $tool_in_storage->save();
+
+            $this->history_table('inventory_tools_histories', $tools_entery->quantity.' Tools given to ' .$tools_entery->assign_person_designation  ,   0 , $tool_in_storage->id , 'inventory.tools.view_tools_in_storage');
+
+            return \Redirect::route('admin.inventory.tools.tools_entry')->with('success', 'Data Added Sucessfully');
+        }
+
+    }
+
+    public function update_tools_entry(Request $request){
+ 
+        $tools_entery = Inventory_tools_entry::find((int)$request->input('id'));
+
+        // if($request->input('tool_descripiton') != ''){
+        //     $tools_entery->tool_descripiton = $request->input('tool_descripiton');
+        // }
+
+        if($request->input('date') != ''){
+            $tools_entery->date = $request->input('date');
+        }
+
+        
+        if($request->input('assign_person_name') != ''){
+            $tools_entery->assign_person_name = $request->input('assign_person_name');
+        }
+
+        if($request->input('assign_person_designation') != ''){
+            $tools_entery->assign_person_designation = $request->input('assign_person_designation');
+        }
+
+        if ($request->hasFile('reciving')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->reciving->getClientOriginalName());
+            $file = $request->file('reciving');
+            if($file->storeAs('/main_admin/inventory/tools/reciving/', $name , ['disk' => 'public_uploads'])){
+                $tools_entery->reciving = $name;
+            }
+         
+        }
+        
+
+    
+        if($tools_entery->save()){
+            $this->history_table('Inventory_tools_entry_histories', 'Tools Entery  Edited' ,   0 , $tools_entery->id , 'inventory.tools.edit_tools_entry');
+
+        
+            return \Redirect::route('admin.inventory.tools.tools_entry')->with('success', 'Data Updated Sucessfully');
+        }
+
+
+    }
+
+    public function edit_tools_entry(Request $request){
+
+        $data['tools_entery'] =   Inventory_tools_entry::find((int)$request->input('id'));
+
         $data['modules']= DB::table('modules')->get();
-        $data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->get();
-        $data['company_names']= DB::table('company_names')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "MOBILE FUEL TANK RENEWALS (Muncipality) Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.muncipality.deleted_data';
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+        $data['page_title'] = "Edit Tools Entry";
+        $data['view'] = 'admin.inventory.tools.edit_tools_entry';
         return view('layout', ["data"=>$data]);
     }
 
-    public function mobile_muncipality_history(){
+    public function tools_entry_history(){
 
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
@@ -1279,180 +1782,31 @@ class InventoryController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['trade_licenses_history']= DB::table('Inventory_tools_entry_histories')->get();
      
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'Inventory_tools_entry_histories';
 
-        $data['trade_licenses_history']= DB::table('muncipality_documents_histories')->where('type' , '=' ,'mobile' )->get();
-        $data['table_name']= 'muncipality_documents_histories';
-        $data['type']= 'mobile';
-        
-
-        $data['page_title'] = "History | MOBILE FUEL TANK RENEWALS (Muncipality)
-        ";
-        $data['view'] = 'admin.hr_pro.history_type';
+        $data['page_title'] = "History | Tools Entries";
+        $data['view'] = 'admin.hr_pro.history';
         return view('layout', ["data"=>$data]);
     }
 
-    public function save_mobile_muncipality(Request $request){
-        $muncipality = new Muncipality_documents;
-
-        if($request->input('expiary_date') != ''){
-            $muncipality->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $muncipality->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-        $muncipality->type = 'mobile';
-
-        $muncipality->status = 'approved';
- 
-        $muncipality->user_id = 0;
-
-        $muncipality->save();
-
-        // $this->history_table_type('muncipality_documents_histories', 'add' , 0 ,'mobile');
-
-        $this->history_table_type('muncipality_documents_histories', 'Add',   $muncipality->user_id , $muncipality->type , $muncipality->id , 'hr_pro.edit_mobile_muncipality');
-
-        return \Redirect::route('admin.hr_pro.mobile_muncipality')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function update_mobile_muncipality(Request $request){
-        $muncipality = Muncipality_documents::find($request->input('id'));
-
-        if($request->input('expiary_date') != ''){
-            $muncipality->expiary_date = $request->input('expiary_date');
-        }
-        
-        if ($request->hasFile('document')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->document->getClientOriginalName());
-            $file = $request->file('document');
-            if($file->storeAs('/main_admin/hr_pro/mobile_fuel_tank_renewals/', $name , ['disk' => 'public_uploads'])){
-                $muncipality->document = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-
-        
-        if($muncipality->action == null || $muncipality->status == 'approved' || $muncipality->action == 'nill'){
-            $muncipality->action = 'edit';
-        }
-        $muncipality->status = $request->input('status');
-
-
-        $muncipality->status_message = $request->input('status_message');
-        if( $muncipality->user_id != 0){
-            $user_id  = $muncipality->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        $muncipality->type = 'mobile';
-        $muncipality->save();
-
-        if($muncipality->status == 'approved' || $muncipality->user_id == 0 ){
-            // $this->history_table_type('muncipality_documents_histories', $muncipality->action , $user_id , 'mobile');
-
-            $this->history_table_type('muncipality_documents_histories', $muncipality->action ,   $user_id, $muncipality->type , $muncipality->id , 'hr_pro.edit_mobile_muncipality');
-
-        }
-
-
-        return \Redirect::route('admin.hr_pro.mobile_muncipality')->with('success', 'Data Updated Sucessfully');
-    }
-
-    public function delete_mobile_muncipality(Request $request){
-        $civil_defense = Muncipality_documents::find($request->input('id'));
-
-        $civil_defense->status_message = $request->input('status_message');
-        if( $civil_defense->user_id != 0){
-            $user_id  = $civil_defense->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $civil_defense->save();
-        
-        // if($civil_defense->action == null){
-            $civil_defense->action = 'delete';
-        // }
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
-
-        // $this->history_table_type('muncipality_documents_histories', $civil_defense->action , $user_id ,'mobile');
-
-        $this->history_table_type('muncipality_documents_histories', $civil_defense->action ,   $user_id, $civil_defense->type , $civil_defense->id , 'hr_pro.edit_mobile_muncipality');
-
-       if($civil_defense->delete()){
-           return response()->json(['status'=>'1']);
-       }else{
-           return response()->json(['status'=>'0']);
-       }
-    }
-
-    public function delete_mobile_muncipality_status(Request $request){
+    public function delete_tools_entry_status(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Muncipality_documents::where('id' , $id)->first();
+        $customer_info = Inventory_tools_entry::where('id' , $id)->first();
         
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id  = $office_contract->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'deleted';
-
+        // $customer_info->status_message = $request->input('status_message');
        
 
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
+        $customer_info->row_status = 'deleted';
 
-        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
-            $office_contract->action = 'delete';
-        // }
-
-        
+    
+        // $this->history_table('customer_histories', $customer_info->action , $user_id);
+        $this->history_table('Inventory_tools_entry_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.tools.edit_tools_entry');
  
-        if( $office_contract->save()){
-
-            // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
-
-            $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_muncipality');
-
+        if( $customer_info->save()){
+           
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -1460,414 +1814,80 @@ class InventoryController extends Controller
         }
     }
 
-    public function restore_mobile_muncipality(Request $request){
+    public function restore_tools_entry(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Muncipality_documents::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id = $office_contract->user_id  ;   
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'active';
-
+        $customer_info = Inventory_tools_entry::where('id' , $id)->first();
        
 
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('muncipality_documents');
-        }
+        $customer_info->row_status = 'active';
 
+        $customer_info->action = 'restored';
         
-            $office_contract->action = 'restored';
-        
-        $office_contract->save();
-        // $this->history_table_type('muncipality_documents_histories', $office_contract->action , $user_id ,'mobile');
+        $customer_info->save();
 
-        
-        $this->history_table_type('muncipality_documents_histories', $office_contract->action ,   $user_id, $office_contract->type , $office_contract->id , 'hr_pro.edit_mobile_muncipality');
+        $this->history_table('Inventory_tools_entry_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.tools.edit_tools_entry');
 
-        
-        $office_contract->action = 'nill';
-        $office_contract->save();
- 
-      
-           
+        $customer_info->save();
             return response()->json(['status'=>'1']);
-        
     }
 
-    ///////////////////////////////////////////////////
-    ///////////// Spare Parts - Inventory /////////////
-    ///////////////////////////////////////////////////
-
-    //trained indidulas
-    public function mobiles_trained_individual(){
+    public function tools_entry_trash(){
         $data['modules']= DB::table('modules')->get();
-        $data['trained_individual'] = Trained_individual::where('type', '=', 'mobile')->get();
+        $data['tools_entry'] = Inventory_tools_entry::all();
+        $data['page_title'] = "Inventorty Tools Entery | Trash";
+        $data['view'] = 'admin.inventory.tools.deleted_data_entry';
+        return view('layout', ["data"=>$data]);
+    }
+    //
+    public function uncategorized (){
+        $data['modules']= DB::table('modules')->get();
+        $data['uncategorized']= Inventory_uncategorized::all();
         
-       
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        
-        $data['page_title'] = "Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.trained_individual';
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+       
+
+        $data['page_title'] = "Uncategorized Product ";
+        $data['view'] = 'admin.inventory.uncategorized.uncategorized';
         return view('layout', ["data"=>$data]);
     }
 
-    public function trash_mobiles_trained_individual(){
+    public function view_uncategorized(Request $request){
+        $data['uncategorized'] = Inventory_uncategorized::find((int)$request->input('id'));
         $data['modules']= DB::table('modules')->get();
-        $data['trained_individual'] = Trained_individual::where('type', '=', 'mobile')->get();
-        $data['company_names']= DB::table('company_names')->get();
-        // dd( $data['customer_info']);
-        $data['page_title'] = "Trained Individual Mobile Fuel Tank Trash";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.deleted_data';
-        return view('layout', ["data"=>$data]);
-    }
+        // dd($data['spare_part']->part_description);
 
-    public function mobiles_trained_individual_history(){
-
-        $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-     
+         $data['company_names']= DB::table('company_names')->get();
 
-        $data['trade_licenses_history']= DB::table('trained_individuals_histories')->where('type' , '=' ,'mobile' )->get();
-        $data['table_name']= 'trained_individuals_histories';
-        $data['type']= 'mobile';
-        
-
-        $data['page_title'] = "History | MOBILE FUEL TANK Trained Individual
+        $data['page_title'] = "View uncategorized Data
         ";
-        $data['view'] = 'admin.hr_pro.history_type';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function add_mobiles_trained_individual(){
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-       
-
-        $data['page_title'] = "Add Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.add_trained_individual';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function edit_mobiles_trained_individual(Request $request){
-
-        $data['trained_individual'] = Trained_individual::where('id' ,'=' , $request->input('id'))->first();
-
-        
-        $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        //  $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Edit Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.edit_trained_individual';
+        $data['view'] = 'admin.inventory.uncategorized.view_uncategorized';
         return view('layout', ["data"=>$data]);
 
     }
 
-    public function save_mobiles_trained_individual(Request $request){
-        $trained_individual = new Trained_individual;
-
-        if($request->input('card_number') != ''){
-            $trained_individual->card_number = $request->input('card_number');
-        }
-
-        if($request->input('employee_name') != ''){
-            $trained_individual->employee_name = $request->input('employee_name');
-        }
-
-
-        if($request->input('expiary_date') != ''){
-            $trained_individual->expiary_date = $request->input('expiary_date');
-        }
-
-        
-        
-        if ($request->hasFile('front_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->front_pic->getClientOriginalName());
-            $file = $request->file('front_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->front_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('back_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->back_pic->getClientOriginalName());
-            $file = $request->file('back_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->back_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('pass_card')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->pass_card->getClientOriginalName());
-            $file = $request->file('pass_card');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->pass_card = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        $trained_individual->type = 'mobile';
-
-        $trained_individual->status = 'approved';
- 
-        $trained_individual->user_id = 0;
-
-        $trained_individual->save();
-
-        // $this->history_table_type('trained_individuals_histories', 'add' , 0 ,'mobile');
-
-        $this->history_table_type('trained_individuals_histories', 'Add' ,0 , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-
-        return \Redirect::route('admin.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function update_mobiles_trained_individual(Request $request){
-        $trained_individual = Trained_individual::find($request->input('id'));
-
-        if($request->input('card_number') != ''){
-            $trained_individual->card_number = $request->input('card_number');
-        }
-
-        if($request->input('employee_name') != ''){
-            $trained_individual->employee_name = $request->input('employee_name');
-        }
-
-
-        if($request->input('expiary_date') != ''){
-            $trained_individual->expiary_date = $request->input('expiary_date');
-        }
-
-        
-        
-        if ($request->hasFile('front_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->front_pic->getClientOriginalName());
-            $file = $request->file('front_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->front_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('back_pic')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->back_pic->getClientOriginalName());
-            $file = $request->file('back_pic');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->back_pic = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-        if ($request->hasFile('pass_card')) {
-            
-            // $request->validate([
-            //     'trade_license' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            
-            $name = time().'_'.str_replace(" ", "_", $request->pass_card->getClientOriginalName());
-            $file = $request->file('pass_card');
-            if($file->storeAs('/main_admin/hr_pro/trained_individual/', $name , ['disk' => 'public_uploads'])){
-                $trained_individual->pass_card = $name;
-
-            }
-            //$filePath = $request->file('image')->storeAs('admin', $name, 'public');
-
-        }
-
-
-        
-        if($trained_individual->action == null || $trained_individual->status == 'approved' ||  $trained_individual->action == 'nill'){
-            $trained_individual->action = 'edit';
-        }
-
-        $trained_individual->status = $request->input('status');
-
-
-        $trained_individual->status_message = $request->input('status_message');
-        if( $trained_individual->user_id != 0){
-            $user_id  = $trained_individual->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-       
-
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
-
-        $trained_individual->type = 'mobile';
-        $trained_individual->save();
-
-        if($trained_individual->status == 'approved' || $trained_individual->user_id == 0 ){
-            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , 'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-
-        }
-
-        return \Redirect::route('admin.hr_pro.mobiles_trained_individual')->with('success', 'Data Added Sucessfully');
-
-    }
-
-    public function delete_mobiles_trained_individual(Request $request){
-             $trained_individual = Trained_individual::find($request->input('id'));
-        
-           
-    
-            if($trained_individual->pass_card != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->pass_card;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-
-            if($trained_individual->back_pic != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->back_pic;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-
-            if($trained_individual->front_pic != NULL){
-                
-                $path = public_path().'/main_admin/hr_pro/trained_individual/'.$trained_individual->front_pic;
-                // echo $path;
-                if(File::exists($path)){
-                   unlink($path);
-                    //$trade_license->id_card = 'null';
-                }
-    
-            }
-            $trained_individual->status_message = $request->input('status_message');
-            if( $trained_individual->user_id != 0){
-                $user_id  = $trained_individual->user_id;
-                
-            }else{
-                $user_id  = 0;
-            }
-    
-            $trained_individual->save();
-            
-            // if($trained_individual->action == null){
-                $trained_individual->action = 'delete';
-            // }
-    
-            if($request->input('status') == 'approved'){
-                $this->remove_table_name('trained_individuals');
-            }
-    
-            // $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id ,'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $trained_individual->action , $user_id , $trained_individual->type , $trained_individual->id , 'hr_pro.view_mobile_trained_individual');
-    
-            if($trained_individual->delete()){
-                return response()->json(['status'=>'1']);
-            }else{
-                return response()->json(['status'=>'0']);
-    
-            }
-    }
-
-    public function delete_mobiles_trained_individual_status(Request $request){
+    public function delete_uncategorized_status(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Trained_individual::where('id' , $id)->first();
+        $customer_info = Inventory_uncategorized::where('id' , $id)->first();
         
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id  = $office_contract->user_id;
-            
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'deleted';
-
+        // $customer_info->status_message = $request->input('status_message');
        
 
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
+        $customer_info->row_status = 'deleted';
 
-        // if($office_contract->action == null || $office_contract->status == 'approved' ||  $office_contract->action== 'nill')  {
-            $office_contract->action = 'delete';
-        // }
-
+    
         
+        $this->history_table('inventory_uncategorized_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.uncategorized.view_uncategorized');
  
-        if( $office_contract->save()){
-
-            // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
-
-            $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
-
+        if( $customer_info->save()){
+           
             return response()->json(['status'=>'1']);
         }else{
             return response()->json(['status'=>'0']);
@@ -1875,58 +1895,46 @@ class InventoryController extends Controller
         }
     }
 
-    public function restore_mobiles_trained_individual(Request $request){
+    public function uncategorized_tools(Request $request){
         $id =  (int)$request->input('id');
-        $office_contract = Trained_individual::where('id' , $id)->first();
-        
-        $office_contract->status_message = $request->input('status_message');
-        if( $office_contract->user_id != 0){
-            $user_id = $office_contract->user_id  ;          
-        }else{
-            $user_id  = 0;
-        }
-
-        $office_contract->row_status = 'active';
-
+        $customer_info = Inventory_uncategorized::where('id' , $id)->first();
        
 
-        if($request->input('status') == 'approved'){
-            $this->remove_table_name('trained_individuals');
-        }
+        $customer_info->row_status = 'active';
 
+        $customer_info->action = 'restored';
         
-            $office_contract->action = 'restored';
-        
-        $office_contract->save();
-        // $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id ,'mobile');
+        $customer_info->save();
 
-        $this->history_table_type('trained_individuals_histories', $office_contract->action , $user_id , $office_contract->type , $office_contract->id , 'hr_pro.view_mobile_trained_individual');
+        $this->history_table('inventory_tools_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.uncategorized.view_uncategorized');
 
-
-        $office_contract->action = 'nill';
-        $office_contract->save();
- 
-      
-           
+        $customer_info->save();
             return response()->json(['status'=>'1']);
-        
     }
 
-    public function view_mobiles_trained_individual(Request $request){
-        $data['trained_individual'] = Trained_individual::where('id' ,'=' , $request->input('id'))->first();
+    public function uncategorized_history(){
 
-        
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        //  $data['company_names']= DB::table('company_names')->get();
+         $data['trade_licenses_history']= DB::table('inventory_uncategorized_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory_uncategorized_histories';
 
-        $data['page_title'] = "View Trained Individual  Mobile Fuel Tank";
-        $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.view_trained_individual';
+        $data['page_title'] = "History | Uncategorized Data | Inventory ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function uncategorized_trash(){
+        $data['modules']= DB::table('modules')->get();
+        $data['uncategorized'] = Inventory_tools::all();
+        $data['page_title'] = "Inventorty Uncategorized Data | Trash";
+        $data['view'] = 'admin.inventory.uncategorized.deleted_data';
         return view('layout', ["data"=>$data]);
     }
 }

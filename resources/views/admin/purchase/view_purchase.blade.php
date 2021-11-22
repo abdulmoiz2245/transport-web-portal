@@ -89,6 +89,20 @@ use App\Models\Purchase_mertial_data;
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
+                    <h5 class="">Supplier Name :</h5>
+                </div>
+                <div class="col-8"> 
+                        @if(Supplier_info::find($data['purchase']->supplier_id ) != null)    
+                        <p> {{ Supplier_info::find($data['purchase']->supplier_id )->name }}</p> 
+                        @else
+                        <p>Supplier Deleted</p>
+                        @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-4">
                     <h5 class="">Type :</h5>
                 </div>
                 <div class="col-8">

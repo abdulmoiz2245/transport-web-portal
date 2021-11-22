@@ -11,18 +11,13 @@ use App\Models\User;
             <a href="{{ route( 'user.inventory.spare_parts') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
-            <a href="{{ route( 'user.inventory.spare_parts.add_spare_parts_in_storage') }}" class="ml-3">
-                <img src="<?= asset('assets') ?>/images/add-button.png" alt="" title="Add Spare Part in Storage" width="30">
-            </a>
         </div>
 
         <div class=""> 
-            <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" class="ml-3">
+            <a href="{{ route( 'user.inventory.spare_parts.spare_parts_history') }}"target="_blank" class="ml-3">
                 <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
             </a>
-            <a href="{{ route( 'admin.hr_pro.trash_mobile_muncipality') }}" class="ml-3" title="Trash" target="_blank">
-                <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
-            </a>
+            
         </div>
     </div>
     <div class="row mt-5">
@@ -49,51 +44,46 @@ use App\Models\User;
                         <table class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
+                                    <th>Id</th>
+                                    <th>Part Description</th>
                                     <th>Spare Part Condition</th>
                                     <th>For </th>
                                     <th>Brand Name</th>
-                                    <th>Part Description</th>
                                     <th>Quantity</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($data['spareparts'] as $sparepart)
+                                @if($sparepart->row_status != 'deleted')
                                 <tr> 
-                                    <td>23-11-2021</td>
-                                    <td>Site</td>
-                                    <td>Service12224</td>
-                                    <td>Service</td>
-                                    <td>20-11-2021</td>
-                                    <td>Slipery</td>
+                                    <td>{{ $sparepart->id }}</td>
+                                    <td>{{ $sparepart->part_description }}</td>
+                                    <td>{{ $sparepart->condition }}</td>
+                                    <td>{{ $sparepart->for }}</td>
+                                    <td>{{ $sparepart->brand_name }}</td>
+                                    <td>{{ $sparepart->quantity }}</td>
                                     <td>
-                                        <!-- <form action="{{ route( 'user.hr_pro.edit_non_mobile_civil_defence') }}" method="post" class="d-inline">
-                                            @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
-                                            <button type="submit" class="border-0 .bg-white">
-                                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                            </button>
-                                        </form> -->
+                                      
 
                                         <form action="{{ route( 'user.inventory.spare_parts.edit_spare_parts_in_storage') }}" method="post" class="d-inline">
                                             @csrf
-                                            <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
+                                            <input type="text" class="form-control d-none" name="id" value ="{{ $sparepart->id }}" placeholder="Enter id" >
                                             <button type="submit" class="border-0 .bg-white">
                                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" title="Edit" width="34">
                                             </button>
                                         </form>
                                             
                                     
-                                        <a href="#" id="" class="delete-file">
+                                        <a href="#" id="{{  $sparepart->id }}" class="delete-file">
                                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" title="Delete" width="34">
                                         </a>
 
-                                        <!-- <a href="{{ route( 'user.hr_pro.mobile_muncipality_history') }}"target="_blank" >
-                                            <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="34">
-                                        </a> -->
                                     </td>
                                     
                                 </tr>
+                                @endif
+                                @endforeach
                             </tbody>         
                         </table>
                     </div>
@@ -134,7 +124,7 @@ use App\Models\User;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_mobile_muncipality_status') }}",
+                    url:"{{ route( 'user.inventory.spare_parts.delete_spare_parts_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
