@@ -3,6 +3,40 @@ use App\Models\Company_name;
 use App\Models\Erp_department;
 
 ?>
+<style>
+    .edit-badge{    
+        margin-left: 20px;
+        border: #f26522;
+        border-radius: 12px;
+        padding-left: 9px;
+        padding-right: 9px;
+        padding-top: 0px;
+        background: #f26522;
+        color: white;
+        margin-bottom: 8px;
+    }
+    .old-value{
+        background: none;
+        border: 1px solid;
+        color: #f26522;
+        color: #f26522 /*fallback*/;
+        display: block;
+        line-height: 16px;
+        position: relative;
+        text-decoration: none;
+        vertical-align: middle;
+        border-radius: 25px;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 5px 10px;
+        white-space: nowrap;
+        display: inline-block;
+        transition: none;
+        text-align: center;
+        min-height: 28px;
+        min-width: 60px;
+    }
+</style>
 <div class="container">
     <div class="mb-4 ">
         <a href="{{ route( 'admin.customer.customer') }}">
@@ -71,73 +105,181 @@ use App\Models\Erp_department;
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Name</label>
+                            
+                            <div class="d-flex">
+                                <label >Customer Name</label>
+                                @if($data['customer_info']->name != $data['customer_info_history']->name )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->name}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="name" value="{{ $data['customer_info']->name}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Address</label>
+                            
+                            <div class="d-flex">
+                                <label >Customer Address</label>
+                                @if($data['customer_info']->address != $data['customer_info_history']->address )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->address}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="address" value="{{ $data['customer_info']->address}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer City</label>
+                           
+                            <div class="d-flex">
+                                <label >Customer City</label>
+                                @if($data['customer_info']->city != $data['customer_info_history']->city )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->city}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="city" value="{{ $data['customer_info']->city}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Country</label>
+                           
+                            <div class="d-flex">
+                                <label >Customer Country</label>
+                                @if($data['customer_info']->country != $data['customer_info_history']->country )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->country}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="country" value="{{ $data['customer_info']->country}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Telephone</label>
+                            
+                            <div class="d-flex">
+                                <label >Customer Telephone</label>
+                                @if($data['customer_info']->tel_number != $data['customer_info_history']->tel_number )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->tel_number}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="tel_number" value="{{ $data['customer_info']->tel_number}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Fax</label>
+                            <div class="d-flex">
+                                <label >Customer Fax</label>
+                                @if($data['customer_info']->fax != $data['customer_info_history']->fax )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->fax}} </div> 
+                                @endif
+                            </div>
                             <input type="text" name="fax" value="{{ $data['customer_info']->fax}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Mobile</label>
+                            
+                            <div class="d-flex">
+                                <label >Customer Mobile</label>
+                                @if($data['customer_info']->mobile != $data['customer_info_history']->mobile )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->mobile}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="mobile" value="{{ $data['customer_info']->mobile}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Email</label>
+                           
+                            <div class="d-flex">
+                                <label >Customer Email</label>
+                                @if($data['customer_info']->email != $data['customer_info_history']->email )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->email}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="email" value="{{ $data['customer_info']->email}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Contact Person</label>
+                           
+                            <div class="d-flex">
+                                <label >Contact Person</label>
+                                @if($data['customer_info']->contact_person != $data['customer_info_history']->contact_person )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->contact_person}} </div>
+                                @endif
+
+                            </div>
                             <input type="text" name="contact_person" value="{{ $data['customer_info']->contact_person}}" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Designation</label>
+                            <div class="d-flex">
+                                <label >Designation</label>
+                                @if($data['customer_info']->des != $data['customer_info_history']->des )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->des}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="des" value="{{ $data['customer_info']->des}}" class="form-control" >
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Website</label>
+                            <div class="d-flex">
+                                <label >Website</label>
+                                @if($data['customer_info']->web != $data['customer_info_history']->web )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->web}} </div>
+                                @endif
+
+                            </div>
+                            
                             <input type="text" name="web" value="{{ $data['customer_info']->web}}" class="form-control" >
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >User</label>
+                            
+                            <div class="d-flex">
+                                <label >User</label>
+                                @if($data['customer_info']->user != $data['customer_info_history']->user )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->user}} </div>
+                                @endif
+
+                            </div>
                             <input type="text" name="user"value="{{ $data['customer_info']->user}}" class="form-control" >
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >PW</label>
+                            <div class="d-flex">
+                                <label >PW</label>
+                                @if($data['customer_info']->pw != $data['customer_info_history']->pw )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->pw}} </div> 
+                                @endif
+
+                            </div>
                             <input type="text" name="pw" value="{{ $data['customer_info']->pw}}" class="form-control" >
                         </div>
 
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Credit Term</label>
+                           
+                            <div class="d-flex">
+                                <label >Credit Term</label>
+                                @if($data['customer_info']->credit_term != $data['customer_info_history']->credit_term )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->credit_term}} </div> 
+                                @endif
+
+                            </div>
                             <input type="integer" name="credit_term" value="{{ $data['customer_info']->credit_term}}" class="form-control" >
                         </div>
                         
@@ -145,12 +287,27 @@ use App\Models\Erp_department;
                              
                          </div>         
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Portal Site Login</label>
+                           
+                            <div class="d-flex">
+                                <label >Portal Site Login</label>
+                                @if($data['customer_info']->portal_login != $data['customer_info_history']->portal_login )
+                                    <div class="edit-badge"> Edited </div> 
+                            
+                                @endif
+                            </div>
+                           
                             <textarea name="portal_login" cols="30" rows="10" class="form-control">{{ $data['customer_info']->portal_login}}</textarea>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Remarks</label>
+                            <div class="d-flex">
+                                <label >Remarks</label>
+                                @if($data['customer_info']->remarks != $data['customer_info_history']->remarks )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->remarks}} </div> 
+                                @endif
+                            </div>
+                            
                             <textarea name="remarks" cols="30" rows="10" class="form-control">{{ $data['customer_info']->remarks}}</textarea>
                         </div>
 
@@ -160,7 +317,13 @@ use App\Models\Erp_department;
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Trn Number</label>
+                            <div class="d-flex">
+                                <label >Trn Number</label>
+                                @if($data['customer_info']->trn != $data['customer_info_history']->trn )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->trn}} </div> 
+                                @endif
+                            </div>
                             <input type="integer" name="trn" value="{{ $data['customer_info']->trn}}" class="form-control" >
                         </div>
 
@@ -171,7 +334,18 @@ use App\Models\Erp_department;
                                 </div> -->
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>Replace TRN Copy</label>
+                                        <div class="d-flex">
+                                            <label>Replace TRN Copy</label>
+
+                                            @if($data['customer_info']->trn_copy != $data['customer_info_history']->trn_copy )
+                                                <div class="edit-badge"> Edited </div> 
+                                                <div class="old-value"> Old file : 
+                                                    <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->trn_copy}}" >
+                                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                                    </a>
+                                                </div> 
+                                            @endif
+                                        </div>
                                     </div>
                                     
                                     <div class="col-11 form-group">  
@@ -221,7 +395,17 @@ use App\Models\Erp_department;
                             @if( $data['customer_info']->business_license_copy != null)
                             <div class="row">
                                 <div class="col-12">
-                                    <label>Replace BUSINESS LICENCE Copy</label>
+                                    <div class="d-flex">
+                                        <label>Replace BUSINESS LICENCE Copy</label>
+                                        @if($data['customer_info']->business_license_copy != $data['customer_info_history']->business_license_copy )
+                                            <div class="edit-badge"> Edited </div> 
+                                            <div class="old-value"> Old file : 
+                                                <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->business_license_copy}}" >
+                                                    <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                                </a>
+                                            </div> 
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-11 form-group">
                                     <div class="input-group">
@@ -258,7 +442,13 @@ use App\Models\Erp_department;
                         </div>
                         
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Expiry Date ( BUSINESS LICENCE )</label>
+                            <div class="d-flex">
+                                <label >Expiry Date ( BUSINESS LICENCE )</label>
+                                @if($data['customer_info']->business_license_expiary_date != $data['customer_info_history']->business_license_expiary_date )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->business_license_expiary_date}} </div> 
+                                @endif
+                            </div>
                             <input type="date" value="{{ $data['customer_info']->business_license_expiary_date}}" name="business_license_expiary_date" class="form-control" >
                         </div>
 
@@ -267,7 +457,14 @@ use App\Models\Erp_department;
                             <h4 class="w-100"> Customer Type </h4>
                         </div>
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Select Type</label>
+                            <div class="d-flex">
+                                <label >Select Type</label>
+
+                                @if($data['customer_info']->contrct != $data['customer_info_history']->contrct )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_info_history']->contrct}} </div> 
+                                @endif
+                            </div>
                             <select name="contract" class="form-control" required>
                                 <option value="contrct" <?php if($data['customer_info']->contrct == 'contract') echo 'selected="selected"' ?>> Contract Based</option>
                                 <option value="project" <?php if($data['customer_info']->contrct == 'project') echo 'selected="selected"' ?>> Project Based</option>
@@ -277,7 +474,17 @@ use App\Models\Erp_department;
                             @if( $data['customer_info']->business_contract_copy != null)
                             <div class="row">
                                 <div class="col-12">
-                                    <label>Replace  Contract/Project Based Copy</label>
+                                    <div class="d-flex">
+                                        <label>Replace  Contract/Project Based Copy</label>
+                                        @if($data['customer_info']->business_contract_copy != $data['customer_info_history']->business_contract_copy )
+                                            <div class="edit-badge"> Edited </div> 
+                                            <div class="old-value"> Old file : 
+                                                <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->business_contract_copy}}" >
+                                                    <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                                </a>
+                                            </div> 
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-11 form-group">
                                     <div class="input-group">

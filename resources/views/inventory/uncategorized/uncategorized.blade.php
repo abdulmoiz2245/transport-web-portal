@@ -17,7 +17,11 @@ use App\Models\User;
             <a href="{{ route( 'user.inventory.uncategorized.uncategorized_history') }}"target="_blank" class="ml-3">
                 <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
             </a>
-           
+
+            <!-- <a href="{{ route( 'user.inventory.uncategorized.uncategorized_history') }}"target="_blank" class="ml-3">
+                <img src="<?= asset('assets') ?>/images/trash_icon.png" alt="" title="Trash" width="30">
+            </a> -->
+
         </div>
     </div>
     <div class="row mt-5">

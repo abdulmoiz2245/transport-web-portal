@@ -1,6 +1,6 @@
 <div class="container">
     <div class="mb-5">
-            <a href="{{ route( 'user.inventory.tyres.complain_tyres') }}">
+            <a href="{{ route( 'user.inventory.tyres.tyres_entry') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
     </div>

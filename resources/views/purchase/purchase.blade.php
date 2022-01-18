@@ -113,14 +113,14 @@ use App\Models\Office_Land_contract;
                                                 </button>
                                             </form>
 
-                                            <form action="{{ route( 'user.purchase.edit_purchase') }}" method="post" class="d-inline">
+                                            <!-- <form action="{{ route( 'user.purchase.edit_purchase') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
-                                                
+                                                 -->
                                         
                                             <a href="#" id="{{ $trade_license->id }}" class="delete-file">
                                                 

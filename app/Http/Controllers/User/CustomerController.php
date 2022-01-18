@@ -11,6 +11,11 @@ use App\Models\Permissions;
 use App\Models\Company_name;
 use App\Models\Approvals;
 use App\Models\Customer_info;
+use App\Models\Customer_edit_history;
+use App\Models\Customer_department_edit_history;
+use App\Models\Customer_rate_card_edit_history;
+
+
 use App\Models\Customer_department;
 use App\Models\Customer_rate_card;
 use App\Models\Erp_department;
@@ -24,7 +29,6 @@ class CustomerController extends Controller
     public function __construct() {
         $this->middleware('auth:user');
     }
-
     /////////////////////////////////////
     ///////// remove table name /////////
     /////////////////////////////////////
@@ -367,6 +371,7 @@ class CustomerController extends Controller
     public function save_customer_department(Request $request){
 
         $customer_dep = new Customer_department;
+        // dd($request->input('customer_id'));
         $customer_info = Customer_info::where('id' , $request->input('customer_id'))->first();
         if($request->input('customer_id') != ''){
             $customer_dep->customer_id = $request->input('customer_id');
@@ -522,6 +527,36 @@ class CustomerController extends Controller
     public function update_customer_info(Request $request){
         $id =  (int)$request->input('id');
         $customer_info = Customer_info::where('id' ,  $id )->first();
+        $customer_edit_info = new Customer_edit_history;
+        //customer edit history track
+        $customer_edit_info->row_id = (int)$request->input('id');
+        $customer_edit_info->company_id =  $customer_info->company_id;
+        $customer_edit_info->name =  $customer_info->name;
+        $customer_edit_info->address =  $customer_info->address;
+        $customer_edit_info->city =  $customer_info->city;
+        $customer_edit_info->country =  $customer_info->country;
+        $customer_edit_info->tel_number =  $customer_info->tel_number;
+        $customer_edit_info->fax =  $customer_info->fax;
+        $customer_edit_info->mobile =  $customer_info->mobile;
+        $customer_edit_info->email =  $customer_info->email;
+        $customer_edit_info->contact_person =  $customer_info->contact_person;
+        $customer_edit_info->des =  $customer_info->des;
+        $customer_edit_info->web =  $customer_info->web;
+        $customer_edit_info->credit_term =  $customer_info->credit_term;
+        $customer_edit_info->remarks =  $customer_info->remarks;
+        $customer_edit_info->portal_login =  $customer_info->portal_login;
+        $customer_edit_info->user =  $customer_info->user	;
+        $customer_edit_info->pw	 =  $customer_info->pw	;
+        $customer_edit_info->business_license_copy	 =  $customer_info->business_license_copy	;
+        $customer_edit_info->business_license_expiary_date =  $customer_info->business_license_expiary_date	;
+        $customer_edit_info->business_contract_copy	 =  $customer_info->business_contract_copy	;
+        $customer_edit_info->business_contract_expiary_date =  $customer_info->business_contract_expiary_date	;
+
+
+        if(!$customer_edit_info->save()){
+            return response()->json(['status'=>'0']);
+        }
+       
 
         if($request->input('company_id') != ''){
             $customer_info->company_id = $request->input('company_id');
@@ -672,6 +707,23 @@ class CustomerController extends Controller
         $customer_dep = Customer_department::where('id' , $id)->first();
         $customer_info = Customer_info::where('id' ,  $customer_dep->customer_id )->first();
 
+        $customer_edit_dep = new Customer_department_edit_history();
+        //customer edit history track
+        $customer_edit_dep->row_id = $customer_dep->id;
+        $customer_edit_dep->customer_id = $customer_dep->customer_id;
+
+        $customer_edit_dep->department_name = $customer_dep->department_name;
+        $customer_edit_dep->concerned_person_name = $customer_dep->concerned_person_name;
+        $customer_edit_dep->concerned_person_designation = $customer_dep->concerned_person_designation;
+        $customer_edit_dep->tell = $customer_dep->tell;
+        $customer_edit_dep->mobile = $customer_dep->mobile;
+        $customer_edit_dep->fax = $customer_dep->fax;
+        $customer_edit_dep->email = $customer_dep->email;
+
+        if(!$customer_edit_dep->save()){
+            return response()->json(['status'=>'0']);
+        }
+        
         if($request->input('department_name') != ''){
             $customer_dep->department_name = $request->input('department_name');
         }
@@ -726,6 +778,8 @@ class CustomerController extends Controller
         $id =  (int)$request->input('id');
         $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
         $customer_info = Customer_info::where('id' ,  $customer_rate_card->customer_id )->first();
+
+         
        
         if($request->input('from') != ''){
             $customer_rate_card->from = $request->input('from');
@@ -1010,7 +1064,36 @@ class CustomerController extends Controller
         $id =  (int)$request->input('id');
         $customer_rate_card = Customer_rate_card::where('id' , $id)->first();
         // $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
+        $customer_edit_rate_card = new Customer_rate_card_edit_history();
+        //customer edit history track
+        $customer_edit_rate_card->row_id = $customer_rate_card->id;
+        $customer_edit_rate_card->customer_id = $customer_rate_card->customer_id;
+        $customer_edit_rate_card->from = $customer_rate_card->from;
+        $customer_edit_rate_card->to = $customer_rate_card->to ;
+        $customer_edit_rate_card->vechicle_type = $customer_rate_card->vechicle_type;
+        $customer_edit_rate_card->rate = $customer_rate_card->rate;
+        $customer_edit_rate_card->rate_price = $customer_rate_card->rate_price;
+        $customer_edit_rate_card->driver_comission = $customer_rate_card->driver_comission;       $customer_edit_rate_card->other_carges = $customer_rate_card->other_carges;
+        
+        $customer_edit_rate_card->other_des = $customer_rate_card->other_des;
+        $customer_edit_rate_card->detention = $customer_rate_card->detention;
+        $customer_edit_rate_card->time = $customer_rate_card->time;
+        $customer_edit_rate_card->charges	 = $customer_rate_card->charges	;
+        $customer_edit_rate_card->detention_days = $customer_rate_card->detention_days;
+        $customer_edit_rate_card->detention_hours = $customer_rate_card->detention_hours;
+        $customer_edit_rate_card->detention_charges_days = $customer_rate_card->detention_charges_days;
+        $customer_edit_rate_card->detention_charges_hours = $customer_rate_card->detention_charges_hours;
+        $customer_edit_rate_card->trip = $customer_rate_card->trip;
+        $customer_edit_rate_card->ap_km = $customer_rate_card->ap_km;
+        $customer_edit_rate_card->ap_diesel = $customer_rate_card->ap_diesel;
+        $customer_edit_rate_card->ap_fuel = $customer_rate_card->ap_fuel;
+        
 
+
+        
+        if(!$customer_edit_rate_card->save()){
+            return response()->json(['status'=>'0']);
+        }
     
         if($request->input('from') != ''){
             $customer_rate_card->from = $request->input('from');

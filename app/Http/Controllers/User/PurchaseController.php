@@ -411,11 +411,13 @@ class PurchaseController extends Controller
 
     }
     
-    public function delete_trade_license(Request $request){
+    public function delete_purchase(Request $request){
         $id =  (int)$request->input('id');
-        $trade_license = Trade_license::where('id' , $id)->first();
+        $trade_license = Purchase::where('id' , $id)->first();
 
-        $trade_license->status = 'pending';
+        $trade_license->status_admin = 'pending';
+        $trade_license->status_account = 'pending';
+
         $trade_license->status_message = $request->input('status_message');
         $trade_license->user_id = Auth::id();
         $trade_license->action = 'delete';

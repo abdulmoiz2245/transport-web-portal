@@ -77,44 +77,8 @@ use App\Models\Supplier_info;
                     </select>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Type</label>
-                    <input type="text" name="type" value="{{ $data['purchase']->type }}" class="form-control" placeholder="Enter Type" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Made In</label>
-                    <input type="text" name="made_in" value="{{ $data['purchase']->made_in }}" class="form-control" placeholder="Enter Made In" required>
-                </div>
-            </div>
-            <div class="col-12">
-                <hr>
-                <h4 class="w-100">FOR STOCK</h4>
-            </div>
-
-            <div class=" col-md-6 col-12">
-                <div class="form-group">
-                    <label >For Stock</label>
-                    <select name="for_stock" id="for_stock" class="form-control" >
-                            <option value="0" <?php if($data['purchase']->for_stock == 0) { ?> selected="selected" <?php } ?>>No</option>
-                            <option value="1" <?php if($data['purchase']->for_stock == 1) { ?> selected="selected" <?php } ?>>Yes</option>
-                    </select>
-                </div>   
-            </div>
-            <div class="col-md-6 col-12 vehicle_no">
-                <div class="form-group">
-                    <label>Vehicle Number</label>
-                    <input type="text"  value="{{ $data['purchase']->vechicle_num }}" name="vechicle_num" class="form-control" placeholder="Enter Vehicle Number" >
-                </div>
-            </div>
-            <div class="col-md-6 col-12 description">
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text"  value="{{ $data['purchase']->stock_description }}" name="stock_description" class="form-control" placeholder="Enter Description" >
-                </div>
-            </div>
+            
+            
             <div class="col-12">
                 <hr>
             </div>
@@ -152,6 +116,18 @@ use App\Models\Supplier_info;
                 <div class="form-group">
                     <label>Unit Price</label>
                     <input type="text" name="unit_price"  value="{{ $data['purchase']->unit_price }}"  class="form-control" placeholder="Enter Unit Price" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Type</label>
+                    <input type="text" name="type" value="{{ $data['purchase']->type }}" class="form-control" placeholder="Enter Type" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Made In</label>
+                    <input type="text" name="made_in" value="{{ $data['purchase']->made_in }}" class="form-control" placeholder="Enter Made In" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">

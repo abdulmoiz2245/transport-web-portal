@@ -540,9 +540,10 @@ class PurchaseController extends Controller
             if($tyre_check == 1){
                 $data = [ ];
                 for($i=1 ; $i<=$purchase->quantity ;$i++ ){
-                    array_push($data , ['row_status'=>'active']);
+                    array_push($data , ['row_status'=>'active' , 'status'=>'new']);
                 }
                 Inventory_Tyre::insert($data);
+                $this->history_table('inventory__tyre_histories', $purchase->quanntity.' Tyres Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , -1 , 'inventory.tyres.new_used_tyres');
                 
             }else if($spare_part_check == 1){
 
@@ -551,7 +552,7 @@ class PurchaseController extends Controller
                 $Inventory_spare_parts->quantity = $purchase->quantity;
                 $Inventory_spare_parts->save();
 
-                $this->history_table('inventory_spare_parts_histories', 'Spare Part Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_spare_parts->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+                $this->history_table('inventory_spare_parts_histories',$purchase->quanntity. ' Spare Part Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_spare_parts->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
             }else if($tools_check == 1){
                 $Inventory_tools = new Inventory_tools;
                 $Inventory_tools->tools_description = $purchase->product_name;
@@ -564,7 +565,7 @@ class PurchaseController extends Controller
 
                 $Inventory_tools->save();
 
-                $this->history_table('inventory_tools_histories', 'Tools Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_tools->id , 'inventory.tools.view_tools_in_storage');
+                $this->history_table('inventory_tools_histories', $purchase->quanntity.' Tools Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_tools->id , 'inventory.tools.view_tools_in_storage');
             }else if(  $fuel != 1 ) {
                 // dd('fuel_not_callwd');
                 $Inventory_uncategorized = new Inventory_uncategorized;
@@ -605,7 +606,7 @@ class PurchaseController extends Controller
             
         }else{
             $user_id  = 0;
-        }
+        } 
 
         $trade_license->save();
 

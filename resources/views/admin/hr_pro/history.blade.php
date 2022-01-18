@@ -49,6 +49,7 @@ use App\Models\User;
                         <?php $route = 'user.'.$trade_licenses_history->route_name?>
                     @endif
 
+                    <?php if($trade_licenses_history->data_id != '-1'){  ?> 
                     <form action="{{ route($route) }}" method="post" class="d-inline">
                         @csrf
                         <input type="text" class="form-control d-none" name="id" value ="{{$trade_licenses_history->data_id}}" placeholder="Enter id" >
@@ -58,6 +59,16 @@ use App\Models\User;
                             <img src="<?= asset('assets') ?>/images/export.png" alt="" >
                         </button>
                     </form>
+                    <?php  } else if($trade_licenses_history->data_id == '-1'){ ?>
+                        <a href=" {{ route($route) }}">
+                            <button type="submit" class="border-0 bg-white" style="
+                                width: 30px;
+                            ">
+                                <img src="<?= asset('assets') ?>/images/export.png" alt="" >
+                            </button>
+                        </a>
+                        
+                    <?php } ?>
                 </td>
                 <td>{{ $trade_licenses_history->date }}</td>
 

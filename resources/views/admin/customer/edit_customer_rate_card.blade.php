@@ -33,21 +33,16 @@
         <div class="row">
             
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >From Location </label>
                     <input type="text" value="{{ $data['customer_rate_card']->from}}" name="from" class="form-control" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >To Location </label>
                     <input type="text" value="{{ $data['customer_rate_card']->to}}" name="to" class="form-control" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >VEHICLE TYPE </label>
                     <select name="vechicle_type" class="form-control" >
                         <option value="flatbed" <?php if($data['customer_rate_card']->vechicle_type == 'flatbed') echo 'selected' ?>>FLATBED</option>
@@ -58,25 +53,19 @@
                         <option value="10_ton" <?php if($data['customer_rate_card']->vechicle_type == '10_ton') echo 'selected' ?>>10-TON</option>
                         <option value="3_ton_grill" <?php if($data['customer_rate_card']->vechicle_type == '3_ton_grill') echo 'selected' ?>>3TON GRILL</option>
                     </select>
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Other Charges </label>
                     <input type="text" value="{{ $data['customer_rate_card']->other_carges}}" name="other_carges" class="form-control" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Other Charges Description </label>
                     <input type="text"  value="{{ $data['customer_rate_card']->other_des}}"name="other_des" class="form-control" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Rate Type</label>
                     <select name="rate" class="form-control" >
                         <option value="per_ton" <?php if($data['customer_rate_card']->rate == 'per_ton') echo 'selected' ?>>Per Ton</option>
@@ -84,81 +73,74 @@
                         <option value="per_day_12hr" <?php if($data['customer_rate_card']->rate == 'per_day_12hr') echo 'selected' ?>>Per Day 12hr</option>
                         <option value="per_day_24hr" <?php if($data['customer_rate_card']->rate == 'per_day_24hr') echo 'selected' ?>>Per Day 24hr</option>
                     </select>
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Rate </label>
                     <input type="text" name="rate_price" class="form-control" value="{{$data['customer_rate_card']->rate_price}}" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Driver Comission </label>
                     <input type="number" value="{{ $data['customer_rate_card']->driver_comission}}" name="driver_comission" class="form-control" >
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label for="with_fuel">With Fuel / Without Fuel</label>
                     <select name="trip" class="form-control" id="with_fuel">
                         <option value="with_fuel">With Fuel</option>
                         <option value="without_fuel">Without Fuel </option>
                     </select>
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Ap Fuel as per trip</label>
                     <input type="number" id="Ap_Fuel_as_per_trip" value="{{ $data['customer_rate_card']->ap_fuel}}" name="ap_fuel" class="form-control">
-                </div>
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
                     <label >Ap Km as per trip</label>
                     <input type="number" id="Ap_Km_as_per_trip"  value="{{ $data['customer_rate_card']->ap_km}}" name="ap_km" class="form-control">
-                </div>
             </div>
 
-            <div class="col-md-6 col-12 mb-3">
+            <!-- <div class="col-md-6 col-12 mb-3">
                 <div class=" col-md-6 col-12 mb-3">
                     <label >Ap Diesel as per trip</label>
                     <input type="number" id="Ap_Diesel_as_per_trip"  value="{{ $data['customer_rate_card']->ap_diesel}}" name="ap_diesel" class="form-control">
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-12">
                 <hr>
                 <h4 class="w-100">DETENTION CHARGE </h4>
             </div>
 
-            <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
+            <!-- <div class="col-md-6 col-12 mb-3">
                     <label >Select Per Day / Per Hour</label>
                     <select name="detention" class="form-control" >
                         <option value="per_day"  <?php if($data['customer_rate_card']->detention == 'per_day') echo 'selected' ?>>Per Day</option>
                         <option value="per_hour"  <?php if($data['customer_rate_card']->detention == 'per_hour') echo 'selected' ?>>Per Hour</option>
                     </select>
-                </div>
+            </div> -->
+
+            <div class="col-md-6 col-12 mb-3">
+                    <label >Enter Days</label>
+                    <input  type="number"  value="{{ $data['customer_rate_card']->detention_days}}" name="detention_days" class="form-control" >
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Days / Hours</label>
-                    <input  type="number"  value="{{ $data['customer_rate_card']->time}}" name="time" class="form-control" required>
-                </div>
+                    <label >Enter Hours</label>
+                    <input  type="number"  value="{{ $data['customer_rate_card']->detention_hours	}}" name="detention_hours" class="form-control" >
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Per Days Charges / Per Hours Charges</label>
-                    <input type="number"  value="{{ $data['customer_rate_card']->charges}}" name="charges" class="form-control" required>
-                </div>
+                    <label >Per Days Charges</label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->detention_charges_days}}" name="detention_charges_days" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                    <label>  Per Hours Charges </label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->detention_charges_hours}}" name="detention_charges_hours" class="form-control" required>
             </div>
 
             

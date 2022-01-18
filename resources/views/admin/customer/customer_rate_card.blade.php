@@ -78,14 +78,12 @@ use App\Models\User;
                                     <th>Other Charges </th>
                                     <th>Other Charges Description</th>
                                     <th>Driver Comission </th>
-                                    <th>DETENTION </th>
-                                    <th>Days / Hours </th>
-                                    <th>Per Days Charges / Per Hours Charges</th>
+                                    <th>DETENTION Days </th>
+                                    <th>DETENTION Hours</th>
+                                    <th>Per Days Charges </th>
+                                    <td>Per Hours Charges</th>
                                     <th>Trip Type </th>
                                     <th>Ap Km as per trip: </th>
-                                    <th>Ap Diesel as per trip</th>
-
-
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -95,7 +93,7 @@ use App\Models\User;
                                 @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
-                                    <td>{{ $customer_rate_card->id }}</td>
+                                <td>{{ $customer_rate_card->id }}</td>
                                     <td>
                                             @if($customer_rate_card->customer_id == 0)
                                             Customer Deleted
@@ -119,12 +117,13 @@ use App\Models\User;
                                     <td>{{ $customer_rate_card->other_des }}</td>
                                     <td>{{ $customer_rate_card->other_carges }}</td>
                                     <td>{{ $customer_rate_card->driver_comission }}</td>
-                                    <td>{{ $customer_rate_card->detention }}</td>
-                                    <td>{{ $customer_rate_card->time }}</td>
-                                    <td>{{ $customer_rate_card->charges }}</td>
+                                    <td>{{ $customer_rate_card->detention_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_hours }}</td>
+
+                                    <td>{{ $customer_rate_card->detention_charges_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_charges_hours }}</td>
                                     <td>{{ $customer_rate_card->trip }}</td>
                                     <td>{{ $customer_rate_card->ap_km }}</td>
-                                    <td>{{ $customer_rate_card->ap_diesel }}</td>
 
                                     
                                     <td>
@@ -167,7 +166,7 @@ use App\Models\User;
                         <table class="display table  nowrap  " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                <th>Id</th>
                                     <th>Customer Name</th>
                                     <th>From</th>
                                     <th>To</th>
@@ -177,12 +176,12 @@ use App\Models\User;
                                     <th>Other Charges </th>
                                     <th>Other Charges Description</th>
                                     <th>Driver Comission </th>
-                                    <th>DETENTION </th>
-                                    <th>Days / Hours </th>
-                                    <th>Per Days Charges / Per Hours Charges</th>
+                                    <th>DETENTION Days </th>
+                                    <th>DETENTION Hours</th>
+                                    <th>Per Days Charges </th>
+                                    <td>Per Hours Charges</th>
                                     <th>Trip Type </th>
                                     <th>Ap Km as per trip: </th>
-                                    <th>Ap Diesel as per trip</th>
                                     <th>User Action</th>
 
 
@@ -195,7 +194,7 @@ use App\Models\User;
                                 @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
-                                    <td>{{ $customer_rate_card->id }}</td>
+                                <td>{{ $customer_rate_card->id }}</td>
                                     <td>
                                             @if($customer_rate_card->customer_id == 0)
                                             Customer Deleted
@@ -219,12 +218,13 @@ use App\Models\User;
                                     <td>{{ $customer_rate_card->other_des }}</td>
                                     <td>{{ $customer_rate_card->other_carges }}</td>
                                     <td>{{ $customer_rate_card->driver_comission }}</td>
-                                    <td>{{ $customer_rate_card->detention }}</td>
-                                    <td>{{ $customer_rate_card->time }}</td>
-                                    <td>{{ $customer_rate_card->charges }}</td>
+                                    <td>{{ $customer_rate_card->detention_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_hours }}</td>
+
+                                    <td>{{ $customer_rate_card->detention_charges_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_charges_hours }}</td>
                                     <td>{{ $customer_rate_card->trip }}</td>
                                     <td>{{ $customer_rate_card->ap_km }}</td>
-                                    <td>{{ $customer_rate_card->ap_diesel }}</td>
                                     <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_rate_card->action }}</span></td>
                                     <!-- <td>
                                             @if($customer_rate_card->user_id == 0)
@@ -288,12 +288,12 @@ use App\Models\User;
                                     <th>Other Charges </th>
                                     <th>Other Charges Description</th>
                                     <th>Driver Comission </th>
-                                    <th>DETENTION </th>
-                                    <th>Days / Hours </th>
-                                    <th>Per Days Charges / Per Hours Charges</th>
+                                    <th>DETENTION Days </th>
+                                    <th>DETENTION Hours</th>
+                                    <th>Per Days Charges </th>
+                                    <td>Per Hours Charges</th>
                                     <th>Trip Type </th>
                                     <th>Ap Km as per trip: </th>
-                                    <th>Ap Diesel as per trip</th>
                                     <th>User Action</th>
 
 
@@ -307,7 +307,7 @@ use App\Models\User;
                                 @if(Customer_info::find($customer_rate_card->customer_id) != null)
                                 @if(Customer_info::find($customer_rate_card->customer_id)->row_status != 'deleted')
                                 <tr>
-                                    <td>{{ $customer_rate_card->id }}</td>
+                                <td>{{ $customer_rate_card->id }}</td>
                                     <td>
                                             @if($customer_rate_card->customer_id == 0)
                                             Customer Deleted
@@ -331,12 +331,13 @@ use App\Models\User;
                                     <td>{{ $customer_rate_card->other_des }}</td>
                                     <td>{{ $customer_rate_card->other_carges }}</td>
                                     <td>{{ $customer_rate_card->driver_comission }}</td>
-                                    <td>{{ $customer_rate_card->detention }}</td>
-                                    <td>{{ $customer_rate_card->time }}</td>
-                                    <td>{{ $customer_rate_card->charges }}</td>
+                                    <td>{{ $customer_rate_card->detention_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_hours }}</td>
+
+                                    <td>{{ $customer_rate_card->detention_charges_days }}</td>
+                                    <td>{{ $customer_rate_card->detention_charges_hours }}</td>
                                     <td>{{ $customer_rate_card->trip }}</td>
                                     <td>{{ $customer_rate_card->ap_km }}</td>
-                                    <td>{{ $customer_rate_card->ap_diesel }}</td>
                                     <td><span class="badge badge-pill badge-success p-2 m-1">{{$customer_rate_card->action }}</span></td>
                                     <!-- <td>
                                             @if($customer_rate_card->user_id == 0)

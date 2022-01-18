@@ -38,7 +38,8 @@ class CreateCustomerInfoTable extends Migration
             $table->string('business_license_copy' )->nullable();
             $table->date('business_license_expiary_date' )->nullable();
             $table->string('business_contract_copy' )->nullable();
-            $table->date('business_contract_expiary_date' )->nullable();
+            $table->string('business_contract_copy' )->nullable();
+            $table->date('contract' )->nullable();
 
             $table->string('status');
             $table->string('action')->nullable();

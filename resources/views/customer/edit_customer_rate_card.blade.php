@@ -128,27 +128,23 @@
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Select Per Day / Per Hour</label>
-                    <select name="detention" class="form-control" >
-                        <option value="per_day"  <?php if($data['customer_rate_card']->detention == 'per_day') echo 'selected' ?>>Per Day</option>
-                        <option value="per_hour"  <?php if($data['customer_rate_card']->detention == 'per_hour') echo 'selected' ?>>Per Hour</option>
-                    </select>
-                </div>
+                    <label >Enter Days</label>
+                    <input  type="number"  value="{{ $data['customer_rate_card']->detention_days}}" name="detention_days" class="form-control" >
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Days / Hours</label>
-                    <input  type="number"  value="{{ $data['customer_rate_card']->time}}" name="time" class="form-control">
-                </div>
+                    <label >Enter Hours</label>
+                    <input  type="number"  value="{{ $data['customer_rate_card']->detention_hours	}}" name="detention_hours" class="form-control" >
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                <div class=" col-md-6 col-12 mb-3">
-                    <label >Per Days Charges / Per Hours Charges</label>
-                    <input type="number"  value="{{ $data['customer_rate_card']->charges}}" name="charges" class="form-control">
-                </div>
+                    <label >Per Days Charges</label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->detention_charges_days}}" name="detention_charges_days" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 col-12 mb-3">
+                    <label>  Per Hours Charges </label>
+                    <input type="number"  value="{{ $data['customer_rate_card']->detention_charges_hours}}" name="detention_charges_hours" class="form-control" required>
             </div>
 
             

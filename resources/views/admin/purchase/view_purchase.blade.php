@@ -1,5 +1,7 @@
 <?php 
 use App\Models\Purchase_mertial_data;
+use App\Models\Supplier_info;
+
 
 ?>
 <div class="container   ">

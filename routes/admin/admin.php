@@ -60,11 +60,13 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/admin/update-users' , [AdminController::class, 'update_user'])->name('admin.update.user');
 
     require __DIR__.'/hr_pro.php';
+    require __DIR__.'/employee.php';
     require __DIR__.'/customer.php';
     require __DIR__.'/supplier.php';
     require __DIR__.'/sub_contractor.php';
     require __DIR__.'/purchase.php';
     require __DIR__.'/inventory.php';
+
 
 
 

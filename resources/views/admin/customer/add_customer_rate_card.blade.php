@@ -104,11 +104,11 @@ use App\Models\User;
                     <input  id="ap_km" type="number" name="ap_km" class="form-control">
             </div>
 
-            <div class="col-md-6 col-12 mb-3">
+            <!-- <div class="col-md-6 col-12 mb-3">
                 
                     <label >Ap Diesel as per trip</label>
                     <input  id="ap_diesel" type="number" name="ap_diesel" class="form-control" >
-            </div>
+            </div> -->
 
             <div class="col-12">
                 <hr>
@@ -116,28 +116,25 @@ use App\Models\User;
             </div>
 
             <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Select Per Day / Per Hour</label>
-                    <select name="detention" class="form-control" >
-                        <option value="per_day">Per Day</option>
-                        <option value="per_hour">Per Hour</option>
-                    </select>
-                </div>
+                    <label >Enter Days</label>
+                    <input  type="number"   name="detention_days" class="form-control" >
+            </div>
 
             <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Days / Hours</label>
-                    <input type="number" name="time" class="form-control" required>
-                </div>
+                    <label >Enter Hours</label>
+                    <input  type="number"   name="detention_hours" class="form-control" >
+            </div>
 
             <div class="col-md-6 col-12 mb-3">
-                
-                    <label >Per Days Charges / Per Hours Charges</label>
-                    <input type="number" name="charges" class="form-control" required>
-                </div>
+                    <label >Per Days Charges</label>
+                    <input type="number"   name="detention_charges_days" class="form-control" required>
+            </div>
 
-            
-            
+            <div class="col-md-6 col-12 mb-3">
+                    <label>  Per Hours Charges </label>
+                    <input type="number"   name="detention_charges_hours" class="form-control" required>
+            </div>
+               
         </div>
         <input name="submit" type="submit" value="Submit" class="btn ">
     </form>

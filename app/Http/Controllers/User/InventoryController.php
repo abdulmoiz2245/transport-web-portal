@@ -1700,7 +1700,7 @@ class InventoryController extends Controller
 
     
         if($tools_entery->save()){
-            $this->history_table('Inventory_tools_entry_histories', 'Tools Entery  Added' ,   Auth::id() , $tools_entery->id , 'inventory.tools.edit_tools_entry');
+            $this->history_table('inventory_tools_entry_histories', 'Tools Entery  Added' ,   Auth::id() , $tools_entery->id , 'inventory.tools.edit_tools_entry');
 
             $tool_in_storage->quantity = $tool_in_storage->quantity - $tools_entery->quantity;
             $tool_in_storage->save();
@@ -1747,7 +1747,7 @@ class InventoryController extends Controller
 
     
         if($tools_entery->save()){
-            $this->history_table('Inventory_tools_entry_histories', 'Tools Entery  Edited' ,   Auth::id() , $tools_entery->id , 'inventory.tools.edit_tools_entry');
+            $this->history_table('inventory_tools_entry_histories', 'Tools Entery  Edited' ,   Auth::id() , $tools_entery->id , 'inventory.tools.edit_tools_entry');
 
         
             return \Redirect::route('user.inventory.tools.tools_entry')->with('success', 'Data Updated Sucessfully');
@@ -1780,10 +1780,10 @@ class InventoryController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['trade_licenses_history']= DB::table('Inventory_tools_entry_histories')->get();
+         $data['trade_licenses_history']= DB::table('inventory_tools_entry_histories')->get();
      
         // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
-        $data['table_name']= 'Inventory_tools_entry_histories';
+        $data['table_name']= 'inventory_tools_entry_histories';
 
         $data['page_title'] = "History | Tools Entries";
         $data['view'] = 'hr_pro.history';
@@ -1801,7 +1801,7 @@ class InventoryController extends Controller
 
     
         // $this->history_table('customer_histories', $customer_info->action , $user_id);
-        $this->history_table('Inventory_tools_entry_histories', 'Delete' ,   Auth::id() , $customer_info->id , 'inventory.tools.edit_tools_entry');
+        $this->history_table('inventory_tools_entry_histories', 'Delete' ,   Auth::id() , $customer_info->id , 'inventory.tools.edit_tools_entry');
  
         if( $customer_info->save()){
            
@@ -1823,7 +1823,7 @@ class InventoryController extends Controller
         
         $customer_info->save();
 
-        $this->history_table('Inventory_tools_entry_histories', 'Restored' ,   Auth::id() , $customer_info->id , 'inventory.tools.edit_tools_entry');
+        $this->history_table('inventory_tools_entry_histories', 'Restored' ,   Auth::id() , $customer_info->id , 'inventory.tools.edit_tools_entry');
 
         $customer_info->save();
             return response()->json(['status'=>'1']);

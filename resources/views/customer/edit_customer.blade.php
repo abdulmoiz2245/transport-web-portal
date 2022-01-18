@@ -60,7 +60,8 @@ use App\Models\Erp_department;
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Customer Name</label>
+                            <label >Customer Name</label> 
+                            
                             <input type="text" name="name" value="{{ $data['customer_info']->name}}" class="form-control" required>
                         </div>
 
@@ -480,7 +481,7 @@ use App\Models\Erp_department;
 
     $(document).ready(function(){
         var id = {{ $data['customer_info']->id }};
-       
+       console.log(id);
 
         $('#customer_info').on('submit', function (e) {
 

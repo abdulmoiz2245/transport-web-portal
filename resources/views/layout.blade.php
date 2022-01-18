@@ -336,11 +336,11 @@
                     <h1><?= $data['page_title'] ?></h1>
                 </div>
                 
-                <div class="card">
-                    <div class="card-body">
+                <!-- <div class="card"> -->
+                    <!-- <div class="card-body"> -->
                         <?=  view($data['view'])->with('data', $data); ?>
-                    </div>
-                </div>
+                    <!-- </div> -->
+                <!-- </div> -->
                 <div class="flex-grow-1"></div>
                 <div class="app-footer">
                     <div class="row">
