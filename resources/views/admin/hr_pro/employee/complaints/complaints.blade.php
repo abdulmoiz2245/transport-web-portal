@@ -180,21 +180,7 @@
   <div class="sk-circle11 sk-child"></div>
   <div class="sk-circle12 sk-child"></div>
 </div>
-<?php 
-  if (isset($_GET["status"])) {
-    if($_GET["status"] == 'approved'){
 
-    }else if($_GET["status"] == 'pending'){
-
-    }
-    else if($_GET["status"] == 'pending_admin'){
-      
-    }
-    else if($_GET["status"] == 'rejected'){
-      
-    }
-  }
-?>
 <div class="tab" >
   <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_complaints') }}" style=""> Add New Complaint </a>  </button>
   <form action="" method="get">
