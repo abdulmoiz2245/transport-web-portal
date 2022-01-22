@@ -4,6 +4,10 @@ use App\Models\Erp_department;
 
 ?>
 <style>
+    .card {
+       height: auto;
+       min-height:auto;
+    }
     .form-group.required .control-label:after {
         content:"*";
         color:red;
@@ -40,6 +44,81 @@ use App\Models\Erp_department;
         min-height: 28px;
         min-width: 60px;
     }
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 0.25rem;
+    }
+    .profile-view {
+        position: relative;
+    }
+    .profile-view .profile-img-wrap {
+    height: 120px;
+    width: 120px;
+}
+.profile-img-wrap {
+    height: 120px;
+    position: absolute;
+    width: 120px;
+    background: #fff;
+    overflow: hidden;
+}
+.profile-img {
+    cursor: pointer;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+    width: 80px;
+}
+.profile-img-wrap img {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+}
+.profile-view .profile-basic {
+    margin-left: 140px;
+    padding-right: 50px;
+}
+.profile-info-left {
+    border-right: 2px dashed #ccc;
+}
+.staff-msg {
+    margin-top: 30px;
+}
+.btn-custom {
+    background: #ff9b44;
+    background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
+    background: -webkit-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
+    background: -ms-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
+    background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
+    color: #fff;
+}
+.personal-info {
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+.personal-info li {
+    margin-bottom: 10px;
+}
+.personal-info li .title {
+    color: #4f4f4f;
+    float: left;
+    font-weight: 500;
+    margin-right: 30px;
+    width: 25%;
+}
+.personal-info li .text {
+    color: #8e8e8e;
+    display: block;
+    overflow: hidden;
+}
 </style>
 <div class="container">
     <div class="mb-4">
@@ -47,6 +126,60 @@ use App\Models\Erp_department;
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
+</div>
+<div class="card mb-0">
+<div class="card-body">
+<div class="row">
+<div class="col-md-12">
+<div class="profile-view">
+<div class="profile-img-wrap">
+<div class="profile-img">
+<a href="#"><img alt="" src="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->photo}}"></a>
+</div>
+</div>
+<div class="profile-basic">
+<div class="row">
+<div class="col-md-5">
+<div class="profile-info-left">
+<h3 class="user-name m-t-0 mb-0">John Doe</h3>
+<h6 class="text-muted">UI/UX Design Team</h6>
+<small class="text-muted">Web Designer</small>
+<div class="staff-id">Employee ID : FT-0001</div>
+<div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+</div>
+</div>
+<div class="col-md-7">
+<ul class="personal-info">
+<li>
+<div class="title">Phone:</div>
+<div class="text"><a href="">9876543210</a></div>
+</li>
+<li>
+<div class="title">Email:</div>
+<div class="text"><a href="">johndoe@example.com</a></div>
+</li>
+<li>
+<div class="title">Birthday:</div>
+<div class="text">24th July</div>
+</li>
+<li>
+<div class="title">Address:</div>
+<div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+</li>
+<li>
+<div class="title">Gender:</div>
+<div class="text">Male</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="smartwizard">
     <ul class="nav">
