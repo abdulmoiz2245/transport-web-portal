@@ -182,10 +182,11 @@
 </div>
 
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_employee_increments') }}" style=""> Add New </a>  </button>
-  <button class="tablinks active" onclick="openCity(event, 'terminated')"> Approved Increments </button>
-  <button class="tablinks" onclick="openCity(event, 'pending')">Pending Request</button>
-  <button class="tablinks" onclick="openCity(event, 'rejected')">Rejected Request</button>
+  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_employee_leave') }}" style=""> Add New Leave</a>  </button>
+  <button class="tablinks active" onclick="openCity(event, 'approved')"> On Leave </button>
+  <button class="tablinks " onclick="openCity(event, 'pending')"> Pending Request</button>
+  <button class="tablinks " onclick="openCity(event, 'rejected')"> Rejecetd Request</button>
+
 </div>
 
 <div class="card">
@@ -200,18 +201,18 @@
         <div class="mt-3 mb-3"> 
                 
 
-                <a href="{{ route( 'admin.hr_pro.employee_increments_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.employee_leave_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
-                <a href="{{ route( 'admin.hr_pro.trash_employee_increments') }}" target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.trash_employee_leave') }}" target="_blank" class="ml-3">
                     <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
                 </a>
             </div>
 
             
         </div>
-        <div id="terminated" class="tabcontent" style="display: block;">
+        <div id="approved" class="tabcontent" style="display: block;">
           <div class="table-responsive">
             <table id="trade_license"  class="display table  nowrap " style="width:100%">
                 <thead>
@@ -219,42 +220,42 @@
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
-                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
                         <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'approved'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['leave'] as $leave)
+                    @if($leave->status == 'approved'  && $leave->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $leave->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $leave->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
-                    <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->from }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->to }}</span></td>
+
+                    <td>{{ $leave->reason }}</td>
+                  
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_leave') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$leave->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $leave->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -277,50 +278,49 @@
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
-                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
                         <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'pending'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['leave'] as $leave)
+                    @if($leave->status == 'pending'  && $leave->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $leave->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $leave->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
-                    <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->from }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->to }}</span></td>
+
+                    <td>{{ $leave->reason }}</td>
+                  
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_leave') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$leave->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_employee_leave') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$leave->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                       
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $leave->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -343,49 +343,49 @@
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
-                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
                         <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'rejected'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['leave'] as $leave)
+                    @if($leave->status == 'rejected'  && $leave->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $leave->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $leave->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
-                    <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->from }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->to }}</span></td>
+
+                    <td>{{ $leave->reason }}</td>
+                  
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $leave->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_leave') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$leave->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_employee_leave') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$leave->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $leave->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -429,7 +429,7 @@ $('.delete-file').click(function () {
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_employee_increments_status') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_employee_leave_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

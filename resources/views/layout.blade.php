@@ -157,8 +157,8 @@
                         <div class="triangle"></div>
                     </li>
             
-                    <li class="nav-item " data-item="module_1">
-                        <a class="nav-item-hold" href="">
+                    <li class="nav-item " data-item="">
+                        <a class="nav-item-hold" href="{{ route('admin.hr_pro') }}">
                             <i class="nav-icon i-Male-21"></i>
                             <span class="nav-text">HR-PRO</span>
                         </a>
@@ -304,22 +304,7 @@
                     </li>
                 </ul>
 
-                @foreach ($data['modules'] as $module)
-                    @if($module->parent_id != 0) 
-                   
-
-                        <ul class="childNav" data-parent="module_{{$module->parent_id}}">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.'.$module->nickname ) }}">
-                                    <i class="nav-icon {{$module->icon}}"></i>
-                                    <span class="item-name">{{$module->name}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                        
-                    
-                    @endif
-                @endforeach
+                
                 
             </div>
            

@@ -35,6 +35,21 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
+                    <a href="{{ route('admin.hr_pro.employee_attendence_report') }}">
+                        <div class="card card-icon mb-4">
+                            <div class="card-body text-center">
+                                <!-- <img src="<?= asset('assets') ?>/images/leave_clender.png" class="mb-1" alt="" width="35"> -->
+                                <i class="nav-icon  i-Calendar-4" style="
+                                    font-size: 39px;
+                                "></i>
+                                <p class="text-muted mt-2 mb-2"><strong>Attendence Report</strong></p>
+                                <p class="lead text-22 m-0"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.hr_pro.employee_leave') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
@@ -47,20 +62,18 @@
                     </a>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.hr_pro.employee_absent') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <img src="<?= asset('assets') ?>/images/leave_clender.png" class="mb-1" alt="" width="35">
-                                <!-- <i class="nav-icon  i-Calendar-4" style="
-                                    font-size: 39px;
-                                "></i> -->
+                                
                                 <p class="text-muted mt-2 mb-2"><strong> Absent Employee</strong></p>
                                 <p class="lead text-22 m-0"></p>
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.hr_pro.employee_terminate') }}">

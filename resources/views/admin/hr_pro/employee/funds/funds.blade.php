@@ -182,17 +182,17 @@
 </div>
 
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_employee_increments') }}" style=""> Add New </a>  </button>
-  <button class="tablinks active" onclick="openCity(event, 'terminated')"> Approved Increments </button>
-  <button class="tablinks" onclick="openCity(event, 'pending')">Pending Request</button>
-  <button class="tablinks" onclick="openCity(event, 'rejected')">Rejected Request</button>
+  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_employee_funds') }}" style=""> Add New Fund </a>  </button>
+  <button class="tablinks active" onclick="openCity(event, 'terminated')"> Approved Funds </button>
+  <button class="tablinks" onclick="openCity(event, 'pending')">Pending Funds</button>
+  <button class="tablinks" onclick="openCity(event, 'rejected')">Rejected Funds</button>
 </div>
 
 <div class="card">
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.hr_pro.existing_employee_detail') }}">
+                <a href="{{ route( 'admin.hr_pro.employee') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 
@@ -200,11 +200,11 @@
         <div class="mt-3 mb-3"> 
                 
 
-                <a href="{{ route( 'admin.hr_pro.employee_increments_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.employee_funds_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
-                <a href="{{ route( 'admin.hr_pro.trash_employee_increments') }}" target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.trash_employee_funds') }}" target="_blank" class="ml-3">
                     <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
                 </a>
             </div>
@@ -222,39 +222,38 @@
                         <th>Type</th>
                         <th>Reason</th>
                         <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'approved'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['employee_funds'] as $employee_funds)
+                    @if($employee_funds->status == 'approved'  && $employee_funds->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $employee_funds->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $employee_funds->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td>{{ $employee_funds->reason }}</td>
+                    <td>{{ $employee_funds->amount }}</td>
+                   
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -280,47 +279,45 @@
                         <th>Type</th>
                         <th>Reason</th>
                         <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'pending'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['employee_funds'] as $employee_funds)
+                    @if($employee_funds->status == 'pending'  && $employee_funds->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $employee_funds->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $employee_funds->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td>{{ $employee_funds->reason }}</td>
+                    <td>{{ $employee_funds->amount }}</td>
+                   
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_employee_funds') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                       
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -333,6 +330,7 @@
                     @endforeach
                 </tbody>         
             </table>
+            
           </div>
         </div>
         <div id="rejected" class="tabcontent" >
@@ -346,46 +344,45 @@
                         <th>Type</th>
                         <th>Reason</th>
                         <th>Amount</th>
-                        <th>Month</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'rejected'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['employee_funds'] as $employee_funds)
+                    @if($employee_funds->status == 'rejected'  && $employee_funds->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $employee_funds->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $employee_funds->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
+                    <td>{{ $employee_funds->reason }}</td>
+                    <td>{{ $employee_funds->amount }}</td>
+                   
               
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_employee_funds') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                     <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -429,7 +426,7 @@ $('.delete-file').click(function () {
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_employee_increments_status') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_employee_funds_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
@@ -475,6 +472,6 @@ $('.delete-file').click(function () {
         evt.path[0].className += " active";
         console.log('cale234d');
 
-      }, 1000);
+      }, 1500);
   }
 </script>

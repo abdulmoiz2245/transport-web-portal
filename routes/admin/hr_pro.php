@@ -5,10 +5,10 @@ use App\Http\Controllers\Admin\EmployeeController;
 
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/admin/hr-pro', [Hr_ProController::class, 'hr_pro']) 
+->name('admin.hr_pro');
 Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
-    Route::get('/', [Hr_ProController::class, 'hr_pro']) 
-    ->name('as');
+   
 
 
     /////////////////////////////////
@@ -70,9 +70,55 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::get('/employee/attendence', [EmployeeController::class, 'employee_attendence']) 
     ->name('employee_attendence');
 
+    Route::get('/employee/attendence/mark/{date?}', [EmployeeController::class, 'employee_attendence_mark']) 
+    ->name('employee_attendence_mark');
+
+    Route::get('/employee/attendence/report/{date?}', [EmployeeController::class, 'employee_attendence_report']) 
+    ->name('employee_attendence_report');
+
+    Route::post('/employee/employee-attendance/save', [EmployeeController::class, 'save_employee_attendance']) 
+    ->name('save_employee_attendance');
+
     Route::get('/employee/attendence/leave', [EmployeeController::class, 'employee_leave']) 
     ->name('employee_leave');
 
+
+    
+
+    Route::get('/employee/attendence/leave/history', [EmployeeController::class, 'employee_leave_history']) 
+    ->name('employee_leave_history');
+
+    Route::post('/employee/attendence/leave/history/clear', [EmployeeController::class, 'employee_leave_history_clear']) 
+    ->name('employee_leave_history_clear');
+
+    Route::get('/employee/attendence/leave/add', [EmployeeController::class, 'add_employee_leave']) 
+    ->name('add_employee_leave');
+
+    Route::post('/employee/attendence/leave/save', [EmployeeController::class, 'save_employee_leave']) 
+    ->name('save_employee_leave');
+
+    Route::post('/employee/attendence/leave/edit', [EmployeeController::class, 'edit_employee_leave']) 
+    ->name('edit_employee_leave');
+
+    Route::post('/employee/attendence/leave/update', [EmployeeController::class, 'update_employee_leave']) 
+    ->name('update_employee_leave');
+
+    Route::post('/employee/attendence/leave/delete', [EmployeeController::class, 'delete_employee_leave']) 
+    ->name('delete_employee_leave');
+
+    Route::get('/employee/attendence/leave/trash', [EmployeeController::class, 'trash_employee_leave']) 
+    ->name('trash_employee_leave');
+
+    Route::post('/employee/attendence/leave/restor-delete', [EmployeeController::class, 'restore_employee_leave']) 
+    ->name('restore_employee_leave');
+
+    Route::post('/employee/attendence/leave/delete-status', [EmployeeController::class, 'delete_employee_leave_status']) 
+    ->name('delete_employee_leave_status');
+
+    Route::post('/employee/attendence/leave/view', [EmployeeController::class, 'view_employee_leave']) 
+    ->name('view_employee_leave');
+
+    //attendance absent request
     Route::get('/employee/attendence/absent', [EmployeeController::class, 'employee_absent']) 
     ->name('employee_absent');
 
@@ -232,38 +278,81 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::get('/employee/deduction', [EmployeeController::class, 'employee_deduction']) 
     ->name('employee_deduction');
 
-    Route::get('/employee/increments/history', [EmployeeController::class, 'employee_deduction_history']) 
+    Route::get('/employee/deduction/history', [EmployeeController::class, 'employee_deduction_history']) 
     ->name('employee_deduction_history');
 
-    Route::post('/employee/increments/history/clear', [EmployeeController::class, 'employee_deduction_history_clear']) 
+    Route::post('/employee/deduction/history/clear', [EmployeeController::class, 'employee_deduction_history_clear']) 
     ->name('employee_deduction_history_clear');
 
-    Route::get('/employee/increments/add', [EmployeeController::class, 'add_employee_deduction']) 
+    Route::get('/employee/deduction/add', [EmployeeController::class, 'add_employee_deduction']) 
     ->name('add_employee_deduction');
 
-    Route::post('/employee/increments/save', [EmployeeController::class, 'save_employee_deduction']) 
+    Route::post('/employee/deduction/save', [EmployeeController::class, 'save_employee_deduction']) 
     ->name('save_employee_deduction');
 
-    Route::post('/employee/increments/edit', [EmployeeController::class, 'edit_employee_deduction']) 
+    Route::post('/employee/deduction/edit', [EmployeeController::class, 'edit_employee_deduction']) 
     ->name('edit_employee_deduction');
 
-    Route::post('/employee/increments/update', [EmployeeController::class, 'update_employee_deduction']) 
+    Route::post('/employee/deduction/update', [EmployeeController::class, 'update_employee_deduction']) 
     ->name('update_employee_deduction');
 
-    Route::post('/employee/increments/delete', [EmployeeController::class, 'delete_employee_deduction']) 
+    Route::post('/employee/deduction/delete', [EmployeeController::class, 'delete_employee_deduction']) 
     ->name('delete_employee_deduction');
 
-    Route::get('/employee/increments/trash', [EmployeeController::class, 'trash_employee_deduction']) 
+    Route::get('/employee/deduction/trash', [EmployeeController::class, 'trash_employee_deduction']) 
     ->name('trash_employee_deduction');
 
-    Route::post('/employee/increments/restor-delete', [EmployeeController::class, 'restore_employee_deduction']) 
+    Route::post('/employee/deduction/restor-delete', [EmployeeController::class, 'restore_employee_deduction']) 
     ->name('restore_employee_deduction');
 
-    Route::post('/employee/increments/delete-status', [EmployeeController::class, 'delete_employee_deduction_status']) 
+    Route::post('/employee/deduction/delete-status', [EmployeeController::class, 'delete_employee_deduction_status']) 
     ->name('delete_employee_deduction_status');
 
-    Route::post('/employee/increments/view', [EmployeeController::class, 'view_employee_deduction']) 
+    Route::post('/employee/deduction/view', [EmployeeController::class, 'view_employee_deduction']) 
     ->name('view_employee_deduction');
+
+    //employee funds
+    //increments
+
+    Route::get('/employee/funds', [EmployeeController::class, 'employee_funds']) 
+    ->name('employee_funds');
+
+    Route::get('/employee/funds/history', [EmployeeController::class, 'employee_funds_history']) 
+    ->name('employee_funds_history');
+
+    Route::post('/employee/funds/history/clear', [EmployeeController::class, 'employee_funds_history_clear']) 
+    ->name('employee_funds_history_clear');
+
+    Route::get('/employee/funds/add', [EmployeeController::class, 'add_employee_funds']) 
+    ->name('add_employee_funds');
+
+    Route::post('/employee/funds/save', [EmployeeController::class, 'save_employee_funds']) 
+    ->name('save_employee_funds');
+
+    Route::post('/employee/funds/edit', [EmployeeController::class, 'edit_employee_funds']) 
+    ->name('edit_employee_funds');
+
+    Route::post('/employee/funds/update', [EmployeeController::class, 'update_employee_funds']) 
+    ->name('update_employee_funds');
+
+    Route::post('/employee/funds/delete', [EmployeeController::class, 'delete_employee_funds']) 
+    ->name('delete_employee_funds');
+
+    Route::get('/employee/funds/trash', [EmployeeController::class, 'trash_employee_funds']) 
+    ->name('trash_employee_funds');
+
+    Route::post('/employee/funds/restor-delete', [EmployeeController::class, 'restore_employee_funds']) 
+    ->name('restore_employee_funds');
+
+    Route::post('/employee/funds/delete-status', [EmployeeController::class, 'delete_employee_funds_status']) 
+    ->name('delete_employee_funds_status');
+
+    Route::post('/employee/funds/view', [EmployeeController::class, 'view_employee_funds']) 
+    ->name('view_employee_funds');
+
+
+   
+
 
     //handover submission
 
@@ -279,8 +368,45 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
     Route::get('/employee-salaries', [Hr_ProController::class, 'hr_pro']) 
     ->name('employee_salaries');
 
-    Route::get('/complaints', [Hr_ProController::class, 'hr_pro']) 
+    //complaints
+    Route::get('/complaints', [EmployeeController::class, 'complaints']) 
     ->name('complaints');
+
+    
+    
+
+    Route::get('/complaints/history', [EmployeeController::class, 'complaints_history']) 
+    ->name('complaints_history');
+
+    Route::post('/complaints/history/clear', [EmployeeController::class, 'complaints_history_clear']) 
+    ->name('complaints_history_clear');
+
+    Route::get('/complaints/add', [EmployeeController::class, 'add_complaints']) 
+    ->name('add_complaints');
+
+    Route::post('/complaints/save', [EmployeeController::class, 'save_complaints']) 
+    ->name('save_complaints');
+
+    Route::post('/complaints/edit', [EmployeeController::class, 'edit_complaints']) 
+    ->name('edit_complaints');
+
+    Route::post('/complaints/update', [EmployeeController::class, 'update_complaints']) 
+    ->name('update_complaints');
+
+    Route::post('/complaints/delete', [EmployeeController::class, 'delete_complaints']) 
+    ->name('delete_complaints');
+
+    Route::get('/complaints/trash', [EmployeeController::class, 'trash_complaints']) 
+    ->name('trash_complaints');
+
+    Route::post('/complaints/restor-delete', [EmployeeController::class, 'restore_complaints']) 
+    ->name('restore_complaints');
+
+    Route::post('/complaints/delete-status', [EmployeeController::class, 'delete_complaints_status']) 
+    ->name('delete_complaints_status');
+
+    Route::post('/complaints/view', [EmployeeController::class, 'view_complaints']) 
+    ->name('view_complaints');
 
     Route::post('/table-history/clear', [Hr_ProController::class, 'table_history_clear']) 
     ->name('table_history_clear');

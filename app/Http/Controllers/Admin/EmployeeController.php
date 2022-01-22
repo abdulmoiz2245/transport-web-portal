@@ -31,15 +31,41 @@ use App\Models\Employee_increments;
 use App\Models\Employee_increments_history;
 use App\Models\Employee_increments_edit_history;
 
+use App\Models\Funds_request;
+use App\Models\Funds_request_history;
+use App\Models\Funds_request_edit_history;
+
 use App\Models\Employee_deduction;
 use App\Models\Employee_deduction_history;
 use App\Models\Employee_deduction_edit_history;
+
+use App\Models\Leave;
+use App\Models\Leave_edit_history;
+use App\Models\Leave_history;
+
+use App\Models\Attendence;
+use App\Models\Attendence_edit_history;
+use App\Models\Attendence_history;
+
+use App\Models\Absent;
+use App\Models\Absent_edit_history;
+use App\Models\Absent_history;
+use Carbon\Carbon;
+
+use App\Models\Complaints;
+use App\Models\Complaints_edit_history;
+use App\Models\Complaints_history;
+
+
+
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\isEmpty;
 
 class EmployeeController extends Controller
 {
@@ -324,7 +350,7 @@ class EmployeeController extends Controller
         }
 
         $employee->status = 'pending';
-        $employee->admin_status = 'approved';
+        $employee->admin_status = '1';
 
         $employee->user_id = 0;
 
@@ -366,6 +392,27 @@ class EmployeeController extends Controller
 
         $data['page_title'] = "Edit Employee";
         $data['view'] = 'admin.hr_pro.employee.edit_employee';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function view_employee (Request $request){
+        $data['employee'] = Employee::find($request->input('id'));
+        
+
+        $data['employee_history'] = Employee_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        if($data['employee_history'] != null &&  $data['employee']->name != $data['employee_history']->name ){
+            // dd($data['employee_history']->name );
+
+        }
+        if( $data['employee_history'] == null){
+            $data['employee_history'] = null;
+        }
+        
+        
+        $data['modules']= DB::table('modules')->get();
+
+        $data['page_title'] = "View Employee";
+        $data['view'] = 'admin.hr_pro.employee.view_employee';
         return view('layout', ["data"=>$data]);
     }
 
@@ -1835,7 +1882,7 @@ class EmployeeController extends Controller
         //dd($data['modules']);
         
 
-        $data['page_title'] = "Edit Employee Renewal Request";
+        $data['page_title'] = "Edit Employee Increment Request";
         $data['view'] = 'admin.hr_pro.employee.increments.edit_increments';
         return view('layout', ["data"=>$data]);
     }
@@ -1961,10 +2008,7 @@ class EmployeeController extends Controller
 
         $employee = Employee::find( $employee_termination->emp_id);
 
-        $employee->employee_current_action = '';
-        $employee->employee_current_status = '';
-        $employee->employee_current_status_reason = '';
-        $employee->save();
+       
         // $this->history_table('employee_histories','Employee R Removed' , 0 ,  $employee->id, "hr_pro.view_employee");
 
         $employee_termination->status_message = $request->input('status_message');
@@ -2228,10 +2272,7 @@ class EmployeeController extends Controller
 
         $employee = Employee::find( $employee_termination->emp_id);
 
-        $employee->employee_current_action = '';
-        $employee->employee_current_status = '';
-        $employee->employee_current_status_reason = '';
-        $employee->save();
+        
         // $this->history_table('employee_histories','Employee R Removed' , 0 ,  $employee->id, "hr_pro.view_employee");
 
         $employee_termination->status_message = $request->input('status_message');
@@ -2294,5 +2335,917 @@ class EmployeeController extends Controller
             return response()->json(['status'=>'1']);
         
     }
+
+    public function employee_attendence(){
+        // $data['employee_deduction'] = employee_deduction::find($request->input('id'));
+
+        $data['modules']= DB::table('modules')->get();
+        $data['employee'] = Employee::all();
+        $data['attendance'] = Attendence::all();
+        $mark_dates = [];
+        foreach( $data['attendance'] as $attendance){
+            if(count($mark_dates) == 0){
+                array_push($mark_dates , $attendance->date);
+            }
+            foreach($mark_dates as $dates){
+              
+
+                if($dates != $attendance->date){
+                        array_push($mark_dates , $attendance->date);
+                }
+            }
+            
+        }
+
+        // $data['mark_dates'] = array_unique($mark_dates);
+        $data['mark_dates'] = $mark_dates;
+
+        // dd($data['mark_dates']);
+        $data['page_title'] = "Mark Employee Attendance";
+        $data['view'] = 'admin.hr_pro.employee.attendance.attendance';
+        return view('layout', ["data"=>$data]);
+    }
+
+     ///////////////////////////////////////
+    ///////// Employee Leave /////////
+    ///////////////////////////////////////
+
+    public function employee_leave(){
+        // $data['employee_deduction'] = employee_deduction::find($request->input('id'));
+
+        $data['modules']= DB::table('modules')->get();
+        $data['employees'] = Employee::all();
+        $data['leave'] = Leave::all();
+
+
+        //dd($data['modules']);
+        
+        $data['page_title'] = "Leave Request";
+        $data['view'] = 'admin.hr_pro.employee.attendance.leave.leave';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_employee_leave(){
+        $data['modules']= DB::table('modules')->get();
+        $data['leave'] = leave::all();
+        $data['employees'] = Employee::all();
+        // $data['leave'] = Leave::all();
+
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Employee Leave Trash";
+        $data['view'] = 'admin.hr_pro.employee.attendance.leave.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function employee_leave_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['employees'] = Employee::all();
+
+
+        $data['trade_licenses_history']= Leave_history::all();
+        $data['table_name']= 'leave_histories';
+
+        $data['page_title'] = "History | Employee Leave Request ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function add_employee_leave(){
+        $data['modules']= DB::table('modules')->get();
+
+        
+        $data['employee'] = Employee::all();
+        
+        $data['page_title'] = "Add  Employee Leave";
+        $data['view'] = 'admin.hr_pro.employee.attendance.leave.add_leave';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function view_employee_leave(Request $request){
+        $data['leave'] = leave::find($request->input('id'));
+        $data['employees'] = Employee::all();
+
+        $data['modules']= DB::table('modules')->get();
+
+        
+        $user = Auth::user();
+        
+        $data['page_title'] = "  Employee Leave Request";
+        $data['view'] = 'admin.hr_pro.employee.attendance.leave.view_leave';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function edit_employee_leave (Request $request){
+        $data['leave'] = Leave::find($request->input('id'));
+
+        $data['modules']= DB::table('modules')->get();
+        $data['employee'] = Employee::all();
+
+        //dd($data['modules']);
+        
+
+        $data['page_title'] = "Edit Employee Leave";
+        $data['view'] = 'admin.hr_pro.employee.attendance.leave.edit_leave';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function save_employee_leave(Request $request){
+
+        $leave = new leave;
+        
+
+        if($request->input('emp_id') != ''){
+            $leave->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('from') != ''){
+            $leave->from = $request->input('from');
+
+        }
+        if($request->input('to') != ''){
+            $leave->to = $request->input('to');
+
+        }
+        
+        if($request->input('reason') != ''){
+            $leave->reason = $request->input('reason');
+
+        }
+        
+
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $leave->upload	 = $name;
+
+            }
+           
+
+        }
+        $leave->status = 'approved';
+ 
+        $leave->user_id = 0;
+       
+
+
+        if($leave->save()){
+            $this->history_table('leave_histories', 'Add' , 0 , $leave->id , 'hr_pro.view_employee_leave');
+            return \Redirect::route('admin.hr_pro.employee_leave')->with('success', 'Data Added Sucessfully');
+        }
+        
+
+
+    }
+
+    public function update_employee_leave(Request $request){
+        $id =  (int)$request->input('id');
+        $leave = leave::where('id' , $id)->first();
+
+        if($request->input('emp_id') != ''){
+            $leave->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('amount') != ''){
+            $leave->amount = $request->input('amount');
+
+        }
+        if($request->input('reason') != ''){
+            $leave->reason = $request->input('reason');
+
+        }
+        if($request->input('applicable_month') != ''){
+            $leave->applicable_month = $request->input('applicable_month');
+        }
+
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $leave->upload	 = $name;
+
+            }
+           
+
+        }
+
+
+
+
+        $leave->status_message = $request->input('status_message');
+        if( $leave->user_id != 0){
+            $user_id  = $leave->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+        // dd($trade_license->action );
+
+        if($leave->action == null || $leave->status == 'approved' ||$leave->action == 'nill'){
+            $leave->action = 'edit';
+        }
+
+        $leave->status = $request->input('status');
+
+
+        $leave->save();
+
+        
+        if($leave->status == 'approved' || $user_id == 0 ){
+            
+            //  $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+             $this->history_table('leave_histories', $leave->action , $user_id , $leave->id , 'hr_pro.view_employee_leave');
+        }
+
+
+        return \Redirect::route('admin.hr_pro.employee_leave')->with('success', 'Data Updated Sucessfully');
+
+    }
+
+   
+    public function delete_employee_leave_status(Request $request){
+        $id =  (int)$request->input('id');
+        $leave = leave::where('id' , $id)->first();
+
+        
+
+        $leave->status_message = $request->input('status_message');
+        if( $leave->user_id != 0){
+            $user_id  = $leave->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $leave->row_status = 'deleted';
+
+       
+
+        if($request->input('status') == 'approved'){
+            $this->remove_table_name('trade_licenses');
+        }
+
+        // if($trade_license->action == null || $trade_license->status == 'approved'){
+            $leave->action = 'delete';
+        // }
+
+        
+        $leave->status = 'approved';
+ 
+        if( $leave->save()){
+
+            // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            $this->history_table('leave_histories', $leave->action , $user_id , $leave->id , 'hr_pro.view_employee_leave');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_employee_leave(Request $request){
+        $id =  (int)$request->input('id');
+        $leave = leave::where('id' , $id)->first();
+        
+        $leave->status_message = $request->input('status_message');
+        if( $leave->user_id != 0){
+                        
+        }else{
+            $user_id  = 0;
+        }
+
+        $leave->row_status = 'active';
+        $leave->status = 'pending';
+        $leave->action = 'restored';
+        
+        $leave->save();
+        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('leave_histories', $leave->action , $user_id , $leave->id , 'hr_pro.view_employee_leave');
+ 
+        $leave->action = 'deleted';
+        $leave->save();
+           
+            return response()->json(['status'=>'1']);
+        
+    }
+
+    public function employee_attendence_mark($date=null){
+            // echo $date;
+            $timestamp =  strtotime($date);
+            // echo $date;
+            $date = date('Y-m-d', $timestamp);
+            // echo $date;
+            
+            $leave = leave::all();
+        $data['modules']= DB::table('modules')->get();
+
+            $data['employee'] = Employee::all();
+            $data['date'] = $date;
+
+        
+            $data['page_title'] = "Attendance";
+            $data['view'] = 'admin.hr_pro.employee.attendance.mark_attendance';
+            return view('layout', ["data"=>$data]);
+    }
+
+    public function save_employee_attendance(Request $request){
+        $str = $request->input('date');
+
+        if (($timestamp = strtotime($str)) !== false)
+        {
+            $php_date = getdate($timestamp);
+            // or if you want to output a date in year/month/day format:
+            $date = date("Y/m/d", $timestamp); // see the date manual page for format options      
+        }
+        foreach($request->input('attendance') as $key => $value){
+            $attendance = new Attendence;
+            $attendance->emp_id = $key;
+            $attendance->attendence_status = $value;
+            $attendance->date = $date;
+            $attendance->month =  date("m", $timestamp);
+            $attendance->year =  date("Y", $timestamp);
+            $attendance->marked_by = 'Admin';
+            $attendance->row_status = 'active';
+            $attendance->user_id = 0;
+
+            if($value == 'a'){
+                $attendance->status = 'pending'; 
+                $absent  = new Absent;
+                $absent->emp_id =  $key;
+                $absent->date =  date("Y/m/d", $timestamp);
+                $absent->status =  'pending';
+                $absent->row_status = 'active';
+                $absent->save();
+                $this->history_table('absent_histories', 'add' , 0 , $absent->id , 'hr_pro.employee_attendence');
+
+            }else{
+                $attendance->status = 'approved'; 
+
+            }
+            $attendance->save();
+            $this->history_table('attendence_histories', 'add' , 0 , $attendance->id , 'hr_pro.employee_attendence');
+
+        }
+
+        return \Redirect::route('admin.hr_pro.employee_attendence')->with('success', 'Data Added Sucessfully');
+
+    }
+
+    public function employee_attendence_report(){
+        if(!empty($_GET['month'])){
+            $dateValue = strtotime($_GET['month']);                     
+
+            $yr = date("Y", $dateValue) ." "; 
+            $mon = date("m", $dateValue)." "; 
+            $date = date("Y-m-d", $dateValue);
+
+            $start_date = Carbon::parse($date)->toDateTimeString();
+            $end_date = Carbon::parse($date)->lastOfMonth()->toDateTimeString();
+            $data['attendance'] = Attendence::whereBetween('date',[$start_date,$end_date])->get(); 
+            
+        }else{
+            $date = date("Y-m-d");
+            $start_date = Carbon::parse($date)->startOfMonth()->toDateTimeString();
+            $end_date = Carbon::parse($date)->lastOfMonth()->toDateTimeString();
+            // dd($end_date );
+            $data['attendance'] = Attendence::whereBetween('date',[$start_date,$end_date])->get(); 
+            // dd( $data['attendace']);
+        }
+
+
+         leave::all();
+        $data['modules']= DB::table('modules')->get();
+
+        $data['employee'] = Employee::all();
+       
+        $data['page_title'] = "Attendance Report";
+        $data['view'] = 'admin.hr_pro.employee.attendance.attendance_report';
+        return view('layout', ["data"=>$data]);
+    }
+
+    ///////////////////////////////////////
+    ///////// Employee Funds Request /////////
+    ///////////////////////////////////////
+
+    public function employee_funds(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        
+        $data['employee_funds'] = Funds_request::all();
+        $data['employees'] = Employee::all();
+        $data['page_title'] = "Funds Request";
+        $data['view'] = 'admin.hr_pro.employee.funds.funds';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_employee_funds(){
+        $data['modules']= DB::table('modules')->get();
+        $data['employee_funds'] = Funds_request::all();
+        $data['employees'] = Employee::all();
+
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Funds Request Trash";
+        $data['view'] = 'admin.hr_pro.employee.funds.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function employee_funds_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['employees'] = Employee::all();
+
+        $data['trade_licenses_history']= Funds_request_history::all();
+        $data['table_name']= 'funds_request_histories';
+
+        $data['page_title'] = "History | Funds Request ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function add_employee_funds(){
+        $data['modules']= DB::table('modules')->get();
+
+        
+        $data['employee'] = Employee::all();
+        $data['page_title'] = "New Funds Request";
+        $data['view'] = 'admin.hr_pro.employee.funds.add_funds';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function view_employee_funds(Request $request){
+        $data['employee_funds'] = Funds_request::find($request->input('id'));
+        $data['employees'] = Employee::all();
+
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        
+        $data['page_title'] = "  Fund Request";
+        $data['view'] = 'admin.hr_pro.employee.funds.view_funds';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function edit_employee_funds (Request $request){
+        $data['employee_funds'] = Funds_request::find($request->input('id'));
+
+        $data['modules']= DB::table('modules')->get();
+        $data['employee'] = Employee::all();
+
+        //dd($data['modules']);
+        
+
+        $data['page_title'] = "Edit Fund Request";
+        $data['view'] = 'admin.hr_pro.employee.funds.edit_funds';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function save_employee_funds(Request $request){
+
+        $funds_request = new Funds_request;
+        
+
+        if($request->input('emp_id') != ''){
+            $funds_request->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('amount') != ''){
+            $funds_request->amount = $request->input('amount');
+
+        }
+        if($request->input('reason') != ''){
+            $funds_request->reason = $request->input('reason');
+
+        }
+        
+
+        if ($request->hasFile('proof')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->proof->getClientOriginalName());
+            $file = $request->file('proof');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $funds_request->proof	 = $name;
+
+            }
+           
+
+        }
+        $funds_request->status = 'approved';
+ 
+        $funds_request->user_id = 0;
+       
+
+
+        if($funds_request->save()){
+            $this->history_table('funds_request_histories', 'Add' , 0 , $funds_request->id , 'hr_pro.view_employee_funds');
+            return \Redirect::route('admin.hr_pro.employee_funds')->with('success', 'Data Added Sucessfully');
+        }
+        
+
+
+    }
+
+    public function update_employee_funds(Request $request){
+        $id =  (int)$request->input('id');
+        $funds_request = Funds_request::where('id' , $id)->first();
+
+        if($request->input('emp_id') != ''){
+            $funds_request->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('amount') != ''){
+            $funds_request->amount = $request->input('amount');
+
+        }
+        if($request->input('reason') != ''){
+            $funds_request->reason = $request->input('reason');
+
+        }
+       
+
+        if ($request->hasFile('proof')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->proof->getClientOriginalName());
+            $file = $request->file('proof');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $funds_request->proof	 = $name;
+
+            }
+           
+
+        }
+
+
+
+
+        $funds_request->status_message = $request->input('status_message');
+        if( $funds_request->user_id != 0){
+            $user_id  = $funds_request->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+        // dd($trade_license->action );
+
+        if($funds_request->action == null || $funds_request->status == 'approved' ||$funds_request->action == 'nill'){
+            $funds_request->action = 'edit';
+        }
+
+        $funds_request->status = $request->input('status');
+
+
+        $funds_request->save();
+
+        
+        if($funds_request->status == 'approved' || $user_id == 0 ){
+            
+            //  $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+             $this->history_table('funds_request_histories', $funds_request->action , $user_id , $funds_request->id , 'hr_pro.view_employee_funds');
+        }
+
+
+        return \Redirect::route('admin.hr_pro.employee_funds')->with('success', 'Data Updated Sucessfully');
+
+    }
+
+   
+    public function delete_employee_funds_status(Request $request){
+        $id =  (int)$request->input('id');
+        $employee_termination = Funds_request::where('id' , $id)->first();
+
+        
+        // $this->history_table('employee_histories','Employee R Removed' , 0 ,  $employee->id, "hr_pro.view_employee");
+
+        $employee_termination->status_message = $request->input('status_message');
+        if( $employee_termination->user_id != 0){
+            $user_id  = $employee_termination->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $employee_termination->row_status = 'deleted';
+
+       
+
+      
+        // if($trade_license->action == null || $trade_license->status == 'approved'){
+            $employee_termination->action = 'delete';
+        // }
+
+        
+        $employee_termination->status = 'pending';
+ 
+        if( $employee_termination->save()){
+
+            // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            $this->history_table('funds_request_histories', $employee_termination->action , $user_id , $employee_termination->id , 'hr_pro.view_employee_funds');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_employee_funds(Request $request){
+        $id =  (int)$request->input('id');
+        $employee_termination = Funds_request::where('id' , $id)->first();
+        
+        $employee_termination->status_message = $request->input('status_message');
+        if( $employee_termination->user_id != 0){
+                        
+        }else{
+            $user_id  = 0;
+        }
+
+        $employee_termination->row_status = 'active';
+        $employee_termination->status = 'pending';
+        $employee_termination->action = 'restored';
+        
+        $employee_termination->save();
+        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('funds_request_histories', $employee_termination->action , $user_id , $employee_termination->id , 'hr_pro.view_employee_funds');
+ 
+        $employee_termination->action = 'deleted';
+        $employee_termination->save();
+           
+            return response()->json(['status'=>'1']);
+        
+    }
+
+    //////////////////////////////////////
+    ///////// Employee Complaints /////////
+    ///////////////////////////////////////
+    public function complaints(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        
+        $data['complaints'] = Complaints::all();
+        $data['employees'] = Employee::all();
+        $data['page_title'] = "Complaints";
+        $data['view'] = 'admin.hr_pro.employee.complaints.complaints';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function trash_complaints(){
+        $data['modules']= DB::table('modules')->get();
+        $data['complaints'] = Complaints::all();
+        $data['employees'] = Employee::all();
+
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Complaints Trash";
+        $data['view'] = 'admin.hr_pro.employee.complaints.deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function complaints_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['employees'] = Employee::all();
+
+        $data['trade_licenses_history']= Complaints_history::all();
+        $data['table_name']= 'complaints_histories';
+
+        $data['page_title'] = "History | Complaints ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function add_complaints(){
+        $data['modules']= DB::table('modules')->get();
+
+        
+        $data['employee'] = Employee::all();
+        $data['page_title'] = "New Complaints";
+        $data['view'] = 'admin.hr_pro.employee.complaints.add_complaints';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function view_complaints(Request $request){
+        $data['complaint'] = Complaints::find($request->input('id'));
+        $data['employees'] = Employee::all();
+
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        
+        $data['page_title'] = "View  Complaint";
+        $data['view'] = 'admin.hr_pro.employee.complaints.view_complaints';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function edit_complaints (Request $request){
+        $data['complaint'] = Complaints::find($request->input('id'));
+
+        $data['modules']= DB::table('modules')->get();
+        $data['employee'] = Employee::all();
+
+        //dd($data['modules']);
+        
+
+        $data['page_title'] = "Edit Complaint";
+        $data['view'] = 'admin.hr_pro.employee.complaints.edit_complaints';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function save_complaints(Request $request){
+
+        $Complaints = new Complaints;
+        
+
+        if($request->input('emp_id') != ''){
+            $Complaints->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('admin_remarks') != ''){
+            $Complaints->admin_remarks = $request->input('admin_remarks');
+
+        }
+         if($request->input('hr_remarks') != ''){
+            $Complaints->hr_remarks = $request->input('hr_remarks');
+
+        }
+        if($request->input('complaint') != ''){
+            $Complaints->complaint = $request->input('complaint');
+
+        }
+        
+
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $Complaints->upload	 = $name;
+
+            }
+           
+
+        }
+        $Complaints->status = 'approved';
+ 
+        $Complaints->user_id = 0;
+       
+
+
+        if($Complaints->save()){
+            $this->history_table('complaints_histories', 'Add' , 0 , $Complaints->id , 'hr_pro.view_complaints');
+            return \Redirect::route('admin.hr_pro.complaints')->with('success', 'Data Added Sucessfully');
+        }
+        
+
+
+    }
+
+    public function update_complaints(Request $request){
+        $id =  (int)$request->input('id');
+        $Complaints = Complaints::where('id' , $id)->first();
+
+        if($request->input('emp_id') != ''){
+            $Complaints->emp_id = $request->input('emp_id');
+
+        }
+        if($request->input('complaint') != ''){
+            $Complaints->complaint = $request->input('complaint');
+
+        }
+        if($request->input('admin_remarks') != ''){
+            $Complaints->admin_remarks = $request->input('admin_remarks');
+
+        }
+        if($request->input('hr_remarks') != ''){
+            $Complaints->hr_remarks = $request->input('hr_remarks');
+
+        }
+       
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $Complaints->upload	 = $name;
+
+            }
+           
+
+        }
+
+
+
+
+        $Complaints->status_message = $request->input('status_message');
+        if( $Complaints->user_id != 0){
+            $user_id  = $Complaints->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+        // dd($trade_license->action );
+
+        if($Complaints->action == null || $Complaints->status == 'approved' ||$Complaints->action == 'nill'){
+            $Complaints->action = 'edit';
+        }
+
+        $Complaints->status = $request->input('status');
+
+
+        $Complaints->save();
+
+        
+        if($Complaints->status == 'approved' || $user_id == 0 ){
+            
+            //  $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+             $this->history_table('Complaints_histories', $Complaints->action , $user_id , $Complaints->id , 'hr_pro.view_complaints');
+        }
+
+
+        return \Redirect::route('admin.hr_pro.complaints')->with('success', 'Data Updated Sucessfully');
+
+    }
+
+   
+    public function delete_complaints_status(Request $request){
+        $id =  (int)$request->input('id');
+        $employee_termination = Complaints::where('id' , $id)->first();
+
+        
+        // $this->history_table('employee_histories','Employee R Removed' , 0 ,  $employee->id, "hr_pro.view_employee");
+
+        $employee_termination->status_message = $request->input('status_message');
+        if( $employee_termination->user_id != 0){
+            $user_id  = $employee_termination->user_id;
+            
+        }else{
+            $user_id  = 0;
+        }
+
+        $employee_termination->row_status = 'deleted';
+
+       
+
+      
+        // if($trade_license->action == null || $trade_license->status == 'approved'){
+            $employee_termination->action = 'delete';
+        // }
+
+        
+        $employee_termination->status = 'pending';
+ 
+        if( $employee_termination->save()){
+
+            // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+            $this->history_table('complaints_histories', $employee_termination->action , $user_id , $employee_termination->id , 'hr_pro.view_complaints');
+
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_complaints(Request $request){
+        $id =  (int)$request->input('id');
+        $employee_termination = Complaints::where('id' , $id)->first();
+        
+        $employee_termination->status_message = $request->input('status_message');
+        if( $employee_termination->user_id != 0){
+                        
+        }else{
+            $user_id  = 0;
+        }
+
+        $employee_termination->row_status = 'active';
+        $employee_termination->status = 'pending';
+        $employee_termination->action = 'restored';
+        
+        $employee_termination->save();
+        // $this->history_table('trade_license_histories', $trade_license->action , $user_id);
+        $this->history_table('complaints_histories', $employee_termination->action , $user_id , $employee_termination->id , 'hr_pro.view_complaints');
+ 
+        $employee_termination->action = 'deleted';
+        $employee_termination->save();
+           
+            return response()->json(['status'=>'1']);
+        
+    }
+
+    
 
 }

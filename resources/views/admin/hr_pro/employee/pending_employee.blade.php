@@ -229,7 +229,7 @@
                     <td><span class="badge badge-pill badge-warning">{{ $employees->action }}</span></td>
                     <td><span class="badge badge-pill badge-warning">{{ $employees->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_land_contracts') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.view_employee') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$employees->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
@@ -300,7 +300,7 @@
                     <td><span class="badge badge-pill badge-warning">{{ $employees->action }}</span></td>
                     <td><span class="badge badge-pill badge-warning">{{ $employees->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_land_contracts') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.view_employee') }}" method="post" class="d-inline">
                             @csrf
                             <input type="text" class="form-control d-none" name="id" value ="{{$employees->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">

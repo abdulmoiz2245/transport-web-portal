@@ -222,7 +222,7 @@ use App\Models\Erp_department;
                                     <div class="old-value"> Old Value : {{ $data['employee_history']->national_id_number}} </div> 
                                 @endif
                         </div>
-                        <input name="national_id_number"   class="form-control" type="text" required>
+                        <input name="national_id_number"   class="form-control" type="text" required value="{{ $data['employee']->national_id_number }}">
                     </div>
                 </div>
 

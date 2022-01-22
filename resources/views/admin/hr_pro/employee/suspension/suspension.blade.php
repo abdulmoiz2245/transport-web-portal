@@ -192,7 +192,7 @@
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.hr_pro.employee_suspension') }}">
+                <a href="{{ route( 'admin.hr_pro.existing_employee_detail') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 

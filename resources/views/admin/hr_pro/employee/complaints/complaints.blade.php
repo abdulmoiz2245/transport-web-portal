@@ -180,81 +180,145 @@
   <div class="sk-circle11 sk-child"></div>
   <div class="sk-circle12 sk-child"></div>
 </div>
+<?php 
+  if (isset($_GET["status"])) {
+    if($_GET["status"] == 'approved'){
 
+    }else if($_GET["status"] == 'pending'){
+
+    }
+    else if($_GET["status"] == 'pending_admin'){
+      
+    }
+    else if($_GET["status"] == 'rejected'){
+      
+    }
+  }
+?>
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_employee_increments') }}" style=""> Add New </a>  </button>
-  <button class="tablinks active" onclick="openCity(event, 'terminated')"> Approved Increments </button>
-  <button class="tablinks" onclick="openCity(event, 'pending')">Pending Request</button>
-  <button class="tablinks" onclick="openCity(event, 'rejected')">Rejected Request</button>
+  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_complaints') }}" style=""> Add New Complaint </a>  </button>
+  <form action="" method="get">
+    <input type="text" name="status" value="approved" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'approved'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'approved')"> Approved / Existing Complaints 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="pending" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'pending'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'pending')">  Pending Complaints 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="pending_admin" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'pending_admin'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'pending_admin')"> Forward Complaints 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="rejected" class="d-none">
+    <button class="mt-2" type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'rejected'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'rejected')"> Rejected Complaints 
+    </button>
+  </form>
+  
+
 </div>
 
 <div class="card">
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.hr_pro.existing_employee_detail') }}">
+                <a href="{{ route( 'admin.hr_pro.employee') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 
         </div>
         <div class="mt-3 mb-3"> 
                 
-
-                <a href="{{ route( 'admin.hr_pro.employee_increments_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.complaints_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
-                <a href="{{ route( 'admin.hr_pro.trash_employee_increments') }}" target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.trash_complaints') }}" target="_blank" class="ml-3">
                     <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
                 </a>
             </div>
 
             
         </div>
-        <div id="terminated" class="tabcontent" style="display: block;">
+        <div id="approved" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'approved'){
+              echo 'block';
+            }
+          }else{
+            echo 'block';
+          }
+          ?>;">
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
                         <th>Type</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
+                        <th>Complaint</th>
+                        <th>Hr Remarks</th>
+                        <th>Admin Remarks</th>
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'approved'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['complaints'] as $complaints)
+                    @if($complaints->status == 'approved'  && $complaints->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $complaints->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $complaints->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td>{{ $complaints->complaint }}</td>
+                    <td>{{ $complaints->hr_remarks }}</td>
+                    <td>{{ $complaints->admin_remarks }}</td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $complaints->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_complaints') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $complaints->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -269,58 +333,139 @@
             </table>
           </div>
         </div>
-        <div id="pending" class="tabcontent" >
+        <div id="pending" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'pending'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;">
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
                         <th>Type</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
+                        <th>Complaint</th>
+                        <th>Hr Remarks</th>
+                        <th>Admin Remarks</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'pending'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['complaints'] as $complaints)
+                    @if($complaints->status == 'pending'  && $complaints->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $complaints->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $complaints->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td>{{ $complaints->complaint }}</td>
+                    <td>{{ $complaints->hr_remarks }}</td>
+                    <td>{{ $complaints->admin_remarks }}</td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $complaints->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'admin.hr_pro.view_complaints') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_complaints') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                       
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $complaints->id }}" class="delete-file">
+                            <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                        </a>
+                        
+                    </td>
+                        
+                    </tr>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
+                </tbody>         
+            </table>
+            
+          </div>
+        </div>
+        <div id="pending_admin" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'pending_admin'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;">
+          <div class="table-responsive">
+            <table id=""  class="display table  nowrap " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Employee Name</th>
+                        <th>Designation</th>
+                        <th>Type</th>
+                        <th>Complaint</th>
+                        <th>Hr Remarks</th>
+                        <th>Admin Remarks</th>
+                        <th>Modified Date</th>  
+                        <th>Action</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data['complaints'] as $complaints)
+                    @if($complaints->status == 'pending_admin'  && $complaints->row_status != 'deleted')
+                    @foreach($data['employees'] as $employees)
+                    @if($employees->id ==  $complaints->emp_id)
+                        
+                    <tr>
+                   
+                    <td>
+                      {{ $complaints->id }}
+                    </td>
+                    <td>{{ $employees->name }}</td>
+                    <td>{{ $employees->designation_actual }}</td>
+                    <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
+                    <td>{{ $complaints->complaint }}</td>
+                    <td>{{ $complaints->hr_remarks }}</td>
+                    <td>{{ $complaints->admin_remarks }}</td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $complaints->updated_at }}</span></td>
+                    <td>
+                        <form action="{{ route( 'admin.hr_pro.view_complaints') }}" method="post" class="d-inline">
+                            @csrf
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
+                            <button type="submit" class="border-0 .bg-white">
+                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                            </button>
+                        </form>
+                        <form action="{{ route( 'admin.hr_pro.edit_complaints') }}" method="post" class="d-inline">
+                            @csrf
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
+                            <button type="submit" class="border-0 .bg-white">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                            </button>
+                        </form>
+                        <a href="#" id="{{ $complaints->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -335,57 +480,65 @@
             </table>
           </div>
         </div>
-        <div id="rejected" class="tabcontent" >
+        <div id="rejected" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'rejected'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;" >
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
                         <th>Type</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Month</th>
+                        <th>Complaint</th>
+                        <th>Hr Remarks</th>
+                        <th>Admin Remarks</th>
                         <th>Modified Date</th>  
-                        <th>Action</th>   
+                        <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_increments'] as $employee_increments)
-                    @if($employee_increments->status == 'rejected'  && $employee_increments->row_status != 'deleted')
+                    @foreach($data['complaints'] as $complaints)
+                    @if($complaints->status == 'rejected'  && $complaints->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_increments->emp_id)
+                    @if($employees->id ==  $complaints->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_increments->id }}
+                      {{ $complaints->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_increments->reason }}</td>
-                    <td>{{ $employee_increments->amount }}</td>
-                    <td>{{ $employee_increments->applicable_month }}</td>
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_increments->updated_at }}</span></td>
+                    <td>{{ $complaints->complaint }}</td>
+                    <td>{{ $complaints->hr_remarks }}</td>
+                    <td>{{ $complaints->admin_remarks }}</td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $complaints->updated_at }}</span></td>
                     <td>
-                        <form action="{{ route( 'admin.hr_pro.view_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.view_complaints') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'admin.hr_pro.edit_employee_increments') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'admin.hr_pro.edit_complaints') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_increments->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$complaints->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_increments->id }}" class="delete-file">
+                        <a href="#" id="{{ $complaints->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -406,7 +559,7 @@
   $(document).ready(function() {
         $('.table').DataTable( {
             dom: 'Bfrtip',
-            responsive: true,
+            // responsive: true,
             buttons: [  
                 'copyHtml5',
                 'excelHtml5',
@@ -429,7 +582,7 @@ $('.delete-file').click(function () {
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'admin.hr_pro.delete_employee_increments_status') }}",
+                    url:"{{ route( 'admin.hr_pro.delete_complaints_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
@@ -457,9 +610,11 @@ $('.delete-file').click(function () {
       $(".card ").css("filter", "blur(8px)");
 
       $(".loader").css('display' , 'block');
+
       setTimeout(function(ent) { 
-      $(".tab ").css("filter", "blur(0px)");
-      $(".card ").css("filter", "blur(0px)");
+
+        $(".tab ").css("filter", "blur(0px)");
+        $(".card ").css("filter", "blur(0px)");
 
         $(".loader").css('display' , 'none');
 
@@ -475,6 +630,6 @@ $('.delete-file').click(function () {
         evt.path[0].className += " active";
         console.log('cale234d');
 
-      }, 1000);
+      }, 0);
   }
 </script>
