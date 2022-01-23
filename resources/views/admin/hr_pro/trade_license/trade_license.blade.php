@@ -236,7 +236,7 @@ use App\Models\Trade_license_partners;
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.dashboard') }}">
+                <a href="{{ route( 'admin.hr_pro') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 

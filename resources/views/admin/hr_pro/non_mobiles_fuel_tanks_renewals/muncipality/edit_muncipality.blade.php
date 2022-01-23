@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-1 p-0">
-                <a  target="_blank" href="{{ asset('main_admin') }}/hr_pro/non_mobile_fuel_tank_renewals/{{$data['muncipality']u->document}}">
+                <a  target="_blank" href="{{ asset('main_admin') }}/hr_pro/non_mobile_fuel_tank_renewals/{{$data['muncipality']->document}}">
                     <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
                 </a>
             </div>

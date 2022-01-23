@@ -1,6 +1,11 @@
-<div class="container">
+<div class="container">     
     <div class="card">
         <div class="card-body">
+            <div class="mb-5">
+                <a href="{{ route( 'admin.hr_pro') }}">
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+                </a>
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.hr_pro.add_employee') }}">

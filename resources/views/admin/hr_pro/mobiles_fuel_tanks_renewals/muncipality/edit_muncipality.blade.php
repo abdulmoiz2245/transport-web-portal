@@ -76,7 +76,6 @@
         </div>
         @endif
         <div class="form-group">
-            <label for="admin-status">Expiary Date</label>
             <div class="d-flex">
                 <label for="admin-status">Expiary Date</label>
                 @if($data['muncipality_edit'] != null && $data['muncipality']->expiary_date != $data['muncipality_edit']->expiary_date )
