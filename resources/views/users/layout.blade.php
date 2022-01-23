@@ -163,7 +163,7 @@
                          @endif
                         @endforeach
                         @if($found == true)
-                        <li class="nav-item " data-item="module_{{$module->id}}">
+                        <li class="nav-item " data-item="">
                             <a class="nav-item-hold" href="{{ route('user.'.$module->nickname ) }}">
                                 <i class="nav-icon {{ $module->icon }}"></i>
                                 <span class="nav-text">{{ $module->name }}</span>
@@ -209,14 +209,14 @@
                         
                         @if($permissions->operation == 'view' && $permissions->status == 1)
 
-                        <ul class="childNav" data-parent="module_{{$module->parent_id}}">
+                        <!-- <ul class="childNav" data-parent="module_{{$module->parent_id}}">
                             <li class="nav-item">
                                 <a href="{{ route('user.'.$module->nickname ) }}">
                                     <i class="nav-icon {{$module->icon}}"></i>
                                     <span class="item-name">{{$module->name}}</span>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                         
                         @endif
                         @endif
@@ -259,11 +259,9 @@
                     <h1><?= $data['page_title'] ?></h1>
                 </div>
                 
-                <div class="card">
-                    <div class="card-body">
+               
                         <?=  view($data['view'])->with('data', $data); ?>
-                    </div>
-                </div>
+                    
                 <div class="flex-grow-1"></div>
                 <div class="app-footer">
                     <div class="row">

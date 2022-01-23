@@ -877,7 +877,11 @@ class EmployeeController extends Controller
         $id =  (int)$request->input('id');
         $employee = Employee::where('id' , $id)->first();
         $employee->admin_status = $request->input('admin_status');
-
+        if($employee->employee_doj != ''){
+            $employee->status= 'approved';
+            // die("asd");
+        }
+        
         $employee->save();
             //  $this->history_table('employee_histories',$request->input('section'). " info " , 0,  $employee->id, "hr_pro.view_employee");
         

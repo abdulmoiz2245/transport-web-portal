@@ -6,9 +6,10 @@ use App\Models\Office_Land_contract;
 use App\Models\Trade_license_partners;
 
 
-
-  
 ?>
+
+
+
 <style>
     /* Style the tab */
 .tab {
@@ -193,7 +194,7 @@ use App\Models\Trade_license_partners;
 </div>
 
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_trade_license__sponsors__partners') }}" style=""> Add New Trade License </a>  </button>
+  <button  class="tablinks "> <a href="{{ route('admin.hr_pro.add_trade_license__sponsors__partners') }}" style=""> Add Trade License </a>  </button>
   <form action="" method="get">
     <input type="text" name="status" value="approved" class="d-none">
     <button type="submit" class="tablinks <?php 
@@ -216,10 +217,9 @@ use App\Models\Trade_license_partners;
       ?>" onclick="openCity(event, 'pending')">  Pending Trade License 
     </button>
   </form>
-
   <form action="" method="get">
     <input type="text" name="status" value="rejected" class="d-none">
-    <button class="mt-2" type="submit" class="tablinks <?php 
+    <button type="submit" class="tablinks <?php 
       if (isset($_GET["status"])) {
         if($_GET["status"] == 'rejected'){
           echo 'active';
@@ -228,6 +228,7 @@ use App\Models\Trade_license_partners;
       ?>" onclick="openCity(event, 'rejected')"> Rejected Trade License 
     </button>
   </form>
+  
 
 </div>
 
@@ -235,40 +236,24 @@ use App\Models\Trade_license_partners;
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.hr_pro.employee') }}">
+                <a href="{{ route( 'admin.dashboard') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 
         </div>
         <div class="mt-3 mb-3"> 
                 
-                <a href="{{ route( 'admin.hr_pro.complaints_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
-                <a href="{{ route( 'admin.hr_pro.trash_complaints') }}" target="_blank" class="ml-3">
+                <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" target="_blank" class="ml-3">
                     <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
                 </a>
             </div>
 
             
         </div>
-        @if (session('success'))
-            <div class="alert alert-success mb-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="alert alert-danger mb-3" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            @endif
         <div id="approved" class="tabcontent" style="display: <?php 
           if (isset($_GET["status"])) {
             if($_GET["status"] == 'approved'){
@@ -278,96 +263,7 @@ use App\Models\Trade_license_partners;
             echo 'block';
           }
           ?>;">
-        </div>
-
-        <div id="pending" class="tabcontent" style="display: <?php 
-          if (isset($_GET["status"])) {
-            if($_GET["status"] == 'pending'){
-              echo 'block';
-            }
-          }else{
-            echo 'block';
-          }
-          ?>;">
-        </div>
-
-        <div id="rejected" class="tabcontent" style="display: <?php 
-          if (isset($_GET["status"])) {
-            if($_GET["status"] == 'rejected'){
-              echo 'block';
-            }
-          }else{
-            echo 'block';
-          }
-          ?>;">
-        </div>
-    </div>
-</div>
-          
-
-
-
-<div class="container">
-    <!-- <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="mb-5">
-        <button class="btn btn-primary">
-            Add Trade License
-        </button>
-    </a> -->
-
-    <div class="d-flex" style="justify-content: space-between;">
-        <div>
-            <a href="{{ route( 'admin.dashboard') }}" class="ml-3">
-                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
-            <a href="{{ route( 'admin.hr_pro.add_trade_license__sponsors__partners') }}" class="ml-3">
-                <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-            </a>
-        </div>
-        
-
-        <div class=""> 
-            <a href="{{ route( 'admin.hr_pro.trade_license__sponsors__partners_history') }}"target="_blank" class="ml-3">
-                    <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" title="History" width="30">
-            </a> 
-            <a href="{{ route( 'admin.hr_pro.trash_trade_license__sponsors__partners') }}" class="ml-3" target="_blank">
-                <img  src="<?= asset('assets') ?>/images/trash.png" alt="" title="Trash" width="30">
-            </a>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col-12">
-            @if (session('success'))
-            <div class="alert alert-success mb-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="alert alert-danger mb-3" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            @endif
-                <ul class="nav nav-tabs mt-3 mb-5" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="approved-tab" data-toggle="tab" href="#approved" role="tab" aria-controls="approved" aria-selected="true"> <b>Approved</b> </a>
-                    </li>
-                    <li class="nav-item">
-                        
-                        <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">  <b>Pending </b> </a>
-                    </li>
-                    <li class="nav-item">
-                        
-                        <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">  <b>Rejected </b> </a>
-                    </li>
-                </ul>
-                 <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="approved" role="tabpanel" aria-labelledby="approved-tab">
-                        <div class="table-responsive">
+          <div class="table-responsive">
                             <table  class="display table2 table responsive nowrap " style="width:100%">
                                 <thead>
                                     <tr>
@@ -511,10 +407,18 @@ use App\Models\Trade_license_partners;
                                     @endforeach
                                 </tbody>         
                             </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade show " id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                        <div class="table-responsive">
+            </div>
+        </div>
+        <div id="pending" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'pending'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;">
+          <div class="table-responsive">
                             <table   class="display table1 table responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
@@ -656,9 +560,17 @@ use App\Models\Trade_license_partners;
                                 </tbody>         
                             </table>
                         </div>
-                    </div>
-                    <div class="tab-pane fade show " id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
-                        <div class="table-responsive">
+        </div>
+        <div id="rejected" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'rejected'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;" >
+          <div class="table-responsive">
                             <table   class="display table1 table responsive nowrap " style="width:100%">
                                 <thead>
                                     <tr>
@@ -801,8 +713,6 @@ use App\Models\Trade_license_partners;
                                 </tbody>         
                             </table>
                         </div>
-                    </div>
-                </div>
         </div>
     </div>
 </div>
@@ -988,4 +898,34 @@ use App\Models\Trade_license_partners;
     var new_date = date.toLocaleDateString('en-CA');
     
     console.log($("[type='date']").attr("min",new_date) );
+
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      var ent = evt;
+      $(".tab ").css("filter", "blur(8px)");
+      $(".card ").css("filter", "blur(8px)");
+
+      $(".loader").css('display' , 'block');
+
+      setTimeout(function(ent) { 
+
+        $(".tab ").css("filter", "blur(0px)");
+        $(".card ").css("filter", "blur(0px)");
+
+        $(".loader").css('display' , 'none');
+
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.path[0].className += " active";
+        console.log('cale234d');
+
+      }, 0);
+  }
 </script>

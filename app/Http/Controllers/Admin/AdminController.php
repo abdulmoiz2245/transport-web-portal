@@ -396,6 +396,11 @@ class AdminController extends Controller
                 ['module_id' => '36',
                 'role_id' =>  $roles->id ,
                 'operation' => 'view' ,
+                'status' => 0],
+
+                ['module_id' => '37',
+                'role_id' =>  $roles->id ,
+                'operation' => 'view' ,
                 'status' => 0]
                  
                 

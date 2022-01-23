@@ -40,6 +40,9 @@ Route::middleware(['auth:user'])->group(function () {
     require __DIR__.'/purchase.php';
 
     require __DIR__.'/inventory.php';
+    
+    require __DIR__.'/operations.php';
+
 
     
 

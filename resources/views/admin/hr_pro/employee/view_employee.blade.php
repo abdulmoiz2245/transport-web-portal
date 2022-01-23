@@ -141,35 +141,27 @@ use App\Models\Erp_department;
 <div class="row">
 <div class="col-md-5">
 <div class="profile-info-left">
-<h3 class="user-name m-t-0 mb-0">John Doe</h3>
-<h6 class="text-muted">UI/UX Design Team</h6>
-<small class="text-muted">Web Designer</small>
-<div class="staff-id">Employee ID : FT-0001</div>
-<div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+<h3 class="user-name m-t-0 mb-0">{{ $data['employee']->name }}</h3>
+<h6 class="text-muted">{{ $data['employee']->nationality}}</h6>
+<small class="text-muted">{{ $data['employee']->designation_actual}}</small>
+<div class="staff-id">NOC Number : {{ $data['employee']->national_id_number}}</div>
+<div class="small doj text-muted">Date of Join : {{ $data['employee']->employee_doj}}</div>
 <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
 </div>
 </div>
 <div class="col-md-7">
 <ul class="personal-info">
 <li>
-<div class="title">Phone:</div>
-<div class="text"><a href="">9876543210</a></div>
+<div class="title">Password Number :</div>
+<div class="text"><a href="">{{ $data['employee_history']->passport_number}}</a></div>
 </li>
 <li>
-<div class="title">Email:</div>
-<div class="text"><a href="">johndoe@example.com</a></div>
+<div class="title">Passport  Expiry :</div>
+<div class="text"><a href="">{{ $data['employee']->passport_exp}}</a></div>
 </li>
 <li>
-<div class="title">Birthday:</div>
-<div class="text">24th July</div>
-</li>
-<li>
-<div class="title">Address:</div>
-<div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
-</li>
-<li>
-<div class="title">Gender:</div>
-<div class="text">Male</div>
+<div class="title">Labour Contract  Number :</div>
+<div class="text">{{ $data['employee']->labour_contract_number}}</div>
 </li>
 </ul>
 </div>
@@ -698,46 +690,246 @@ use App\Models\Erp_department;
 
         <div id="step-2" class="tab-pane" role="tabpanel">
             <div class="row">
-            <div class="col-12 col-md-6 mb-3">
+                <div class="col-12 col-md-6 mb-3">
                     <div class="row">
                         <div class="col-5">
-                            <h5 class="font-weight-bold"> Labour Contract Number :</h5>
+                            <h5 class="font-weight-bold"> JABEL ALI PASS No :</h5>
 
                         </div>
                         <div class="col-6">
-                            <p>{{ $data['employee']->labour_contract_number }}</p>
+                            <p>{{ $data['employee']->	jabel_ali_pass}}</p>
                         </div>
                     </div> 
                 </div>
                 <div class="col-12 col-md-6 mb-3">
                     <div class="row">
                         <div class="col-5">
-                            <h5 class="font-weight-bold"> Labour Contract EXP :</h5>
+                            <h5 class="font-weight-bold"> JABEL ALI PASS Expiry :</h5>
 
                         </div>
                         <div class="col-6">
-                            <p>{{ $data['employee']->labour_contract_exp }}</p>
+                            <p>{{ $data['employee']->jabel_ali_pass_exp}}</p>
                         </div>
                     </div> 
                 </div>
                 <div class="col-12 col-md-6 mb-3">
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="font-weight-bold"> Labour Contract Copy:</h5>
+                            <h5 class="font-weight-bold"> JABEL ALI PASS Copy :</h5>
 
                         </div>
                         <div class="col-8">
-                            @if( $data['employee']->labour_contract_copy == NULL)
+                            @if( $data['employee']->jabel_ali_pass_copy == NULL)
                             
                                 <p>No File Found</p>
                             @else
-                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->labour_contract_copy}}">
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->jabel_ali_pass_copy}}">
                                     <button class="btn">
                                         View Documennt
                                     </button>
                                 </a>
 
-                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->labour_contract_copy}}">
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->jabel_ali_pass_copy}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Emal PASS No :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->	emal_pass}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Emal PASS Expiry :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->emal_pass_exp}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> EMAL PASS Copy :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->emal_pass_copy == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->emal_pass_copy}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->emal_pass_copy}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> KP MINA PASS No :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->	kp_mina}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> KP MINA  PASS Expiry :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->kp_mina_exp}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> KP MINA PASS Copy :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->kp_mina_copy == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->kp_mina_copy}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->kp_mina_copy}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Driving license Number :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->	driving_license}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Driving License Expiry :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->driving_license_exp}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Driving License Copy :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->driving_license_copy == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->driving_license_copy}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->driving_license_copy}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Health Insurance Policy Number :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->	health_insurance_policy_number}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> Health Insurance Policy Expiry :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->health_insurance_policy_exp}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Health Insurance Policy Copy :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->kp_mina_copy == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->health_insurance_policy_copy}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->health_insurance_policy_copy}}">
                                     <button class="btn">
                                         Download Documennt
                                     </button>
@@ -758,12 +950,160 @@ use App\Models\Erp_department;
         </div>
 
         <div id="step-5" class="tab-pane" role="tabpanel">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold">Incentives :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->incentives }}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Incentives Document:</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->incentives_upload == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->incentives_upload}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->incentives_upload}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>  
+                </div>
+            </div>
         </div>
 
         <div id="step-6" class="tab-pane" role="tabpanel">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold">Deposit Amount :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->deposit_amount }}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold">Deposit Way :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->deposit_way }}</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Deposit Copy :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->deposit_upload == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->deposit_upload}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->deposit_upload}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
         </div>
 
         <div id="step-7" class="tab-pane" role="tabpanel">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Passport Handover :</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->passport_handover == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->passport_handover}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->passport_handover}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>  
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="font-weight-bold"> Sumission Template:</h5>
+
+                        </div>
+                        <div class="col-8">
+                            @if( $data['employee']->submission_template == NULL)
+                            
+                                <p>No File Found</p>
+                            @else
+                                <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['employee']->submission_template}}">
+                                    <button class="btn">
+                                        View Documennt
+                                    </button>
+                                </a>
+
+                                <a download href="{{ asset('main_admin/hr_pro/employee/main/')}}/{{$data['employee']->submission_template}}">
+                                    <button class="btn">
+                                        Download Documennt
+                                    </button>
+                                </a>
+                            @endif
+                            
+                        </div>
+                    </div>  
+                </div>
+            </div>
         </div>
     </div>
 </div>
