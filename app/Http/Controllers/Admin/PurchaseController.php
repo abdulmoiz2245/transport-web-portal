@@ -18,6 +18,7 @@ use App\Models\Fuel_transfer;
 use App\Models\Inventory_uncategorized;
 
 use App\Models\Supplier_info;
+use App\Models\Purchase_edit_history;
 
 
 
@@ -193,7 +194,9 @@ class PurchaseController extends Controller
         $data['material_data']= DB::table('purchase_mertial_datas')->get();
         $data['modules']= DB::table('modules')->get();
 
-        //dd($data['modules']);
+        $data['purchase_edit'] = Purchase_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -375,6 +378,37 @@ class PurchaseController extends Controller
             $meterial->name = $request->input('meterial_data_id');
             $meterial->save();
         }
+
+        $purchase_edit = new Purchase_edit_history;
+        //customer edit history track
+        $purchase_edit->row_id = (int)$request->input('id');
+        $purchase_edit->date =  $purchase->date;
+        $purchase_edit->trn =  $purchase->trn;
+        $purchase_edit->lpo_ref_num =  $purchase->lpo_ref_num;
+        $purchase_edit->company_name =  $purchase->company_name;
+        $purchase_edit->company_address =  $purchase->company_address; 
+        $purchase_edit->company_id =  $purchase->company_id;
+        $purchase_edit->meterial_data_id =  $purchase->meterial_data_id; 
+        $purchase_edit->type =  $purchase->type;
+        $purchase_edit->made_in =  $purchase->made_in; 
+        $purchase_edit->vechicle_num =  $purchase->vechicle_num;
+        $purchase_edit->stock_description =  $purchase->stock_description; $purchase_edit->product_name =  $purchase->product_name;
+        $purchase_edit->brand =  $purchase->brand; 
+        $purchase_edit->size =  $purchase->size;
+        $purchase_edit->quantity =  $purchase->quantity;
+         $purchase_edit->unit =  $purchase->unit;
+        $purchase_edit->unit_price =  $purchase->unit_price;
+        $purchase_edit->delivery_date =  $purchase->delivery_date;
+        $purchase_edit->terms =  $purchase->terms;
+        $purchase_edit->cerdit_days =  $purchase->cerdit_days;
+        $purchase_edit->total_amount =  $purchase->total_amount;
+        $purchase_edit->po_number =  $purchase->po_number;
+        $purchase_edit->delivery_proof_copy =  $purchase->delivery_proof_copy;
+        $purchase_edit->delivery_notes =  $purchase->delivery_notes;
+        $purchase_edit->for_stock =  $purchase->for_stock;
+
+        $purchase_edit->save();
+
 
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');

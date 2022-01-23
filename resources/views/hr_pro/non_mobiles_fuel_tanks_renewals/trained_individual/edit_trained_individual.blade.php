@@ -1,5 +1,5 @@
 <div class="container">
-<div class="mb-5">
+    <div class="mb-4">
         <a href="{{ route( 'user.hr_pro.non_mobile_trained_individual') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
@@ -8,17 +8,38 @@
     <form action="{{ route('user.hr_pro.update_non_mobile_trained_individual') }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="text" name="id" value="{{ $data['trained_individual']->id }}" class="d-none">
-       
         <div class="row">
-           <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Card NUMBER</label>
+                    <label>Admin Notes</label>
+                    <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['trained_individual']->status_message }}</textarea>
+                    
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+           <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label>Card NUMBER</label>
+                        @if($data['trained_individual_edit'] != null && $data['trained_individual']->card_number != $data['trained_individual_edit']->card_number )
+                            <div class="edit-badge"> Edited </div> 
+                            <div class="old-value"> Old Value : {{ $data['trained_individual_edit']->card_number}} </div> 
+                        @endif
+                    </div>
                     <input type="text" name="card_number" class="form-control form-control-rounded"  placeholder="Enter Card NUMBER"  value="{{$data['trained_individual']->card_number}}">
                 </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Employee Name</label>
+                    <div class="d-flex">
+                        <label>Employee Name</label>
+                        @if($data['trained_individual_edit'] != null && $data['trained_individual']->employee_name != $data['trained_individual_edit']->employee_name )
+                            <div class="edit-badge"> Edited </div> 
+                            <div class="old-value"> Old Value : {{ $data['trained_individual_edit']->employee_name}} </div> 
+                        @endif
+                    </div>
                     <input name="employee_name" class="form-control" type="text" placeholder="Enter Employee Name" value="{{$data['trained_individual']->employee_name}}">
 
                 </div>
@@ -26,9 +47,16 @@
        </div>
 
        <div class="row">
-           <div class="col-6">
+           <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Expiary Date</label>
+                    <div class="d-flex">
+                        <label>Card NUMBER</label>
+                        @if($data['trained_individual_edit'] != null && $data['trained_individual']->expiary_date != $data['trained_individual_edit']->expiary_date )
+                            <div class="edit-badge"> Edited </div> 
+                            <div class="old-value"> Old Value : {{ $data['trained_individual_edit']->expiary_date}} </div> 
+                        @endif
+                    </div>
                     <input name="expiary_date" class="form-control" type="date" value="{{$data['trained_individual']->expiary_date}}">
 
                 </div>
@@ -37,7 +65,18 @@
                 @if($data['trained_individual']->pass_card != NULL)
                 <div class="row">
                     <div class="col-12">
-                        <label>Replace Pass/Card</label>
+                        <div class="d-flex">
+                            <label>Replace Pass/Card</label>
+                            @if($data['trained_individual_edit'] != null && $data['trained_individual']->pass_card != $data['trained_individual_edit']->pass_card )
+                                <div class="edit-badge"> Edited </div> 
+                                <div class="old-value"> Old file : 
+                                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual_edit']->pass_card}}" >
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div> 
+                            @endif
+                        </div>
+
                     </div>
                     <div class="col-11 form-group">
                         <div class="input-group mb-3">
@@ -74,11 +113,21 @@
        </div>
 
        <div class="row">
-       <div class="col-md-6 col-12">  
+           <div class="col-md-6 col-12">  
                 @if($data['trained_individual']->front_pic != NULL)
                 <div class="row">
                     <div class="col-12">
-                        <label>Replace Front Pic</label>
+                        <div class="d-flex">
+                            <label>Replace Front Pic</label>
+                            @if($data['trained_individual_edit'] != null && $data['trained_individual']->front_pic != $data['trained_individual_edit']->front_pic )
+                                <div class="edit-badge"> Edited </div> 
+                                <div class="old-value"> Old file : 
+                                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual_edit']->front_pic}}" >
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div> 
+                            @endif
+                        </div>
                     </div>
                     <div class="col-11 form-group">
                         <div class="input-group mb-3">
@@ -116,7 +165,17 @@
                 @if($data['trained_individual']->back_pic != NULL) 
                 <div class="row">
                     <div class="col-12">
-                        <label>Replace Back Pic</label>
+                        <div class="d-flex">
+                            <label>Replace Back Pic</label>
+                            @if($data['trained_individual_edit'] != null && $data['trained_individual']->back_pic != $data['trained_individual_edit']->back_pic )
+                                <div class="edit-badge"> Edited </div> 
+                                <div class="old-value"> Old file : 
+                                    <a target="_blank" href="{{ asset('main_admin/hr_pro/trained_individual/')}}/{{$data['trained_individual_edit']->back_pic}}" >
+                                        <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                    </a>
+                                </div> 
+                            @endif
+                        </div>
                     </div>
                     <div class="col-11 form-group">
                         <div class="input-group mb-3">
@@ -155,6 +214,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
 <script>
     var date = new Date();
     date.setDate(date.getDate() + 10);

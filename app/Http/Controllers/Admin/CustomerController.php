@@ -188,10 +188,10 @@ class CustomerController extends Controller
 
 
         $data['customer_info_history'] = Customer_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
+        $data['customer_dep_history'] = Customer_department_edit_history::where('customer_id' , $request->input('id'))->orderBy('created_at','desc')->first();
         
-        if( $data['customer_info_history'] == null){
-            $data['customer_info_history'] = new Customer_edit_history;
-        }
+        
         
         
         $data['modules']= DB::table('modules')->get();

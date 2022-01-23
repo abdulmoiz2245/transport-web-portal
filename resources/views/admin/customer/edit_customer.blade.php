@@ -108,7 +108,7 @@ use App\Models\Erp_department;
                             
                             <div class="d-flex">
                                 <label >Customer Name</label>
-                                @if($data['customer_info']->name != $data['customer_info_history']->name )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->name != $data['customer_info_history']->name )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->name}} </div> 
                                 @endif
@@ -121,7 +121,7 @@ use App\Models\Erp_department;
                             
                             <div class="d-flex">
                                 <label >Customer Address</label>
-                                @if($data['customer_info']->address != $data['customer_info_history']->address )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->address != $data['customer_info_history']->address )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->address}} </div> 
                                 @endif
@@ -134,7 +134,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Customer City</label>
-                                @if($data['customer_info']->city != $data['customer_info_history']->city )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->city != $data['customer_info_history']->city )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->city}} </div> 
                                 @endif
@@ -147,7 +147,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Customer Country</label>
-                                @if($data['customer_info']->country != $data['customer_info_history']->country )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->country != $data['customer_info_history']->country )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->country}} </div> 
                                 @endif
@@ -160,7 +160,7 @@ use App\Models\Erp_department;
                             
                             <div class="d-flex">
                                 <label >Customer Telephone</label>
-                                @if($data['customer_info']->tel_number != $data['customer_info_history']->tel_number )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->tel_number != $data['customer_info_history']->tel_number )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->tel_number}} </div> 
                                 @endif
@@ -172,7 +172,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Customer Fax</label>
-                                @if($data['customer_info']->fax != $data['customer_info_history']->fax )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->fax != $data['customer_info_history']->fax )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->fax}} </div> 
                                 @endif
@@ -184,7 +184,7 @@ use App\Models\Erp_department;
                             
                             <div class="d-flex">
                                 <label >Customer Mobile</label>
-                                @if($data['customer_info']->mobile != $data['customer_info_history']->mobile )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->mobile != $data['customer_info_history']->mobile )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->mobile}} </div> 
                                 @endif
@@ -197,7 +197,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Customer Email</label>
-                                @if($data['customer_info']->email != $data['customer_info_history']->email )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->email != $data['customer_info_history']->email )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->email}} </div> 
                                 @endif
@@ -210,7 +210,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Contact Person</label>
-                                @if($data['customer_info']->contact_person != $data['customer_info_history']->contact_person )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->contact_person != $data['customer_info_history']->contact_person )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->contact_person}} </div>
                                 @endif
@@ -222,7 +222,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Designation</label>
-                                @if($data['customer_info']->des != $data['customer_info_history']->des )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->des != $data['customer_info_history']->des )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->des}} </div> 
                                 @endif
@@ -234,7 +234,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Website</label>
-                                @if($data['customer_info']->web != $data['customer_info_history']->web )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->web != $data['customer_info_history']->web )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->web}} </div>
                                 @endif
@@ -248,7 +248,7 @@ use App\Models\Erp_department;
                             
                             <div class="d-flex">
                                 <label >User</label>
-                                @if($data['customer_info']->user != $data['customer_info_history']->user )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->user != $data['customer_info_history']->user )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->user}} </div>
                                 @endif
@@ -260,7 +260,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >PW</label>
-                                @if($data['customer_info']->pw != $data['customer_info_history']->pw )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->pw != $data['customer_info_history']->pw )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->pw}} </div> 
                                 @endif
@@ -274,7 +274,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Credit Term</label>
-                                @if($data['customer_info']->credit_term != $data['customer_info_history']->credit_term )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->credit_term != $data['customer_info_history']->credit_term )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->credit_term}} </div> 
                                 @endif
@@ -290,7 +290,7 @@ use App\Models\Erp_department;
                            
                             <div class="d-flex">
                                 <label >Portal Site Login</label>
-                                @if($data['customer_info']->portal_login != $data['customer_info_history']->portal_login )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->portal_login != $data['customer_info_history']->portal_login )
                                     <div class="edit-badge"> Edited </div> 
                             
                                 @endif
@@ -302,7 +302,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Remarks</label>
-                                @if($data['customer_info']->remarks != $data['customer_info_history']->remarks )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->remarks != $data['customer_info_history']->remarks )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->remarks}} </div> 
                                 @endif
@@ -319,7 +319,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Trn Number</label>
-                                @if($data['customer_info']->trn != $data['customer_info_history']->trn )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->trn != $data['customer_info_history']->trn )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->trn}} </div> 
                                 @endif
@@ -337,7 +337,7 @@ use App\Models\Erp_department;
                                         <div class="d-flex">
                                             <label>Replace TRN Copy</label>
 
-                                            @if($data['customer_info']->trn_copy != $data['customer_info_history']->trn_copy )
+                                            @if($data['customer_info_history'] != null && $data['customer_info']->trn_copy != $data['customer_info_history']->trn_copy )
                                                 <div class="edit-badge"> Edited </div> 
                                                 <div class="old-value"> Old file : 
                                                     <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->trn_copy}}" >
@@ -397,7 +397,7 @@ use App\Models\Erp_department;
                                 <div class="col-12">
                                     <div class="d-flex">
                                         <label>Replace BUSINESS LICENCE Copy</label>
-                                        @if($data['customer_info']->business_license_copy != $data['customer_info_history']->business_license_copy )
+                                        @if($data['customer_info_history'] != null && $data['customer_info']->business_license_copy != $data['customer_info_history']->business_license_copy )
                                             <div class="edit-badge"> Edited </div> 
                                             <div class="old-value"> Old file : 
                                                 <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->business_license_copy}}" >
@@ -444,7 +444,7 @@ use App\Models\Erp_department;
                         <div class=" col-md-6 col-12 mb-3">
                             <div class="d-flex">
                                 <label >Expiry Date ( BUSINESS LICENCE )</label>
-                                @if($data['customer_info']->business_license_expiary_date != $data['customer_info_history']->business_license_expiary_date )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->business_license_expiary_date != $data['customer_info_history']->business_license_expiary_date )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->business_license_expiary_date}} </div> 
                                 @endif
@@ -460,7 +460,7 @@ use App\Models\Erp_department;
                             <div class="d-flex">
                                 <label >Select Type</label>
 
-                                @if($data['customer_info']->contrct != $data['customer_info_history']->contrct )
+                                @if($data['customer_info_history'] != null && $data['customer_info']->contrct != $data['customer_info_history']->contrct )
                                     <div class="edit-badge"> Edited </div> 
                                     <div class="old-value"> Old Value : {{ $data['customer_info_history']->contrct}} </div> 
                                 @endif
@@ -476,7 +476,7 @@ use App\Models\Erp_department;
                                 <div class="col-12">
                                     <div class="d-flex">
                                         <label>Replace  Contract/Project Based Copy</label>
-                                        @if($data['customer_info']->business_contract_copy != $data['customer_info_history']->business_contract_copy )
+                                        @if($data['customer_info_history'] != null && $data['customer_info']->business_contract_copy != $data['customer_info_history']->business_contract_copy )
                                             <div class="edit-badge"> Edited </div> 
                                             <div class="old-value"> Old file : 
                                                 <a target="_blank" href="{{ asset('main_admin/customer/')}}/{{$data['customer_info_history']->business_contract_copy}}" >
@@ -540,7 +540,13 @@ use App\Models\Erp_department;
                     <input type="text" name="id" value="{{ $data['customer_department']->id }}" class="d-none">
                     <div class="row">
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Select Department </label>
+                            <div class="d-flex">
+                                <label >Select Department </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->department_name != $data['customer_dep_history']->department_name )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->department_name}} </div> 
+                                @endif
+                            </div>
                             <select name="department_name" id="Select_Department_" class="form-control">
                                 @foreach(Erp_department::all() as $department)
                                     <option value="{{ $department->id }}"  <?php if($data['customer_department']->department_name == $department->id) echo 'selected="selected"' ?>> {{ $department->name }} </option>
@@ -550,32 +556,71 @@ use App\Models\Erp_department;
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >CONCERNED PERSON NAME </label>
+                            <div class="d-flex">
+                                <label >CONCERNED PERSON NAME </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->concerned_person_name != $data['customer_dep_history']->concerned_person_name )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->concerned_person_name}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->concerned_person_name}}" name="concerned_person_name" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >CONCERNED PERSON DESIGNATION </label>
+                            <div class="d-flex">
+                                <label >CONCERNED PERSON DESIGNATION </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->concerned_person_designation != $data['customer_dep_history']->concerned_person_designation )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->concerned_person_designation}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->concerned_person_designation}}" name="concerned_person_designation" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
-                            <label >Tell</label>
+                            <div class="d-flex">
+                                <label >Tell</label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->tell != $data['customer_dep_history']->tell )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->tell}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->tell}}" name="tell" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Mobile</label>
+                            <div class="d-flex">
+                                <label >CONCERNED PERSON NAME </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->mobile != $data['customer_dep_history']->mobile )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->mobile}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->mobile}}" name="mobile" class="form-control" required>
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Fax</label>
+                            <div class="d-flex">
+                                <label >CONCERNED PERSON NAME </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->mobile != $data['customer_dep_history']->mobile )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->mobile}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->fax}}" name="fax" class="form-control" >
                         </div>
 
                         <div class=" col-md-6 col-12 mb-3">
                             <label >Email</label>
+                            <div class="d-flex">
+                                <label >CONCERNED PERSON NAME </label>
+                                @if($data['customer_dep_history'] != null && $data['customer_department']->email != $data['customer_dep_history']->email )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['customer_dep_history']->email}} </div> 
+                                @endif
+                            </div>
                             <input type="text" value="{{ $data['customer_department']->email}}" name="email" class="form-control" required>
                         </div>
                     

@@ -200,6 +200,13 @@ class CustomerController extends Controller
         $data['customer_department'] = Customer_department::where('customer_id' ,'=' , $request->input('id'))->first();
         $data['customer_rate_card'] = Customer_rate_card::where('customer_id' ,'=' , $request->input('id'))->first();
 
+        
+
+        $data['customer_info_history'] = Customer_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
+        $data['customer_dep_history'] = Customer_department_edit_history::where('customer_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        
+
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
@@ -527,6 +534,41 @@ class CustomerController extends Controller
     public function update_customer_info(Request $request){
         $id =  (int)$request->input('id');
         $customer_info = Customer_info::where('id' ,  $id )->first();
+
+        $customer_edit_info = new Customer_edit_history;
+        //customer edit history track
+        $customer_edit_info->row_id = (int)$request->input('id');
+        $customer_edit_info->company_id =  $customer_info->company_id;
+        $customer_edit_info->name =  $customer_info->name;
+        $customer_edit_info->address =  $customer_info->address;
+        $customer_edit_info->city =  $customer_info->city;
+        $customer_edit_info->country =  $customer_info->country;
+        $customer_edit_info->tel_number =  $customer_info->tel_number;
+        $customer_edit_info->fax =  $customer_info->fax;
+        $customer_edit_info->mobile =  $customer_info->mobile;
+        $customer_edit_info->email =  $customer_info->email;
+        $customer_edit_info->contact_person =  $customer_info->contact_person;
+        $customer_edit_info->des =  $customer_info->des;
+        $customer_edit_info->web =  $customer_info->web;
+        $customer_edit_info->credit_term =  $customer_info->credit_term;
+        $customer_edit_info->remarks =  $customer_info->remarks;
+        $customer_edit_info->portal_login =  $customer_info->portal_login;
+        $customer_edit_info->user =  $customer_info->user	;
+        $customer_edit_info->pw	 =  $customer_info->pw	;
+        $customer_edit_info->trn	 =  $customer_info->trn	;
+        $customer_edit_info->trn_copy	 =  $customer_info->trn_copy	;
+
+
+        $customer_edit_info->business_license_copy	 =  $customer_info->business_license_copy	;
+        $customer_edit_info->business_license_expiary_date =  $customer_info->business_license_expiary_date	;
+        $customer_edit_info->business_contract_copy	 =  $customer_info->business_contract_copy	;
+        $customer_edit_info->business_contract_expiary_date =  $customer_info->business_contract_expiary_date	;
+
+
+        if(!$customer_edit_info->save()){
+            return response()->json(['status'=>'0']);
+        }
+
         $customer_edit_info = new Customer_edit_history;
         //customer edit history track
         $customer_edit_info->row_id = (int)$request->input('id');

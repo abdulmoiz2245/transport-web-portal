@@ -18,9 +18,15 @@ use App\Models\Muncipality_documents;
 use App\Models\Trained_individual;
 use App\Models\Approvals;
 use App\Models\Trade_license_partners;
+use App\Models\Trade_license_edit_history;
+use App\Models\Trade_license_partners_edit_history;
+use App\Models\Office_land_contract_edit_history;
+
+use App\Models\Trained_individual_edit_history;
 
 
-
+use App\Models\Civil_defense_files_edit_history;
+use App\Models\Muncipality_documents_edit_history;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
@@ -212,7 +218,11 @@ class Hr_ProController extends Controller
         $data['trade_license'] = Trade_license::find($request->input('id'));
 
         $data['modules']= DB::table('modules')->get();
-
+        $data['trade_license_edit_history'] = Trade_license_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        
+        if( $data['trade_license_edit_history'] == null){
+            $data['trade_license_edit_history'] = new Trade_license_edit_history;
+        }
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
@@ -473,6 +483,39 @@ class Hr_ProController extends Controller
     public function update_trade_license(Request $request){
         $id =  (int)$request->input('id');
         $trade_license = Trade_license::where('id' , $id)->first();
+
+        $trade_license_edit = new Trade_license_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->company_id =  $trade_license->company_id;
+        $trade_license_edit->member_ship_certificate =  $trade_license->member_ship_certificate;
+        $trade_license_edit->sponsor_page =  $trade_license->sponsor_page;
+        $trade_license_edit->trade_name =  $trade_license->trade_name;
+        $trade_license_edit->license_number =  $trade_license->license_number;
+        $trade_license_edit->trade_license_copy =  $trade_license->trade_license_copy;
+        $trade_license_edit->manager_id_card =  $trade_license->manager_id_card;
+        
+        $trade_license_edit->sponsor_id_card =  $trade_license->sponsor_id_card;
+        $trade_license_edit->partners_id_card =  $trade_license->partners_id_card;
+        $trade_license_edit->manager_visa =  $trade_license->manager_visa;
+        $trade_license_edit->sponsor_visa =  $trade_license->sponsor_visa;
+        $trade_license_edit->partners_visa =  $trade_license->partners_visa;
+        $trade_license_edit->manager_passport =  $trade_license->manager_passport;
+        $trade_license_edit->sponsor_passport =  $trade_license->sponsor_passport;
+        $trade_license_edit->partners_passport =  $trade_license->partners_passport;
+        $trade_license_edit->company_other =  $trade_license->company_other	;
+        $trade_license_edit->manager_other	 =  $trade_license->manager_other	;
+        $trade_license_edit->sponsor_other	 =  $trade_license->sponsor_other	;
+        $trade_license_edit->partners_other	 =  $trade_license->partners_other	;
+
+
+        $trade_license_edit->sponsorship_fee	 =  $trade_license->sponsorship_fee	;
+        
+
+
+        if(!$trade_license_edit->save()){
+            return response()->json(['status'=>'0']);
+        }
 
         if($request->input('company_id') != ''){
             $trade_license->company_id = $request->input('company_id');
@@ -776,6 +819,11 @@ class Hr_ProController extends Controller
 
         $data['modules']= DB::table('modules')->get();
 
+        $data['trade_license_partners_edit'] = Trade_license_partners_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        
+        if( $data['trade_license_partners_edit'] == null){
+            $data['trade_license_partners_edit'] = new Trade_license_partners_edit_history;
+        }
         //dd($data['modules']);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
@@ -858,7 +906,16 @@ class Hr_ProController extends Controller
         $id =  (int)$request->input('id');
         $customer_rate_card = Trade_license_partners::where('id' , $id)->first();
         // $customer_info = Customer_info::where('id' , $customer_rate_card->customer_id)->first();
+        $trade_license_edit = new Trade_license_partners_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->trade_license_id =  $customer_rate_card->trade_license_id;
+        $trade_license_edit->passport_copy =  $customer_rate_card->passport_copy;
 
+        $trade_license_edit->passport_copy =  $customer_rate_card->passport_copy;
+        $trade_license_edit->visa_copy =  $customer_rate_card->visa_copy;
+        $trade_license_edit->other =  $customer_rate_card->other;
+        $trade_license_edit->save();
        
         if($request->input('other') != ''){
             $customer_rate_card->other = $request->input('other');
@@ -1006,9 +1063,11 @@ class Hr_ProController extends Controller
     public function edit_office_contract(Request $request){
 
         $data['office_contract'] = Office_Land_contract::where('type', '=', 'office')->where('id' ,'=' , $request->input('id'))->first();
+
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['office_edit'] =  Office_land_contract_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1106,6 +1165,20 @@ class Hr_ProController extends Controller
     public function update_office_contract(Request $request){
         $office_contract = Office_Land_contract::find($request->input('id'));
         // dd($request->input('id'));
+        $trade_license_edit = new Office_land_contract_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->contract_number =  $office_contract->contract_number;
+
+        $trade_license_edit->plot_details =  $office_contract->plot_details;
+        $trade_license_edit->landloard_name =  $office_contract->landloard_name;
+        $trade_license_edit->contract_expiary_date =  $office_contract->contract_expiary_date;
+        $trade_license_edit->ijari_number =  $office_contract->ijari_number;
+        $trade_license_edit->lease_rent =  $office_contract->lease_rent;
+        $trade_license_edit->ijari_certificate =  $office_contract->ijari_certificate;
+        $trade_license_edit->type =  $office_contract->type;
+
+        $trade_license_edit->save();
 
         if($request->input('contract_number') != ''){
             $office_contract->contract_number = $request->input('contract_number');
@@ -1273,8 +1346,10 @@ class Hr_ProController extends Controller
 
         $data['land_contract'] = Office_Land_contract::where('type', '=', 'land')->where('id' ,'=' , $request->input('id'))->first();
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+
+        $data['land_edit'] =  Office_land_contract_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+       
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1372,6 +1447,20 @@ class Hr_ProController extends Controller
     public function update_land_contract(Request $request){
         $office_contract = Office_Land_contract::find($request->input('id'));
 
+        $trade_license_edit = new Office_land_contract_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->contract_number =  $office_contract->contract_number;
+
+        $trade_license_edit->plot_details =  $office_contract->plot_details;
+        $trade_license_edit->landloard_name =  $office_contract->landloard_name;
+        $trade_license_edit->contract_expiary_date =  $office_contract->contract_expiary_date;
+        $trade_license_edit->ijari_number =  $office_contract->ijari_number;
+        $trade_license_edit->lease_rent =  $office_contract->lease_rent;
+        $trade_license_edit->ijari_certificate =  $office_contract->ijari_certificate;
+        $trade_license_edit->type =  $office_contract->type;
+
+        $trade_license_edit->save();
         if($request->input('contract_number') != ''){
             $office_contract->contract_number = $request->input('contract_number');
         }
@@ -1574,8 +1663,9 @@ class Hr_ProController extends Controller
 
         $data['civil_defense'] = Civil_defense_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['civil_defense_edit'] = Civil_defense_files_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1634,6 +1724,14 @@ class Hr_ProController extends Controller
 
     public function update_mobile_civil_defence(Request $request){
         $civil_defense = Civil_defense_documents::find($request->input('id'));
+
+        $trade_license_edit = new  Civil_defense_files_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->expiary_date =  $civil_defense->expiary_date;
+        $trade_license_edit->document =  $civil_defense->document;
+        
+        $trade_license_edit->save();
 
         if($request->input('expiary_date') != ''){
             $civil_defense->expiary_date = $request->input('expiary_date');
@@ -1751,8 +1849,11 @@ class Hr_ProController extends Controller
 
         $data['muncipality'] = Muncipality_documents::where('type', '=', 'mobile')->where('id' ,'=' , $request->input('id'))->first();
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['muncipality_edit'] = Muncipality_documents_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
+
+        
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -1811,6 +1912,14 @@ class Hr_ProController extends Controller
 
     public function update_mobile_muncipality(Request $request){
         $muncipality = Muncipality_documents::find($request->input('id'));
+
+        $trade_license_edit = new   Muncipality_documents_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->expiary_date =  $muncipality->expiary_date;
+        $trade_license_edit->document =  $muncipality->document;
+        
+        $trade_license_edit->save();
 
         if($request->input('expiary_date') != ''){
             $muncipality->expiary_date = $request->input('expiary_date');
@@ -1950,8 +2059,9 @@ class Hr_ProController extends Controller
 
         $data['civil_defense'] = Civil_defense_documents::where('type', '=', 'non_mobile')->where('id' ,'=' , $request->input('id'))->first();
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['civil_defense_edit'] = Civil_defense_files_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -2011,6 +2121,14 @@ class Hr_ProController extends Controller
 
     public function update_non_mobile_civil_defence(Request $request){
         $civil_defense = Civil_defense_documents::find($request->input('id'));
+
+        $trade_license_edit = new   Civil_defense_files_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->expiary_date =  $civil_defense->expiary_date;
+        $trade_license_edit->document =  $civil_defense->document;
+        
+        $trade_license_edit->save();
 
         if($request->input('expiary_date') != ''){
             $civil_defense->expiary_date = $request->input('expiary_date');
@@ -2127,8 +2245,9 @@ class Hr_ProController extends Controller
 
         $data['muncipality'] = Muncipality_documents::where('type', '=', 'non_mobile')->where('id' ,'=' , $request->input('id'))->first();
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['muncipality_edit'] = Muncipality_documents_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+        
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -2188,6 +2307,15 @@ class Hr_ProController extends Controller
 
     public function update_non_mobile_muncipality(Request $request){
         $muncipality = Muncipality_documents::find($request->input('id'));
+
+        $trade_license_edit = new   Muncipality_documents_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->expiary_date =  $muncipality->expiary_date;
+        $trade_license_edit->document =  $muncipality->document;
+        
+        $trade_license_edit->save();
+
 
         if($request->input('expiary_date') != ''){
             $muncipality->expiary_date = $request->input('expiary_date');
@@ -2356,8 +2484,9 @@ class Hr_ProController extends Controller
 
         
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['trained_individual_edit'] = Trained_individual_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -2459,6 +2588,17 @@ class Hr_ProController extends Controller
 
     public function update_non_mobile_trained_individual(Request $request){
         $trained_individual = Trained_individual::find($request->input('id'));
+
+        $trade_license_edit = new Trained_individual_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->card_number =  $trained_individual->card_number;
+        $trade_license_edit->employee_name =  $trained_individual->employee_name;
+        $trade_license_edit->pass_card =  $trained_individual->pass_card;
+        $trade_license_edit->front_pic =  $trained_individual->front_pic;
+        $trade_license_edit->expiary_date =  $trained_individual->expiary_date;
+        $trade_license_edit->back_pic =  $trained_individual->back_pic;
+        $trade_license_edit->save();
 
         if($request->input('card_number') != ''){
             $trained_individual->card_number = $request->input('card_number');
@@ -2640,8 +2780,9 @@ class Hr_ProController extends Controller
 
         
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
+        $data['trained_individual_edit'] = Trained_individual_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -2744,6 +2885,17 @@ class Hr_ProController extends Controller
 
     public function update_mobiles_trained_individual(Request $request){
         $trained_individual = Trained_individual::find($request->input('id'));
+
+        $trade_license_edit = new Trained_individual_edit_history;
+        //customer edit history track
+        $trade_license_edit->row_id = (int)$request->input('id');
+        $trade_license_edit->card_number =  $trained_individual->card_number;
+        $trade_license_edit->employee_name =  $trained_individual->employee_name;
+        $trade_license_edit->pass_card =  $trained_individual->pass_card;
+        $trade_license_edit->front_pic =  $trained_individual->front_pic;
+        $trade_license_edit->expiary_date =  $trained_individual->expiary_date;
+        $trade_license_edit->back_pic =  $trained_individual->back_pic;
+        $trade_license_edit->save();
 
         if($request->input('card_number') != ''){
             $trained_individual->card_number = $request->input('card_number');

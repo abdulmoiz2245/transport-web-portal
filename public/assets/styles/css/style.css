@@ -17132,3 +17132,44 @@ textarea.popover-textarea {
 .traning-matrix-body-head tr td.bg-grey{
     background: #fafafa;
 }
+
+.edit-badge {
+    margin-left: 20px;
+    border: #f26522;
+    border-radius: 12px;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 0px;
+    background: #f26522;
+    color: white;
+    margin-bottom: 8px;
+}
+.old-value{
+    background: none;
+    border: 1px solid;
+    color: #f26522;
+    color: #f26522 /fallback/;
+    display: block;
+    line-height: 16px;
+    position: relative;
+    text-decoration: none;
+    vertical-align: middle;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: 500;
+    /* padding: 5px 10px; */
+    white-space: nowrap;
+    display: inline-block;
+    transition: none;
+    text-align: center;
+    /* min-height: 28px; */
+    min-width: 60px;
+    margin-left: 4px;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+    }
+.old-value img{
+    width:14px
+}

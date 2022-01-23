@@ -11,6 +11,9 @@ use App\Models\Permissions;
 use App\Models\Company_name;
 use App\Models\Approvals;
 use App\Models\Sub_contractor_info;
+use App\Models\Sub_contractor_info_edit_history;
+
+use App\Models\Sub_contractor_dep_edit_history;
 
 use App\Models\Customer_info;
 use App\Models\Sub_contractor_department;
@@ -189,6 +192,10 @@ class Sub_contractorController extends Controller
         $data['customer_info'] = Sub_contractor_info::find($request->input('id'));
         $data['customer_department'] = Sub_contractor_department::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
         $data['customer_rate_card'] = Sub_contractor_rate_card::where('sub_contractor_id' ,'=' , $request->input('id'))->first();
+
+        $data['customer_info_edit'] = Sub_contractor_info_edit_history::where('row_id' , $request->input('id'))->orderBy('created_at','desc')->first();
+
+        $data['customer_department_edit'] =  Sub_contractor_dep_edit_history::where('sub_contractor_id' , $request->input('id'))->orderBy('created_at','desc')->first();
 
         $data['modules']= DB::table('modules')->get();
         $data['customer_infos'] = Customer_info::all();
@@ -439,8 +446,37 @@ class Sub_contractorController extends Controller
 
     public function update_sub_contractor_info(Request $request){
         $id =  (int)$request->input('id');
-        // dd($id);
+        
         $customer_info = Sub_contractor_info::where('id' ,  $id )->first();
+
+        $customer_info_edit = new Sub_contractor_info_edit_history;
+        //customer edit history track
+        $customer_info_edit->row_id = (int)$request->input('id');
+        $customer_info_edit->company_id =  $customer_info->company_id;
+        $customer_info_edit->name =  $customer_info->name;
+        $customer_info_edit->trn =  $customer_info->trn;
+        $customer_info_edit->trn_copy =  $customer_info->trn_copy;
+        $customer_info_edit->address =  $customer_info->address; 
+        $customer_info_edit->city =  $customer_info->city;
+        $customer_info_edit->country =  $customer_info->country; 
+        $customer_info_edit->tel_number =  $customer_info->tel_number;
+        $customer_info_edit->fax =  $customer_info->fax; 
+        $customer_info_edit->mobile =  $customer_info->mobile;
+        $customer_info_edit->email =  $customer_info->email; 
+        $customer_info_edit->contact_person =  $customer_info->contact_person;
+        $customer_info_edit->des =  $customer_info->des; 
+        $customer_info_edit->web =  $customer_info->web;
+        $customer_info_edit->credit_term =  $customer_info->credit_term;
+        $customer_info_edit->remarks =  $customer_info->remarks;
+        $customer_info_edit->portal_login =  $customer_info->portal_login;
+        $customer_info_edit->user =  $customer_info->user;
+        $customer_info_edit->pw =  $customer_info->pw;
+        $customer_info_edit->business_license_copy =  $customer_info->business_license_copy;
+        $customer_info_edit->business_contract_copy =  $customer_info->business_contract_copy;
+        $customer_info_edit->business_contract_expiary_date =  $customer_info->business_contract_expiary_date;
+        $customer_info_edit->nda =  $customer_info->nda;
+       
+        $customer_info_edit->save();
 
         if($request->input('company_id') != ''){
             $customer_info->company_id = $request->input('company_id');
@@ -595,6 +631,25 @@ class Sub_contractorController extends Controller
         $id =  (int)$request->input('id');
         $customer_dep = Sub_contractor_department::where('id' , $id)->first();
         $customer_info = Sub_contractor_info::where('id' ,  $customer_dep->sub_contractor_id )->first();
+
+        $customer_info_edit = new Sub_contractor_info_edit_history;
+        //customer edit history track
+        $customer_info_edit->row_id = (int)$request->input('id');
+        $customer_info_edit->sub_contractor_id =  $customer_dep->sub_contractor_id;
+        $customer_info_edit->accountant_name =  $customer_dep->accountant_name;
+        $customer_info_edit->concerned_person_name =  $customer_dep->concerned_person_name;
+        $customer_info_edit->concerned_person_designation =  $customer_dep->concerned_person_designation;
+        $customer_info_edit->logistic_department =  $customer_dep->logistic_department; 
+        
+        $customer_info_edit->tell =  $customer_dep->tell;
+        $customer_info_edit->fax =  $customer_dep->fax; 
+        $customer_info_edit->mobile =  $customer_dep->mobile;
+        $customer_info_edit->email =  $customer_dep->email; 
+       
+       
+        $customer_info_edit->save();
+
+
 
         if($request->input('accountant_name') != ''){
             $customer_dep->accountant_name = $request->input('accountant_name');
