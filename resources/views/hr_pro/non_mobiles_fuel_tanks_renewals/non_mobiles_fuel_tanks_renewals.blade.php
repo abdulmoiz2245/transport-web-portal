@@ -1,4 +1,8 @@
-<div class="container">
+
+
+<div class="card">
+    <div class="card-body">
+    <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route('user.hr_pro.non_mobile_muncipality') }}">
@@ -40,5 +44,7 @@
             </div>
             </a>
         </div>
+    </div>
+</div>
     </div>
 </div>
