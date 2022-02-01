@@ -127,6 +127,45 @@ use Illuminate\Support\Facades\Route;
     //attendance absent request
     Route::get('/employee/attendence/absent', [EmployeeController::class, 'employee_absent']) 
     ->name('employee_absent');
+    //complaints
+    Route::get('/employee/attendence/absent', [EmployeeController::class, 'absent']) 
+    ->name('absent');
+
+    
+    
+
+    Route::get('/employee/attendence/history', [EmployeeController::class, 'absent_history']) 
+    ->name('absent_history');
+
+    Route::post('/employee/attendence/history/clear', [EmployeeController::class, 'absent_history_clear']) 
+    ->name('absent_history_clear');
+
+    Route::get('/employee/attendence/add', [EmployeeController::class, 'add_absent']) 
+    ->name('add_absent');
+
+    Route::post('/employee/attendence/save', [EmployeeController::class, 'save_absent']) 
+    ->name('save_absent');
+
+    Route::post('/employee/attendence/edit', [EmployeeController::class, 'edit_absent']) 
+    ->name('edit_absent');
+
+    Route::post('/employee/attendence/update', [EmployeeController::class, 'update_absent']) 
+    ->name('update_absent');
+
+    Route::post('/employee/attendence/delete', [EmployeeController::class, 'delete_absent']) 
+    ->name('delete_absent');
+
+    Route::get('/employee/attendence/trash', [EmployeeController::class, 'trash_absent']) 
+    ->name('trash_absent');
+
+    Route::post('/employee/attendence/restor-delete', [EmployeeController::class, 'restore_absent']) 
+    ->name('restore_absent');
+
+    Route::post('/employee/attendence/delete-status', [EmployeeController::class, 'delete_absent_status']) 
+    ->name('delete_absent_status');
+
+    Route::post('/employee/attendence/view', [EmployeeController::class, 'view_absent']) 
+    ->name('view_absent');
 
     //termination
     Route::get('/employee/terminate', [EmployeeController::class, 'employee_terminate']) 

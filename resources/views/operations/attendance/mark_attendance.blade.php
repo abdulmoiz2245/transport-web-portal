@@ -27,7 +27,7 @@
                             <td>{{ $employee->designation_actual }}</td>
                             <td>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="inlineCheckbox1" name="attendance['{{ $employee->id }}']" value="p">
+                                    <input class="form-check-input" type="radio" id="inlineCheckbox1" name="attendance['{{ $employee->id }}']" value="p" checked="true">
                                     <label class="form-check-label" for="inlineCheckbox1">P</label>
                                 </div>
                                 <div class="form-check form-check-inline">

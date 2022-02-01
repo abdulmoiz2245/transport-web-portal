@@ -159,6 +159,17 @@ class EmployeeController extends Controller
             $employee->type = $request->input('type');
         }
 
+        if ($request->hasFile('photo')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->photo->getClientOriginalName());
+            $file = $request->file('photo');
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
+                $employee->photo = $name;
+
+            }
+            
+        }
+
         if($request->input('name') != ''){
             $employee->name = $request->input('name');
         }
@@ -202,7 +213,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->national_id_copy->getClientOriginalName());
             $file = $request->file('national_id_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->national_id_copy = $name;
 
             }
@@ -221,7 +232,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->passport_copy->getClientOriginalName());
             $file = $request->file('passport_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->passport_copy = $name;
 
             }
@@ -244,7 +255,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->visa_copy->getClientOriginalName());
             $file = $request->file('visa_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->visa_copy = $name;
 
             }
@@ -264,7 +275,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->work_permit_copy->getClientOriginalName());
             $file = $request->file('work_permit_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->work_permit_copy = $name;
 
             }
@@ -284,7 +295,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->noc_copy->getClientOriginalName());
             $file = $request->file('noc_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->noc_copy = $name;
 
             }
@@ -303,7 +314,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->labour_contract_copy->getClientOriginalName());
             $file = $request->file('labour_contract_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->labour_contract_copy = $name;
 
             }
@@ -323,7 +334,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->company_contract_copy->getClientOriginalName());
             $file = $request->file('company_contract_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->company_contract_copy = $name;
 
             }
@@ -342,7 +353,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->emirates_copy->getClientOriginalName());
             $file = $request->file('emirates_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->emirates_copy = $name;
 
             }
@@ -495,6 +506,17 @@ class EmployeeController extends Controller
             $employee->type = $request->input('type');
         }
 
+        if ($request->hasFile('photo')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->photo->getClientOriginalName());
+            $file = $request->file('photo');
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
+                $employee->photo = $name;
+
+            }
+            
+        }
+
         if($request->input('name') != ''){
             $employee->name = $request->input('name');
         }
@@ -539,7 +561,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->national_id_copy->getClientOriginalName());
             $file = $request->file('national_id_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->national_id_copy = $name;
 
             }
@@ -558,7 +580,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->passport_copy->getClientOriginalName());
             $file = $request->file('passport_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->passport_copy = $name;
 
             }
@@ -581,7 +603,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->visa_copy->getClientOriginalName());
             $file = $request->file('visa_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->visa_copy = $name;
 
             }
@@ -601,7 +623,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->work_permit_copy->getClientOriginalName());
             $file = $request->file('work_permit_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->work_permit_copy = $name;
 
             }
@@ -621,7 +643,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->noc_copy->getClientOriginalName());
             $file = $request->file('noc_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->noc_copy = $name;
 
             }
@@ -640,7 +662,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->labour_contract_copy->getClientOriginalName());
             $file = $request->file('labour_contract_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->labour_contract_copy = $name;
 
             }
@@ -660,7 +682,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->company_contract_copy->getClientOriginalName());
             $file = $request->file('company_contract_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->company_contract_copy = $name;
 
             }
@@ -679,7 +701,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->emirates_copy->getClientOriginalName());
             $file = $request->file('emirates_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->emirates_copy = $name;
 
             }
@@ -698,7 +720,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->jabel_ali_pass_copy->getClientOriginalName());
             $file = $request->file('jabel_ali_pass_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->jabel_ali_pass_copy = $name;
 
             }
@@ -718,7 +740,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->emal_pass_copy->getClientOriginalName());
             $file = $request->file('emal_pass_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->emal_pass_copy = $name;
 
             }
@@ -738,7 +760,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->kp_mina_copy->getClientOriginalName());
             $file = $request->file('kp_mina_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->kp_mina_copy = $name;
 
             }
@@ -758,7 +780,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->driving_license_copy->getClientOriginalName());
             $file = $request->file('driving_license_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->driving_license_copy = $name;
 
             }
@@ -778,7 +800,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->health_insurance_policy_copy->getClientOriginalName());
             $file = $request->file('health_insurance_policy_copy');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->health_insurance_policy_copy = $name;
 
             }
@@ -789,7 +811,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->submission_template->getClientOriginalName());
             $file = $request->file('submission_template');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->submission_template = $name;
 
             }
@@ -800,7 +822,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->passport_handover->getClientOriginalName());
             $file = $request->file('passport_handover');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->passport_handover = $name;
 
             }
@@ -818,7 +840,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->deposit_upload->getClientOriginalName());
             $file = $request->file('deposit_upload');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->deposit_upload = $name;
 
             }
@@ -834,7 +856,7 @@ class EmployeeController extends Controller
 
             $name = time().'_'.str_replace(" ", "_", $request->incentives_upload->getClientOriginalName());
             $file = $request->file('incentives_upload');
-            if($file->storeAs('/main_admin/employee/main/', $name , ['disk' => 'public_uploads'])){
+            if($file->storeAs('/main_admin/hr_pro/employee/main/', $name , ['disk' => 'public_uploads'])){
                 $employee->incentives_upload = $name;
 
             }
@@ -2670,7 +2692,7 @@ class EmployeeController extends Controller
         }
         foreach($request->input('attendance') as $key => $value){
             $attendance = new Attendence;
-            $attendance->emp_id = $key;
+            $attendance->emp_id = str_replace('"', "", $key) ;
             $attendance->attendence_status = $value;
             $attendance->date = $date;
             $attendance->month =  date("m", $timestamp);
@@ -2682,9 +2704,9 @@ class EmployeeController extends Controller
             if($value == 'a'){
                 $attendance->status = 'pending'; 
                 $absent  = new Absent;
-                $absent->emp_id =  $key;
+                $absent->emp_id = str_replace('"', "", $key) ;
                 $absent->date =  date("Y/m/d", $timestamp);
-                $absent->status =  'pending';
+                $absent->status =  'new';
                 $absent->row_status = 'active';
                 $absent->save();
                 $this->history_table('absent_histories', 'add' , 0 , $absent->id , 'hr_pro.employee_attendence');

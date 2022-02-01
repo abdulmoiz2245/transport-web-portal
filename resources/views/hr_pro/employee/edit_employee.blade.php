@@ -61,7 +61,7 @@ use App\Models\Erp_department;
            </a>
        </li>
        @if($data['employee']->designation == 'driver')
-       <li>
+       <!-- <li>
            <a class="nav-link" href="#step-3">
               Salary Card
            </a>
@@ -70,7 +70,7 @@ use App\Models\Erp_department;
            <a class="nav-link" href="#step-4">
               Comisson Rates
            </a>
-       </li>
+       </li> -->
        @endif
        @if($data['employee']->type == 'permanent')
        <li>
@@ -98,7 +98,7 @@ use App\Models\Erp_department;
     <div class="tab-content">
         
        <div id="step-1" class="tab-pane" role="tabpanel">
-            <form action="{{ route( 'user.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route( 'user.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data" id="basic_info_update">
 
             <div class="row">
                 @csrf
@@ -130,6 +130,60 @@ use App\Models\Erp_department;
                         <h5 class="text-danger">Please Add Company First </h5> 
                         <?php } ?>
                     </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    @if( $data['employee']->photo != null)
+                        <!-- <div class="col-4">
+                            <h5 class=""><b> TRN Copy :</b></h5>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex">
+                                    <label>Replace Photo</label>
+
+                                    @if($data['employee_history'] != null &&  $data['employee']->photo != $data['employee_history']->photo )
+                                        <div class="edit-badge"> Edited </div> 
+                                        <div class="old-value"> Old file : 
+                                            <a target="_blank" href="{{ asset('main_admin/employee/main')}}/{{$data['employee_history']->photo}}" >
+                                                <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                            </a>
+                                        </div> 
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <div class="col-11 form-group">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" >Upload Photo</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input"   name="photo">
+                                        <label class="custom-file-label">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1 p-0">
+                                <a target="_blank" href="{{ asset('main_admin/employee/main')}}/{{$data['employee']->photo}}" >
+                                    <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
+                                </a>
+                                                            
+                            </div>
+                        </div>
+                    @else
+                        <div class="form-group">
+                            <label>Upload Photo</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Upload National Id Copy</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input"   name="photo">
+                                    <label class="custom-file-label">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group required designation">
@@ -892,15 +946,15 @@ use App\Models\Erp_department;
                 </div>
 
                 
-                <div class="">
-                    <input type="submit" class="btn btn-primary" id="basic_info_update"  value="Update">
+                <div class="col-12">
+                    <input type="submit" class="btn btn-primary"  value="Update">
                 </div>
             </div>
             </form>
        </div>
 
        <div id="step-2" class="tab-pane" role="tabpanel">
-         <form action="{{ route( 'user.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data">
+         <form action="{{ route( 'user.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data" id="detail_info_update">
 
          <div class="row">
                 @csrf
@@ -1312,7 +1366,7 @@ use App\Models\Erp_department;
                     @endif
             </div>
             <div class="col-12">
-                    <input type="submit" class="btn btn-primary" id="detail_info_update"  value="Update">
+                    <input type="submit" class="btn btn-primary"  value="Update">
 
             </div>
          </div>
@@ -1321,59 +1375,7 @@ use App\Models\Erp_department;
        </div>
        @if($data['employee']->designation == 'driver')
        <div id="step-3" class="tab-pane container" role="tabpanel">
-            <div class="d-flex mb-3" style="justify-content: space-between;">
-
-                <div class="">
-                    <!-- <a href="{{ route( 'user.dashboard') }}" class="text-right">
-                            <img src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-                    </a> -->
-                    <a href="{{ route( 'user.hr_pro.add_salary_card') }}" class="ml-3">
-                    </a>
-                    <form action="{{ route( 'user.hr_pro.add_salary_card') }}" method="post" class="d-inline">
-                        @csrf
-                        <input type="text" class="form-control d-none" name="id" value ="{{$data['employee']->id}}" placeholder="Enter id" >
-                        <button type="submit" class="border-0 bg-white">
-                        <img src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
-                        </button>
-                    </form>
-                </div>
-
-                <div class=""> 
-                    
-
-                    <a href="{{ route( 'user.customer.customer_history') }}"target="_blank" class="ml-3">
-                        <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
-                    </a>
-
-                    <a href="{{ route( 'user.customer.trash_customer') }}" class="ml-3" target="_blank">
-                        <img src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
-                    </a>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="display table nowrap  " style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Month</th>
-                            <th>Flat Trip</th>
-                            <th>Addded By</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       
-                        <tr>
-                           <th></th>
-                           <th></th>
-                           <th></th>
-                           <th></th>
-                           <th></th>
-                        </tr>
-                        
-                    </tbody>         
-                </table>
-            </div>
+           
        </div>
 
        <div id="step-4" class="tab-pane" role="tabpanel">

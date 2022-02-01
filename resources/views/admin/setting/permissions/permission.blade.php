@@ -1,6 +1,8 @@
 
 
-<div class="container">
+<div class="card">
+    <div class="card-body">
+    <div class="container">
     <h2 class="mb-5 mt-2"> <span>Permission Access : {{ $data['role_name']->name }}</span>  </h2>
 
     @foreach($data['modules'] as $module)
@@ -74,6 +76,9 @@
     @endforeach
 
 </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
    

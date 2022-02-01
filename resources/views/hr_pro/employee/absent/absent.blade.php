@@ -182,10 +182,53 @@
 </div>
 
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('user.hr_pro.add_employee_funds') }}" style=""> Add New Fund </a>  </button>
-  <button class="tablinks active" onclick="openCity(event, 'terminated')"> Approved Funds </button>
-  <button class="tablinks" onclick="openCity(event, 'pending')">Pending Funds</button>
-  <button class="tablinks" onclick="openCity(event, 'rejected')">Rejected Funds</button>
+  <!-- <button  class="tablinks "> <a href="{{ route('user.hr_pro.add_absent') }}" style=""> Add New Complaint </a>  </button> -->
+  <form action="" method="get">
+    <input type="text" name="status" value="new" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'new'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'new')"> New Absenties 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="approved" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'approved'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'approved')"> Valid  Absents 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="pending" class="d-none">
+    <button type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'pending'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'pending')">  Pending Absent 
+    </button>
+  </form>
+  <form action="" method="get">
+    <input type="text" name="status" value="rejected" class="d-none">
+    <button class="mt-2" type="submit" class="tablinks <?php 
+      if (isset($_GET["status"])) {
+        if($_GET["status"] == 'rejected'){
+          echo 'active';
+        }
+      }
+      ?>" onclick="openCity(event, 'rejected')"> Rejected Absents 
+    </button>
+  </form>
+  
+
 </div>
 
 <div class="card">
@@ -199,61 +242,73 @@
         </div>
         <div class="mt-3 mb-3"> 
                 
-
-                <a href="{{ route( 'user.hr_pro.employee_funds_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route( 'user.hr_pro.absent_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
-                <!-- <a href="{{ route( 'user.hr_pro.trash_employee_funds') }}" target="_blank" class="ml-3">
+                <a href="{{ route( 'user.hr_pro.trash_absent') }}" target="_blank" class="ml-3">
                     <img  src="<?= asset('assets') ?>/images/trash.png" alt="" width="30">
-                </a> -->
+                </a>
             </div>
 
             
         </div>
-        <div id="terminated" class="tabcontent" style="display: block;">
+        <div id="new" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'new'){
+              echo 'block';
+            }
+          }else{
+            echo 'block';
+          }
+          ?>;">
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
                         <th>Type</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
+                        <th>Date</th>
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_funds'] as $employee_funds)
-                    @if($employee_funds->status == 'approved'  && $employee_funds->row_status != 'deleted')
+                    @foreach($data['absent'] as $absent)
+                    @if($absent->status == 'new'  && $absent->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_funds->emp_id)
+                    @if($employees->id ==  $absent->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_funds->id }}
+                      {{ $absent->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_funds->reason }}</td>
-                    <td>{{ $employee_funds->amount }}</td>
-                   
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
+                    
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->date }}</span></td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'user.hr_pro.view_absent') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
+                        <form action="{{ route( 'user.hr_pro.edit_absent') }}" method="post" class="d-inline">
+                            @csrf
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
+                            <button type="submit" class="border-0 .bg-white">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                            </button>
+                        </form>
+                        <a href="#" id="{{ $absent->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -268,9 +323,17 @@
             </table>
           </div>
         </div>
-        <div id="pending" class="tabcontent" >
+        <div id="approved" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'approved'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;">
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -278,46 +341,113 @@
                         <th>Designation</th>
                         <th>Type</th>
                         <th>Reason</th>
-                        <th>Amount</th>
+                        <th>Hr Remarks</th>
+                        <th>Date </th>  
+
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_funds'] as $employee_funds)
-                    @if($employee_funds->status == 'pending'  && $employee_funds->row_status != 'deleted')
+                    @foreach($data['absent'] as $absent)
+                    @if($absent->status == 'approved'  && $absent->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_funds->emp_id)
+                    @if($employees->id ==  $absent->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_funds->id }}
+                      {{ $absent->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_funds->reason }}</td>
-                    <td>{{ $employee_funds->amount }}</td>
-                   
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
+                    <td>{{ $absent->reason }}</td>
+                    <td>{{ $absent->hr_remarks }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->date }}</span></td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                      <form action="{{ route( 'user.hr_pro.view_absent') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'user.hr_pro.edit_employee_funds') }}" method="post" class="d-inline">
+                        <a href="#" id="{{ $absent->id }}" class="delete-file">
+                            <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                        </a>
+                        
+                    </td>
+                        
+                    </tr>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
+                </tbody>         
+            </table>
+          </div>
+        </div>
+        <div id="pending" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'pending'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;">
+          <div class="table-responsive">
+            <table id=""  class="display table  nowrap " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Employee Name</th>
+                        <th>Designation</th>
+                        <th>Type</th>
+                        <th>Reason</th>
+                        <th>Date</th>  
+
+                        <th>Modified Date</th>  
+                        <th>Action</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data['absent'] as $absent)
+                    @if($absent->status == 'pending'  && $absent->row_status != 'deleted')
+                    @foreach($data['employees'] as $employees)
+                    @if($employees->id ==  $absent->emp_id)
+                        
+                    <tr>
+                   
+                    <td>
+                      {{ $absent->id }}
+                    </td>
+                    <td>{{ $employees->name }}</td>
+                    <td>{{ $employees->designation_actual }}</td>
+                    <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
+                    <td>{{ $absent->reason }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->date }}</span></td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->updated_at }}</span></td>
+                    <td>
+                      <form action="{{ route( 'user.hr_pro.view_absent') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
+                        <form action="{{ route( 'user.hr_pro.edit_absent') }}" method="post" class="d-inline">
+                            @csrf
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
+                            <button type="submit" class="border-0 .bg-white">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                            </button>
+                        </form>
+                        <a href="#" id="{{ $absent->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -333,56 +463,66 @@
             
           </div>
         </div>
-        <div id="rejected" class="tabcontent" >
+       
+        <div id="rejected" class="tabcontent" style="display: <?php 
+          if (isset($_GET["status"])) {
+            if($_GET["status"] == 'rejected'){
+              echo 'block';
+            }
+          }else{
+            echo 'none';
+          }
+          ?>;" >
           <div class="table-responsive">
-            <table id="trade_license"  class="display table  nowrap " style="width:100%">
+            <table id=""  class="display table  nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
                         <th>Type</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
+                        <th>Complaint</th>
+                        <th>Hr Remarks</th>
+                        <th>Date</th>
                         <th>Modified Date</th>  
                         <th>Action</th>  
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data['employee_funds'] as $employee_funds)
-                    @if($employee_funds->status == 'rejected'  && $employee_funds->row_status != 'deleted')
+                    @foreach($data['absent'] as $absent)
+                    @if($absent->status == 'rejected'  && $absent->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_funds->emp_id)
+                    @if($employees->id ==  $absent->emp_id)
                         
                     <tr>
                    
                     <td>
-                      {{ $employee_funds->id }}
+                      {{ $absent->id }}
                     </td>
                     <td>{{ $employees->name }}</td>
                     <td>{{ $employees->designation_actual }}</td>
                     <td><span class="badge badge-pill badge-success">{{ $employees->type }}</span></td>
-                    <td>{{ $employee_funds->reason }}</td>
-                    <td>{{ $employee_funds->amount }}</td>
-                   
-              
-                    <td><span class="badge badge-pill badge-warning">{{ $employee_funds->updated_at }}</span></td>
+                    <td>{{ $absent->reason }}</td>
+                    <td>{{ $absent->hr_remarks }}</td>
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->date }}</span></td>
+
+                    <td><span class="badge badge-pill badge-warning">{{ $absent->updated_at }}</span></td>
                     <td>
-                      <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'user.hr_pro.view_absent') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
                                 <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <form action="{{ route( 'user.hr_pro.edit_employee_funds') }}" method="post" class="d-inline">
+                        <form action="{{ route( 'user.hr_pro.edit_absent') }}" method="post" class="d-inline">
                             @csrf
-                            <input type="text" class="form-control d-none" name="id" value ="{{$employee_funds->id}}" placeholder="Enter id" >
+                            <input type="text" class="form-control d-none" name="id" value ="{{$absent->id}}" placeholder="Enter id" >
                             <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                             </button>
                         </form>
-                        <a href="#" id="{{ $employee_funds->id }}" class="delete-file">
+                        <a href="#" id="{{ $absent->id }}" class="delete-file">
                             <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                         </a>
                         
@@ -403,7 +543,7 @@
   $(document).ready(function() {
         $('.table').DataTable( {
             dom: 'Bfrtip',
-            responsive: true,
+            // responsive: true,
             buttons: [  
                 'copyHtml5',
                 'excelHtml5',
@@ -426,7 +566,7 @@ $('.delete-file').click(function () {
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route( 'user.hr_pro.delete_employee_funds_status') }}",
+                    url:"{{ route( 'user.hr_pro.delete_absent_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {
@@ -447,31 +587,33 @@ $('.delete-file').click(function () {
 
             })
     });
-  function openCity(evt, cityName) {
-      var i, tabcontent, tablinks;
-      var ent = evt;
-      $(".tab ").css("filter", "blur(8px)");
-      $(".card ").css("filter", "blur(8px)");
+  // function openCity(evt, cityName) {
+  //     var i, tabcontent, tablinks;
+  //     var ent = evt;
+  //     $(".tab ").css("filter", "blur(8px)");
+  //     $(".card ").css("filter", "blur(8px)");
 
-      $(".loader").css('display' , 'block');
-      setTimeout(function(ent) { 
-      $(".tab ").css("filter", "blur(0px)");
-      $(".card ").css("filter", "blur(0px)");
+  //     $(".loader").css('display' , 'block');
 
-        $(".loader").css('display' , 'none');
+  //     setTimeout(function(ent) { 
 
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(cityName).style.display = "block";
-        evt.path[0].className += " active";
-        console.log('cale234d');
+  //       $(".tab ").css("filter", "blur(0px)");
+  //       $(".card ").css("filter", "blur(0px)");
 
-      }, 1500);
-  }
+  //       $(".loader").css('display' , 'none');
+
+  //       tabcontent = document.getElementsByClassName("tabcontent");
+  //       for (i = 0; i < tabcontent.length; i++) {
+  //           tabcontent[i].style.display = "none";
+  //       }
+  //       tablinks = document.getElementsByClassName("tablinks");
+  //       for (i = 0; i < tablinks.length; i++) {
+  //           tablinks[i].className = tablinks[i].className.replace(" active", "");
+  //       }
+  //       document.getElementById(cityName).style.display = "block";
+  //       evt.path[0].className += " active";
+  //       console.log('cale234d');
+
+  //     }, 0);
+  // }
 </script>

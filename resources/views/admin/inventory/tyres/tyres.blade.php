@@ -5,7 +5,9 @@ use App\Models\User;
 
 
 ?>
-<div class="container">
+<div class="card">
+    <div class="card-body">
+    <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
         <div>
             <a href="{{ route( 'admin.inventory.inventory') }}">
@@ -51,6 +53,9 @@ use App\Models\User;
     </div>
     
 </div>
+    </div>
+</div>
+
 
 <script>
     $(document).ready(function() {

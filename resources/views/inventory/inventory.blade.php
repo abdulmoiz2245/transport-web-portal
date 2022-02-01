@@ -1,5 +1,7 @@
 <div class="container">
-    <div class="row">
+    <div class="card">
+        <div class="card-body">
+        <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route('user.inventory.fuel') }}">
                 <div class="card card-icon mb-4">
@@ -59,4 +61,7 @@
             </a>
         </div>
     </div>
+        </div>
+    </div>
+   
 </div>

@@ -387,4 +387,39 @@ function openCity(evt, cityName) {
 
 
 }
+
+$('.delete-file').click(function () {
+            var file_id = this.id;
+            swal({
+                title: 'Are you sure?',
+                text: "You want to delete this Data.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',  
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+                $.ajax({
+                    type:'POST',
+                    url:"{{ route( 'user.hr_pro.delete_employee_status') }}",
+                    data:{id:file_id, _token :"{{ csrf_token() }}"},
+                    success:function(data){
+                            if (data.status == 1) {
+                                swal({
+                                    title: "Deleted!",
+                                    text: "Data has been deleted.",
+                                    type: "success"
+                                }).then(function () {
+                                    window.location.href = '';
+                                });
+                            }else{
+                                toastr.error("Some thing went wrong. ");
+
+                            }
+                    }
+                 });
+              
+
+            })
+    });
 </script>

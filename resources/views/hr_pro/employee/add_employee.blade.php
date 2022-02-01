@@ -473,7 +473,9 @@ p {
                 </div>
             </div> -->
 
-            <input type="submit"  value="Save">
+            <div class="col-12">
+                 <input type="submit" class="btn btn-primary"  value="Save">
+            </div>
         </div>
     </form>
 

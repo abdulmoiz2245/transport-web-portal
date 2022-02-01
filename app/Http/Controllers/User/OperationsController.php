@@ -422,6 +422,7 @@ class OperationsController extends Controller
 
     public function save_employee_attendance(Request $request){
         $str = $request->input('date');
+        // dd($str);
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
@@ -434,7 +435,7 @@ class OperationsController extends Controller
         }
         foreach($request->input('attendance') as $key => $value){
             $attendance = new Attendence;
-            $attendance->emp_id = $key;
+            $attendance->emp_id = str_replace('"', "", $key) ;
             $attendance->attendence_status = $value;
             $attendance->date = $date;
             $attendance->month =  date("m", $timestamp);
@@ -447,9 +448,11 @@ class OperationsController extends Controller
             if($value == 'a'){
                 $attendance->status = 'pending'; 
                 $absent  = new Absent;
-                $absent->emp_id =  $key;
-                $absent->date =  date("Y/m/d", $timestamp);
-                $absent->status =  'pending';
+                $absent->emp_id =  str_replace("'", "", $key) ;
+                $absent->date =   $date;
+                $absent->status =  'new';
+                $absent->categorie = 'driver';
+
                 $absent->row_status = 'active';
                 $absent->save();
                 $this->history_table('absent_histories', 'add' , 0 , $absent->id , 'hr_pro.employee_attendence');
@@ -635,7 +638,7 @@ class OperationsController extends Controller
 
 
         if($Complaints->save()){
-            $this->history_table('complaints_histories', 'Add' , 0 , $Complaints->id , 'hr_pro.view_complaints');
+            $this->history_table('complaints_histories', 'Add' , Auth::id() , $Complaints->id , 'hr_pro.view_complaints');
             return \Redirect::route('user.operations.complaints')->with('success', 'Data Added Sucessfully');
         }
         
@@ -717,6 +720,224 @@ class OperationsController extends Controller
         }
     }
 
+
+    //Absent
+
+       ///////////////////////////////////////
+    ///////// Absent /////////
+    ///////////////////////////////////////
+    public function absent(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['absent'] = Absent::where('categorie' , '=' ,'driver')->get();
+        $data['employees'] = Employee::all();
+        $data['page_title'] = "Absent Employees";
+        $data['view'] = 'operations.absent.absent';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function trash_absent(){
+        $data['modules']= DB::table('modules')->get();
+        $data['absent'] = absent::all();
+        $data['employees'] = Employee::all();
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Absent Trash";
+        $data['view'] = 'operations.absent.deleted_data';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function absent_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['employees'] = Employee::all();
+
+        $data['trade_licenses_history']= absent_history::all();
+        $data['table_name']= 'abbsent_histories';
+
+        $data['page_title'] = "History | Absent ";
+        $data['view'] = 'hr_pro.history';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function add_absent(){
+        $data['modules']= DB::table('modules')->get();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['absent'] = absent::all();
+        $data['page_title'] = "New Absent";
+        $data['view'] = 'operations.absent.add_absent';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function view_absent(Request $request){
+        $data['complaint'] = absent::find($request->input('id'));
+        $data['employees'] = Employee::all();
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        
+        $data['page_title'] = "View  absent";
+        $data['view'] = 'operations.absent.view_absent';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function edit_absent (Request $request){
+        $data['absent'] = absent::find($request->input('id'));
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['modules']= DB::table('modules')->get();
+        $data['employee'] = Employee::all();
+
+        //dd($data['modules']);
+        
+
+        $data['page_title'] = "Edit Absent";
+        $data['view'] = 'operations.absent.edit_absent';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function save_absent(Request $request){
+
+        $absent = new absent;
+        
+
+        if($request->input('emp_id') != ''){
+            $absent->emp_id = $request->input('emp_id');
+
+        }
+        
+        if($request->input('reason') != ''){
+            $absent->reason = $request->input('reason');
+
+        }
+        
+
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $absent->upload	 = $name;
+
+            }
+           
+
+        }
+        $absent->date =   date('y-m-d');
+        $absent->status = 'pending';
+ 
+        $absent->user_id = Auth::id();
+        
+        $absent->action="Add";
+       
+
+
+        if($absent->save()){
+            $this->history_table('absent_histories', 'Add' , $absent->user_id , $absent->id , 'hr_pro.view_absent');
+            return \Redirect::route('user.operations.absent')->with('success', 'Data Added Sucessfully');
+        }
+        
+
+
+    }
+
+    public function update_absent(Request $request){
+        $id =  (int)$request->input('id');
+        $absent = Absent::where('id' , $id)->first();
+
+        // if($request->input('emp_id') != ''){
+        //     $absent->emp_id = $request->input('emp_id');
+
+        // }
+        if($request->input('reason') != ''){
+            $absent->reason = $request->input('reason');
+
+        }
+        // if($request->input('admin_remarks') != ''){
+        //     $absent->admin_remarks = $request->input('admin_remarks');
+
+        // }
+        // if($request->input('hr_remarks') != ''){
+        //     $absent->hr_remarks = $request->input('hr_remarks');
+
+        // }
+       
+        if ($request->hasFile('upload')) {
+
+        
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/hr_pro/employee/main', $name , ['disk' => 'public_uploads'])){
+                $absent->upload	 = $name;
+
+            }
+           
+
+        }
+
+
+
+
+        $absent->status = 'pending';
+ 
+        $absent->user_id = Auth::id();
+        
+        $absent->action="Edit";
+
+// dd( $absent->status);
+        $absent->save();
+
+        
+
+        return \Redirect::route('user.operations.absent')->with('success', 'Data Updated Sucessfully');
+
+    }
+
+   
+    public function delete_absent_status(Request $request){
+        $id =  (int)$request->input('id');
+        $absent = absent::where('id' , $id)->first();
+
+        
+        $absent->status = 'pending';
+ 
+        $absent->user_id = Auth::id();
+        
+        $absent->action="Delete";
+
+        if( $absent->save()){
+
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
 
 
 }

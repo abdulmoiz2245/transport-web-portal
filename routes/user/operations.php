@@ -103,3 +103,43 @@ Route::post('/operations/complaints/delete-status', [OperationsController::class
 
 Route::post('/operations/complaints/view', [OperationsController::class, 'view_complaints']) 
 ->name('user.operations.view_complaints');
+
+//Absent
+Route::get('/operations/absent', [OperationsController::class, 'absent']) 
+->name('user.operations.absent');
+
+
+
+
+Route::get('/operations/absent/history', [OperationsController::class, 'absent_history']) 
+->name('user.operations.absent_history');
+
+Route::post('/operations/absent/history/clear', [OperationsController::class, 'absent_history_clear']) 
+->name('user.operations.absent_history_clear');
+
+Route::get('/operations/absent/add', [OperationsController::class, 'add_absent']) 
+->name('user.operations.add_absent');
+
+Route::post('/operations/absent/save', [OperationsController::class, 'save_absent']) 
+->name('user.operations.save_absent');
+
+Route::post('/operations/absent/edit', [OperationsController::class, 'edit_absent']) 
+->name('user.operations.edit_absent');
+
+Route::post('/operations/absent/update', [OperationsController::class, 'update_absent']) 
+->name('user.operations.update_absent');
+
+Route::post('/operations/absent/delete', [OperationsController::class, 'delete_absent']) 
+->name('user.operations.delete_absent');
+
+Route::get('/operations/absent/trash', [OperationsController::class, 'trash_absent']) 
+->name('user.operations.trash_absent');
+
+Route::post('/operations/absent/restor-delete', [OperationsController::class, 'restore_absent']) 
+->name('user.operations.restore_absent');
+
+Route::post('/operations/absent/delete-status', [OperationsController::class, 'delete_absent_status']) 
+->name('user.operations.delete_absent_status');
+
+Route::post('/operations/absent/view', [OperationsController::class, 'view_absent']) 
+->name('user.operations.view_absent');

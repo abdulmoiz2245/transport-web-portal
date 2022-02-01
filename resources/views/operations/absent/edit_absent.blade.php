@@ -1,41 +1,74 @@
 <div class="container">
 
     <div class="mb-5"> 
-        <a href="{{ route( 'user.hr_pro.complaints') }}">
+        <a href="{{ route( 'user.operations') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
-    <form action="{{ route('user.hr_pro.update_complaints') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.operations.update_absent') }}" method="post" enctype="multipart/form-data">
     @csrf
-    <input type="text" name="id" value="{{ $data['complaint']->id }}" class="d-none">
+    <input type="text" name="id" value="{{ $data['absent']->id }}" class="d-none">
         <div class="row">
-            <div class="col-md-6 col-12">
+            <!-- <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Admin Notes</label>
-                    <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['complaint']->status_message }}</textarea>
+                    <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['absent']->status_message }}</textarea>
                     
                 </div>
-            </div>
+            </div> -->
+            <!-- <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        <option value='pending' <?php if($data['absent']->status == 'pending') echo 'selected="selected"' ?> >Pending</option>
+                        <option value='approved' <?php if($data['absent']->status == 'approved') echo 'selected="selected"' ?> >Approved</option>
+                        <option value='rejected' <?php if($data['absent']->status == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
+                    </select>
+                </div>
+            </div> -->
             
         </div>
-        <hr>
+        <!-- <hr> -->
         <div class="row">
-            <div class="col-12 col-md-6">
+            <!-- <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label>Select Employee </label>
                     <select name="emp_id" class="form-control" required>
                     @foreach($data['employee'] as $employee)
                         
 
-                        <option value="{{ $employee->id }}" <?php if($data['complaint']->emp_id == $employee->id) echo 'selected="selected"' ?>> {{ $employee->name }}</option>
+                        <option value="{{ $employee->id }}" <?php if($data['absent']->emp_id == $employee->id) echo 'selected="selected"' ?>> {{ $employee->name }}</option>
                           
                     @endforeach
                     </select>
                 </div>
+            </div> -->
+            <!-- <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Hr Remarks </label>
+                    
+                    
+                    <textarea name="hr_remarks" class="form-control" id="" cols="30" rows="10" required>
+                    {{ $data['absent']->hr_remarks }}
+                    </textarea>
+                </div>
+            </div> -->
+
+            
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Reason </label>
+                    
+                    
+                    <textarea name="reason" class="form-control" id="" cols="30" rows="10" required>
+                    {{ $data['absent']->reason }}
+                    </textarea>
+                </div>
             </div>
 
             <div class="col-md-6 col-12">
-                @if($data['complaint']->upload != NULL)
+                @if($data['absent']->upload != NULL)
                 <div class="row">
                     <div class="col-12">
                         <label>Replace Upload Document</label>
@@ -52,7 +85,7 @@
                         </div>
                     </div>
                     <div class="col-1 p-0">
-                        <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['complaint']->upload}}">
+                        <a target="_blank" href="{{ asset('main_admin/hr_pro/employee/main')}}/{{$data['absent']->upload}}">
                             <img  src="<?= asset('assets') ?>/images/export.png" alt="" title="View Document" width="30">
                         </a>
                     </div>
@@ -74,29 +107,7 @@
             </div>
             
             
-            <div class="col-12 col-md-6">
-                <div class="form-group">
-                    <label>Hr Remarks </label>
-                    
-                    
-                    <textarea name="hr_remarks" class="form-control" id="" cols="30" rows="10" required>
-                    {{ $data['complaint'] ->hr_remarks }}
-                    </textarea>
-                </div>
-            </div>
-
             
-
-            <div class="col-12 col-md-6">
-                <div class="form-group">
-                    <label>Compaints </label>
-                    
-                    
-                    <textarea name="complaint" class="form-control" id="" cols="30" rows="10" required>
-                    {{ $data['complaint'] ->complaint }}
-                    </textarea>
-                </div>
-            </div>
 
            
             

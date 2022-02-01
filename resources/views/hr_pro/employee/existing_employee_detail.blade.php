@@ -62,8 +62,8 @@
                     </a>
                 </div>
 
-                <!-- <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('user.hr_pro.employee_absent') }}">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <a href="{{ route('user.hr_pro.absent') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <img src="<?= asset('assets') ?>/images/leave_clender.png" class="mb-1" alt="" width="35">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </a>
-                </div> -->
+                </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('user.hr_pro.employee_terminate') }}">

@@ -112,7 +112,7 @@ use App\Models\Erp_department;
     float: left;
     font-weight: 500;
     margin-right: 30px;
-    width: 25%;
+    /* width: 25%; */
 }
 .personal-info li .text {
     color: #8e8e8e;
@@ -146,14 +146,13 @@ use App\Models\Erp_department;
 <small class="text-muted">{{ $data['employee']->designation_actual}}</small>
 <div class="staff-id">NOC Number : {{ $data['employee']->national_id_number}}</div>
 <div class="small doj text-muted">Date of Join : {{ $data['employee']->employee_doj}}</div>
-<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
 </div>
 </div>
 <div class="col-md-7">
 <ul class="personal-info">
 <li>
-<div class="title">Password Number :</div>
-<div class="text"><a href="">{{ $data['employee_history']->passport_number}}</a></div>
+<div class="title">Passport Number :</div>
+<div class="text"><a href="">{{ $data['employee']->passport_number}}</a></div>
 </li>
 <li>
 <div class="title">Passport  Expiry :</div>
@@ -280,10 +279,22 @@ use App\Models\Erp_department;
                 </div>
 
                 <div class="col-12 col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="font-weight-bold"> National Id Number :</h5>
+
+                        </div>
+                        <div class="col-6">
+                            <p>{{ $data['employee']->national_id_number }}</p>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
                     
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="font-weight-bold"> Nationality Id Copy:</h5>
+                            <h5 class="font-weight-bold"> National Id Copy:</h5>
 
                         </div>
                         <div class="col-8">

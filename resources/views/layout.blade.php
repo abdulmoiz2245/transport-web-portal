@@ -197,13 +197,13 @@
                         <div class="triangle"></div>
                     </li>
         
-                    <li class="nav-item" data-item="">
+                    <!-- <li class="nav-item" data-item="">
                         <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
                             <i class="nav-icon i-Business-Man"></i>
                             <span class="nav-text">Employee</span>
                         </a>
                         <div class="triangle"></div>
-                    </li>
+                    </li> -->
 
                     <li class="nav-item" data-item="">
                         <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">

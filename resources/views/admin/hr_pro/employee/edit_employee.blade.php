@@ -8,7 +8,7 @@ use App\Models\Erp_department;
         content:"*";
         color:red;
     }
-    .edit-badge{    
+        .edit-badge {
         margin-left: 20px;
         border: #f26522;
         border-radius: 12px;
@@ -32,13 +32,21 @@ use App\Models\Erp_department;
         border-radius: 25px;
         font-size: 12px;
         font-weight: 500;
-        padding: 5px 10px;
+        /* padding: 5px 10px; */
         white-space: nowrap;
         display: inline-block;
         transition: none;
         text-align: center;
-        min-height: 28px;
+        /* min-height: 28px; */
         min-width: 60px;
+        margin-left: 4px;
+        margin-bottom: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 2px;
+        }
+    .old-value img{
+        width:14px
     }
 </style>
 <div class="container">
@@ -61,7 +69,7 @@ use App\Models\Erp_department;
            </a>
        </li>
        @if($data['employee']->designation == 'driver')
-       <li>
+       <!-- <li>
            <a class="nav-link" href="#step-3">
               Salary Card
            </a>
@@ -70,7 +78,7 @@ use App\Models\Erp_department;
            <a class="nav-link" href="#step-4">
               Comisson Rates
            </a>
-       </li>
+       </li> -->
        @endif
        @if($data['employee']->type == 'permanent')
        <li>
@@ -98,7 +106,7 @@ use App\Models\Erp_department;
     <div class="tab-content">
         
        <div id="step-1" class="tab-pane" role="tabpanel">
-            <form action="{{ route('admin.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data" id="basic_info_update">
 
             <div class="row">
                 @csrf
@@ -900,7 +908,7 @@ use App\Models\Erp_department;
        </div>
 
        <div id="step-2" class="tab-pane" role="tabpanel">
-         <form action="{{ route('admin.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data">
+         <form action="{{ route('admin.hr_pro.update_employee') }}" method="post" enctype="multipart/form-data" id="detail_info_update">
 
          <div class="row">
                 @csrf
@@ -1312,7 +1320,7 @@ use App\Models\Erp_department;
                     @endif
             </div>
             <div class="col-12">
-                    <input type="submit" class="btn btn-primary" id="detail_info_update"  value="Update">
+                    <input type="submit" class="btn btn-primary" value="Update">
 
             </div>
          </div>
