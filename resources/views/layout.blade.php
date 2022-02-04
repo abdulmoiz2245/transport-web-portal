@@ -206,7 +206,7 @@
                     </li> -->
 
                     <li class="nav-item" data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.account.account') }}">
                             <i class="nav-icon i-Data-Financial"></i>
                             <span class="nav-text">Accounts</span>
                         </a>

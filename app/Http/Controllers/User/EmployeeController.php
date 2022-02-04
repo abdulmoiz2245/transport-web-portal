@@ -2833,6 +2833,7 @@ class EmployeeController extends Controller
         }
 
 
+        $funds_request->row_status = 'active';
 
         $funds_request->status = 'pending';
  

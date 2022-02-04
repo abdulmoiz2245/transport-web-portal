@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmmployeeTerminationHistoriesTable extends Migration
+class CreateAccountPurchaseHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEmmployeeTerminationHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('emmployee_termination_histories', function (Blueprint $table) {
+        Schema::create('account_purchase_histories', function (Blueprint $table) {
             $table->id();
             $table->string('action')->nullable();
             $table->integer('user_id')->nullable();
@@ -31,6 +31,6 @@ class CreateEmmployeeTerminationHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emmployee_termination_histories');
+        Schema::dropIfExists('account_purchase_histories');
     }
 }

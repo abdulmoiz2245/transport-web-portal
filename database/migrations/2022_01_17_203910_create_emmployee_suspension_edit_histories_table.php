@@ -19,7 +19,7 @@ class CreateEmmployeeSuspensionEditHistoriesTable extends Migration
 
             $table->string('emp_id')->nullable();
             $table->string('remarks')->nullable();
-            $table->string('uoload')->nullable();
+            $table->string('upload')->nullable();
             $table->string('date')->nullable();
 
             $table->string('status')->nullable();
