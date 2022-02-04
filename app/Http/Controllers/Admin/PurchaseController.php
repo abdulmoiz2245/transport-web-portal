@@ -241,6 +241,15 @@ class PurchaseController extends Controller
             $purchase->supplier_id = $request->input('supplier_id');
         }
 
+        if($request->input('supplier_status') != ''){
+            $purchase->supplier_status = $request->input('supplier_status');
+        }
+
+        if($request->input('is_vat') != ''){
+            $purchase->is_vat = $request->input('is_vat');
+        }
+
+
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');
         }

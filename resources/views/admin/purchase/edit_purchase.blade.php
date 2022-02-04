@@ -109,13 +109,13 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <input type="text" name="unit" value="{{ $data['purchase']->unit }}"  class="form-control" placeholder="Enter Unit" required>
+                    <input type="number" name="unit" id="unit" value="{{ $data['purchase']->unit }}"  class="form-control" placeholder="Enter Unit" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit Price</label>
-                    <input type="text" name="unit_price"  value="{{ $data['purchase']->unit_price }}"  class="form-control" placeholder="Enter Unit Price" required>
+                    <input type="number" name="unit_price" id="unit_price"  value="{{ $data['purchase']->unit_price }}"  class="form-control" placeholder="Enter Unit Price" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
@@ -144,14 +144,16 @@ use App\Models\Supplier_info;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Credit Days</label>
-                    <input type="text" name="cerdit_days" value="{{ $data['purchase']->cerdit_days }}"  class="form-control" placeholder="Enter Credit Days" required>
+                    <label>Total Amount</label>
+                    <input type="text" name="total_amount" id="total_amount" value="{{ $data['purchase']->total_amount }}"  class="form-control" placeholder="Enter Total Amount" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Total Amount</label>
-                    <input type="text" name="total_amount" value="{{ $data['purchase']->total_amount }}"  class="form-control" placeholder="Enter Total Amount" required>
+                    <label>Is VAT</label>
+                    <label class="switch pr-5 switch-dark mt-3"> 
+                        <input type="checkbox" checked="checked" id="is_vat" name="is_vat"><span class="slider"></span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -168,17 +170,6 @@ use App\Models\Supplier_info;
                 <div class="form-group">
                     <label>Status</label>
                     <select name="status" class="form-control">
-                        <option value='pending' <?php if($data['purchase']->status_admin == 'pending') echo 'selected="selected"' ?> >Pending</option>
-                        <option value='approved' <?php if($data['purchase']->status_admin == 'approved') echo 'selected="selected"' ?> >Approved</option>
-                        <option value='rejected' <?php if($data['purchase']->status_admin == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Accounts Status</label>
-                    <select name="status_account" class="form-control">
                         <option value='pending' <?php if($data['purchase']->status_admin == 'pending') echo 'selected="selected"' ?> >Pending</option>
                         <option value='approved' <?php if($data['purchase']->status_admin == 'approved') echo 'selected="selected"' ?> >Approved</option>
                         <option value='rejected' <?php if($data['purchase']->status_admin == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
@@ -264,6 +255,42 @@ $('.as_supplier_id').on('change', function()
             //     }
             // });
         });
+    });
+
+    $('#unit_price').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+        }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
+    });
+
+    $('#unit').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+        }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
+    });
+
+    $('#is_vat').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+        }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
     });
 
 $(document).ready(function() {

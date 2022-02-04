@@ -20,13 +20,13 @@ use App\Models\Supplier_info;
         <div class="row">
             <div class="col-12 mt-3 mb-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="supplier_type" id="new_supplier" checked>
+                    <input class="form-check-input" type="radio" name="supplier_status" id="new_supplier" checked>
                     <label class="form-check-label" for="new_supplier">
                         New Supplier
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="supplier_type" id="existing_supplier">
+                    <input class="form-check-input" type="radio" name="supplier_status" id="existing_supplier">
                     <label class="form-check-label" for="existing_supplier">
                         Existing Supplier
                     </label>
@@ -41,10 +41,16 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12 trn_number">
                 <div class="form-group">
                     <label>TRN Number</label>
-                    <input type="number" id="trn_number" name="trn" class="form-control"  placeholder="Enter TRN Number" required>
+                    <input type="number" name="trn" class="form-control"  placeholder="Enter TRN Number" required>
                 </div>
             </div>
-
+            <div class="col-md-6 col-12 trn_number_supplier">
+                <div class="form-group">
+                    <label>TRN Number</label>
+                    <input type="number" name="trn" id="trn_supplier" class="form-control"  placeholder="Enter TRN Number" disabled>
+                </div>
+            </div>
+        
        
             <!-- <div class="col-md-6 col-12">
                 <div class="form-group">
@@ -52,13 +58,29 @@ use App\Models\Supplier_info;
                     <input type="text" name="lpo_ref_num" class="form-control"  placeholder="Enter LPO Reference Number" required>
                 </div>
             </div> -->
-            <div class="col-md-6 col-12">
+
+            <div class="col-md-6 col-12 select_company">
                 <div class="form-group">
-                    <label>Company Name</label>
-                    <input id="company_name" type="text" name="company_name" class="form-control" placeholder="Enter Company Name" required>
+                    <label >Select Company</label>
+                    <?php if(Company_name::all()->count() > 0){ ?>
+                        <select name="company_id" class="form-control "required >
+                            
+                            @foreach($data['company_names'] as $company_name)
+                            <option value="{{ $company_name->id }}">{{ $company_name->name }}</option>
+                            @endforeach
+                        </select>
+                    <?php } else{ ?>
+                    <h5 class="text-danger">Please Add Company First </h5> 
+                    <?php } ?>
                 </div>
             </div>
-           
+
+            <div class="col-md-6 col-12 company_supplier">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" name="company_name" class="form-control" placeholder="Enter Company Name" required>
+                </div>
+            </div>
 
             <div class="col-md-6 col-12 supplier_name">
                 <div class="form-group">
@@ -129,16 +151,16 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit</label>
-                    <input type="text" name="unit" class="form-control" placeholder="Enter Unit" required>
+                    <input type="number" name="unit" id="unit" class="form-control" placeholder="Enter Unit" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit Price</label>
-                    <input type="number" name="unit_price" class="form-control" placeholder="Enter Unit Price" required>
+                    <input type="number" name="unit_price" id="unit_price" class="form-control" placeholder="Enter Unit Price" required>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-12 type">
                 <div class="form-group">
                     <label>Type</label>
                     <input type="text" name="type" class="form-control" placeholder="Enter Type" required>
@@ -164,14 +186,16 @@ use App\Models\Supplier_info;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Credit Days</label>
-                    <input type="number" name="cerdit_days" class="form-control" placeholder="Enter Credit Days" required>
+                    <label>Is VAT</label>
+                    <label class="switch pr-5 switch-dark mt-3"> 
+                        <input type="checkbox" checked="checked" id="is_vat" name="is_vat"><span class="slider"></span>
+                    </label>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Total Amount</label>
-                    <input type="number" name="total_amount" class="form-control" placeholder="Enter Total Amount" required>
+                    <input type="number" name="total_amount" id="total_amount" class="form-control" placeholder="Enter Total Amount" disabled>
                 </div>
             </div>
         </div>
@@ -194,7 +218,6 @@ use App\Models\Supplier_info;
     
     $('.as_supplier_id').on('change', function()
     {
-        console.log(this.value);
         var studentSelect = $('#Material_Data');
 
         
@@ -240,27 +263,53 @@ use App\Models\Supplier_info;
 
            
 
-           
+            // // manually trigger the `select2:select` event
+            // studentSelect.trigger({
+            //     type: 'select2:select',
+            //     params: {
+            //         data: data
+            //     }
+            // });
         });
     });
 
     var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
-    //var sup = JSON.parse(JSON.stringify(data));
-    console.log(data);
-    data.forEach(function()){
-
+    
+    
+    $('#unit_price').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+        }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
     });
 
-    $('#supplier_select').change(function(){
-        var supplier_id = $(this).find(":selected").val();
-        var arrayLength = data.length;
-        for (var i = 0; i < arrayLength; i++) {
-            if(supplier_id == data[i].id){
-
-                break;
-            }
-            //Do something
+    $('#unit').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
         }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
+    });
+
+    $('#is_vat').change(function(){
+        var unit = $('#unit').val();
+        var unit_price = $('#unit_price').val();
+        if($('#is_vat').is(':checked')){
+            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+        }
+        else{
+            $('#total_amount').val((unit*unit_price));
+        }
+        
     });
 
     
@@ -271,12 +320,31 @@ use App\Models\Supplier_info;
             $('.supplier_id').hide();
             $('.trn_number').show();
             $('.trn_number_supplier').hide();
+            $('.select_company').show();
+            $('.company_supplier').hide();
         } 
+
+        $('#supplier_select').change(function(){
+        var supplier_id = $(this).find(":selected").val();
+        var arrayLength = data.length;
+        for (var i = 0; i < arrayLength; i++) {
+            console.log(data[i].trn)
+            if(supplier_id == data[i].id){
+                $('#trn_supplier').val(data[i].trn);
+                break;
+            }
+            //Do something
+        }
+        });
     });
+
     $('.supplier_name').show();
     $('.supplier_id').hide();
     $('.trn_number').show();
     $('.trn_number_supplier').hide();
+    $('.select_company').show();
+    $('.company_supplier').hide();
+    
     $('#existing_supplier').change(function()
     {
         if ($(this).is(':checked')) {
@@ -284,6 +352,8 @@ use App\Models\Supplier_info;
             $('.supplier_id').show();
             $('.trn_number').hide();
             $('.trn_number_supplier').show();
+            $('.select_company').hide();
+            $('.company_supplier').show();
         } 
     });
 </script>
