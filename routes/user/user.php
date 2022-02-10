@@ -45,6 +45,7 @@ Route::middleware(['auth:user'])->group(function () {
 
     require __DIR__.'/account.php';
 
+    require __DIR__.'/petty.php';
     
 
     Route::get('/employee/inventory', [UserController::class, 'inventory']) 

@@ -67,6 +67,8 @@ Route::middleware(['auth:admin'])->group(function () {
     require __DIR__.'/purchase.php';
     require __DIR__.'/inventory.php';
     require __DIR__.'/account.php';
+    require __DIR__.'/petty.php';
+
 
 });
 
