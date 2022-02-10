@@ -240,6 +240,9 @@ class PurchaseController extends Controller
         if($request->input('supplier_id') != ''){
             $purchase->supplier_id = $request->input('supplier_id');
         }
+        if($request->input('supplier_name') != ''){
+            $purchase->supplier_name = $request->input('supplier_name');
+        }
 
         if($request->input('supplier_status') != ''){
             $purchase->supplier_status = $request->input('supplier_status');
@@ -263,6 +266,11 @@ class PurchaseController extends Controller
         }
         if($request->input('company_address') != ''){
             $purchase->company_address = $request->input('company_address');
+        }
+
+        if($request->input('company_id') != ''){
+            $purchase->company_id = $request->input('company_id');
+
         }
         // if(!$check){
         //     $purchase->meterial_data_id = $meterial->id;
@@ -319,6 +327,7 @@ class PurchaseController extends Controller
         if($request->input('cerdit_days') != ''){
             $purchase->cerdit_days = $request->input('cerdit_days');
         }
+        // dd($request->input('total_amount'));
         if($request->input('total_amount') != ''){
             $purchase->total_amount = $request->input('total_amount');
 
@@ -395,6 +404,7 @@ class PurchaseController extends Controller
         $purchase_edit->trn =  $purchase->trn;
         $purchase_edit->lpo_ref_num =  $purchase->lpo_ref_num;
         $purchase_edit->company_name =  $purchase->company_name;
+        $purchase_edit->company_id =  $purchase->company_id;
         $purchase_edit->company_address =  $purchase->company_address; 
         $purchase_edit->company_id =  $purchase->company_id;
         $purchase_edit->meterial_data_id =  $purchase->meterial_data_id; 
@@ -415,10 +425,33 @@ class PurchaseController extends Controller
         $purchase_edit->delivery_proof_copy =  $purchase->delivery_proof_copy;
         $purchase_edit->delivery_notes =  $purchase->delivery_notes;
         $purchase_edit->for_stock =  $purchase->for_stock;
+        $purchase_edit->supplier_name =  $purchase->supplier_name;
+        $purchase_edit->is_vat =  $purchase->is_vat;
+        $purchase_edit->supplier_status =  $purchase->supplier_status;
+        $purchase_edit->supplier_id =  $purchase->supplier_id;
+
+
 
         $purchase_edit->save();
 
+        if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
+        }
+        if($request->input('supplier_name') != ''){
+            $purchase->supplier_name = $request->input('supplier_name');
+        }
 
+        if($request->input('supplier_status') != ''){
+            $purchase->supplier_status = $request->input('supplier_status');
+        }
+
+        if($request->input('is_vat') != ''){
+            $purchase->is_vat = $request->input('is_vat');
+        }
+        if($request->input('company_id') != ''){
+            $purchase->company_id = $request->input('company_id');
+
+        }
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');
         }

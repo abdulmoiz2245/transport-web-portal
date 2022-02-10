@@ -165,6 +165,24 @@ class PurchaseController extends Controller
             $meterial->name = $request->input('material_data_id');
             $meterial->save();
         }
+          if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
+        }
+        if($request->input('supplier_name') != ''){
+            $purchase->supplier_name = $request->input('supplier_name');
+        }
+
+        if($request->input('supplier_status') != ''){
+            $purchase->supplier_status = $request->input('supplier_status');
+        }
+
+        if($request->input('is_vat') != ''){
+            $purchase->is_vat = $request->input('is_vat');
+        }
+        if($request->input('company_id') != ''){
+            $purchase->company_id = $request->input('company_id');
+
+        }
 
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');
@@ -329,9 +347,31 @@ class PurchaseController extends Controller
         $purchase_edit->delivery_proof_copy =  $purchase->delivery_proof_copy;
         $purchase_edit->delivery_notes =  $purchase->delivery_notes;
         $purchase_edit->for_stock =  $purchase->for_stock;
+        $purchase_edit->supplier_name =  $purchase->supplier_name;
+        $purchase_edit->is_vat =  $purchase->is_vat;
+        $purchase_edit->supplier_status =  $purchase->supplier_status;
+        $purchase_edit->supplier_id =  $purchase->supplier_id;
 
+        
         $purchase_edit->save();
+        if($request->input('supplier_id') != ''){
+            $purchase->supplier_id = $request->input('supplier_id');
+        }
+        if($request->input('supplier_name') != ''){
+            $purchase->supplier_name = $request->input('supplier_name');
+        }
 
+        if($request->input('supplier_status') != ''){
+            $purchase->supplier_status = $request->input('supplier_status');
+        }
+
+        if($request->input('is_vat') != ''){
+            $purchase->is_vat = $request->input('is_vat');
+        }
+        if($request->input('company_id') != ''){
+            $purchase->company_id = $request->input('company_id');
+
+        }
         if($request->input('date') != ''){
             $purchase->date = $request->input('date');
         }

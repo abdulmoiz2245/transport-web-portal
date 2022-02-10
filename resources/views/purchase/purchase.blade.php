@@ -210,6 +210,8 @@ use App\Models\Office_Land_contract;
         if($_GET["status"] == 'pending'){
           echo 'active';
         }
+      }else{
+        echo 'active';
       }
       ?>" onclick="openCity(event, 'pending')">  Pending Purchase 
     </button>

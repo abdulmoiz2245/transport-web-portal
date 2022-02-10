@@ -199,6 +199,8 @@ use App\Models\Office_Land_contract;
         if($_GET["status"] == 'approved'){
           echo 'active';
         }
+      }else{
+        echo 'active';
       }
       ?>" onclick="openCity(event, 'approved')"> Approved / Existing Purchase 
     </button>

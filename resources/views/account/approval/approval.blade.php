@@ -10,7 +10,9 @@
 .badge{
   font-size: 12px;
 }
-
+.badge{
+    font-size:12px;
+}
 /* Style the buttons inside the tab */
 .tab button {
     float: left;
@@ -48,7 +50,7 @@
   border: 1px solid #ccc;
   border-top: none; */
 }
-    .sk-circle {
+.sk-circle {
         margin: 100px auto;
     width: 40px;
     height: 40px;
@@ -197,7 +199,7 @@
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'user.account') }}">
+                <a href="{{ route( 'user.account.account') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
             </div>
@@ -207,330 +209,345 @@
         <div id="approved" class="tabcontent" style="display: block;">
           
           <div class="table-responsive">
-              <button class="table_button btn ml-3 active purchase_approved">
+              <button class="table_button btn ml-3 mt-3 mb-3 active purchase_approved">
                   Purchase
               </button>
-              <button class="btn ml-3 hr_approved">
+              <button class="btn ml-3 mt-3 mb-3 hr_approved">
                   Hr Funds
               </button>
-            <!-- Purchase Approval -->
-            <table id="purchase_approved_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Po Number</th>
-                        <th>Amount</th>
-                        <th>Purchase Date</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['purchase'] as $purchase)
-                    @if($purchase->status_account == 'approved'  && $purchase->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $purchase->id }}
-                        </td>
-                        <td>{{ $purchase->po_number }}</td>
-                        <td>{{ $purchase->total_amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
-                        <td>
-                            <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
+            <div id="purchase_approved_table" class="">
+                <!-- Purchase Approval -->
+                <table  class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Po Number</th>
+                            <th>Amount</th>
+                            <th>Purchase Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchase'] as $purchase)
+                        @if($purchase->status_account == 'approved'  && $purchase->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $purchase->id }}
+                            </td>
+                            <td>{{ $purchase->po_number }}</td>
+                            <td>{{ $purchase->total_amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
+                            <td>
+                                <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
                             
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
+            
+            <div id="hr_approved_table" class="">
+                <!-- Hr Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['hr_funds'] as $hr_funds)
+                        @if($hr_funds->status == 'approved'  && $hr_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $hr_funds->id }}
+                            </td>
+                            <td>{{ $hr_funds->reason }}</td>
+                            <td>{{ $hr_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
+                            <td>
+                                <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
                             
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
-
-            <!-- Hr Approval -->
-            <table id="hr_approved_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['hr_funds'] as $hr_funds)
-                    @if($hr_funds->status == 'approved'  && $hr_funds->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $hr_funds->id }}
-                        </td>
-                        <td>{{ $hr_funds->reason }}</td>
-                        <td>{{ $hr_funds->amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
-                        <td>
-                            <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
-                            
-                            
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
+            
           </div>
         </div>
         <div id="pending" class="tabcontent" >
-          <button class="table_button btn ml-3 active purchase_pending">
+          <button class="table_button btn ml-3 mt-3 mb-3 active purchase_pending">
                 Purchase
             </button>
-            <button class="btn ml-3 hr_pending">
+            <button class="btn ml-3 mt-3 mb-3 hr_pending">
                 Hr Funds
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
-            <table id="purchase_pending_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Po Number</th>
-                        <th>Amount</th>
-                        <th>Purchase Date</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['purchase'] as $purchase)
-                    @if($purchase->status_admin == 'approved' && $purchase->status_account == 'pending'  && $purchase->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $purchase->id }}
-                        </td>
-                        <td>{{ $purchase->po_number }}</td>
-                        <td>{{ $purchase->total_amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
-                        <td>
+            <div id="purchase_pending_table" class="">
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Po Number</th>
+                            <th>Amount</th>
+                            <th>Purchase Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchase'] as $purchase)
+                        @if($purchase->status_admin == 'approved' && $purchase->status_account == 'pending'  && $purchase->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $purchase->id }}
+                            </td>
+                            <td>{{ $purchase->po_number }}</td>
+                            <td>{{ $purchase->total_amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
+                            <td>
+                                <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="purchase" >
+                                    <input type="text" class="form-control d-none" name="status" value ="rejected" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-danger">
+                                        Reject
+                                    </button>
+                                    </a>
+                                </form>
+
+                                <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="purchase" >
+                                    <input type="text" class="form-control d-none" name="status" value ="approved" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-success">
+                                        Approve
+                                    </button>
+                                    </a>
+                                </form>
+
+                                
+
+                                <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
+            
+            <div  id="hr_pending_table" class="">
+                <table  class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['hr_funds'] as $hr_funds)
+                        @if($hr_funds->status == 'pending'  && $hr_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $hr_funds->id }}
+                            </td>
+                            <td>{{ $hr_funds->reason }}</td>
+                            <td>{{ $hr_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
+                            <td>
                             <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
-                                <input type="text" class="form-control d-none" name="type" value ="purchase" >
-                                <input type="text" class="form-control d-none" name="status" value ="rejected" >
-                                <a href="">
-                                  <button type="submit" class="btn btn-danger">
-                                      Reject
-                                  </button>
-                                </a>
-                            </form>
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="hr_funds" >
+                                    <input type="text" class="form-control d-none" name="status" value ="rejected" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-danger">
+                                        Reject
+                                    </button>
+                                    </a>
+                                </form>
 
-                            <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
-                                <input type="text" class="form-control d-none" name="type" value ="purchase" >
-                                <input type="text" class="form-control d-none" name="status" value ="approved" >
-                                <a href="">
-                                  <button type="submit" class="btn btn-success">
-                                      Approve
-                                  </button>
-                                </a>
-                            </form>
-
+                                <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="hr_funds" >
+                                    <input type="text" class="form-control d-none" name="status" value ="approved" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-success">
+                                        Approve
+                                    </button>
+                                    </a>
+                                </form>
+                                <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
                             
-
-                            <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
-                            
-                            
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
-
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             <!-- Hr Approval -->
-            <table id="hr_pending_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['hr_funds'] as $hr_funds)
-                    @if($hr_funds->status == 'pending'  && $hr_funds->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $hr_funds->id }}
-                        </td>
-                        <td>{{ $hr_funds->reason }}</td>
-                        <td>{{ $hr_funds->amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
-                        <td>
-                        <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
-                                <input type="text" class="form-control d-none" name="type" value ="hr_funds" >
-                                <input type="text" class="form-control d-none" name="status" value ="rejected" >
-                                <a href="">
-                                  <button type="submit" class="btn btn-danger">
-                                      Reject
-                                  </button>
-                                </a>
-                            </form>
-
-                            <form action="{{ route( 'user.account.update_approval') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
-                                <input type="text" class="form-control d-none" name="type" value ="hr_funds" >
-                                <input type="text" class="form-control d-none" name="status" value ="approved" >
-                                <a href="">
-                                  <button type="submit" class="btn btn-success">
-                                      Approve
-                                  </button>
-                                </a>
-                            </form>
-                            <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
-                            
-                            
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
+            
           </div>
         </div>
         <div id="rejected" class="tabcontent" >
-            <button class="table_button btn ml-3 active purchase_rejected">
+            <button class="table_button btn ml-3 mt-3 mb-3 active purchase_rejected">
                 Purchase
             </button>
-            <button class="btn ml-3 hr_rejected">
+            <button class="btn ml-3 mt-3 mb-3 hr_rejected">
                 Hr Funds
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
-            <table id="purchase_rejected_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Po Number</th>
-                        <th>Amount</th>
-                        <th>Purchase Date</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['purchase'] as $purchase)
-                    @if( $purchase->status_account == 'rejected'  && $purchase->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $purchase->id }}
-                        </td>
-                        <td>{{ $purchase->po_number }}</td>
-                        <td>{{ $purchase->total_amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
-                        <td>
-                            <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
+            <div id="purchase_rejected_table" >
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Po Number</th>
+                            <th>Amount</th>
+                            <th>Purchase Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchase'] as $purchase)
+                        @if( $purchase->status_account == 'rejected'  && $purchase->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $purchase->id }}
+                            </td>
+                            <td>{{ $purchase->po_number }}</td>
+                            <td>{{ $purchase->total_amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
+                            <td>
+                                <form action="{{ route( 'user.purchase.view_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
                             
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
+            
+            <div id="hr_rejected_table" class="">
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['hr_funds'] as $hr_funds)
+                        @if($hr_funds->status == 'rejected'  && $hr_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $hr_funds->id }}
+                            </td>
+                            <td>{{ $hr_funds->reason }}</td>
+                            <td>{{ $hr_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
+                            <td>
+                                <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
                             
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
-
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             <!-- Hr Approval -->
-            <table id="hr_rejected_table"  class="display table  nowrap " style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Reason</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Action</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['hr_funds'] as $hr_funds)
-                    @if($hr_funds->status == 'rejected'  && $hr_funds->row_status != 'deleted')
-    
-                    <tr>
-                   
-                        <td>
-                            {{ $hr_funds->id }}
-                        </td>
-                        <td>{{ $hr_funds->reason }}</td>
-                        <td>{{ $hr_funds->amount }}</td>
-                        <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
-                        <td>
-                            <form action="{{ route( 'user.hr_pro.view_employee_funds') }}" method="post" class="d-inline">
-                                @csrf
-                                <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
-                                <button type="submit" class="border-0 .bg-white">
-                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                </button>
-                            </form>
-                            
-                            
-                        </td>
-                        
-                    </tr>
-                   
-                    @endif
-                    @endforeach
-                </tbody>         
-            </table>
+            
           </div>
         </div>
     </div>

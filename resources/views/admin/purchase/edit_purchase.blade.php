@@ -1,6 +1,7 @@
 <?php 
 use App\Models\Purchase_mertial_data;
 use App\Models\Supplier_info;
+use App\Models\Company_name;
 
 ?>
 
@@ -20,37 +21,72 @@ use App\Models\Supplier_info;
     
 
         <h2>LPO</h2>
+        
         <div class="row">
+            <div class="col-12 mt-3 mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="supplier_status" id="new_supplier" value="new" <?php if($data['purchase']->supplier_status == 'new') echo 'checked' ?>>
+                    <label class="form-check-label" for="new_supplier">
+                        New Supplier
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="supplier_status" id="existing_supplier" value="existing" <?php if($data['purchase']->supplier_status == 'existing') echo 'checked' ?>>
+                    <label class="form-check-label" for="existing_supplier">
+                        Existing Supplier
+                    </label>
+                </div>
+            </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label >Date</label>
                     <input type="date" value="{{ $data['purchase']->date }}" name="date" class="form-control form-control" id="" required>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-12 trn_number">
                 <div class="form-group">
                     <label>TRN Number</label>
-                    <input type="text" name="trn" class="form-control"  placeholder="Enter TRN Number" value="{{ $data['purchase']->trn }}" required>
+                    <input type="number" name="trn" class="form-control"  placeholder="Enter TRN Number" value="{{ $data['purchase']->trn }}" required>
                 </div>
             </div>
-        
-    
-            <div class="col-md-6 col-12">
+       
+            <!-- <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Company Name</label>
-                    <input type="text" value="{{ $data['purchase']->company_name }}" name="company_name" class="form-control" placeholder="Enter Company Name" required>
+                    <label>LPO Ref No</label>
+                    <input type="text" name="lpo_ref_num" class="form-control"  placeholder="Enter LPO Reference Number" required>
                 </div>
-            </div>
-            <div class="col-md-6 col-12">
+            </div> -->
+
+            <div class="col-md-6 col-12 select_company">
                 <div class="form-group">
-                    <label>Company Address</label>
-                    <input type="text" value="{{ $data['purchase']->company_address }}"  name="company_address" class="form-control" placeholder="Enter Company Address" required>
+                    <label >Select Company</label>
+                    <?php if(Company_name::all()->count() > 0){ ?>
+                        <select name="company_id"  class="form-control "required >
+                            
+                            @foreach(Company_name::all() as $company_name)
+                            <option value="{{ $company_name->id }}" <?php if($company_name->id == $data['purchase']->company_id) {?> selected='selected' <?php } ?>>{{ $company_name->name }}</option >
+                            @endforeach
+                        </select>
+                    <?php } else{ ?>
+                    <h5 class="text-danger">Please Add Company First </h5> 
+                    <?php } ?>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+
+            
+
+            <div class="col-md-6 col-12 supplier_name">
+                <div class="form-group">
+                    <label>Supplier Name</label>
+                    <input type="text" name="supplier_name" id="supplier_name" class="form-control " value="{{ $data['purchase']->supplier_name }}"  placeholder="Enter Supplier Name" 
+                    >
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12 supplier_id">
                 <div class="form-group">
                     <label>Select Supplier</label>
-                    <select name="supplier_id" id=""class="form-control as_supplier_id">
+                    <select name="supplier_id" id="supplier_select" class="form-control as_supplier_id">
                         @foreach(Supplier_info::all() as $supplier)
                         @if($supplier->row_status != 'deleted')
                         @if($supplier->status == 'approved')
@@ -62,6 +98,7 @@ use App\Models\Supplier_info;
                     </select>
                 </div>
             </div>
+            
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label >Material Data</label>
@@ -100,12 +137,7 @@ use App\Models\Supplier_info;
                     <input type="text" name="size" value="{{ $data['purchase']->size }}" class="form-control" placeholder="Enter Size" required>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="text" name="quantity" value="{{ $data['purchase']->quantity }}" class="form-control" placeholder="Enter Quantity" required>
-                </div>
-            </div>
+           
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Unit</label>
@@ -139,13 +171,13 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Terms</label>
-                    <input type="text" value="{{ $data['purchase']->terms }}"  name="terms" class="form-control" placeholder="Enter Terms" required>
+                    <input type="number" value="{{ $data['purchase']->terms }}"  name="terms" class="form-control" placeholder="Enter Terms" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Total Amount</label>
-                    <input type="text" name="total_amount" id="total_amount" value="{{ $data['purchase']->total_amount }}"  class="form-control" placeholder="Enter Total Amount" required>
+                    <input type="text" name="total_amount" id="total_amount" value="{{ $data['purchase']->total_amount }}"  class="form-control" placeholder="Enter Total Amount" required readonly>
                 </div>
             </div>
             <div class="col-md-6 col-12">
@@ -193,7 +225,7 @@ use App\Models\Supplier_info;
 // var new_date = date.toLocaleDateString('en-CA');
 
 // console.log($("[type='date']").attr("min",new_date) );
-
+var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
 $('.as_supplier_id').on('change', function()
     {
         console.log(this.value);
@@ -255,6 +287,40 @@ $('.as_supplier_id').on('change', function()
             //     }
             // });
         });
+        var supplier_id = $(this).val();
+        var arrayLength = Object.keys(data).length;
+        console.log(supplier_id);
+        console.log('as');
+
+        for (var i = 0; i < arrayLength; i++) {
+            if(supplier_id == data[i].id){
+                $('#trn_supplier').val(data[i].trn);
+                $('.select_company select option').each(function() {
+                    var selected = $(this)[0].value;
+                  
+                    if (selected == data[i].company_id) {
+                        console.log("found");
+
+                        $('.trn_number input').val(parseInt(data[i].trn));
+                        $('.trn_number input').attr("readonly" ,"readonly"  );
+                        $('.select_company select option[value="'+selected+'"]').removeAttr("readonly");       
+                        $('.select_company select option[value="'+selected+'"]').attr("selected");     
+                        
+                        $('.select_company select').val( data[i].company_id);               
+
+                    }else{
+                        $('.select_company select option[value="'+selected+'"]').attr("disabled", "disabled");
+                         $('.select_company select option[value="'+selected+'"]').removeAttr("selected"); 
+                    }
+                })
+                break;
+            }
+            //     $('.select_company select option').each(function() {
+            //     $('.select_company select option').removeAttr("selected"); 
+            //     $('.select_company select option').removeAttr("disabled"); 
+
+            // });
+        }
     });
 
     $('#unit_price').change(function(){
@@ -293,31 +359,110 @@ $('.as_supplier_id').on('change', function()
         
     });
 
-$(document).ready(function() {
-
-    $("#Material_Data").select2({
-        tags: true
-    });
-    console.log($("#Material_Data").select2({
-        tags: true
-    }));
-
-    $('#for_stock').on('change', function()
+    
+    $('#new_supplier').change(function()
     {
-        if(this.value == '0'){
-            $('.vehicle_no').show();
-            $('.description').show();
-        }
+        if ($(this).is(':checked')) {
+            $('.supplier_name').show();
+            $('.supplier_id').hide();
+            $('.trn_number input').removeAttr("readonly");
+            $('.trn_number input').val("");
 
-        if(this.value == '1'){
-            $('.vehicle_no').val(null);
-            $('.vehicle_no').hide();
-            $('.description').val(null);
-            $('.description').hide();
-        }
-        
+            $('.select_company').show();
+        } 
+        $('.select_company select option').each(function() {
+            $('.select_company select option').removeAttr("selected"); 
+            $('.select_company select option').removeAttr("disabled"); 
+
+        });
+       
     });
-});
+
+    $('#Select_Supplier').change(function(){
+       
+
+       
+       
+    });
+
+    <?php if( $data['purchase']->supplier_status == 'new'){ ?>
+        $('.supplier_name').show();
+        $('.supplier_id').hide();
+
+    <?php } else { ?>
+        $('.supplier_name').hide();
+        $('.supplier_id').show();
+
+    <?php  } ?>
+    $('.trn_number').show();
+    $('.select_company').show();
+    // $('.trn_number input').val(parseInt(data[0].trn));
+    
+    var supplier_id = $(".as_supplier_id").find("option:first-child").val();
+    console.log(supplier_id);
+    console.log($("#Select_Supplier"));
+
+    var arrayLength = Object.keys(data).length;
+
+    for (var i = 0; i < arrayLength; i++) {
+        if(supplier_id == data[i].id){
+            console.log('found');
+            $('.trn_number input').val(parseInt(data[i].trn));
+            $('.trn_number input').val(data[i].trn);
+            
+        }
+    }
+    $('.trn_number input').attr('readonly' , 'readonly');
+
+
+    $('.select_company select option').each(function() {
+            // $('.select_company select option').removeAttr("selected"); 
+        $('.select_company select option').removeAttr("disabled"); 
+
+    });
+    
+
+    $('#existing_supplier').change(function()
+    {
+        if ($(this).is(':checked')) {
+            $('.supplier_name').hide();
+            $('.supplier_id').show();
+            $('.trn_number input').attr("readonly" ,"readonly"  );
+
+            $('.trn_number_supplier').show();
+
+            
+
+            var supplier_id = $("#Select_Supplier").val();
+            var arrayLength = Object.keys(data).length;
+            console.log(supplier_id);
+            for (var i = 0; i < arrayLength; i++) {
+                if(supplier_id == data[i].id){
+                    $('.trn_number input').val(data[i].trn);
+                    // console.log(supplier_id);
+
+                    $('.select_company select option').each(function() {
+                        var selected = $(this)[0].value;
+                    
+                        if (selected == data[i].company_id) {
+                            $('.select_company select option').removeAttr("disabled" );
+
+                        }else{
+
+                            $('.select_company select option').attr("disabled" ,"disabled"  );
+                        }
+                    });
+                    $('.select_company select ').val(parseInt(data[i].company_id));
+
+                }
+            }
+        } 
+
+       
+    });
+
+
+
 
 
 </script>
