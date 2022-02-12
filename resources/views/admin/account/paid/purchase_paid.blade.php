@@ -65,7 +65,7 @@ use App\Models\account_cheque;
 </div>
 <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
     <div>
-        <a href="{{ route( 'admin.account.account') }}">
+        <a href="{{ route( 'admin.account') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -276,7 +276,7 @@ use App\Models\account_cheque;
       $("#filterTable_filter ").append($("#categoryFilter"));
       $("#filterTable_filter ").css("display" , "flex");
       //Get the column index for the Category column to be used in the method below ($.fn.dataTable.ext.search.push)
-      //This tells datatables what column to filter on when a user selects a value from the dropdown.
+      //This tells datatables what column to filter on when a admin selects a value from the dropdown.
       //It's important that the text used here (Category) is the same for used in the header of the column to filter
       var categoryIndex = 6;
       $("#filterTable th").each(function (i) {
@@ -296,7 +296,7 @@ use App\Models\account_cheque;
         }
       );
       //Set the change event for the Category Filter dropdown to redraw the datatable each time
-      //a user selects a new filter.
+      //a admin selects a new filter.
       $("#categoryFilter").change(function (e) {
         table.draw();
       });

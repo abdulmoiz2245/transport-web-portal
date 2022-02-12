@@ -23,7 +23,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">RECIEVEABLE</p>
+                            ">Recievable</p>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">PAID</p>
+                            ">Paid</p>
                         </div>
                     </div>
                 </div>
@@ -46,29 +46,14 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.account.cheque') }}">
+            <a href="{{ route( 'admin.account.cheque') }}">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                     <div class="card-body text-center">
                         <i class="i-Add-User"></i>
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">ISSUED CHEQUE</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="">
-                <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                    <div class="card-body text-center">
-                        <i class="i-Add-User"></i>
-                        <div class="content">
-                            <p class="text-muted mt-2 mb-0" style="
-                                font-size: 16px;
-                            ">INVOICING</p>
+                            ">Isseued Cheque</p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +68,22 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">VAT</p>
+                            ">Invoicing</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <a href="">
+                <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card-body text-center">
+                        <i class="i-Add-User"></i>
+                        <div class="content">
+                            <p class="text-muted mt-2 mb-0" style="
+                                font-size: 16px;
+                            ">Vat</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">APPROVALS </p>
+                            ">Approvals </p>
                         </div>
                     </div>
                 </div>

@@ -64,7 +64,7 @@ use App\Models\account_cheque;
 </div>
 <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
     <div>
-        <a href="{{ route( 'user.account') }}">
+        <a href="{{ route( 'user.account.cheque') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>

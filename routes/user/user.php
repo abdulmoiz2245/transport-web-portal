@@ -29,6 +29,7 @@ Route::middleware(['auth:user'])->group(function () {
     ->name('user.booking');
 
     
+
     require __DIR__.'/customer.php';
 
     require __DIR__.'/hr_pro.php';
@@ -51,8 +52,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/employee/inventory', [UserController::class, 'inventory']) 
     ->name('user.inventory');
 
-    Route::get('/employee/petty-cash', [UserController::class, 'petty_cash']) 
-    ->name('user.petty_cash');
+
 
     Route::get('/employee/reports', [UserController::class, 'historys']) 
     ->name('user.reports');
@@ -71,6 +71,7 @@ Route::middleware(['auth:user'])->group(function () {
 
     Route::get('/employee/workshop', [UserController::class, 'workshop']) 
     ->name('user.workshop');
+
 
 });
 

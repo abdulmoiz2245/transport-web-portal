@@ -222,7 +222,7 @@ $('.as_supplier_id').on('change', function()
             // create the option and append to Select2
             data.supplier_product.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
-                        var option = new Option(e, null , true, true);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -231,7 +231,7 @@ $('.as_supplier_id').on('change', function()
 
             data.supplier_services.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
-                        var option = new Option(e, null , true, true);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }

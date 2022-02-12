@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
     ->name('user.account');
     Route::group(['prefix'=>'/employee/account','as'=>'user.account.'], function(){
         
-
     Route::get('/approvals', [AccountController::class, 'approval']) 
     ->name('approval');
 
@@ -47,6 +46,10 @@ use Illuminate\Support\Facades\Route;
     Route::post('/approvals/view', [AccountController::class, 'view_approval']) 
     ->name('view_approval');
 
+    //Account Petty
+    Route::get('/payable/petty', [AccountController::class, 'payable_petty']) 
+    ->name('payable_petty');
+
     //Account Payable
     Route::get('/payable/purchase', [AccountController::class, 'payable_purchase']) 
     ->name('payable_purchase');
@@ -54,17 +57,33 @@ use Illuminate\Support\Facades\Route;
     Route::get('/payable/hr-fund', [AccountController::class, 'payable_hr_fund']) 
     ->name('payable_hr_fund');
 
+    Route::get('/payable/petty-fund', [AccountController::class, 'payable_petty_fund']) 
+    ->name('payable_petty_fund');
+
     Route::post('/cheque/issue/purchase', [AccountController::class, 'cheque_issue_purchase']) 
     ->name('cheque_issue_purchase');
 
+    Route::post('/petty/payable/purchase', [AccountController::class, 'pay_by_petty_purchase']) 
+    ->name('pay_by_petty_purchase');
+
+    Route::post('/petty/payable/hr', [AccountController::class, 'pay_by_petty_hr']) 
+    ->name('pay_by_petty_hr');
+
     Route::post('/cheque/issue/hr-fund', [AccountController::class, 'cheque_issue_hr_fund']) 
     ->name('cheque_issue_hr_fund');
+
+    Route::post('/cheque/issue/petty-fund', [AccountController::class, 'cheque_issue_petty_fund']) 
+    ->name('cheque_issue_petty_fund');
 
     //Cheque
     Route::get('/cheque', [AccountController::class, 'cheque']) 
     ->name('cheque');
     Route::get('/cheque/purchase', [AccountController::class, 'cheque_purchase']) 
     ->name('cheque_purchase');
+
+    Route::get('/cheque/petty', [AccountController::class, 'cheque_petty']) 
+    ->name('cheque_petty');
+
 
     Route::get('/cheque/hr-fund', [AccountController::class, 'cheque_hr_fund']) 
     ->name('cheque_hr_fund');

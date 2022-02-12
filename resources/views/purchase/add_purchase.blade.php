@@ -211,10 +211,12 @@ use App\Models\Supplier_info;
             $("#Material_Data option").each(function() {
                 $(this).remove();
             });
+            console.log(data);
             // create the option and append to Select2
             data.supplier_product.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
-                        var option = new Option(e, "" , true, true);
+                        console.log(e);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -223,7 +225,7 @@ use App\Models\Supplier_info;
 
             data.supplier_services.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool' && e != 'fuel' ){
-                        var option = new Option(e, "" , true, true);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }

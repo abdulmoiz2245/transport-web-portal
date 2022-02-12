@@ -54,11 +54,17 @@ use Illuminate\Support\Facades\Route;
     Route::get('/payable/hr-fund', [AccountController::class, 'payable_hr_fund']) 
     ->name('payable_hr_fund');
 
+    Route::get('/payable/petty-fund', [AccountController::class, 'payable_petty_fund']) 
+    ->name('payable_petty_fund');
+
     Route::post('/cheque/issue/purchase', [AccountController::class, 'cheque_issue_purchase']) 
     ->name('cheque_issue_purchase');
 
     Route::post('/cheque/issue/hr-fund', [AccountController::class, 'cheque_issue_hr_fund']) 
     ->name('cheque_issue_hr_fund');
+
+    Route::post('/cheque/issue/petty-fund', [AccountController::class, 'cheque_issue_petty_fund']) 
+    ->name('cheque_issue_petty_fund');
 
     //Cheque
     Route::get('/cheque', [AccountController::class, 'cheque']) 

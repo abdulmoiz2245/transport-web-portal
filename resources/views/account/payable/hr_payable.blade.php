@@ -55,7 +55,9 @@ use App\Models\account_cheque;
   </a>
   
   <button class="tablinks">Employee Salaries</button>
-  <button class="tablinks">Petty Cash</button>
+  <a href="{{ route('user.account.payable_petty_fund') }}">
+        <button class="tablinks">Petty Cash</button>
+  </a>
 
   <a  href="{{ route('user.account.payable_hr_fund') }}">
     <button class="tablinks active" >Hr Funds</button>
@@ -109,7 +111,20 @@ use App\Models\account_cheque;
         <tbody>
             @foreach($data['hr_fund'] as $hr_fund)
             @if( $hr_fund->row_status != 'deleted' )
-            @if(account_cheque::find($hr_fund->cheque_id)!= null && account_cheque::find($hr_fund->cheque_id)->status != 'cleard')
+            @if( $hr_fund->status != 'paid')
+            <?php $check = true;
+             if( $hr_fund->status == 'partial_paid') {
+                if(account_cheque::find($hr_fund->cheque_id)!= null){
+                    if(account_cheque::find($hr_fund->cheque_id)->status == 'not_cleared'){
+                        $check = true;
+                    }else{
+                        $check = false;
+
+                    }
+                }   
+            }
+            ?>
+            @if($check == true)
             <tr style="background-color:  <?php if(account_cheque::find($hr_fund->cheque_id)!= null) if(account_cheque::find($hr_fund->cheque_id)->status == 'not_cleared'){ ?> gold; <?php } ?>">
                 
                 <td><span class="badge badge-pill ">{{ $hr_fund->id }}</span> </td>
@@ -130,20 +145,26 @@ use App\Models\account_cheque;
                     @endif
                 </td>
                 <td>
-                     @if(  $hr_fund->amount_paid > 0)
-                     <form action="{{ route( 'user.account.view_cheque') }}" method="post" class="d-inline">
-                        @csrf
-                        <input type="text" class="form-control d-none" name="id" value ="{{ $hr_fund->cheque_id }}" placeholder="Enter id" >
-                        <button type="submit" id="{{ $hr_fund->cheque_id }}" class="btn btn-success edit_cheque" data-toggle="" data-target="">
-                            View Cheque
-                        </button>
-                     </form>
-                     
-                    
+                    @if( $hr_fund->pay_by == 'cheque')
+                      @if( $hr_fund->pay_by == 'cheque' && $hr_fund->amount_paid > 0)
+                      <form action="{{ route( 'user.account.view_cheque') }}" method="post" class="d-inline">
+                          @csrf
+                          <input type="text" class="form-control d-none" name="id" value ="{{ $hr_fund->cheque_id }}" placeholder="Enter id" >
+                          <button type="submit" id="{{ $hr_fund->cheque_id }}" class="btn btn-success edit_cheque" data-toggle="" data-target="">
+                              View Cheque
+                          </button>
+                      </form>
+                      @else
+                      <button type="submit" id="{{ $hr_fund->id }}" class="btn btn-primary edit_cheque" data-toggle="modal" data-target="#exampleModal" style=" background-color: #08c;">
+                          Issue Cheque
+                      </button>
+                      @endif
                     @else
-                    <button type="submit" id="{{ $hr_fund->id }}" class="btn btn-primary edit_cheque" data-toggle="modal" data-target="#exampleModal" style=" background-color: #08c;">
-                        Issue Cheque
-                    </button>
+                        <select name="pay_by" id="{{ $hr_fund->id }}" class="form-control pay_by">
+                            <option >Select</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="petty">Petty</option>
+                        </select>
                     @endif                        
                 </td>
                 <!-- <td>
@@ -160,6 +181,8 @@ use App\Models\account_cheque;
                 </td> -->
                 
             </tr>
+            @endif
+
             @endif
             @endif
             @endforeach
@@ -179,7 +202,7 @@ use App\Models\account_cheque;
       <form action="{{ route('user.account.cheque_issue_hr_fund') }}" enctype="multipart/form-data" method="post">
           @csrf
       <div class="modal-body">
-        <input type="text" id="edit_id" class="form-control d-block" name="id" >
+        <input type="text" id="edit_id" class="form-control d-none" name="id" >
         <div class="row">
             <div class="col-12  ">
                 <label >Cheque Number</label>
@@ -187,7 +210,7 @@ use App\Models\account_cheque;
             </div>
             <div class="col-12  ">
                 <label >Cheque Amount</label>
-                <input type="number" name="cheque_amount" class="form-control" required>
+                <input type="number" min='0' name="cheque_amount" class="form-control" required>
             </div>
             <div class="col-12  ">
                 <label >Cheque Date</label>
@@ -312,5 +335,46 @@ use App\Models\account_cheque;
         table.draw();
       });
       table.draw();
+
+      $(".pay_by").on('change', function(){
+          // console.log(this.value);
+          var file_id = this.id;
+          if(this.value == 'cheque'){
+            document.getElementById('edit_id').value = this.id;
+            $('#exampleModal').modal('show');
+          }else if(this.value == 'petty'){
+            swal({
+                title: 'Are you sure?',
+                text: "You want to Pay this By Petty.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',  
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Pay it!'
+            }).then(function () {
+                $.ajax({
+                    type:'POST',
+                    url:"{{ route('user.account.pay_by_petty_hr') }}",
+                    data:{id:file_id, _token :"{{ csrf_token() }}" ,pay_by:"petty"},
+                    success:function(data){
+                            if (data.status == 1) {
+                                swal({
+                                    title: "",
+                                    text: "Data has been moved to Petty.",
+                                    type: "success"
+                                }).then(function () {
+                                    window.location.href = '';
+                                });
+                            }else{
+                                toastr.error("Some thing went wrong. ");
+
+                            }
+                    }
+                 });
+              
+
+            })
+          }
+      });
     });
   </script>

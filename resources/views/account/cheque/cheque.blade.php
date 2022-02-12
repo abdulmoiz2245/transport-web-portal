@@ -1,7 +1,16 @@
 <div class="container">
+    <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
+            <div>
+                <a href="{{ route( 'user.account') }}">
+                    <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+                </a>
+            </div>
+                
+        </div>
     <div class="row">
+        
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route( 'user.account') }}">
+            <a href="{{ route( 'user.account.cheque_petty') }}">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                     <div class="card-body text-center">
                         <i class="i-Add-User"></i>

@@ -23,7 +23,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">RECIEVEABLE</p>
+                            ">Recievable</p>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">PAID</p>
+                            ">Paid</p>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">ISSUED CHEQUE</p>
+                            ">Isseued Cheque</p>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">INVOICING</p>
+                            ">Invoicing</p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">VAT</p>
+                            ">Vat</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                         <div class="content">
                             <p class="text-muted mt-2 mb-0" style="
                                 font-size: 16px;
-                            ">APPROVALS </p>
+                            ">Approvals </p>
                         </div>
                     </div>
                 </div>

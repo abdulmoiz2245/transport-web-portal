@@ -10,7 +10,9 @@
 .badge{
   font-size: 12px;
 }
-
+.badge{
+    font-size:12px;
+}
 /* Style the buttons inside the tab */
 .tab button {
     float: left;
@@ -48,7 +50,7 @@
   border: 1px solid #ccc;
   border-top: none; */
 }
-    .sk-circle {
+.sk-circle {
         margin: 100px auto;
     width: 40px;
     height: 40px;
@@ -197,7 +199,7 @@
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route( 'admin.account.account') }}">
+                <a href="{{ route( 'admin.account') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
             </div>
@@ -212,6 +214,9 @@
               </button>
               <button class="btn ml-3 mt-3 mb-3 hr_approved">
                   Hr Funds
+              </button>
+              <button class="btn ml-3 mt-3 mb-3 petty_approved">
+                  Petty Funds
               </button>
             <div id="purchase_approved_table" class="">
                 <!-- Purchase Approval -->
@@ -300,6 +305,50 @@
                     </tbody>         
                 </table>
             </div>
+
+            <div id="petty_approved_table" class="">
+                <!-- Petty Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Requested Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['petty_funds'] as $petty_funds)
+                        @if($petty_funds->status == 'approved'  && $petty_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $petty_funds->id }}
+                            </td>
+                            <td>{{ $petty_funds->reason }}</td>
+                            <td>{{ $petty_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $petty_funds->date }}</span></td>
+                            <td>
+                                <form action="{{ route( 'admin.petty.view_finance_request') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$petty_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -309,6 +358,9 @@
             </button>
             <button class="btn ml-3 mt-3 mb-3 hr_pending">
                 Hr Funds
+            </button>
+            <button class="btn ml-3 mt-3 mb-3 petty_pending">
+                  Petty Funds
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
@@ -405,7 +457,7 @@
                             <td>{{ $hr_funds->amount }}</td>
                             <td><span class="badge badge-pill badge-warning">{{ $hr_funds->type }}</span></td>
                             <td>
-                            <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
+                                <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$hr_funds->id}}" placeholder="Enter id" >
                                     <input type="text" class="form-control d-none" name="type" value ="hr_funds" >
@@ -446,7 +498,74 @@
                     </tbody>         
                 </table>
             </div>
-            <!-- Hr Approval -->
+            
+            <div id="petty_pending_table" class="">
+                <!-- Petty Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Requested Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['petty_funds'] as $petty_funds)
+                        @if($petty_funds->status == 'pending'  && $petty_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $petty_funds->id }}
+                            </td>
+                            <td>{{ $petty_funds->reason }}</td>
+                            <td>{{ $petty_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $petty_funds->date }}</span></td>
+                            <td>
+                                <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$petty_funds->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="petty_funds" >
+                                    <input type="text" class="form-control d-none" name="status" value ="rejected" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-danger">
+                                        Reject
+                                    </button>
+                                    </a>
+                                </form>
+
+                                <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$petty_funds->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="petty_funds" >
+                                    <input type="text" class="form-control d-none" name="status" value ="approved" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-success">
+                                        Approve
+                                    </button>
+                                    </a>
+                                </form>
+
+                                <form action="{{ route( 'admin.petty.view_finance_request') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$petty_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -456,6 +575,9 @@
             </button>
             <button class="btn ml-3 mt-3 mb-3 hr_rejected">
                 Hr Funds
+            </button>
+            <button class="btn ml-3 mt-3 mb-3 petty_rejected">
+                Petty Funds
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
@@ -544,7 +666,51 @@
                     </tbody>         
                 </table>
             </div>
-            <!-- Hr Approval -->
+            
+            <div id="petty_rejected_table" class="">
+                <!-- Petty Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Requested Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['petty_funds'] as $petty_funds)
+                        @if($petty_funds->status == 'rejected'  && $petty_funds->row_status != 'deleted')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $petty_funds->id }}
+                            </td>
+                            <td>{{ $petty_funds->reason }}</td>
+                            <td>{{ $petty_funds->amount }}</td>
+                            <td><span class="badge badge-pill badge-warning">{{ $petty_funds->date }}</span></td>
+                            <td>
+                                
+                                <form action="{{ route( 'admin.petty.view_finance_request') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$petty_funds->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -656,38 +822,71 @@
 
   $('#purchase_approved_table').show();
   $('#hr_approved_table').hide();
+  $('#petty_approved_table').hide();
 
   $('.purchase_approved').click(function () {
     $('#purchase_approved_table').show();
     $('#hr_approved_table').hide();
+    $('#petty_approved_table').hide();
+    
   });
   $('.hr_approved').click(function () {
     $('#purchase_approved_table').hide();
+    $('#petty_approved_table').hide();
     $('#hr_approved_table').show();
+    
+  });
+  $('.petty_approved').click(function () {
+    $('#purchase_approved_table').hide();
+    $('#petty_approved_table').show();
+    $('#hr_approved_table').hide();
+    
   });
 
   $('#purchase_pending_table').show();
   $('#hr_pending_table').hide();
+  $('#petty_pending_table').hide();
 
   $('.purchase_pending').click(function () {
     $('#purchase_pending_table').show();
     $('#hr_pending_table').hide();
+    $('#petty_pending_table').hide();
+
   });
   $('.hr_pending').click(function () {
     $('#purchase_pending_table').hide();
     $('#hr_pending_table').show();
+    $('#petty_pending_table').hide();
+    
+  });
+  $('.petty_pending').click(function () {
+    $('#purchase_pending_table').hide();
+    $('#hr_pending_table').hide();
+    $('#petty_pending_table').show();
+    
   });
 
   $('#purchase_rejected_table').show();
   $('#hr_rejected_table').hide();
+  $('#petty_rejected_table').hide();
 
   $('.purchase_rejected').click(function () {
     $('#purchase_rejected_table').show();
     $('#hr_rejected_table').hide();
+    $('#petty_rejected_table').hide();
+
   });
   $('.hr_rejected').click(function () {
     $('#purchase_rejected_table').hide();
     $('#hr_rejected_table').show();
+    $('#petty_rejected_table').hide();
+
+  });
+  $('.petty_rejected').click(function () {
+    $('#purchase_rejected_table').hide();
+    $('#hr_rejected_table').hide();
+    $('#petty_rejected_table').show();
+
   });
 
 $('.delete-file').click(function () {

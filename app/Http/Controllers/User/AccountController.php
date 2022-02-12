@@ -22,6 +22,13 @@ use App\Models\account_purchase_history;
 use App\Models\account_3pl;
 use App\Models\account_3pl_edit_history;
 use App\Models\account_3pl_history;
+use App\Models\Petty_finance_request;
+
+use App\Models\Account_petty;
+use App\Models\Petty;
+
+
+
 
 use App\Models\Employee;
 use App\Models\account_cheque;
@@ -30,6 +37,8 @@ use App\Models\account_cheque;
 
 use App\Models\Purchase;
 use App\Models\Funds_request;
+use App\Models\Petty_purchase;
+use App\Models\Petty_hr;
 
 
 
@@ -141,6 +150,7 @@ class AccountController extends Controller
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
         $data['purchase'] = Purchase::where('row_status','!=' ,'deleted')->get();
         $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+        $data['petty_funds'] = Petty_finance_request::where('row_status','!=' ,'deleted')->get();
 
  
 
@@ -299,7 +309,7 @@ class AccountController extends Controller
                 $account_purchase->status = 'not_paid';
                 $account_purchase->row_status = 'active';
                 $account_purchase->date = $purchase->date;
-                $account_purchase->user_id = 0;
+                $account_purchase->user_id = Auth::id();
 
                 $account_purchase->save();
 
@@ -307,9 +317,9 @@ class AccountController extends Controller
                 $purchase->save();
 
                 if($account_purchase->save()){
-                    $this->history_table('account_purchase_histories', 'Add' , 0 , $account_purchase->id , 'account.view_approval');
+                    $this->history_table('account_purchase_histories', 'Add' , Auth::id() , $account_purchase->id , 'account.view_approval');
 
-                    $this->history_table('purchase_histories', 'Purchase Approve From Account ' , 0,  $purchase->id , "purchase.view_purchase");
+                    $this->history_table('purchase_histories', 'Purchase Approve From Account ' , Auth::id(),  $purchase->id , "purchase.view_purchase");
 
                     return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
                 }
@@ -321,7 +331,7 @@ class AccountController extends Controller
                 
                 $purchase->save();
 
-                $this->history_table('purchase_histories', 'Status Change From Account' , 0,  $purchase->id , "purchase.view_purchase");
+                $this->history_table('purchase_histories', 'Status Change From Account' , Auth::id(),  $purchase->id , "purchase.view_purchase");
 
                 return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
             }
@@ -332,7 +342,7 @@ class AccountController extends Controller
 
                 $account_hr = new account_hr();
                 $account_hr->hr_fund_id = $fund->id;
-                $account_hr->user_id = 0;
+                $account_hr->user_id = Auth::id();
 
                 // $account_hr->po_id = $fund->id;
                 // $account_hr->company = $fund->company_id;
@@ -349,9 +359,9 @@ class AccountController extends Controller
                 $fund->save();
 
                 if($account_hr->save()){
-                    $this->history_table('account_hr_histories', 'Add' , 0 , $account_hr->id , 'account.view_approval');
+                    $this->history_table('account_hr_histories', 'Add' , Auth::id() , $account_hr->id , 'account.view_approval');
 
-                    $this->history_table('funds_request_histories', 'Funds Approve From Account ' , 0,  $fund->id , "hr_pro.view_employee_funds");
+                    $this->history_table('funds_request_histories', 'Funds Approve From Account ' , Auth::id(),  $fund->id , "hr_pro.view_employee_funds");
 
                     return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
                 }
@@ -362,7 +372,47 @@ class AccountController extends Controller
                 
                 $fund->save();
 
-                $this->history_table('funds_request_histories', 'Status Change From Account' , 0,  $fund->id , "hr_pro.view_employee_funds");
+                $this->history_table('funds_request_histories', 'Status Change From Account' , Auth::id(),  $fund->id , "hr_pro.view_employee_funds");
+
+                return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
+            }
+        }else if($request->input('type') == 'petty_funds' ){
+            $data['approval'] = Petty_finance_request::find($request->input('id'));
+            if($request->input('status') == 'approved'){
+                $fund = Petty_finance_request::where('id' , $id)->first();
+
+                $account_hr = new Account_petty();
+                $account_hr->petty_request_id = $fund->id;
+                $account_hr->user_id = Auth::id();
+
+                
+                $account_hr->total_amount = $fund->amount;
+                $account_hr->amount_paid = 0;
+                $account_hr->amount_remaning	 =  $fund->amount;
+                $account_hr->status = 'not_paid';
+                $account_hr->row_status = 'active';
+                $account_hr->date = $fund->created_at;
+
+                $account_hr->save();
+
+                $fund->status = 'approved';
+                $fund->save();
+
+                if($account_hr->save()){
+                    // $this->history_table('account_hr_histories', 'Add' , 0 , $account_hr->id , 'account.view_approval');
+
+                    $this->history_table('petty_finance_request_histories', 'Funds Approve From Account ' , Auth::id(),  $fund->id , "petty.view_finance_request");
+
+                    return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
+                }
+            }else{
+                $fund = Funds_request::where('id' , $id)->first();
+
+                $fund->status = $request->input('status');
+                
+                $fund->save();
+
+                $this->history_table('petty_finance_request_histories', 'Status Change From Account' , Auth::id(),  $fund->id , "petty.view_finance_request");
 
                 return \Redirect::route('user.account.approval')->with('success', 'Data Updated Sucessfully');
             }
@@ -388,21 +438,38 @@ class AccountController extends Controller
     return view('users.layout', ["data"=>$data]);
    }
 
-    public function payable_hr_fund(){
-        $data['modules']= DB::table('modules')->get();
-            
-        $data['hr_fund'] = account_hr::where('row_status','!=' ,'deleted')->get();
-        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
-        $user = Auth::user();
+   public function payable_hr_fund(){
+    $data['modules']= DB::table('modules')->get();
+        
+    $data['hr_fund'] = account_hr::where('row_status','!=' ,'deleted')->get();
+    // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+    $user = Auth::user();
 
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+    $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
 
-        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
 
 
-        $data['page_title'] = "Accout Payable Hr Funds";
-        $data['view'] = 'account.payable.hr_payable';
-        return view('users.layout', ["data"=>$data]);
+    $data['page_title'] = "Accout Payable Hr Funds";
+    $data['view'] = 'account.payable.hr_payable';
+    return view('users.layout', ["data"=>$data]);
+   }
+
+   public function payable_petty_fund(){
+    $data['modules']= DB::table('modules')->get();
+        
+    $data['petty_fund'] = Account_petty::where('row_status','!=' ,'deleted')->get();
+    // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+    $user = Auth::user();
+
+    $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+    $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+
+    $data['page_title'] = "Accout Payable Petty Funds";
+    $data['view'] = 'account.payable.petty_payable';
+    return view('users.layout', ["data"=>$data]);
    }
 
    public function cheque_issue_purchase(Request $request){
@@ -430,8 +497,7 @@ class AccountController extends Controller
             $account_purchase->status = 'not_paid';
             $account_purchase->row_status = 'active';
             $account_purchase->date = date('Y-m-d ');
-            $account_purchase->user_id = 0;
-
+            $account_purchase->user_id = Auth::id();
             $account_purchase->save();
 
         }else{
@@ -442,7 +508,7 @@ class AccountController extends Controller
         $cheque->account_name = $request->input('account_name');
         $cheque->account_number = $request->input('account_number');
         $cheque->cheque_amount = $request->input('cheque_amount');
-        $cheque->cheque_number = $request->input('cheque_amount');
+        $cheque->cheque_number = $request->input('cheque_number');
         $cheque->date = $request->input('date');
         $cheque->due_date = $request->input('due_date');
         $cheque->data_id = $purchase->po_id;
@@ -465,6 +531,8 @@ class AccountController extends Controller
         }
         $cheque->save();
         $purchase->cheque_id =  $cheque->id;
+        $purchase->pay_by =  'cheque';
+
         $purchase->save();
 
         $this->history_table('account_purchase_histories', 'Cheque Id ( '. $cheque->id.' )  Issued' , 0 , $cheque->id , 'account.view_cheque');
@@ -497,7 +565,7 @@ class AccountController extends Controller
             $account_hr_fund->status = 'not_paid';
             $account_hr_fund->row_status = 'active';
             $account_hr_fund->date = $hr_fund->date;
-            $account_hr_fund->user_id = 0;
+            $account_hr_fund->user_id = Auth::id();
 
             $account_hr_fund->save();
 
@@ -533,6 +601,7 @@ class AccountController extends Controller
         }
         $cheque->save();
         $hr_fund->cheque_id =  $cheque->id;
+        $hr_fund->pay_by =  'cheque';
         $hr_fund->save();
 
         $this->history_table('account_hr_histories', 'Cheque Id ( '. $cheque->id.' )  Issued' , 0 , $cheque->id , 'account.view_cheque');
@@ -542,8 +611,80 @@ class AccountController extends Controller
 
    }
 
+   public function cheque_issue_petty_fund(Request $request){
+        $petty_fund = Account_petty::find($request->input('id'));
+        
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $petty_fund->amount_paid = $request->input('cheque_amount');
+
+        $petty_fund->amount_remaning = (int)$petty_fund->amount_remaning - (int)$request->input('cheque_amount');
+
+        if($petty_fund->amount_remaning > 0  ){
+            $petty_fund->status = 'partial_paid';
+
+            $account_petty_fund = new Account_petty();
+            $account_petty_fund->petty_request_id
+            = $petty_fund->petty_request_id
+            ;
+            $account_petty_fund->total_amount = $petty_fund->total_amount;
+            $account_petty_fund->amount_paid = 0 ;
+            $account_petty_fund->amount_remaning = $petty_fund->amount_remaning;
+            $account_petty_fund->status = 'not_paid';
+            $account_petty_fund->row_status = 'active';
+            $account_petty_fund->date = $petty_fund->date;
+            $account_petty_fund->user_id = Auth::id();
+
+            $account_petty_fund->save();
+
+        }else{
+            $petty_fund->status = 'paid';
+        }
+
+        $cheque = new account_cheque();
+        $cheque->account_name = $request->input('account_name');
+        $cheque->account_number = $request->input('account_number');
+        $cheque->cheque_amount = $request->input('cheque_amount');
+        $cheque->cheque_number = $request->input('cheque_number');
+        $cheque->data_id = $petty_fund->petty_request_id;
+        $cheque->issued_to = 'petty_fund';
+
+
+        $cheque->row_status =  'active';
+        $cheque->status =  'not_cleared';
+        $cheque->date = $request->input('date');
+        $cheque->due_date = $request->input('due_date');
+
+
+
+        if ($request->hasFile('upload')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/account/', $name , ['disk' => 'public_uploads'])){
+                $cheque->upload = $name;
+
+            }
+            
+        }
+        $cheque->save();
+        $petty_fund->cheque_id =  $cheque->id;
+        $petty_fund->save();
+
+        $this->history_table('account_petty_histories', 'Cheque Id ( '. $cheque->id.' )  Issued' , Auth::id() , $cheque->id , 'account.view_cheque');
+
+        return \Redirect::route('user.account.payable_petty_fund')->with('success', 'Cheque Issued');
+
+
+   }
+
+   
+
    //Cheque
-   public function cheque(){
+    public function cheque(){
         $data['modules']= DB::table('modules')->get();
         $user = Auth::user();
 
@@ -557,16 +698,35 @@ class AccountController extends Controller
 
     public function cheque_purchase(){
         $data['modules']= DB::table('modules')->get();
-            
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
         $data['cheque'] = account_cheque::where('row_status','!=' ,'deleted')->where('issued_to','=','purchase')->get();
         // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
 
         $data['page_title'] = "Cheque For Purchase";
         $data['view'] = 'account.cheque.purchase_cheque';
         return view('users.layout', ["data"=>$data]);
-   }
+    }
 
-   public function cheque_hr_fund(){
+    public function cheque_petty(){
+        $data['modules']= DB::table('modules')->get();
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+        $data['cheque'] = account_cheque::where('row_status','!=' ,'deleted')->where('issued_to','=','petty_fund')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+        $data['page_title'] = "Cheque For Petty";
+        $data['view'] = 'account.cheque.petty_cheque';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function cheque_hr_fund(){
         $data['modules']= DB::table('modules')->get();
         $user = Auth::user();
 
@@ -587,6 +747,37 @@ class AccountController extends Controller
         $id =  (int)$request->input('id');
         $cheque = account_cheque::where('id' , $id)->first();
 
+        if($request->input('type') == 'petty'){
+           if($request->input('status') == 'cleard'){
+               $petty = Petty::latest()->first();
+               if($petty != null){
+                   $new_petty = new Petty();
+                   $new_petty->recived_amount  =  $cheque->cheque_amount;
+                   $new_petty->total_amount  =  (float)$petty->total_amount + (float)$cheque->cheque_amount;
+
+                   $new_petty->date  =  date('Y-m-d');
+                   $new_petty->status  =  'approved';
+
+                   $new_petty->row_status  =  'active';
+                   $new_petty->user_id  =  Auth::id();
+                   $new_petty->save();
+
+               }else{
+
+                    $new_petty = new Petty();
+                    $new_petty->recived_amount  =  $cheque->cheque_amount;
+                    $new_petty->total_amount  =  $new_petty->recived_amount;
+
+                    $new_petty->date  =  date('Y-m-d');
+                    $new_petty->status  =  'approved';
+
+                    $new_petty->row_status  =  'active';
+                    $new_petty->user_id  =  Auth::id();
+                    $new_petty->save();
+               }
+           }
+        }
+
         if($request->input('status') != ''){
             $cheque->status = $request->input('status');
         }
@@ -606,7 +797,71 @@ class AccountController extends Controller
             
         }
         $cheque->save();
-        return \Redirect::route('user.account.cheque_hr_fund')->with('success', 'Cheque Update');
+        return \Redirect::route('user.account.cheque')->with('success', 'Cheque Update');
+    }
+
+    public function  pay_by_petty_purchase(Request $request){
+        $account_purchase = account_purchase::find($request->input('id'));
+        
+        $petty_purchase = new Petty_purchase();
+        $petty_purchase->po_number = $account_purchase->po_number;
+        $petty_purchase->po_id = $account_purchase->po_id;
+        $petty_purchase->account_id = $account_purchase->id;
+        $petty_purchase->date = $account_purchase->date;
+
+        $petty_purchase->total_amount = $account_purchase->total_amount;
+        $petty_purchase->amount_paid = $account_purchase->amount_paid;
+        $petty_purchase->amount_remaning = $account_purchase->amount_remaning;
+        $petty_purchase->status = 'not_paid';
+        $petty_purchase->action = 'Add';
+        $petty_purchase->row_status = 'active';
+
+        $petty_purchase->user_id = Auth::id();
+        $petty_purchase->save();
+
+        $account_purchase->status = 'paid';
+        $account_purchase->pay_by = 'petty';
+
+        if( $account_purchase->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+
+        
+    }
+
+    public function  pay_by_petty_hr(Request $request){
+        $account_purchase = account_hr::find($request->input('id'));
+        
+        $petty_purchase = new Petty_hr();
+        $petty_purchase->hr_fund_id = $account_purchase->hr_fund_id;
+        $petty_purchase->account_id = $account_purchase->id;
+        $petty_purchase->date = $account_purchase->date;
+        $petty_purchase->total_amount = $account_purchase->total_amount;
+        $petty_purchase->amount_paid = $account_purchase->amount_paid;
+        $petty_purchase->amount_remaning = $account_purchase->amount_remaning;
+        $petty_purchase->status = 'not_paid';
+        $petty_purchase->action = 'Add';
+        $petty_purchase->row_status = 'active';
+
+        $petty_purchase->user_id = Auth::id();
+        $petty_purchase->save();
+
+        $account_purchase->status = 'paid';
+        $account_purchase->pay_by = 'petty';
+
+        if( $account_purchase->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+
+        
     }
 
     public function view_cheque(Request $request){

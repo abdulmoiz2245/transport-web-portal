@@ -213,7 +213,7 @@
                         <div class="triangle"></div>
                     </li>
                     <li class="nav-item" data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.petty') }}">
                             <i class="nav-icon i-Cash-register-2"></i>
                             <span class="nav-text">Petty-cash</span>
                         </a>

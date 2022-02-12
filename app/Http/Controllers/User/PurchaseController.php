@@ -152,20 +152,36 @@ class PurchaseController extends Controller
     public function save_purchase(Request $request){
 
         $purchase = new Purchase;
-        
-        $check = false;
+        $check = 0;
         foreach(Purchase_mertial_data::all() as $purchase_material){
-            if($purchase_material->id == $request->input('material_data_id')){
-                $check = true;
+            if($purchase_material->id == $request->input('meterial_data_id_1')){
+                $check = 1;
+                $check_id_name = $request->input('meterial_data_id_1');
+                break;
+            }else if($purchase_material->name == $request->input('meterial_data_id_1')){
+                $check = 1;
+                $check_id_name = $purchase_material->id;
+                break;
             }
         }
+        
+        // dd($request->input('meterial_data_id_1'));
 
-        if(!$check){
+        if($check != 1){
             $meterial = new Purchase_mertial_data;
-            $meterial->name = $request->input('material_data_id');
+            $meterial->name = $request->input('meterial_data_id_1');
             $meterial->save();
+
+            $purchase->meterial_data_id = $meterial->id;
+
+        }else{
+            $purchase->meterial_data_id = $check_id_name;
+
         }
-          if($request->input('supplier_id') != ''){
+
+        // dd( $purchase->meterial_data_id);
+        
+        if($request->input('supplier_id') != ''){
             $purchase->supplier_id = $request->input('supplier_id');
         }
         if($request->input('supplier_name') != ''){
