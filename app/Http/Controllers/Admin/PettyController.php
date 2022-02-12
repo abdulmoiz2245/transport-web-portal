@@ -46,7 +46,7 @@ use function PHPUnit\Framework\isEmpty;
 class PettyController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:user');
+        $this->middleware('auth:admin');
     }
     public function history_table($table_name , $action , $user_id, $data_id, $tab_name){
         DB::table($table_name)->insert([
