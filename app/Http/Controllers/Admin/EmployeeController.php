@@ -3199,7 +3199,7 @@ class EmployeeController extends Controller
         if($Complaints->status == 'approved' || $user_id == 0 ){
             
             //  $this->history_table('trade_license_histories', $trade_license->action , $user_id);
-             $this->history_table('Complaints_histories', $Complaints->action , $user_id , $Complaints->id , 'hr_pro.view_complaints');
+             $this->history_table('complaints_histories', $Complaints->action , $user_id , $Complaints->id , 'hr_pro.view_complaints');
         }
 
 

@@ -229,7 +229,7 @@
                     @foreach($data['employee_deduction'] as $employee_deduction)
                     @if($employee_deduction->status == 'approved'  && $employee_deduction->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $employee_deduction->emp_id)
+                    @if($employees->id ==  $employee_deduction->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

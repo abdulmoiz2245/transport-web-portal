@@ -20,7 +20,7 @@
                     </thead>
                     <tbody>
                     @foreach($data['employee'] as $employee)
-                        @if($employee->employee_doj != '' && $employee->status== 'approved')
+                        @if($employee->employee_doj != '' && $employee->status== 'approved' && $employee->row_status != 'deleted')
                         <tr>
                             <td>{{ $employee->id }}</td>
                             <td> {{ $employee->name }}</td>

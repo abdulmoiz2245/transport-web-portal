@@ -218,7 +218,7 @@
   </form>
   <form action="" method="get">
     <input type="text" name="status" value="rejected" class="d-none">
-    <button class="mt-2" type="submit" class="tablinks <?php 
+    <button type="submit" class="tablinks <?php 
       if (isset($_GET["status"])) {
         if($_GET["status"] == 'rejected'){
           echo 'active';
@@ -281,7 +281,7 @@
                     @foreach($data['complaints'] as $complaints)
                     @if($complaints->status == 'approved'  && $complaints->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $complaints->emp_id)
+                    @if($employees->id ==  $complaints->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

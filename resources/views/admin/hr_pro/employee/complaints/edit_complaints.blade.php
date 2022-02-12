@@ -35,10 +35,10 @@
                     <label>Select Employee </label>
                     <select name="emp_id" class="form-control" required>
                     @foreach($data['employee'] as $employee)
-                        
+                    @if($employee->status == 'approved' && $employee->row_status != 'deleted')   
 
                         <option value="{{ $employee->id }}" <?php if($data['complaint']->emp_id == $employee->id) echo 'selected="selected"' ?>> {{ $employee->name }}</option>
-                          
+                    @endif    
                     @endforeach
                     </select>
                 </div>

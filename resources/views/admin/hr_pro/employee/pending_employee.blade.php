@@ -169,6 +169,11 @@ use App\Models\User;
   }
 }
 </style>
+<div class="mb-3">
+            <a href="{{ route( 'admin.hr_pro.employee') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+</div>
 <div class="sk-circle loader"style="display:none">
   <div class="sk-circle1 sk-child"></div>
   <div class="sk-circle2 sk-child"></div>

@@ -231,7 +231,7 @@
                     @foreach($data['leave'] as $leave)
                     @if($leave->status == 'approved'  && $leave->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $leave->emp_id)
+                    @if($employees->id ==  $leave->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

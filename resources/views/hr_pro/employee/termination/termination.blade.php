@@ -231,7 +231,7 @@
                     @foreach($data['terminate_employee'] as $terminate_employee)
                     @if($terminate_employee->status == 'approved'  && $terminate_employee->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $terminate_employee->emp_id)
+                    @if($employees->id ==  $terminate_employee->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

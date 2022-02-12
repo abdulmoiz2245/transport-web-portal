@@ -229,7 +229,7 @@
                     @foreach($data['renew_employee'] as $renew_employee)
                     @if($renew_employee->status == 'approved'  && $renew_employee->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $renew_employee->emp_id)
+                    @if($employees->id ==  $renew_employee->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

@@ -279,7 +279,7 @@
                     @foreach($data['absent'] as $absent)
                     @if($absent->status == 'new'  && $absent->row_status != 'deleted')
                     @foreach($data['employees'] as $employees)
-                    @if($employees->id ==  $absent->emp_id)
+                    @if($employees->id ==  $absent->emp_id && $employees->row_status != 'deleted')
                         
                     <tr>
                    

@@ -9,7 +9,7 @@
     
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'admin.hr_pro.employee') }}">
+            <a href="{{ route( 'admin.hr_pro.existing_employee_detail') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
             

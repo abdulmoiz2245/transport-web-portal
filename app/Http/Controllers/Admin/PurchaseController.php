@@ -562,7 +562,7 @@ class PurchaseController extends Controller
             $purchase->action = 'Admin Edit';
         }
         $purchase->status_admin = $request->input('status');
-        $purchase->status_account = $request->input('status_account');
+        $purchase->status_account = $request->input('pending');
 
 
 

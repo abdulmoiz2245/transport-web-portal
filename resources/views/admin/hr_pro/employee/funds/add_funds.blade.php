@@ -14,9 +14,10 @@
                         <label>Select Employee </label>
                         <select name="emp_id" class="form-control" required>
                         @foreach($data['employee'] as $employee)
+                        @if($employee->status== 'approved' && $employee->row_status != 'deleted')
                            
                             <option value="{{ $employee->id }}"> {{ $employee->name }}</option>
-                            
+                        @endif   
                         @endforeach
                         </select>
                     </div>

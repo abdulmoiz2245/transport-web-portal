@@ -2785,6 +2785,8 @@ class EmployeeController extends Controller
 
         }
         $funds_request->status = 'pending';
+
+        $funds_request->row_status = 'active';
  
         $funds_request->user_id = Auth::id();
         

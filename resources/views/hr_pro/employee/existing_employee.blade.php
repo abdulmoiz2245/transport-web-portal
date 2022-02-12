@@ -12,7 +12,7 @@ use App\Models\User;
     
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'user.hr_pro.employee') }}">
+            <a href="{{ route( 'user.hr_pro.existing_employee_detail') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
             
@@ -67,7 +67,7 @@ use App\Models\User;
                         @foreach($data['employee'] as $employee)
                        
                         
-                            @if($employee->employee_doj != '' && $employee->row_status != 'deleted' && $employee->admin_status == '1' && $employee->status == 'approved' )
+                            @if($employee->employee_doj != '' && $employee->row_status != 'deleted' && $employee->admin_status == '1' && $employee->status == 'approved' && $employee->row_status != 'deleted')
                             
                             <tr>
                                 <td>{{ $employee->id }}</td>

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-5"> 
-                <a href="{{ route( 'admin.hr_pro.employee') }}">
+                <a href="{{ route( 'admin.hr_pro.employee_terminate') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
             </div>
@@ -25,7 +25,7 @@
                                     
                                 }
                             ?>
-                            @if($employee->employee_doj != '' && $employee->status== 'approved' && $check == true)
+                            @if($employee->employee_doj != '' && $employee->status== 'approved' && $check == true && $employee->row_status != 'deleted')
 
                             <option value="{{ $employee->id }}"> {{ $employee->name }}</option>
                                 @endif

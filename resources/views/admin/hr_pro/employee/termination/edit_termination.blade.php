@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="mb-5"> 
-        <a href="{{ route( 'admin.hr_pro.employee') }}">
+        <a href="{{ route( 'admin.hr_pro.employee_terminate') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -46,7 +46,7 @@
                                 
                             }
                         ?>
-                        @if($employee->employee_doj != '' && $employee->status== 'approved'  && $check == true)
+                        @if($employee->employee_doj != '' && $employee->status== 'approved'  && $check == true && $employee->row_status != 'deleted' )
 
                         <option value="{{ $employee->id }}" <?php if($data['terminate_employee']->emp_id == $employee->id) echo 'selected="selected"' ?>> {{ $employee->name }}</option>
                             @endif

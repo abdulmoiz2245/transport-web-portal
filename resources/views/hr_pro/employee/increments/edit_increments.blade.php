@@ -25,7 +25,7 @@
                     <label>Select Employee </label>
                     <select name="emp_id" class="form-control" required>
                     @foreach($data['employee'] as $employee)
-                        @if($employee->employee_doj != '' && $employee->status== 'approved')
+                        @if($employee->employee_doj != '' && $employee->status== 'approved' && $employee->row_status != 'deleted')
 
                         <option value="{{ $employee->id }}" <?php if($data['employee_increments']->emp_id == $employee->id) echo 'selected="selected"' ?>> {{ $employee->name }}</option>
                             @endif

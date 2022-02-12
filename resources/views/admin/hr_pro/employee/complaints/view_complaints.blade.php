@@ -5,7 +5,7 @@
         </a>
     </div>
     @foreach($data['employees'] as $employees)
-        @if($employees->id ==  $data['complaint']->emp_id)
+        @if($employees->id ==  $data['complaint']->emp_id && $employees->row_status != 'deleted')
     <div class="row mb-3">
         <div class="col-12 col-md-6">
             <div class="row">

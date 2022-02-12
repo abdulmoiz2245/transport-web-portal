@@ -1,5 +1,11 @@
 
 <div class="container card p-5">
+<div class="mb-3">
+            <a href="{{ route( 'admin.hr_pro.existing_employee_detail') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>
+            
+    </div>
     <form action="" method="get">
         <div class="row">
             <div class="col-12 col-md-4">

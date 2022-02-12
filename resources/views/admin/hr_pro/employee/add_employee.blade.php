@@ -242,13 +242,13 @@ p {
             </div>
 
             <div class="col-md-6 col-12">
-                <div class="form-group required">
+                <div class="form-group">
                     <label class="control-label">Passport Copy </label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" >Passport  Copy</span>
                         </div>
-                        <div 9class="custom-file">
+                        <div class="custom-file">
                             <input type="file" class="custom-file-input" name="passport_copy">
                             <label class="custom-file-label">Choose file</label>
                         </div>
