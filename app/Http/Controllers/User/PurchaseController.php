@@ -298,6 +298,8 @@ class PurchaseController extends Controller
 
         $purchase->status_admin = 'pending';
         $purchase->status_account = 'pending';
+        $purchase->row_status = 'active';
+
 
         $purchase->action = 'add';
         if($request->input('status_message') != ''){

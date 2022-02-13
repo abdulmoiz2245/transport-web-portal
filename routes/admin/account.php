@@ -6,11 +6,10 @@ use App\Http\Controllers\Admin\AccountController ;
 
 
 use Illuminate\Support\Facades\Route;
-
+    Route::get('/admin/account', [AccountController::class, 'account']) 
+    ->name('admin.account');
     Route::group(['prefix'=>'/admin/account','as'=>'admin.account.'], function(){
-        Route::get('/', [AccountController::class, 'account']) 
-        ->name('account');
-
+        
     Route::get('/approvals', [AccountController::class, 'approval']) 
     ->name('approval');
 
@@ -47,6 +46,10 @@ use Illuminate\Support\Facades\Route;
     Route::post('/approvals/view', [AccountController::class, 'view_approval']) 
     ->name('view_approval');
 
+    //Account Petty
+    Route::get('/payable/petty', [AccountController::class, 'payable_petty']) 
+    ->name('payable_petty');
+
     //Account Payable
     Route::get('/payable/purchase', [AccountController::class, 'payable_purchase']) 
     ->name('payable_purchase');
@@ -60,6 +63,12 @@ use Illuminate\Support\Facades\Route;
     Route::post('/cheque/issue/purchase', [AccountController::class, 'cheque_issue_purchase']) 
     ->name('cheque_issue_purchase');
 
+    Route::post('/petty/payable/purchase', [AccountController::class, 'pay_by_petty_purchase']) 
+    ->name('pay_by_petty_purchase');
+
+    Route::post('/petty/payable/hr', [AccountController::class, 'pay_by_petty_hr']) 
+    ->name('pay_by_petty_hr');
+
     Route::post('/cheque/issue/hr-fund', [AccountController::class, 'cheque_issue_hr_fund']) 
     ->name('cheque_issue_hr_fund');
 
@@ -71,6 +80,10 @@ use Illuminate\Support\Facades\Route;
     ->name('cheque');
     Route::get('/cheque/purchase', [AccountController::class, 'cheque_purchase']) 
     ->name('cheque_purchase');
+
+    Route::get('/cheque/petty', [AccountController::class, 'cheque_petty']) 
+    ->name('cheque_petty');
+
 
     Route::get('/cheque/hr-fund', [AccountController::class, 'cheque_hr_fund']) 
     ->name('cheque_hr_fund');

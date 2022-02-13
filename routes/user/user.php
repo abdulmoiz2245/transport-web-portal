@@ -22,8 +22,8 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/employee/employee', [UserController::class, 'employee']) 
     ->name('user.employee');
 
-    Route::get('/employee/accounts', [UserController::class, 'accounts']) 
-    ->name('user.accounts');
+    // Route::get('/employee/accounts', [UserController::class, 'accounts']) 
+    // ->name('user.accounts');
 
     Route::get('/employee/booking', [UserController::class, 'booking']) 
     ->name('user.booking');
