@@ -23,8 +23,13 @@ Route::group(['prefix'=>'/admin/hr-pro','as'=>'admin.hr_pro.'], function(){
 
     Route::get('/employee/history', [EmployeeController::class, 'employee_history']) 
     ->name('employee_history');
+
     Route::get('/employee/trash', [EmployeeController::class, 'trash_employee']) 
     ->name('trash_employee');
+
+    Route::post('/employee/restore', [EmployeeController::class, 'restore_employee']) 
+    ->name('restore_employee');
+    
 
     Route::get('/employee', [EmployeeController::class, 'employee']) 
     ->name('employee');

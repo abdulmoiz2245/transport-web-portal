@@ -143,6 +143,60 @@ class EmployeeController extends Controller
         $data['view'] = 'admin.hr_pro.employee.existing_employee_detail';
         return view('layout', ["data"=>$data]);
     }
+
+    public function trash_employee(){
+        $data['modules']= DB::table('modules')->get();
+        // $data['complaints'] = Complaints::all();
+        $data['employee'] = Employee::all();
+
+        // dd( $data['customer_info']);
+        $data['page_title'] = "Employee Trash";
+        $data['view'] = 'admin.hr_pro.employee.employee_deleted_data';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function employee_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['employees'] = Employee::all();
+
+        $data['trade_licenses_history']= Employee_history::all();
+        $data['table_name']= 'employee_histories';
+
+        $data['page_title'] = "History | All Employee ";
+        $data['view'] = 'admin.hr_pro.`history`';
+        return view('layout', ["data"=>$data]);
+    }
+    public function employee_history(){
+        $data['id'] = DB::table('modules')->het
+    }
+    public function restore_employee(Request $request){
+        $id =  (int)$request->input('id');
+        $employee = Employee::where('id' , $id)->first();
+        
+        $employee->status_message = $request->input('status_message');
+        if( $employee->user_id != 0){
+                        
+        }else{
+            $user_id  = 0;
+        }
+
+        $employee->admin_status == 0;
+        $employee->status == 'pending';
+
+        $employee->row_status = 'active';
+
+        $employee->action = 'restored';
+        
+        $employee->save();
+
+        $this->history_table('employee_histories', 'Restore', 0,  $employee->id, "hr_pro.view_employee");
+ 
+        $employee->save();
+           
+            return response()->json(['status'=>'1']);
+    }
     
     public function add_employee(){
         $data['modules']= DB::table('modules')->get();

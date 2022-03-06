@@ -29,6 +29,8 @@ class CreatePettyBillsTable extends Migration
             $table->string('user_id')->nullable();
             $table->timestamps();
 
+
+
         });
     }
 
