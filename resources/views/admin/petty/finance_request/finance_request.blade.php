@@ -193,7 +193,7 @@ use App\Models\Office_finance_request;
 </div>
 
 <div class="tab" >
-  <button  class="tablinks "> <a href="{{ route('user.petty.add_finance_request') }}" style=""> Add Finance Request </a>  </button>
+  <button  class="tablinks "> <a href="{{ route('admin.petty.add_finance_request') }}" style=""> Add Finance Request </a>  </button>
   <form action="" method="get">
     <input type="text" name="status" value="approved" class="d-none">
     <button type="submit" class="tablinks <?php 
@@ -233,23 +233,41 @@ use App\Models\Office_finance_request;
 
 </div>
 
+<div class="col-12">
+            @if (session('success'))
+            <div class="alert alert-success mb-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger mb-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @endif
+
 <div class="card">
     <div class="card-body">
         <div class="d-flex mt-3 mb-3" style="justify-content: space-between;">
             <div>
-                <a href="{{ route('user.petty') }}">
+                <a href="{{ route('admin.petty') }}">
                     <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
                 </a>
                 
         </div>
         <div class="mt-3 mb-3"> 
                 
-                <a href="{{ route('user.petty.finance_request_history') }}"target="_blank" class="ml-3">
+                <a href="{{ route('admin.petty.finance_request_history') }}"target="_blank" class="ml-3">
                         <img src="<?= asset('assets') ?>/images/history_icon.png" alt="" width="30">
                 </a> 
 
                 
-            </div>
+          </div>
 
             
         </div>
@@ -310,7 +328,7 @@ use App\Models\Office_finance_request;
 
                                 
                             <td>
-                                <form action="{{ route('user.petty.view_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.view_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -318,7 +336,7 @@ use App\Models\Office_finance_request;
                                     </button>
                                 </form>
 
-                                <form action="{{ route('user.petty.edit_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.edit_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -403,7 +421,7 @@ use App\Models\Office_finance_request;
 
                                 
                             <td>
-                                <form action="{{ route('user.petty.view_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.view_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -411,7 +429,7 @@ use App\Models\Office_finance_request;
                                     </button>
                                 </form>
 
-                                <form action="{{ route('user.petty.edit_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.edit_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -491,7 +509,7 @@ use App\Models\Office_finance_request;
 
                                 
                             <td>
-                                <form action="{{ route('user.petty.view_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.view_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -499,7 +517,7 @@ use App\Models\Office_finance_request;
                                     </button>
                                 </form>
 
-                                <form action="{{ route('user.petty.edit_finance_request') }}" method="post" class="d-inline">
+                                <form action="{{ route('admin.petty.edit_finance_request') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$finance_request->id}}" placeholder="Enter id" >
                                     <button type="submit" class="border-0 .bg-white">
@@ -554,7 +572,7 @@ use App\Models\Office_finance_request;
             }).then(function () {
                 $.ajax({
                     type:'POST',
-                    url:"{{ route('user.petty.delete_finance_request') }}",
+                    url:"{{ route('admin.petty.delete_finance_request') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

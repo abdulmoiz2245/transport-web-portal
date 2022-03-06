@@ -116,6 +116,22 @@ if($petty!= null){
         </div>
         
     </div>
+    @if (session('success'))
+    <div class="alert alert-success mb-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    @endif
+    @if (session('error'))
+    <div class="alert alert-danger mb-3" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    @endif
     
 <div class="">
   
