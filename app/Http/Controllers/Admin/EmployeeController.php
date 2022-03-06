@@ -168,9 +168,7 @@ class EmployeeController extends Controller
         $data['view'] = 'admin.hr_pro.`history`';
         return view('layout', ["data"=>$data]);
     }
-    public function employee_history(){
-        $data['id'] = DB::table('modules')->het
-    }
+   
     public function restore_employee(Request $request){
         $id =  (int)$request->input('id');
         $employee = Employee::where('id' , $id)->first();
