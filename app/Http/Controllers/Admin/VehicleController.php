@@ -129,6 +129,29 @@ class VehicleController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
+    public function own_new_vehicle(Request $request){
+        if($request->input('vehicle_mode') == 'own_vehicle'){
+            $data['vehicle_mode']= 'own_vechicle';
+            $data['page_title'] = "Own Vehicle";
+        }else{
+
+            $data['vehicle_mode']= 'new_vechicle';
+            $data['page_title'] = "New Vehicle";
+        }
+
+        $data['modules']= DB::table('modules')->get();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         //$data['company_names']= DB::table('company_names')->get();
+
+       
+        $data['view'] = 'admin.vehicle.register_new_vehicle.own_new_vehicle';
+        return view('layout', ["data"=>$data]);
+    }
+
      //own vehicle - register new vehicle - vehicle
      public function own_vehicle(){
         $data['modules']= DB::table('modules')->get();

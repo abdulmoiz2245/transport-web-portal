@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/register_new_vehicle/own_vehicle', [VehicleController::class, 'own_vehicle']) 
             ->name('register_new_vehicle.own_vehicle');
 
+        Route::post('/register_new_vehicle/own_new_vehicle', [VehicleController::class, 'own_new_vehicle']) 
+        ->name('register_new_vehicle.own_new_vehicle');
+
         // hired sub contractor vehicle - register new vehicle - vehicle
         Route::get('/register_new_vehicle/hired_sub_contractor_vehicle', [VehicleController::class, 'hired_sub_contractor_vehicle']) 
         ->name('register_new_vehicle.hired_sub_contractor_vehicle');
