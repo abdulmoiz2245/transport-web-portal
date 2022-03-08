@@ -25,11 +25,6 @@ use Illuminate\Support\Facades\Route;
         // hired sub contractor vehicle - register new vehicle - vehicle
         Route::get('/register_new_vehicle/hired_sub_contractor_vehicle', [VehicleController::class, 'hired_sub_contractor_vehicle']) 
         ->name('register_new_vehicle.hired_sub_contractor_vehicle');
-
-        // registration - register new vehicle - vehicle
-        Route::get('/register_new_vehicle/registration', [VehicleController::class, 'registration']) 
-        ->name('register_new_vehicle.registration');
-
         
 
         Route::get('/register_new_vehicle/add_own_vehicle', [VehicleController::class, 'add_own_vehicle']) 
@@ -37,9 +32,6 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/register_new_vehicle/add_hired_sub_contractor_vehicle', [VehicleController::class, 'add_hired_sub_contractor_vehicle']) 
         ->name('register_new_vehicle.add_hired_sub_contractor_vehicle');
-
-        Route::get('/register_new_vehicle/add_registration', [VehicleController::class, 'add_registration']) 
-        ->name('register_new_vehicle.add_registration');
 
 
 
@@ -57,10 +49,6 @@ use Illuminate\Support\Facades\Route;
         Route::post('/register_new_vehicle/edit_hired_sub_contractor_vehicle', [VehicleController::class, 'edit_hired_sub_contractor_vehicle']) 
         ->name('register_new_vehicle.edit_hired_sub_contractor_vehicle');
 
-        Route::post('/register_new_vehicle/edit_registration', [VehicleController::class, 'edit_registration']) 
-        ->name('register_new_vehicle.edit_registration');
-
-
 
         Route::post('/register_new_vehicle/view_own_vehicle', [VehicleController::class, 'view_own_vehicle']) 
         ->name('register_new_vehicle.view_own_vehicle');
@@ -68,16 +56,12 @@ use Illuminate\Support\Facades\Route;
         Route::post('/register_new_vehicle/view_hired_sub_contractor_vehicle', [VehicleController::class, 'view_hired_sub_contractor_vehicle']) 
         ->name('register_new_vehicle.view_hired_sub_contractor_vehicle');
 
-        Route::post('/register_new_vehicle/view_registration', [VehicleController::class, 'view_registration']) 
-        ->name('register_new_vehicle.view_registration');
 
-
-
-        Route::get('/register_new_vehicle/trash_register_new_vehicle', [VehicleController::class, 'trash_fuel_reading']) 
-        ->name('fuel.trash_fuel_reading');
+        Route::get('/register_new_vehicle/trash_register_new_vehicle', [VehicleController::class, 'trash_register_new_vehicle']) 
+        ->name('register_new_vehicle.trash_register_new_vehicle');
         
-        Route::get('/register_new_vehicle/register_new_vehicle_history', [VehicleController::class, 'fuel_reading_history']) 
-        ->name('fuel.fuel_reading_history');
+        Route::get('/register_new_vehicle/register_new_vehicle_history', [VehicleController::class, 'register_new_vehicle_history']) 
+        ->name('register_new_vehicle.register_new_vehicle_history');
 
 
         Route::post('/register_new_vehicle/restor-delete', [VehicleController::class, 'restore_fuel_reading']) 

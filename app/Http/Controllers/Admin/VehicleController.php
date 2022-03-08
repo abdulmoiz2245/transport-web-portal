@@ -153,15 +153,6 @@ class VehicleController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    //registration - register new vehicle - vehicle
-    public function registration(){
-      $data['modules']= DB::table('modules')->get();
-
-      $data['page_title'] = "Registration";
-      $data['view'] = 'admin.vehicle.register_new_vehicle.registration';
-      return view('layout', ["data"=>$data]);
-    }
-
     public function add_own_vehicle(){
 
         $data['modules']= DB::table('modules')->get();
@@ -201,27 +192,6 @@ class VehicleController extends Controller
         $data['page_title'] = "Add Hired Sub Contractor Vehicle
         ";
         $data['view'] = 'admin.vehicle.register_new_vehicle.add_hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function add_registration(){
-
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        if(!empty( Fuel_transfer::latest('date')->first())){
-            $data['fuel_entery'] = Fuel_transfer::latest('date')->first(); 
-        }
-
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Add Registration
-        ";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.add_registration';
         return view('layout', ["data"=>$data]);
     }
 
@@ -491,22 +461,6 @@ class VehicleController extends Controller
 
     }
 
-    public function edit_registration(Request $request){
-        $data['modules']= DB::table('modules')->get();
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Edit Registration
-        ";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.edit_registration';
-        return view('layout', ["data"=>$data]);
-
-    }
-
     public function view_own_vehicle(Request $request){
        
         $data['modules']= DB::table('modules')->get();
@@ -535,22 +489,6 @@ class VehicleController extends Controller
 
         $data['page_title'] = "View Hired Own Sub Contractor Vehicle";
         $data['view'] = 'admin.vehicle.register_new_vehicle.view_hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function view_registration(Request $request){
-
-        $data['modules']= DB::table('modules')->get();
-
-      
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "View Registration";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.view_registration';
         return view('layout', ["data"=>$data]);
     }
 

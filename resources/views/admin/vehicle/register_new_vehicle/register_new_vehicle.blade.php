@@ -17,17 +17,20 @@ use App\Models\User;
     </div>
 
     <div class="row mt-4">
+    <form action="{{ route( 'admin.vehicle.register_new_vehicle.own_vehicle') }}" method="post" class="d-inline">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route('admin.vehicle.register_new_vehicle.own_vehicle') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
-                        <h4 class="mt-2 mb-2"><strong>Own Vehicle</strong></h4>
+                        <input type="hidden" name="vehicle_mode" value="own_vehicle">
+                        <button class="btn" class="mt-2 mb-2"><strong>Own Vehicle</strong></button>
                         <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
         </div>
+    </form>
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route('admin.vehicle.register_new_vehicle.hired_sub_contractor_vehicle') }}">
                 <div class="card card-icon mb-4">
@@ -40,15 +43,18 @@ use App\Models\User;
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.vehicle.register_new_vehicle.registration') }}">
-                <div class="card card-icon mb-4">
+        <form action="{{ route( 'admin.vehicle.register_new_vehicle.own_vehicle') }}" method="post" class="d-inline">
+            <a href="{{ route('admin.vehicle.register_new_vehicle.own_vehicle') }}">
+                <div class="card card-icon ">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
-                        <h4 class="mt-2 mb-2"><strong>Registration</strong></h4>
+                        <input type="hidden" name="vehicle_mode" value="own_vehicle">
+                        <a class="mt-2 mb-2"><strong>Registration</strong></a>
                         <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
+        </form>
         </div>
     </div>   
 </div>

@@ -55,107 +55,89 @@ use App\Models\Office_Land_contract;
                                     <tr>
                                         <th>ID</th>
                                         <th>Date</th>
-                                        <th>Daily Reading - Non Mobile Tank 01</th>
-                                        <th>Refill Amount - Non Mobile Tank 01</th>
-                                        <th>Daily Reading - Non Mobile Tank 02</th>
-                                        <th>Refill Amount - Non Mobile Tank 02</th>
-                                        <th>Daily Reading - Mobile Tank 01</th>
-                                        <th>Refill Amount - Mobile Tank 01</th>
-                                        <th>Daily Reading - Mobile Tank 02</th>
-                                        <th>Refill Amount - Mobile Tank 02</th>
-                                        <th>Fuel Enter</th>
+                                        <th>Sub Contractor</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Registration Date</th>
+                                        <th>Registration Expiry Date</th>
+                                        <th>Make</th>
+                                        <th>Model</th>
+                                        <th>Colour</th>
+                                        <th>Engine Number</th>
+                                        <th>Chassis Number</th>
+                                        <th>Vehicle Type</th>
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($data['fuel_transfers'] as $fuel_transfer)
-                                    @if($fuel_transfer->row_status != 'deleted')
                                     <tr>
-                                        <td class="">{{ $fuel_transfer->id }}</td>
-                                        <td class="">{{ $fuel_transfer->date }}</td>
+                                        <td class=""></td>
+                                        <td class=""></td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->non_mobile_1_reading }}
+                                          
+                                          
                                         </td>
                                         <td class="text-center"> 
-                                            <!-- <span style="background-color: forestgreen;"> -->
-                                                <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            <!-- </span> -->
+                                           
                                             
-                                            {{ $fuel_transfer->non_mobile_1_refill_amount }}
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->non_mobile_2_reading }}
+                                            
+                                           
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->non_mobile_2_refill_amount }}
+                                            
+                                            
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->mobile_1_reading }}
+                                            
+                                            
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->mobile_1_refill_amount }}
+                                            
+                                            
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/readings.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->mobile_2_reading }}
+                                            
+                                            
                                         </td>
                                         <td class="text-center">
-                                            <img src="<?= asset('assets') ?>/images/refilling.png" alt=""style="
-                                                    width: 23px;
-                                                " >
-                                            {{ $fuel_transfer->mobile_2_refill_amount }}
+                                            
+                                            
                                         </td>
                                         <td class="text-center">
-                                            {{ $fuel_transfer->fuel_enter }}
+                                            
+                                        </td>
+                                        <td class="text-center">
+                                            
                                         </td>
 
                                         <td>
 
                                             <form action="{{ route( 'admin.vehicle.register_new_vehicle.view_hired_sub_contractor_vehicle') }}" method="post" class="d-inline">
                                                 @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                                <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
                                             <form action="{{ route( 'admin.vehicle.register_new_vehicle.edit_hired_sub_contractor_vehicle') }}" method="post" class="d-inline">
                                                 @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{ $fuel_transfer->id }}" placeholder="Enter id" >
+                                                <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                         <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
                                                 
                                         
-                                            <a href="#" id="{{ $fuel_transfer->id }}" class="delete-file">
+                                            <a href="#" id="" class="delete-file">
                                                 
                                                 <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
                                         
                                             </a>  
                                         </td>  
                                     </tr>
-                                    @endif
-                                    @endforeach
+                                    
                                 </tbody>         
                             </table>
                         </div>
