@@ -281,80 +281,147 @@ use App\Models\Office_Land_contract;
           }
           ?>;">
           <div class="table-responsive">
-                            <table  class="display table2 table  nowrap " style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>PO Number</th>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th>Total Amount</th>
+                <table  class="display table2 table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PO Number</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
 
-                                        <th>TRN Number</th>
-                                        <th>Delivery Date</th>
-                                        <th>Action By</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data['purchases'] as $trade_license)
-                                    @if($trade_license->status_admin == 'approved' && $trade_license->status_account == 'approved' && $trade_license->row_status != 'deleted')
-                                    <tr>
-                                        <td>{{ $trade_license->id }}</td>
-                                        <td>{{ $trade_license->po_number }}</td>
-                                        <td>{{ $trade_license->product_name }}</td>
-                                        <td>{{ $trade_license->quantity }}</td>
+                            <th>TRN Number</th>
+                            <th>Delivery Date</th>
+                            <th>Action By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchases'] as $trade_license)
+                        @if($trade_license->status_admin == 'approved' && $trade_license->status_account == 'approved' && $trade_license->row_status != 'deleted')
+                        <tr>
+                            <td>{{ $trade_license->id }}</td>
+                            <td>{{ $trade_license->po_number }}</td>
+                            <td>{{ $trade_license->product_name }}</td>
+                            <td>{{ $trade_license->quantity }}</td>
 
-                                        <td>{{ $trade_license->total_amount }}</td>
-                                        <td>{{ $trade_license->trn }}</td>
-                                        <td>{{ $trade_license->delivery_date }}</td>
+                            <td>{{ $trade_license->total_amount }}</td>
+                            <td>{{ $trade_license->trn }}</td>
+                            <td>{{ $trade_license->delivery_date }}</td>
 
-                                        <td>
-                                            @if($trade_license->user_id == 0)
-                                                Admin
-                                            @else
-                                               @if(User::find($trade_license->user_id))
-                                                    {{ User::find($trade_license->user_id)->username}}
-                                               @else
-                                                    User Deleted
-                                               @endif
-                                            
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                                </button>
-                                            </form>
-
-                                            <!-- <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
-                                                </button>
-                                            </form> -->
-                                                
-                                        
-                                            <a href="#" id="{{ $trade_license->id }}" class="delete-file">
-                                                
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                                        
-                                            </a>
-
-                                              
-                                        </td>
-                                        
-                                    </tr>
+                            <td>
+                                @if($trade_license->user_id == 0)
+                                    Admin
+                                @else
+                                    @if(User::find($trade_license->user_id))
+                                        {{ User::find($trade_license->user_id)->username}}
+                                    @else
+                                        User Deleted
                                     @endif
-                                    @endforeach
-                                </tbody>         
-                            </table>
-                        </div>
+                                
+                                @endif
+                            </td>
+
+                            <td>
+                                <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+
+                                <!-- <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                            <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                    </button>
+                                </form> -->
+                                    
+                            
+                                <a href="#" id="{{ $trade_license->id }}" class="delete-file">
+                                    
+                                    <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                            
+                                </a>
+
+                                  
+                            </td>
+                            
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+                <hr>
+                <h3 class="mt-3 ml-3 mb-4">Vehicle</h3>
+                <table  class="display table2 table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PO Number</th>
+                            <th>Type</th>
+                            <th>Engin Number</th>
+                            <th>Chassis Number</th>
+                            <th>Make</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Action By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchases_vechicle'] as $trade_license)
+                        @if($trade_license->status_admin == 'approved' && $trade_license->status_account == 'approved' && $trade_license->row_status != 'deleted')
+                        <tr>
+                            <td>{{ $trade_license->id }}</td>
+                            <td>{{ $trade_license->po_number }}</td>
+                            <td>{{ $trade_license->vechicle_type }}</td>
+                            <td>{{ $trade_license->engine_number }}</td>
+
+                            <td>{{ $trade_license->chassis_no }}</td>
+                            <td>{{ $trade_license->make }}</td>
+                            <td>{{ $trade_license->model }}</td>
+                            <td>{{ $trade_license->color }}</td>
+
+                            <td>
+                                @if($trade_license->user_id == 0)
+                                    Admin
+                                @else
+                                    @if(User::find($trade_license->user_id))
+                                        {{ User::find($trade_license->user_id)->username}}
+                                    @else
+                                        User Deleted
+                                    @endif
+                                
+                                @endif
+                            </td>
+
+                            <td>
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>                                    
+                            
+                                <a href="#" id="{{ $trade_license->id }}" class="delete-vehicle-file">
+                                    
+                                    <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                            
+                                </a>
+
+                                  
+                            </td>
+                            
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
         </div>
         <div id="pending" class="tabcontent" style="display: <?php 
           if (isset($_GET["status"])) {
@@ -366,98 +433,182 @@ use App\Models\Office_Land_contract;
           }
           ?>;">
           <div class="table-responsive">
-                            <table   class="display table1 table  nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>PO Number</th>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th>Total Amount</th>
+            <table   class="display table1 table  nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PO Number</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
 
-                                        <th>TRN Number</th>
-                                        <th>Delivery Date</th>
-                                        <th>Action By</th>
-                                        <th>Pending By</th>
+                        <th>TRN Number</th>
+                        <th>Delivery Date</th>
+                        <th>Action By</th>
+                        <th>Pending By</th>
 
-                                        <!-- <th>User Action</th> -->
+                        <!-- <th>User Action</th> -->
 
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data['purchases'] as $trade_license)
-                                    <?php 
-                                       $check = false;
-                                       if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
-                                            $check = true;
-                                    ?>
-                                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
-                                    <tr>
-                                        <td>{{ $trade_license->id }}</td>
-                                        <td>{{ $trade_license->po_number }}</td>
-                                        <td>{{ $trade_license->product_name }}</td>
-                                        <td>{{ $trade_license->quantity }}</td>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data['purchases'] as $trade_license)
+                    <?php 
+                        $check = false;
+                        if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
+                            $check = true;
+                    ?>
+                    @if( $check == true && ($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending'  ) && $trade_license->row_status != 'deleted')
+                    <tr>
+                        <td>{{ $trade_license->id }}</td>
+                        <td>{{ $trade_license->po_number }}</td>
+                        <td>{{ $trade_license->product_name }}</td>
+                        <td>{{ $trade_license->quantity }}</td>
 
-                                        <td>{{ $trade_license->total_amount }}</td>
-                                        <td>{{ $trade_license->trn }}</td>
-                                        <td>{{ $trade_license->delivery_date }}</td>
-                                        <td>
-                                            @if($trade_license->user_id == 0)
-                                                Admin
-                                            @else
-                                               @if(User::find($trade_license->user_id))
-                                                    {{ User::find($trade_license->user_id)->username}}
-                                               @else
-                                                    User Deleted
-                                               @endif
-                                            
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($trade_license->status_admin == 'pending')
-                                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
-                                            @elseif($trade_license->status_account == 'pending')
-                                                
-                                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
-                                            @endif
-                                        </td>
+                        <td>{{ $trade_license->total_amount }}</td>
+                        <td>{{ $trade_license->trn }}</td>
+                        <td>{{ $trade_license->delivery_date }}</td>
+                        <td>
+                            @if($trade_license->user_id == 0)
+                                Admin
+                            @else
+                                @if(User::find($trade_license->user_id))
+                                    {{ User::find($trade_license->user_id)->username}}
+                                @else
+                                    User Deleted
+                                @endif
+                            
+                            @endif
+                        </td>
+                        <td>
+                            @if($trade_license->status_admin == 'pending')
+                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
+                            @elseif($trade_license->status_account == 'pending')
+                                
+                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
+                            @endif
+                        </td>
 
-                                        
-                                        
-                                        
+                        
+                        
+                        
 
-                                        <td>
-                                            <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                                </button>
-                                            </form>
+                        <td>
+                            <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                <button type="submit" class="border-0 bg-white">
+                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                </button>
+                            </form>
 
-                                            <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
-                                                </button>
-                                            </form>
-                                                
-                                        
-                                            <a href="#" id="{{ $trade_license->id }}" class="delete-file">
-                                                
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                                        
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
+                            <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                </button>
+                            </form>
+                                
+                        
+                            <a href="#" id="{{ $trade_license->id }}" class="delete-file">
+                                
+                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                        
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    @endif
+                    @endforeach
+                </tbody>         
+            </table>
+            <hr>
+            <h3 class="mt-3 ml-3 mb-4">Vehicle</h3>
+            <table  class="display table2 table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PO Number</th>
+                            <th>Type</th>
+                            <th>Engin Number</th>
+                            <th>Chassis Number</th>
+                            <th>Make</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Action By</th>
+                            <th>Pending By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchases_vechicle'] as $trade_license)
+                        @if($trade_license->status_admin == 'pending' || $trade_license->status_account == 'pending' && $trade_license->row_status != 'deleted')
+                        <tr>
+                            <td>{{ $trade_license->id }}</td>
+                            <td>{{ $trade_license->po_number }}</td>
+                            <td>{{ $trade_license->vechicle_type }}</td>
+                            <td>{{ $trade_license->engine_number }}</td>
+
+                            <td>{{ $trade_license->chassis_no }}</td>
+                            <td>{{ $trade_license->make }}</td>
+                            <td>{{ $trade_license->model }}</td>
+                            <td>{{ $trade_license->color }}</td>
+
+                            <td>
+                                @if($trade_license->user_id == 0)
+                                    Admin
+                                @else
+                                    @if(User::find($trade_license->user_id))
+                                        {{ User::find($trade_license->user_id)->username}}
+                                    @else
+                                        User Deleted
                                     @endif
-                                    @endforeach
-                                </tbody>         
-                            </table>
-                        </div>
+                                
+                                @endif
+                            </td>
+                            <td>
+                            @if($trade_license->status_admin == 'pending')
+                                <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
+                                @elseif($trade_license->status_account == 'pending')
+                                    
+                                    <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>    
+                                <form action="{{ route( 'admin.purchase.edit_vehicle_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                            <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                    </button>
+                                </form>                                
+                            
+                                <a href="#" id="{{ $trade_license->id }}" class="delete-vehicle-file">
+                                    
+                                    <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                            
+                                </a>
+
+                                  
+                            </td>
+                            
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>         
+            </table>
+
+          </div>
         </div>
         <div id="rejected" class="tabcontent" style="display: <?php 
           if (isset($_GET["status"])) {
@@ -469,90 +620,163 @@ use App\Models\Office_Land_contract;
           }
           ?>;" >
           <div class="table-responsive">
-                            <table   class="display table1 table  nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>TRN Number</th>
-                                        <th>Company Name</th>
-                                        <th>Delivery Date</th>
-                                        <th>Action By</th>
-                                        <th>Pending By</th>
+            <table   class="display table1 table  nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>TRN Number</th>
+                        <th>Company Name</th>
+                        <th>Delivery Date</th>
+                        <th>Action By</th>
+                        <th>Pending By</th>
 
-                                        <!-- <th>User Action</th> -->
+                        <!-- <th>User Action</th> -->
 
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data['purchases'] as $trade_license)
-                                    <?php 
-                                       $check = false;
-                                       if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
-                                            $check = true;
-                                    ?>
-                                    @if( $check == true && ($trade_license->status_admin == 'rejected' || $trade_license->status_account == 'rejected') && $trade_license->row_status != 'deleted')
-                                    <tr>
-                                        <td>{{ $trade_license->id }}</td>
-                                        <td>{{ $trade_license->trn }}</td>
-                                        <td>{{ $trade_license->company_name }}</td>
-                                        <td>{{ $trade_license->delivery_date }}</td>
-                                        <td>
-                                            @if($trade_license->user_id == 0)
-                                                Admin
-                                            @else
-                                               @if(User::find($trade_license->user_id))
-                                                    {{ User::find($trade_license->user_id)->username}}
-                                               @else
-                                                    User Deleted
-                                               @endif
-                                            
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($trade_license->status_admin == 'pending')
-                                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
-                                            @elseif($trade_license->status_account == 'pending')
-                                                
-                                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
-                                            @endif
-                                        </td>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data['purchases'] as $trade_license)
+                    <?php 
+                        $check = false;
+                        if($trade_license->status_admin != 'rejected' && $trade_license->status_account != 'rejected')
+                            $check = true;
+                    ?>
+                    @if( $check == true && ($trade_license->status_admin == 'rejected' || $trade_license->status_account == 'rejected') && $trade_license->row_status != 'deleted')
+                    <tr>
+                        <td>{{ $trade_license->id }}</td>
+                        <td>{{ $trade_license->trn }}</td>
+                        <td>{{ $trade_license->company_name }}</td>
+                        <td>{{ $trade_license->delivery_date }}</td>
+                        <td>
+                            @if($trade_license->user_id == 0)
+                                Admin
+                            @else
+                                @if(User::find($trade_license->user_id))
+                                    {{ User::find($trade_license->user_id)->username}}
+                                @else
+                                    User Deleted
+                                @endif
+                            
+                            @endif
+                        </td>
+                        <td>
+                            @if($trade_license->status_admin == 'pending')
+                            <span class="badge badge-pill badge-success p-2 m-1">Admin</span>
+                            @elseif($trade_license->status_account == 'pending')
+                                
+                                <span class="badge badge-pill badge-success p-2 m-1">Accounts</span>
+                            @endif
+                        </td>
 
-                                        
-                                        
-                                        
+                        
+                        
+                        
 
-                                        <td>
-                                            <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
-                                                </button>
-                                            </form>
+                        <td>
+                            <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                <button type="submit" class="border-0 bg-white">
+                                    <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                </button>
+                            </form>
 
-                                            <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
-                                                <button type="submit" class="border-0 bg-white">
-                                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
-                                                </button>
-                                            </form>
-                                                
-                                        
-                                            <a href="#" id="{{ $trade_license->id }}" class="delete-file">
-                                                
-                                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
-                                        
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
+                            <form action="{{ route( 'admin.purchase.edit_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                </button>
+                            </form>
+                                
+                        
+                            <a href="#" id="{{ $trade_license->id }}" class="delete-file">
+                                
+                                <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                        
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    @endif
+                    @endforeach
+                </tbody>         
+            </table>
+            <hr>
+            <h3 class="mt-3 ml-3 mb-4">Vehicle</h3>
+            <table  class="display table2 table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PO Number</th>
+                            <th>Type</th>
+                            <th>Engin Number</th>
+                            <th>Chassis Number</th>
+                            <th>Make</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Action By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['purchases_vechicle'] as $trade_license)
+                        @if($trade_license->status_admin == 'rejected' || $trade_license->status_account == 'rejected' && $trade_license->row_status != 'deleted')
+                        <tr>
+                            <td>{{ $trade_license->id }}</td>
+                            <td>{{ $trade_license->po_number }}</td>
+                            <td>{{ $trade_license->vechicle_type }}</td>
+                            <td>{{ $trade_license->engine_number }}</td>
+
+                            <td>{{ $trade_license->chassis_no }}</td>
+                            <td>{{ $trade_license->make }}</td>
+                            <td>{{ $trade_license->model }}</td>
+                            <td>{{ $trade_license->color }}</td>
+
+                            <td>
+                                @if($trade_license->user_id == 0)
+                                    Admin
+                                @else
+                                    @if(User::find($trade_license->user_id))
+                                        {{ User::find($trade_license->user_id)->username}}
+                                    @else
+                                        User Deleted
                                     @endif
-                                    @endforeach
-                                </tbody>         
-                            </table>
-                        </div>
+                                
+                                @endif
+                            </td>
+
+                            <td>
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                <form action="{{ route( 'admin.purchase.edit_vehicle_purchase') }}" method="post" class="d-inline">
+                                @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$trade_license->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 bg-white">
+                                            <img src="<?= asset('assets') ?>/images/edit_icon.png" alt="" width="34">
+                                    </button>
+                                </form>                                  
+                            
+                                <a href="#" id="{{ $trade_license->id }}" class="delete-vehicle-file">
+                                    
+                                    <img src="<?= asset('assets') ?>/images/delete_icon.png" alt="" width="34">
+                            
+                                </a>
+  
+                            </td>
+                            
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>         
+            </table>
+          </div>
         </div>
     </div>
 </div>
@@ -606,6 +830,40 @@ use App\Models\Office_Land_contract;
                 $.ajax({
                     type:'POST',
                     url:"{{ route( 'admin.purchase.delete_purchase_status') }}",
+                    data:{id:file_id, _token :"{{ csrf_token() }}"},
+                    success:function(data){
+                            if (data.status == 1) {
+                                swal({
+                                    title: "Deleted!",
+                                    text: "Data has been moved to trash.",
+                                    type: "success"
+                                }).then(function () {
+                                    window.location.href = '';
+                                });
+                            }else{
+                                toastr.error("Some thing went wrong. ");
+
+                            }
+                    }
+                 });
+              
+
+            })
+    });
+    $('.delete-vehicle-file').click(function () {
+            var file_id = this.id;
+            swal({
+                title: 'Are you sure?',
+                text: "You want to delete this Data.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',  
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+                $.ajax({
+                    type:'POST',
+                    url:"{{ route( 'admin.purchase.delete_vehicle_purchase_status') }}",
                     data:{id:file_id, _token :"{{ csrf_token() }}"},
                     success:function(data){
                             if (data.status == 1) {

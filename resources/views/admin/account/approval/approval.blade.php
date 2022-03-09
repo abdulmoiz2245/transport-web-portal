@@ -243,6 +243,15 @@
                             <td>{{ $purchase->total_amount }}</td>
                             <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
                             <td>
+                                @if($purchase->vechicle_type != '')
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                @else
                                 <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
@@ -250,6 +259,7 @@
                                         <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                     </button>
                                 </form>
+                                @endif
                                 
                                 
                             </td>
@@ -404,6 +414,9 @@
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
                                     <input type="text" class="form-control d-none" name="type" value ="purchase" >
+                                    @if($purchase->vechicle_type != '')
+                                    <input type="text" class="form-control d-none" name="method" value ="vehicle" >
+                                    @endif
                                     <input type="text" class="form-control d-none" name="status" value ="approved" >
                                     <a href="">
                                     <button type="submit" class="btn btn-success">
@@ -413,7 +426,15 @@
                                 </form>
 
                                 
-
+                                @if($purchase->vechicle_type != '')
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                @else
                                 <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
@@ -421,6 +442,7 @@
                                         <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                     </button>
                                 </form>
+                                @endif
                                 
                                 
                             </td>
@@ -605,6 +627,15 @@
                             <td>{{ $purchase->total_amount }}</td>
                             <td><span class="badge badge-pill badge-warning">{{ $purchase->date }}</span></td>
                             <td>
+                                @if($purchase->vechicle_type != '')
+                                <form action="{{ route( 'admin.purchase.view_vehicle_purchase') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                @else
                                 <form action="{{ route( 'admin.purchase.view_purchase') }}" method="post" class="d-inline">
                                     @csrf
                                     <input type="text" class="form-control d-none" name="id" value ="{{$purchase->id}}" placeholder="Enter id" >
@@ -612,6 +643,7 @@
                                         <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                     </button>
                                 </form>
+                                @endif
                                 
                                 
                             </td>

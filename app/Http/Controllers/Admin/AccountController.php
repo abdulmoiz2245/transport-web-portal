@@ -36,6 +36,8 @@ use App\Models\account_cheque;
 // account_cheques
 
 use App\Models\Purchase;
+use App\Models\Purchase_vehicle;
+
 use App\Models\Funds_request;
 use App\Models\Petty_purchase;
 use App\Models\Petty_hr;
@@ -148,7 +150,11 @@ class AccountController extends Controller
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        $data['purchase'] = Purchase::where('row_status','!=' ,'deleted')->get();
+        $purchase = Purchase::where('row_status','!=' ,'deleted')->get();
+        $purchase_vehicle = Purchase_vehicle::where('row_status','!=' ,'deleted')->get();
+        $data['purchase'] = $purchase->merge($purchase_vehicle);
+        // dd($purchase_vehicle);
+
         $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
         $data['petty_funds'] = Petty_finance_request::where('row_status','!=' ,'deleted')->get();
 
@@ -296,7 +302,13 @@ class AccountController extends Controller
             // dd('called');
             $data['approval'] = Purchase::find($request->input('id'));
             if($request->input('status') == 'approved'){
-                $purchase = purchase::where('id' , $id)->first();
+                if($request->input('method') == 'vehicle'){
+                    $purchase = Purchase_vehicle::where('id' , $id)->first();
+
+                }else{
+                    $purchase = purchase::where('id' , $id)->first();
+
+                }
 
                 
                 $account_purchase = new account_purchase();
@@ -330,8 +342,13 @@ class AccountController extends Controller
                 $purchase->status_account = $request->input('status');
                 
                 $purchase->save();
+                if($request->input('method') == 'vehicle'){
+                    $this->history_table('purchase_vehicle_histories', 'Status Change From Account' , 0,  $purchase->id , "purchase.view_purchase");
 
-                $this->history_table('purchase_histories', 'Status Change From Account' , 0,  $purchase->id , "purchase.view_purchase");
+                }else{
+                    $this->history_table('purchase_histories', 'Status Change From Account' , 0,  $purchase->id , "purchase.view_purchase");
+
+                }
 
                 return \Redirect::route('admin.account.approval')->with('success', 'Data Updated Sucessfully');
             }

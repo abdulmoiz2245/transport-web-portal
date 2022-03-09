@@ -1,44 +1,37 @@
 <?php 
-use App\Models\Company_name;
 use App\Models\Purchase_mertial_data;
 use App\Models\Supplier_info;
+use App\Models\Company_name;
 
 ?>
+
 <div class="container">
    
     <div class="row mb-5">
-        <div class="col-1">
+        <div class="col-4">
             <a href="{{ route( 'admin.purchase.purchase') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
-        </div>
-        
-        <div class="col-6">
-            <div class="row">
-                <div class="col-4">
-                    <a href="{{ route( 'admin.purchase.add_vehicle_purchase') }}">
-                        <button class="btn btn-primary">Add Vehicle</button>
-                    </a>
-                </div>
-            </div>
+            </a>      
         </div>
     </div>
+    <form action="{{route('admin.purchase.update_vehicle_purchase')}}" method="post"    enctype="multipart/form-data">
+    @csrf
+    <input type="text" name="id" value="{{ $data['purchase']->id }}" class="d-none">
 
     
-    <form action="{{route('admin.purchase.save_purchase')}}" method="post"    enctype="multipart/form-data">
-    @csrf
 
         <h2>LPO</h2>
+        
         <div class="row">
             <div class="col-12 mt-3 mb-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="supplier_status" id="new_supplier" value="new" >
+                    <input class="form-check-input" type="radio" name="supplier_status" id="new_supplier" value="new" <?php if($data['purchase']->supplier_status == 'new') echo 'checked' ?>>
                     <label class="form-check-label" for="new_supplier">
                         New Supplier
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="supplier_status" id="existing_supplier" value="existing" checked>
+                    <input class="form-check-input" type="radio" name="supplier_status" id="existing_supplier" value="existing" <?php if($data['purchase']->supplier_status == 'existing') echo 'checked' ?>>
                     <label class="form-check-label" for="existing_supplier">
                         Existing Supplier
                     </label>
@@ -47,13 +40,13 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label >Date</label>
-                    <input type="date" name="date" class="form-control form-control" id="" required>
+                    <input type="date" value="{{ $data['purchase']->date }}" name="date" class="form-control form-control" id="" required>
                 </div>
             </div>
             <div class="col-md-6 col-12 trn_number">
                 <div class="form-group">
                     <label>TRN Number</label>
-                    <input type="number" name="trn" class="form-control"  placeholder="Enter TRN Number" required>
+                    <input type="number" name="trn" class="form-control"  placeholder="Enter TRN Number" value="{{ $data['purchase']->trn }}" required>
                 </div>
             </div>
        
@@ -70,8 +63,8 @@ use App\Models\Supplier_info;
                     <?php if(Company_name::all()->count() > 0){ ?>
                         <select name="company_id"  class="form-control "required >
                             
-                            @foreach($data['company_names'] as $company_name)
-                            <option value="{{ $company_name->id }}">{{ $company_name->name }}</option>
+                            @foreach(Company_name::all() as $company_name)
+                            <option value="{{ $company_name->id }}" <?php if($company_name->id == $data['purchase']->company_id) {?> selected='selected' <?php } ?>>{{ $company_name->name }}</option >
                             @endforeach
                         </select>
                     <?php } else{ ?>
@@ -85,7 +78,8 @@ use App\Models\Supplier_info;
             <div class="col-md-6 col-12 supplier_name">
                 <div class="form-group">
                     <label>Supplier Name</label>
-                    <input type="text" name="supplier_name" id="supplier_name" class="form-control " placeholder="Enter Supplier Name" >
+                    <input type="text" name="supplier_name" id="supplier_name" class="form-control " value="{{ $data['purchase']->supplier_name }}"  placeholder="Enter Supplier Name" 
+                    >
                 </div>
             </div>
 
@@ -97,25 +91,20 @@ use App\Models\Supplier_info;
                         @if($supplier->row_status != 'deleted')
                         @if($supplier->status == 'approved')
 
-                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            <option value="{{ $supplier->id }}" <?php if($supplier->id == $data['purchase']->supplier_id) {?> selected='selected' <?php } ?>>{{ $supplier->name }}</option>
                         @endif
                         @endif
                         @endforeach
                     </select>
                 </div>
             </div>
+            
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label >Material Data</label>
-                    <select name="meterial_data_id_1" id="Material_Data" class="form-control "required >
-                        @if(Purchase_mertial_data::all() != null)
-                        @foreach(Purchase_mertial_data::all() as $purchase_meterial)
-                        <option value="{{$purchase_meterial->id}}">{{ $purchase_meterial->name }}</option>
-                        @endforeach
-                        @endif
-                        <!-- <option value="sd">asa</option>
-                        <option value="sd">asda</option> -->
-
+                    <label >Type</label>
+                    <select name="vechicle_type" id="vechicle_type" class="form-control "required placeholder="">
+                        <option value="truck_head" <?php if($data['purchase']->vechicle_type  == 'truck_head'  ) { ?> selected <?php } ?> >Truck Head</option>
+                        <option value="trailer" <?php if($data['purchase']->vechicle_type  == 'trailer'  ) { ?> selected <?php } ?>>Trailer</option>
                     </select>
                 </div>
             </div>
@@ -126,93 +115,143 @@ use App\Models\Supplier_info;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Product Name</label>
-                    <input type="text" name="product_name" class="form-control" placeholder="Enter Product Name" required>
+                    <label>Delivery Date</label>
+                    <input type="date" name="delivery_date" class="form-control" placeholder="Enter Delivery Date" value="{{ $data['purchase']->delivery_date }}" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Brand</label>
-                    <input type="text" name="brand" class="form-control" placeholder="Enter Brand" required>
+                    <label>Make</label>
+                    <input type="text" name="make" class="form-control" placeholder="Enter Make" value="{{ $data['purchase']->make }}" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Model</label>
+                    <input type="text" name="model" class="form-control" placeholder="Enter Model"  value="{{ $data['purchase']->model }}" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Color</label>
+                    <input type="text" name="color" class="form-control" placeholder="Enter Color" value="{{ $data['purchase']->color }}" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="engine_number">
+                <div class="form-group">
+                    <label>Engine Number </label>
+                    <input type="text" name="engine_number" id="" class="form-control"  value="{{ $data['purchase']->engine_number }}" placeholder="Enter Engine Number" >
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="chassis_no">
+                <div class="form-group">
+                    <label>Chassis No</label>
+                    <input type="text" name="chassis_no" id="" class="form-control"  value="{{ $data['purchase']->chassis_no }}" placeholder="Enter Chassis No" >
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12" id="trailer_type">
+                <div class="form-group">
+                    <label>Trailer Type</label>
+                   
+                    <select name="trailer_type" id="" class="form-control">
+                        <option value="flat"  <?php if($data['purchase']->trailer_type  == 'flat'  ) { ?> selected <?php } ?>>Flat</option>
+                        <option value="c_side" <?php if($data['purchase']->trailer_type  == 'c_side'  ) { ?> selected <?php } ?>>C Side</option>
+                        <option value="tipper"  <?php if($data['purchase']->trailer_type  == 'tipper'  ) { ?> selected <?php } ?>>Tipper</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12" id="size">
                 <div class="form-group">
                     <label>Size</label>
-                    <input type="text" name="size" class="form-control" placeholder="Enter Size" required>
+                    <input type="text" name="size" id="" class="form-control" placeholder="Enter Size" value="{{ $data['purchase']->size }}">
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="axle">
+                <div class="form-group">
+                    <label>Axle</label>
+                    <input type="text" name="axle" id="" class="form-control" placeholder="Enter Sxle" value="{{ $data['purchase']->axle }}" >
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Unit</label>
-                    <input type="number" name="unit" id="unit" class="form-control" placeholder="Enter Unit" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Unit Price</label>
-                    <input type="number" name="unit_price" id="unit_price" class="form-control" placeholder="Enter Unit Price" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12 type">
-                <div class="form-group">
-                    <label>Type</label>
-                    <input type="text" name="type" class="form-control" placeholder="Enter Type" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Made In</label>
-                    <input type="text" name="made_in" class="form-control" placeholder="Enter Made In" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Delivery Date</label>
-                    <input type="date" name="delivery_date" class="form-control" placeholder="Enter Delivery Date" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Terms</label>
-                    <input type="number" name="terms" class="form-control" placeholder="Enter Terms" required>
+                    <label>Vehicle suspension</label>
+                    <select name="vehicle_suspension" id="" class="form-control" >
+                        <option value="booster" <?php if($data['purchase']->vehicle_suspension  == 'booster'  ) { ?> selected <?php } ?>>Booster</option>
+                        <option value="kamani" <?php if($data['purchase']->vehicle_suspension  == 'kamani'  ) { ?> selected <?php } ?>>Kamani</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Is VAT</label>
                     <label class="switch pr-5 switch-dark mt-3"> 
-                        <input type="checkbox" checked="checked" id="is_vat" name="is_vat"><span class="slider"></span>
+                        <input type="checkbox"  <?php if($data['purchase']->is_vat  == 'on'  ) { ?> checked="checked" <?php } ?>  id="is_vat" name="is_vat"><span class="slider"></span>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
+                    <label>Price</label>
+                    <?php 
+                        if($data['purchase']->is_vat == 'on'){
+                          $amount =  $data['purchase']->total_amount - ((( $data['purchase']->total_amount )/100)*5);
+                        }else{
+                            $amount =  $data['purchase']->total_amount ;
+                        }
+                    ?>
+                    <input type="number" name="price" id="price" class="form-control" placeholder="Enter Total Amount" value="{{ $amount }}">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="form-group">
                     <label>Total Amount</label>
-                    <input type="number" name="total_amount" id="total_amount" class="form-control" placeholder="Enter Total Amount" readonly>
+                    <input type="number" name="total_amount" id="total_amount" class="form-control" value="{{ $data['purchase']->total_amount }}" placeholder="Enter Total Amount" readonly>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Admin Notes</label>
+                    <textarea name="status_message" class="form-control form-control-rounded"  placeholder="Enter Admin Notes">{{ $data['purchase']->status_message }}</textarea>
+                    
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        <option value='pending' <?php if($data['purchase']->status_admin == 'pending') echo 'selected="selected"' ?> >Pending</option>
+                        <option value='approved' <?php if($data['purchase']->status_admin == 'approved') echo 'selected="selected"' ?> >Approved</option>
+                        <option value='rejected' <?php if($data['purchase']->status_admin == 'rejected') echo 'selected="selected"' ?>>Rejected</option>
+                    </select>
                 </div>
             </div>
         </div>
 
 
-        <div class="text-center mt-5">
-            <input type="submit" class="btn btn-outline-secondary rounded-pill" value="Submit">
-        </div>
+
+    <div class="text-center mt-5">
+        <input type="submit" class="btn btn-outline-secondary rounded-pill" value="Update ">
+    </div>
 
     </form>
 </div>
 
 <script>
+// var date = new Date();
+// date.setDate(date.getDate() + 10);
+// var new_date = date.toLocaleDateString('en-CA');
 
-    // var date = new Date();
-    // date.setDate(date.getDate() + 10);
-    // var new_date = date.toLocaleDateString('en-CA');
- 
-    var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
-    
-    
-    $('.as_supplier_id').on('change', function()
+// console.log($("[type='date']").attr("min",new_date) );
+var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
+$('.as_supplier_id').on('change', function()
     {
+        console.log(this.value);
         var studentSelect = $('#Material_Data');
 
         
@@ -226,7 +265,7 @@ use App\Models\Supplier_info;
             // create the option and append to Select2
             data.supplier_product.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
-                        var option = new Option(e, "" , true, true);
+                        var option = new Option(e, null , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -234,8 +273,8 @@ use App\Models\Supplier_info;
             });
 
             data.supplier_services.forEach(function(e){ 
-                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool' && e != 'fuel' ){
-                        var option = new Option(e, "" , true, true);
+                    if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
+                        var option = new Option(e, null , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -255,7 +294,12 @@ use App\Models\Supplier_info;
 
                 <?php } ?>
             <?php } ?>
-
+            $("#Material_Data option").each(function() {
+                // alert(this.text + ' ' + this.value);
+                if(this.value == "{{ $data['purchase']->meterial_data_id }}" ){
+                    $('#Material_Data').find('option[value="'+ this.value +'"]').prop('selected', true);
+                }
+            });
            
 
             // // manually trigger the `select2:select` event
@@ -266,7 +310,6 @@ use App\Models\Supplier_info;
             //     }
             // });
         });
-
         var supplier_id = $(this).val();
         var arrayLength = Object.keys(data).length;
         console.log(supplier_id);
@@ -303,40 +346,62 @@ use App\Models\Supplier_info;
         }
     });
 
-    
-    
-    $('#unit_price').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
-        if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
-        }
-        else{
-            $('#total_amount').val((unit*unit_price));
-        }
-        
-    });
+    $('#vechicle_type').change(function(){
+       if($('#vechicle_type').val() == 'trailer'){
 
-    $('#unit').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
+            $('#engine_number').hide();
+            $('#chassis_no').show();
+            $('#trailer_type').show();
+            $('#size').show();
+            $('#axle').show();
+
+       }
+       else{
+
+            $('#engine_number').show();
+            $('#chassis_no').hide();
+            $('#trailer_type').hide();
+            $('#size').hide();
+            $('#axle').hide();
+       }
+       
+    });
+    <?php if($data['purchase']->vechicle_type  == 'truck_head'  ) {?>
+    $('#engine_number').show();
+    $('#chassis_no').hide();
+    $('#trailer_type').hide();
+    $('#size').hide();
+    $('#axle').hide();
+    <?php } else{ ?>
+        $('#engine_number').hide();
+        $('#chassis_no').show();
+        $('#trailer_type').show();
+        $('#size').show();
+        $('#axle').show();
+     <?php } ?>
+     
+    $('#price').change(function(){
+       
         if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+            $('#total_amount').val(parseInt($('#price').val())+(((parseInt($('#price').val()))/100)*5));
+            
         }
         else{
-            $('#total_amount').val((unit*unit_price));
+            $('#total_amount').val(( parseInt($('#price').val())));
+            
         }
         
     });
 
     $('#is_vat').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
+       
         if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+            $('#total_amount').val(parseInt($('#price').val())+(((parseInt($('#price').val()))/100)*5));
+            
         }
         else{
-            $('#total_amount').val((unit*unit_price));
+            $('#total_amount').val(parseInt($('#price').val()));
+            
         }
         
     });
@@ -367,9 +432,15 @@ use App\Models\Supplier_info;
        
     });
 
+    <?php if( $data['purchase']->supplier_status == 'new'){ ?>
+        $('.supplier_name').show();
+        $('.supplier_id').hide();
 
-    $('.supplier_name').hide();
-    $('.supplier_id').show();
+    <?php } else { ?>
+        $('.supplier_name').hide();
+        $('.supplier_id').show();
+
+    <?php  } ?>
     $('.trn_number').show();
     $('.select_company').show();
     // $('.trn_number input').val(parseInt(data[0].trn));
@@ -437,5 +508,8 @@ use App\Models\Supplier_info;
        
     });
 
-    
+
+
+
+
 </script>

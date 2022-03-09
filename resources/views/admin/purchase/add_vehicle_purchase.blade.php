@@ -7,25 +7,13 @@ use App\Models\Supplier_info;
 <div class="container">
    
     <div class="row mb-5">
-        <div class="col-1">
+        <div class="col-4">
             <a href="{{ route( 'admin.purchase.purchase') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
-        
-        <div class="col-6">
-            <div class="row">
-                <div class="col-4">
-                    <a href="{{ route( 'admin.purchase.add_vehicle_purchase') }}">
-                        <button class="btn btn-primary">Add Vehicle</button>
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
-
-    
-    <form action="{{route('admin.purchase.save_purchase')}}" method="post"    enctype="multipart/form-data">
+    <form action="{{route('admin.purchase.save_vechicle_purchase')}}" method="post"    enctype="multipart/form-data">
     @csrf
 
         <h2>LPO</h2>
@@ -106,16 +94,10 @@ use App\Models\Supplier_info;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label >Material Data</label>
-                    <select name="meterial_data_id_1" id="Material_Data" class="form-control "required >
-                        @if(Purchase_mertial_data::all() != null)
-                        @foreach(Purchase_mertial_data::all() as $purchase_meterial)
-                        <option value="{{$purchase_meterial->id}}">{{ $purchase_meterial->name }}</option>
-                        @endforeach
-                        @endif
-                        <!-- <option value="sd">asa</option>
-                        <option value="sd">asda</option> -->
-
+                    <label >Type</label>
+                    <select name="vechicle_type" id="vechicle_type" class="form-control "required placeholder="">
+                        <option value="truck_head">Truck Head</option>
+                        <option value="trailer">trailer</option>
                     </select>
                 </div>
             </div>
@@ -126,58 +108,75 @@ use App\Models\Supplier_info;
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Product Name</label>
-                    <input type="text" name="product_name" class="form-control" placeholder="Enter Product Name" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Brand</label>
-                    <input type="text" name="brand" class="form-control" placeholder="Enter Brand" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Size</label>
-                    <input type="text" name="size" class="form-control" placeholder="Enter Size" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Unit</label>
-                    <input type="number" name="unit" id="unit" class="form-control" placeholder="Enter Unit" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Unit Price</label>
-                    <input type="number" name="unit_price" id="unit_price" class="form-control" placeholder="Enter Unit Price" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12 type">
-                <div class="form-group">
-                    <label>Type</label>
-                    <input type="text" name="type" class="form-control" placeholder="Enter Type" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label>Made In</label>
-                    <input type="text" name="made_in" class="form-control" placeholder="Enter Made In" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="form-group">
                     <label>Delivery Date</label>
                     <input type="date" name="delivery_date" class="form-control" placeholder="Enter Delivery Date" required>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <label>Terms</label>
-                    <input type="number" name="terms" class="form-control" placeholder="Enter Terms" required>
+                    <label>Make</label>
+                    <input type="text" name="make" class="form-control" placeholder="Enter Make" required>
                 </div>
             </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Model</label>
+                    <input type="text" name="model" class="form-control" placeholder="Enter Model" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Color</label>
+                    <input type="text" name="color" class="form-control" placeholder="Enter Color" required>
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="engine_number">
+                <div class="form-group">
+                    <label>Engine Number </label>
+                    <input type="text" name="engine_number" id="" class="form-control" placeholder="Enter Engine Number" >
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="chassis_no">
+                <div class="form-group">
+                    <label>Chassis No</label>
+                    <input type="text" name="chassis_no" id="" class="form-control" placeholder="Enter Chassis No" >
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12" id="trailer_type">
+                <div class="form-group">
+                    <label>Trailer Type</label>
+                   
+                    <select name="trailer_type" id="" class="form-control">
+                        <option value="flat">Flat</option>
+                        <option value="c_side">C side</option>
+                        <option value="tipper">Tipper</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12" id="size">
+                <div class="form-group">
+                    <label>Size</label>
+                    <input type="text" name="size" id="" class="form-control" placeholder="Enter Size" >
+                </div>
+            </div>
+            <div class="col-md-6 col-12" id="axle">
+                <div class="form-group">
+                    <label>Axle</label>
+                    <input type="text" name="axle" id="" class="form-control" placeholder="Enter Sxle" >
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Vehicle suspension</label>
+                    <select name="vehicle_suspension" id="" class="form-control" >
+                        <option value="booster">Booster</option>
+                        <option value="kamani">Kamani</option>
+                    </select>
+                </div>
+            </div>
+            
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Is VAT</label>
@@ -186,6 +185,13 @@ use App\Models\Supplier_info;
                     </label>
                 </div>
             </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" name="price" id="price" class="form-control" placeholder="Enter Total Amount">
+                </div>
+            </div>
+
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label>Total Amount</label>
@@ -203,12 +209,7 @@ use App\Models\Supplier_info;
 </div>
 
 <script>
-
-    // var date = new Date();
-    // date.setDate(date.getDate() + 10);
-    // var new_date = date.toLocaleDateString('en-CA');
- 
-    var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
+   var data = {!! json_encode(Supplier_info::all(),JSON_FORCE_OBJECT) !!};
     
     
     $('.as_supplier_id').on('change', function()
@@ -258,26 +259,18 @@ use App\Models\Supplier_info;
 
            
 
-            // // manually trigger the `select2:select` event
-            // studentSelect.trigger({
-            //     type: 'select2:select',
-            //     params: {
-            //         data: data
-            //     }
-            // });
         });
 
         var supplier_id = $(this).val();
         var arrayLength = Object.keys(data).length;
         console.log(supplier_id);
-        console.log('as');
-
+   
         for (var i = 0; i < arrayLength; i++) {
             if(supplier_id == data[i].id){
                 $('#trn_supplier').val(data[i].trn);
                 $('.select_company select option').each(function() {
                     var selected = $(this)[0].value;
-                  
+                    
                     if (selected == data[i].company_id) {
                         console.log("found");
 
@@ -290,58 +283,69 @@ use App\Models\Supplier_info;
 
                     }else{
                         $('.select_company select option[value="'+selected+'"]').attr("disabled", "disabled");
-                         $('.select_company select option[value="'+selected+'"]').removeAttr("selected"); 
+                            $('.select_company select option[value="'+selected+'"]').removeAttr("selected"); 
                     }
                 })
                 break;
             }
-            //     $('.select_company select option').each(function() {
-            //     $('.select_company select option').removeAttr("selected"); 
-            //     $('.select_company select option').removeAttr("disabled"); 
-
-            // });
+            
         }
     });
+    
 
-    
-    
-    $('#unit_price').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
-        if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
-        }
-        else{
-            $('#total_amount').val((unit*unit_price));
-        }
-        
+    $('#vechicle_type').change(function(){
+       if($('#vechicle_type').val() == 'trailer'){
+
+            $('#engine_number').hide();
+            $('#chassis_no').show();
+            $('#trailer_type').show();
+            $('#size').show();
+            $('#axle').show();
+
+       }
+       else{
+
+            $('#engine_number').show();
+            $('#chassis_no').hide();
+            $('#trailer_type').hide();
+            $('#size').hide();
+            $('#axle').hide();
+       }
+       
     });
 
-    $('#unit').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
+    $('#engine_number').show();
+    $('#chassis_no').hide();
+    $('#trailer_type').hide();
+    $('#size').hide();
+    $('#axle').hide();
+    
+    $('#price').change(function(){
+       
         if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+            $('#total_amount').val(parseInt($('#price').val())+(((parseInt($('#price').val()))/100)*5));
+            
         }
         else{
-            $('#total_amount').val((unit*unit_price));
+            $('#total_amount').val(( parseInt($('#price').val())));
+            
         }
         
     });
 
     $('#is_vat').change(function(){
-        var unit = $('#unit').val();
-        var unit_price = $('#unit_price').val();
+       
         if($('#is_vat').is(':checked')){
-            $('#total_amount').val((unit*unit_price)+(((unit*unit_price)/100)*5));
+            $('#total_amount').val(parseInt($('#price').val())+(((parseInt($('#price').val()))/100)*5));
+            
         }
         else{
-            $('#total_amount').val((unit*unit_price));
+            $('#total_amount').val(parseInt($('#price').val()));
+            
         }
         
     });
 
-    
     $('#new_supplier').change(function()
     {
         if ($(this).is(':checked')) {
