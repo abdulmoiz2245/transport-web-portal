@@ -11,7 +11,7 @@ use App\Models\Office_Land_contract;
 
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'user.vehicle.vehicle') }}" class="ml-3">
+            <a href="{{ route( 'user.vehicle') }}" class="ml-3">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
