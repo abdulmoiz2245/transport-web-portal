@@ -11,11 +11,8 @@ use App\Models\Office_Land_contract;
 
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'admin.vehicle.register_new_vehicle') }}" class="ml-3">
+            <a href="{{ route( 'admin.vehicle.vehicle') }}" class="ml-3">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
-            </a>
-            <a href="{{ route( 'admin.vehicle.register_new_vehicle.add_own_vehicle') }}" class="ml-3">
-                <img  src="<?= asset('assets') ?>/images/add-button.png" alt="" width="30">
             </a>
         </div>
         
@@ -114,14 +111,14 @@ use App\Models\Office_Land_contract;
 
                                         <td>
 
-                                            <form action="{{ route( 'admin.vehicle.register_new_vehicle.view_hired_sub_contractor_vehicle') }}" method="post" class="d-inline">
+                                            <form action="{{ route( 'admin.vehicle.view_vehicle') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">
                                                     <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
                                                 </button>
                                             </form>
-                                            <form action="{{ route( 'admin.vehicle.register_new_vehicle.edit_hired_sub_contractor_vehicle') }}" method="post" class="d-inline">
+                                            <form action="{{ route( 'admin.vehicle.edit_own_new_vehicle') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="text" class="form-control d-none" name="id" value ="" placeholder="Enter id" >
                                                 <button type="submit" class="border-0 bg-white">

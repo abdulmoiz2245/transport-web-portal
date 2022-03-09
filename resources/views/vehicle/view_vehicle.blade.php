@@ -7,47 +7,45 @@ use App\Models\Supplier_info;
 <div class="container   ">
 
     <div class="mb-5"> 
-        <a href="{{ route( 'admin.purchase.purchase') }}">
+        <a href="{{ route( 'user.vehicle') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
 
-    <h2 class="mb-3">LPO</h2>
+    <h2 class="mb-3">Vehicle Details</h2>
     <div class="row mb-3">
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Date : </h5>
+                    <h5 class="">Vehicle Number : </h5>
 
                 </div>
                 <div class="col-6">
-                    <p>{{ $data['purchase']->date }}</p>
+                    <p>35798375</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">PO Number : </h5>
+                    <h5 class="">Company Name : </h5>
 
                 </div>
                 <div class="col-6">
-                    @if($data['purchase']->po_number != null)
-                    <p>{{ $data['purchase']->po_number }}</p>
-                    @else
-                    <p>Not Assigned </p>
-                    @endif
+                   
+                    <p>ABD </p>
+                   
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">TRN Number :</h5>
+                    <h5 class="">Registration Date :</h5>
 
                 </div>
                 <div class="col-6">
-                    <p>{{ $data['purchase']->trn }}</p>                   
+                    <p>20 March 2022</p>                   
                 </div>
             </div>
         </div>
@@ -55,18 +53,12 @@ use App\Models\Supplier_info;
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Company Name :</h5>
+                    <h5 class="">Make</h5>
 
                 </div>
                 <div class="col-6">
                     
-                    <?php if(Company_name::all()->count() > 0){ ?>
-                    @foreach(Company_name::all() as $company_name)
-                        @if($company_name->id ==  $data['purchase']->company_id)
-                            <p>{{ $company_name->name }}</p>
-                        @endif
-                    @endforeach
-                    <?php } ?>
+                    <p>fegero</p>
                 
                 </div>
             </div>
@@ -78,57 +70,47 @@ use App\Models\Supplier_info;
                 </div>
 
                 <div class="col-8">                   
-                    <p>{{ $data['purchase']->company_address }}</p>   
+                    <p></p>   
                 </div>
             </div>
         </div> -->
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Material Data :</h5>
+                    <h5 class="">Model :</h5>
                 </div>
                 <div class="col-8"> 
-                        @if(Purchase_mertial_data::find($data['purchase']->meterial_data_id ) != null)    
-                        <p> {{ Purchase_mertial_data::find($data['purchase']->meterial_data_id )->name }}</p> 
-                        @else
-                        <p>Meterial Deleted</p>
-                        @endif
+                        <p>rit450983409</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Supplier Name :</h5>
+                    <h5 class="">Colour :</h5>
                 </div>
                 <div class="col-8"> 
-                        @if($data['purchase']->supplier_status == 'new')
-                        <p> {{ $data['purchase']->supplier_name }}</p> 
-                        @elseif(Supplier_info::find($data['purchase']->supplier_id ) != null)    
-                        <p> {{ Supplier_info::find($data['purchase']->supplier_id )->name }}</p> 
-                        @else
-                        <p>Supplier Deleted</p>
-                        @endif
+                        <p>White</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Type :</h5>
+                    <h5 class="">Engine Number :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{ $data['purchase']->type }}</p>  
+                    <p>43895</p>  
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Made In :</h5>
+                    <h5 class="">Chassis Number :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{ $data['purchase']->made_in }}</p>  
+                    <p>triot54350789</p>  
                 </div>
             </div>
         </div> 
@@ -140,30 +122,30 @@ use App\Models\Supplier_info;
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Product Name :</h5>
+                    <h5 class="">Vehicle Insurnce :</h5>
                 </div>
                 <div class="col-8">
-                    <p> {{ $data['purchase']->product_name }} </p>  
+                    <p> Yes </p>  
                 </div>
             </div>
         </div> 
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Brand :</h5>
+                    <h5 class="">Insurance Expiry Date :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{ $data['purchase']->brand }}</p>  
+                    <p>22-12-22</p>  
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Size :</h5>
+                    <h5 class="">Other Insurance :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{ $data['purchase']->size }}</p>  
+                    <p>No</p>  
                 </div>
             </div>
         </div>
@@ -171,40 +153,40 @@ use App\Models\Supplier_info;
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Unit :</h5>
+                    <h5 class="">J-Ali Tag :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{ $data['purchase']->unit }}</p>  
+                    <p>Yes</p>  
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Unit Price :</h5>
+                    <h5 class="">J-Ali Expiry Date :</h5>
                 </div>
                 <div class="col-8">
-                    <p> {{ $data['purchase']->unit_price }} </p>  
+                    <p>22-09-2022</p>  
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Delivery Date :</h5>
+                    <h5 class="">KP Tag :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{$data['purchase']->delivery_date  }}</p>  
+                    <p>Yes</p>  
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Terms :</h5>
+                    <h5 class="">Expiry Date :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{$data['purchase']->terms  }}</p>  
+                    <p>22-05-2023</p>  
                 </div>
             </div>
         </div>
@@ -214,17 +196,17 @@ use App\Models\Supplier_info;
                     <h5 class="">Credit Days :</h5>
                 </div>
                 <div class="col-8">
-                    <p> {{$data['purchase']->cerdit_days  }}</p>  
+                    <p> </p>  
                 </div>
             </div>
         </div> -->
         <div class="col-md-6 col-12">
             <div class="row">
                 <div class="col-4">
-                    <h5 class="">Total Amount :</h5>
+                    <h5 class="">Vehicle Suspension :</h5>
                 </div>
                 <div class="col-8">
-                    <p>{{$data['purchase']->total_amount  }}</p>  
+                    <p>Booster</p>  
                 </div>
             </div>
         </div>

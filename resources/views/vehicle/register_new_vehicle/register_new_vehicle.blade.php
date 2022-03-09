@@ -10,36 +10,56 @@ use App\Models\User;
     <div class="container">
     <div class="d-flex" style="justify-content: space-between;">
         <div>
-            <a href="{{ route( 'admin.inventory.inventory') }}">
+            <a href="{{ route( 'user.vehicle') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
         </div>
     </div>
 
     <div class="row mt-4">
+    
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.inventory.spare_parts.spare_parts_in_storage') }}">
+        <form id="own_vechicle" action="{{ route( 'user.vehicle.register_new_vehicle.add_own_new_vehicle') }}" method="post" class="d-inline">
+            @csrf
+            <a onclick="document.getElementById('own_vechicle').submit();">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/tyre.png" class="mb-1" alt="" width="35">
-                        <h4 class="mt-2 mb-2"><strong>Spare Parts in Storage</strong></h4>
-                        <p class="lead text-22 m-0">{{$data['spare_part_in_storage'] }}</p>
+                        <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
+                        <input type="hidden" name="vehicle_mode" value="own_vehicle">
+                        <h4 class="mt-2 mb-2"><strong>Add Own Vechicles</strong></h4>
+                        <p class="lead text-22 m-0"></p>
+                    </div>
+                </div>
+            </a>
+        </form>
+
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <a href="{{ route('user.vehicle.register_new_vehicle.add_hired_sub_contractor_vehicle') }}">
+                <div class="card card-icon mb-4">
+                    <div class="card-body text-center">
+                        <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
+                        <h4 class="mt-2 mb-2"><strong>Add Hired Sub Contractor Vehicle</strong></h4>
+                        <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.inventory.spare_parts.spare_parts_entry') }}">
+        <form id="new_vechicle" action="{{ route( 'user.vehicle.register_new_vehicle.add_own_new_vehicle') }}" method="post" class="d-inline">
+            @csrf
+            <a onclick="document.getElementById('new_vechicle').submit();">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
-                        <img src="<?= asset('assets') ?>/images/tyre.png"  alt="" width="40">
-                        <h4 class="mt-2 mb-2"><strong>Spare Parts Entry</strong></h4>
-                        <p class="lead text-22 m-0">{{ $data['spare_part_entry'] }}</p>
+                        <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
+                        <input type="hidden" name="vehicle_mode" value="new_vehicle">
+                        <h4 class="mt-2 mb-2"><strong>Add New Vechicles</strong></h4>
+                        <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
-        </div>
-    </div>
+        </form>
+    </div>   
 </div>
     </div>
 </div>
@@ -49,7 +69,7 @@ use App\Models\User;
     $(document).ready(function() {
         $('.table').DataTable( {
             dom: 'Bfrtip',
-            //responsive: true,
+            responsive: true,
             buttons: [
               
                 'copyHtml5',

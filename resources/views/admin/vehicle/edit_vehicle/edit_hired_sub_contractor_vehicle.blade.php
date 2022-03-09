@@ -1,8 +1,18 @@
-<div class="container mt-3">
-    <div class="mb-5">
-            <a href="{{route('admin.vehicle.register_new_vehicle')}}">
-                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
-            </a>
+<?php 
+use App\Models\Purchase_mertial_data;
+use App\Models\Supplier_info;
+use App\Models\Company_name;
+
+?>
+
+<div class="container">
+   
+    <div class="row mb-5">
+        <div class="col-4">
+            <a href="{{ route( 'admin.vehicle.view_vehicle') }}">
+                <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
+            </a>      
+        </div>
     </div>
     <form action="{{ route('admin.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
     @csrf

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.register_new_vehicle') }}">
+                    <a href="{{ route('user.vehicle.register_new_vehicle') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('user.vehicle.view_vehicle') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
