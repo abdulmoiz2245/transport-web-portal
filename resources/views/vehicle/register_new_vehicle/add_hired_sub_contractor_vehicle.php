@@ -1,10 +1,10 @@
 <div class="container mt-3">
     <div class="mb-5">
-            <a href="{{route('admin.vehicle.register_new_vehicle')}}">
+            <a href="{{route('user.vehicle.register_new_vehicle')}}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" title="Back" width="30">
             </a>
     </div>
-    <form action="{{ route('admin.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('user.hr_pro.save_mobile_civil_defence') }}" method="post" enctype="multipart/form-data">
     @csrf
 
         <div class="row">

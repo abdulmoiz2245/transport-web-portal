@@ -108,6 +108,29 @@ class VehicleController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
+    public function own_new_vehicle(Request $request){
+        if($request->input('vehicle_mode') == 'own_vehicle'){
+            $data['vehicle_mode']= 'own_vechicle';
+            $data['page_title'] = "Own Vehicle";
+        }else{
+
+            $data['vehicle_mode']= 'new_vechicle';
+            $data['page_title'] = "New Vehicle";
+        }
+
+        $data['modules']= DB::table('modules')->get();
+
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         //$data['company_names']= DB::table('company_names')->get();
+
+       
+        $data['view'] = 'admin.vehicle.own_new_vehicle';
+        return view('layout', ["data"=>$data]);
+    }
+
 
     ///////////////////////////////////////////////////
     ///////////////// Vehicle - Register New Vehicle ////////////////
@@ -129,54 +152,7 @@ class VehicleController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function own_new_vehicle(Request $request){
-        if($request->input('vehicle_mode') == 'own_vehicle'){
-            $data['vehicle_mode']= 'own_vechicle';
-            $data['page_title'] = "Own Vehicle";
-        }else{
-
-            $data['vehicle_mode']= 'new_vechicle';
-            $data['page_title'] = "New Vehicle";
-        }
-
-        $data['modules']= DB::table('modules')->get();
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
-
-       
-        $data['view'] = 'admin.vehicle.register_new_vehicle.own_new_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-     //own vehicle - register new vehicle - vehicle
-     public function own_vehicle(){
-        $data['modules']= DB::table('modules')->get();
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         //$data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "Own Vehicle";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.own_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-     //hired sub contractor vehicle - register new vehicle - vehicle
-    public function hired_sub_contractor_vehicle(){
-        $data['modules']= DB::table('modules')->get();
-
-        $data['page_title'] = "Hired Sub Contractor Vehicle";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function add_own_vehicle(){
+    public function add_own_new_vehicle(){
 
         $data['modules']= DB::table('modules')->get();
 
@@ -193,7 +169,7 @@ class VehicleController extends Controller
 
         $data['page_title'] = "Add Own Vehicle
         ";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.add_own_vehicle';
+        $data['view'] = 'admin.vehicle.register_new_vehicle.add_own_new_vehicle';
         return view('layout', ["data"=>$data]);
     }
 
@@ -215,6 +191,22 @@ class VehicleController extends Controller
         $data['page_title'] = "Add Hired Sub Contractor Vehicle
         ";
         $data['view'] = 'admin.vehicle.register_new_vehicle.add_hired_sub_contractor_vehicle';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function view_vehicle(Request $request){
+       
+        $data['modules']= DB::table('modules')->get();
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "Vehicles";
+        $data['view'] = 'admin.vehicle.view_vehicle';
         return view('layout', ["data"=>$data]);
     }
 
@@ -452,7 +444,7 @@ class VehicleController extends Controller
 
     }
 
-    public function edit_own_vehicle(Request $request){
+    public function edit_own_new_vehicle(Request $request){
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
@@ -463,7 +455,7 @@ class VehicleController extends Controller
 
         $data['page_title'] = "Edit Own Vehicle
         ";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.edit_own_vehicle';
+        $data['view'] = 'admin.vehicle.edit_vehicle.edit_own_new_vehicle';
         return view('layout', ["data"=>$data]);
 
     }
@@ -479,41 +471,12 @@ class VehicleController extends Controller
 
         $data['page_title'] = "Edit Hired Sub Contractor Vehicle
         ";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.edit_hired_sub_contractor_vehicle';
+        $data['view'] = 'admin.vehicle.edit_vehicle.edit_hired_sub_contractor_vehicle';
         return view('layout', ["data"=>$data]);
 
     }
 
-    public function view_own_vehicle(Request $request){
-       
-        $data['modules']= DB::table('modules')->get();
-
-        //dd($data['modules']);
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "View Own Vehicle";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.view_own_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
-
-    public function view_hired_sub_contractor_vehicle(Request $request){
-        $data['modules']= DB::table('modules')->get();
-
-
-        $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
-
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-         $data['company_names']= DB::table('company_names')->get();
-
-        $data['page_title'] = "View Hired Own Sub Contractor Vehicle";
-        $data['view'] = 'admin.vehicle.register_new_vehicle.view_hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
-    }
+    
 
     public function trash_register_new_vehicle(){
         $data['modules']= DB::table('modules')->get();

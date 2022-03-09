@@ -19,14 +19,14 @@ use App\Models\User;
     <div class="row mt-4">
     
         <div class="col-lg-3 col-md-6 col-sm-6">
-        <form id="own_vechicle" action="{{ route( 'admin.vehicle.register_new_vehicle.own_new_vehicle') }}" method="post" class="d-inline">
+        <form id="own_vechicle" action="{{ route( 'admin.vehicle.register_new_vehicle.add_own_new_vehicle') }}" method="post" class="d-inline">
             @csrf
             <a onclick="document.getElementById('own_vechicle').submit();">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
                         <input type="hidden" name="vehicle_mode" value="own_vehicle">
-                        <h4 class="mt-2 mb-2"><strong>Own Vechicles</strong></h4>
+                        <h4 class="mt-2 mb-2"><strong>Add Own Vechicles</strong></h4>
                         <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
@@ -35,25 +35,25 @@ use App\Models\User;
 
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="{{ route('admin.vehicle.register_new_vehicle.hired_sub_contractor_vehicle') }}">
+            <a href="{{ route('admin.vehicle.register_new_vehicle.add_hired_sub_contractor_vehicle') }}">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/readings.png"  alt="" width="40">
-                        <h4 class="mt-2 mb-2"><strong>Hired Sub Contractor Vehicle</strong></h4>
+                        <h4 class="mt-2 mb-2"><strong>Add Hired Sub Contractor Vehicle</strong></h4>
                         <p class="lead text-22 m-0"></p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-        <form id="new_vechicle" action="{{ route( 'admin.vehicle.register_new_vehicle.own_new_vehicle') }}" method="post" class="d-inline">
+        <form id="new_vechicle" action="{{ route( 'admin.vehicle.register_new_vehicle.add_own_new_vehicle') }}" method="post" class="d-inline">
             @csrf
             <a onclick="document.getElementById('new_vechicle').submit();">
                 <div class="card card-icon mb-4">
                     <div class="card-body text-center">
                         <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35">
                         <input type="hidden" name="vehicle_mode" value="new_vehicle">
-                        <h4 class="mt-2 mb-2"><strong>New Vechicles</strong></h4>
+                        <h4 class="mt-2 mb-2"><strong>Add New Vechicles</strong></h4>
                         <p class="lead text-22 m-0"></p>
                     </div>
                 </div>

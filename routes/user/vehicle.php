@@ -1,18 +1,24 @@
 <?php 
 
-use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\VehicleController as Admin_VehicleController;
+
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\VehicleController;
+
 use Illuminate\Support\Facades\Route;
-
-
-    Route::group(['prefix'=>'/admin/vehicle','as'=>'admin.vehicle.'], function(){
-        Route::get('/', [VehicleController::class, 'vehicle']) 
-        ->name('as');
 
         /////////////////////////////////
         /////////// Vehicle /////////////
         /////////////////////////////////
-        Route::get('/', [VehicleController::class, 'vehicle']) 
-        ->name('vehicle');
+
+    Route::get('/employee/vehicle', [VehicleController::class, 'vehicle']) 
+    ->name('user.vehicle');
+    
+    Route::group(['prefix'=>'/employee/vehicle','as'=>'user.vehicle.'], function(){
+
+        // Route::get('/', [VehicleController::class, 'vehicle']) 
+        // ->name('vehicle');
 
         //  register new vehicle - vehicle
         Route::get('/register_new_vehicle', [VehicleController::class, 'register_new_vehicle']) 
