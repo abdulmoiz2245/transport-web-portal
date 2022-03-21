@@ -172,11 +172,11 @@
             </div>
             <div class="form-group col-md-6 col-12 policy_number">
                 <label for="policy-number">Policy Number</label>
-                <input type="text" name="policy_number" class="form-control" required>
+                <input type="text" name="insurance_policy_number" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 insurance_expiry">
                 <label for="insurance-expiry">Insurance Expiry Date</label>
-                <input type="date" name="insurance_expiry" class="form-control" required>
+                <input type="date" name="insurance_expiry" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 insurance_form">
                 <div class="form-group">
@@ -186,7 +186,7 @@
                             <span class="input-group-text" >Upload Insurance</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="insurance_form" required>
+                            <input type="file" class="custom-file-input"   name="insurance_form" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -201,7 +201,7 @@
             </div>
             <div class="form-group col-md-6 col-12 other_insurance_expiry">
                 <label for="other-insurance-expiry">Other Insurance Expiry Date</label>
-                <input type="date" name="other_insurance_expiry" class="form-control" required>
+                <input type="date" name="other_insurance_expiry" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 other_insurance_form">
                 <div class="form-group">
@@ -211,7 +211,7 @@
                             <span class="input-group-text" >Upload Other Insurance</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="other_insurance_form" required>
+                            <input type="file" class="custom-file-input"   name="other_insurance_form" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -219,7 +219,7 @@
             </div>
             <div class="form-group col-md-6 col-12 other_insurance_description">
                 <label for="other-insurance-descripiton">Other Insurance Description</label>
-                <input type="text" name="other_insurance_description" class="form-control" required>
+                <input type="text" name="other_insurance_description" class="form-control" >
             </div>
 
             <!-- Tags -->
@@ -233,7 +233,7 @@
             </div>
             <div class="form-group col-md-6 col-12 j_ali_tag_expiry">
                 <label for="j-ali-tag-expiry">J-Ali Tag Expiry Date</label>
-                <input type="date" name="j_ali_tag_expiry" class="form-control" required>
+                <input type="date" name="j_ali_tag_expiry" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 j_ali_tag_upload">
                 <div class="form-group">
@@ -243,7 +243,7 @@
                             <span class="input-group-text" >Upload J-Ali Tag</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="j_ali_tag_upload" required>
+                            <input type="file" class="custom-file-input"   name="j_ali_tag_upload" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -259,7 +259,7 @@
             </div>
             <div class="form-group col-md-6 col-12 kp_tag_expiry">
                 <label for="kp-tag-expiry">KP Tag Expiry Date</label>
-                <input type="date" name="kp_tag_expiry" class="form-control" required>
+                <input type="date" name="kp_tag_expiry" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 kp_tag_upload">
                 <div class="form-group">
@@ -269,7 +269,7 @@
                             <span class="input-group-text" >Upload KP Tag</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="kp_tag_upload" required>
+                            <input type="file" class="custom-file-input"   name="kp_tag_upload" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -285,11 +285,11 @@
             </div>
             <div class="form-group col-md-6 col-12 other_tag_description">
                 <label for="other-tag-description">Other Tag Description</label>
-                <input type="text" name="other_tag_description" class="form-control" required>
+                <input type="text" name="other_tag_description" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 other_tag_expiry">
                 <label for="other-tag-expiry">Other Tag Expiry Date</label>
-                <input type="date" name="other_tag_expiry" class="form-control" required>
+                <input type="date" name="other_tag_expiry" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 other_tag_upload">
                 <div class="form-group">
@@ -299,7 +299,7 @@
                             <span class="input-group-text" >Upload Other Tag</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="other_tag_upload" required>
+                            <input type="file" class="custom-file-input"   name="other_tag_upload" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -326,11 +326,11 @@
             </div>
             <div class="form-group col-md-6 col-12 describe_other_sticker">
                 <label for="describe-other-sticker">Describe Other Sticker</label>
-                <input type="text" name="describe_other_sticker" class="form-control" required>
+                <input type="text" name="describe_other_sticker" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 sticker_validity">
                 <label for="sticker-validity">Sticker Validity</label>
-                <input type="date" name="sticker_validity" class="form-control" required>
+                <input type="date" name="sticker_validity" class="form-control" >
             </div>
             <div class=" col-md-6 col-12 sticker_upload">
                 <div class="form-group">
@@ -340,7 +340,7 @@
                             <span class="input-group-text" >Upload Sticker</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="sticker_upload" required>
+                            <input type="file" class="custom-file-input"   name="sticker_upload" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -370,7 +370,7 @@
             </div>
             <div class="form-group col-md-6 col-12 describe_other_pass">
                 <label for="describe-other-pass">Describe Other Pass</label>
-                <input type="text" name="describe_other_pass" class="form-control" required>
+                <input type="text" name="describe_other_pass" class="form-control" >
             </div>
 
             <div class="form-group col-md-6 col-12 food_pass">
@@ -404,197 +404,344 @@
         <hr class="mt-4">
         <h4>Equipment Details</h4>
 
-        <div class="row">
+        <div class="row" id="equipment_detail">
             <div class="form-group col-md-6 col-12">
-                <label >Medical Kit</label>
+                <div class="d-flex">
+                    <label >Medical Kit</label>
+
+                    @if($data['equipment']['medical_kit'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['medical_kit'] }} </div> 
+                    @endif
+                </div>
                 <select name="medical_kit" id="medical_kit" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['medical_kit'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 medical_kit_expiry">
                 <label for="medical-kit-expiry">Medical Kit Expiry Date</label>
-                <input type="date" name="medical_kit_expiry" class="form-control" required>
+                <input type="date" name="medical_kit_expiry" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Fire Extinguisher</label>
+                <div class="d-flex">
+                    <label >Fire Extinguisher</label>
+                    @if($data['equipment']['fire_extinguisher'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['fire_extinguisher'] }} </div> 
+                    @endif
+                </div>
                 <select name="fire_ext" id="fire_ext" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['fire_extinguisher'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 fire_ext_weight">
                 <label for="fire-ext-weight">Fire Extinguisher Weight</label>
-                <input type="text" name="fire_ext_weight" class="form-control" required>
+                <input type="text" name="fire_ext_weight" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 fire_ext_expiry">
                 <label for="fire-ext-expiry">Fire Extinguisher Expiry Date</label>
-                <input type="date" name="fire_ext_expiry" class="form-control" required>
+                <input type="date" name="fire_ext_expiry" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Jack</label>
+                <div class="d-flex">
+                    <label >Jack</label>
+
+                    @if($data['equipment']['jack'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['jack'] }} </div> 
+                    @endif
+                </div>
                 <select name="jack" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['jack'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
                 <label >Spare Wheel</label>
+                
                 <select name="spare_wheel" id="spare_wheel" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" >Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 spare_wheel_quantity">
                 <label for="spare-wheel-quantity">Spare Wheel Quantity</label>
-                <input type="text" name="spare_wheel_quantity" class="form-control" required>
+                <input type="text" name="spare_wheel_quantity" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 spare_wheel_size">
                 <label for="spare-wheel-size">Spare Wheel Size</label>
-                <input type="text" name="spare_wheel_size" class="form-control" required>
+                <input type="text"  name="spare_wheel_size" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Triangle</label>
+                <div class="d-flex">
+                    <label >Safety Triangle</label>
+
+                    @if($data['equipment']['safety_triangle'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_triangle'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_triangle" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_triangle'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Extra Emergency Light</label>
+                <div class="d-flex">
+                    <label >Extra Emergency Light</label>
+
+                    @if($data['equipment']['emergency_light'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['emergency_light'] }} </div> 
+                    @endif
+                </div>
                 <select name="extra_emergency_light" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['emergency_light'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Shoes</label>
+                <div class="d-flex">
+                    <label >Safety Shoes</label>
+
+                    @if($data['equipment']['safety_shoes'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_shoes'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_shoes" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_shoes'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Helemt</label>
+                <div class="d-flex">
+                    <label >Safety Helemt</label>
+
+
+                    @if($data['equipment']['safety_helemt'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_helemt'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_helmet" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_helemt'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Gloves</label>
+                <div class="d-flex">
+                    <label >Safety Gloves</label>
+
+
+                    @if($data['equipment']['safety_gloves'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_gloves'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_gloves" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_gloves'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Jacket</label>
+                <div class="d-flex">
+                    <label >Safety Jacket</label>
+
+
+
+                    @if($data['equipment']['safety_jacket'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_jacket'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_jacket" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_jacket'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Safety Ear Plug</label>
+                <div class="d-flex">
+                    <label >Safety Ear Plug</label>
+
+
+
+                    @if($data['equipment']['safety_ear_plug'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['safety_ear_plug'] }} </div> 
+                    @endif
+                </div>
                 <select name="safety_ear_plug" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['safety_ear_plug'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Lashing Belt</label>
+                <div class="d-flex">
+                    <label >Lashing Belt</label>
+
+
+
+                    @if($data['equipment']['lashing_belt_long'] >-1 || $data['equipment']['lashing_belt_short'] >-1)
+                        <div class="edit-badge"> Inventory (Long) </div> 
+                        <div class="old-value"> {{ $data['equipment']['lashing_belt_long'] }} </div> 
+
+                        <div class="edit-badge"> Inventory (Short) </div> 
+                        <div class="old-value"> {{ $data['equipment']['lashing_belt_short'] }} </div>
+                    @endif
+                </div>
                 <select name="lashing_belt" id="lashing_belt" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['lashing_belt_long'] <=0 || $data['equipment']['lashing_belt_short'] <=0  ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 lashing_belt_quantity_long">
                 <label for="lashing-belt-quantity-long">Lashing Belt Quantity (Long)</label>
-                <input type="text" name="lashing_belt_quantity_long" class="form-control" required>
+                <input type="text" name="lashing_belt_quantity_long" class="form-control" <?php if($data['equipment']['lashing_belt_long'] <=0 ) { ?> disabled <?php } ?>>
             </div>
             <div class="form-group col-md-6 col-12 lashing_belt_quantity_short">
                 <label for="lashing-belt-quantity-short">Lashing Belt Quantity (Short)</label>
-                <input type="text" name="lashing_belt_quantity_short" class="form-control" required>
+                <input type="text" name="lashing_belt_quantity_short" class="form-control" <?php if($data['equipment']['lashing_belt_short'] <=0  ) { ?> disabled <?php } ?>>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Lashing Chain</label>
+                <div class="d-flex">
+                    <label >Lashing Chain</label>
+
+                    @if($data['equipment']['lashing_chain'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['lashing_chain'] }} </div> 
+                    @endif
+                </div>
                 <select name="lashing_chain" id="lashing_chain" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['lashing_chain'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 lashing_chain_quantity">
-                <label for="lashing-chain-quantity">Lashing Chain Quantity</label>
-                <input type="text" name="lashing_chain_quantity" class="form-control" required>
+                <div class="d-flex">
+                    <label for="lashing-chain-quantity">Lashing Chain Quantity</label>
+                </div>
+                <input type="text" name="lashing_chain_quantity" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Side Grill</label>
+                <div class="d-flex">
+                    <label >Side Grill</label>
+
+
+                    @if($data['equipment']['side_grill'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['side_grill'] }} </div> 
+                    @endif
+                </div>
                 <select name="side_grill" id="side_grill" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['side_grill'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 side_grill_quantity">
                 <label for="side-grill-quantity">Side Grill Quantity</label>
-                <input type="text" name="side_grill_quantity" class="form-control" required>
+                <input type="text" name="side_grill_quantity" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 side_grill_height">
                 <label for="side-grill-height">Side Grill Height</label>
-                <input type="text" name="side_grill_height" class="form-control" required>
+                <input type="text" name="side_grill_height" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Container Lock</label>
+                <div class="d-flex">
+                    <label >Container Lock</label>
+
+                    @if($data['equipment']['container_lock'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['container_lock'] }} </div> 
+                    @endif
+                </div>
                 <select name="container_lock" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['container_lock'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Rope Seal</label>
+                <div class="d-flex">
+                    <label >Rope Seal</label>
+
+                    @if($data['equipment']['rope_seal'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['rope_seal'] }} </div> 
+                    @endif
+                </div>
                 <select name="rope_seal" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['rope_seal'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Lashing Angle</label>
+                <div class="d-flex">
+                    <label >Lashing Angle</label>
+
+                    @if($data['equipment']['lashing_angle'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['lashing_angle'] }} </div> 
+                    @endif
+                </div>
                 <select name="lashing_angle" id="lashing_angle" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['lashing_angle'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 lashing_angle_quantity">
                 <label for="lashing-angle-quantity">Lashing Angle Quantity</label>
-                <input type="text" name="lashing_angle_quantity" class="form-control" required>
+                <input type="text" name="lashing_angle_quantity" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12 lashing_angle_size">
                 <label for="lashing-angle-size">Lashing Angle Size</label>
-                <input type="text" name="lashing_angle_size" class="form-control" required>
+                <input type="text" name="lashing_angle_size" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Tarpaulin</label>
+                <div class="d-flex">
+                    <label >Tarpaulin</label>
+
+                    @if($data['equipment']['tarpaulin'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['tarpaulin'] }} </div> 
+                    @endif
+                </div>
                 <select name="tarpaulin" id="tarpaulin" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['tarpaulin'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12 tarpaulin_type">
                 <label for="tarpaulin-type">Tarpaulin Type</label>
-                <input type="text" name="tarpaulin_type" class="form-control" required>
+                <input type="text" name="tarpaulin_type" class="form-control" >
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Tail Lift</label>
+                <div class="d-flex">
+                    <label >Tail Lift</label>
+
+                    @if($data['equipment']['tail_lift'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['tail_lift'] }} </div> 
+                    @endif
+                </div>
                 <select name="tail_lift" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['tail_lift'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label >Trolly</label>
+            <div class="d-flex">
+                    <label >Trolly</label>
+
+                    @if($data['equipment']['trolly'] >-1)
+                        <div class="edit-badge"> Inventory </div> 
+                        <div class="old-value"> {{ $data['equipment']['trolly'] }} </div> 
+                    @endif
+                </div>
                 <select name="trolly" id="" class="form-control" >
-                        <option value="0" selected="selected">Yes</option>
-                        <option value="1">No</option>
+                        <option value="0" <?php if($data['equipment']['trolly'] <= 0 ) { ?> disabled <?php } ?>>Yes</option>
+                        <option value="1" selected="selected">No</option>
                 </select>
             </div>
 
@@ -613,7 +760,7 @@
                             <span class="input-group-text" >Front photo</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="front_photo" required>
+                            <input type="file" class="custom-file-input"   name="front_photo" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -627,7 +774,7 @@
                             <span class="input-group-text" >Right Photo</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="right_photo" required>
+                            <input type="file" class="custom-file-input"   name="right_photo" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -641,7 +788,7 @@
                             <span class="input-group-text" >Left Photo</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="left_photo" required>
+                            <input type="file" class="custom-file-input"   name="left_photo" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -655,7 +802,7 @@
                             <span class="input-group-text" >Back Photo</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="back_photo" required>
+                            <input type="file" class="custom-file-input"   name="back_photo" >
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -675,7 +822,7 @@
                             <span class="input-group-text" >Equipment Photo</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input"   name="equipment_photo" required>
+                            <input type="file" class="custom-file-input"   name="equipment_photo">
                             <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
@@ -733,6 +880,7 @@
     $('#registration_type').on('change', function()
     {
         if(this.value == '0'){
+            $('#equipment_detail').show();
             $('.vehicle_number').show();
             $('.approx_value').show();
             $('.engine_number').show();
@@ -764,6 +912,8 @@
         }
 
         if(this.value == '1'){
+            $('#equipment_detail').hide();
+
             $('.vehicle_number').val('');
             $('.vehicle_number').hide();
             $('.approx_value').val('');

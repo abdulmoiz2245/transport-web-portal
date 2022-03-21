@@ -23,9 +23,20 @@ use App\Models\account_3pl;
 use App\Models\account_3pl_edit_history;
 use App\Models\account_3pl_history;
 use App\Models\Petty_finance_request;
-
+use App\Models\Purchase_mertial_data;
 use App\Models\Account_petty;
 use App\Models\Petty;
+
+use App\Models\Fuel_transfer;
+use App\Models\Inventory_spare_parts;
+use App\Models\Inventory_spare_parts_entery;
+use App\Models\Inventory_spare_parts_entery_history;
+use App\Models\Inventory_Tyre;
+use App\Models\Inventory_tools_entry;
+use App\Models\Inventory_tools;
+use App\Models\Inventory_uncategorized;
+use App\Models\Inventory_uncategorized_history;
+use App\Models\Inventory_vehicle;
 
 
 
@@ -326,9 +337,125 @@ class AccountController extends Controller
                 $account_purchase->save();
 
                 $purchase->status_account = 'approved';
-                $purchase->save();
+
+                if($purchase->save()){
+                    if($purchase->vechicle_type != ''){
+                        $inventory_vehicle = new Inventory_vehicle();
+                        $inventory_vehicle->purchase_id = $purchase->id;
+                        $inventory_vehicle->vechicle_type = $purchase->vechicle_type;
+                        $inventory_vehicle->make = $purchase->make;
+                        $inventory_vehicle->model = $purchase->model;
+                        $inventory_vehicle->color = $purchase->color;
+                        $inventory_vehicle->engine_number = $purchase->engine_number;
+                        $inventory_vehicle->chassis_no = $purchase->chassis_no;
+                        $inventory_vehicle->vehicle_suspension = $purchase->vehicle_suspension;
+                        $inventory_vehicle->trailer_type = $purchase->trailer_type;
+                        $inventory_vehicle->size = $purchase->size;
+                        $inventory_vehicle->axle = $purchase->axle;
+                        $inventory_vehicle->row_status = 'active';
+                        $inventory_vehicle->user_id = 0;
+            
+                        $inventory_vehicle->save();
+
+                        $this->history_table('inventory_vehicle_histories', 'Vehicle Data Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $inventory_vehicle->id , 'inventory.vehicle.view_vehicle');
+            
+                    }else{
+                        $tyre_check =0;
+                        $spare_part_check  = 0;
+                        $tools_check  = 0;
+                        $not_fuel= 0;
+                        $fuel= 0;
+
+
+                        foreach(Purchase_mertial_data::all() as $material){
+                            if($material->id == $purchase->meterial_data_id  ){
+                                var_dump( $material->name);
+                                echo '<br>';
+                                if($material->name == 'tyres' || $material->name == 'tyre' || $material->name == 'Tyre' || $material->name == 'Tyres'){
+                                    $tyre_check=  1;
+                                    break;
+                                }
+
+                                if($material->name == 'sparepart' || $material->name == 'spareparts' || $material->name == 'Sparepart' || $material->name == 'Spareparts'){
+                                    $spare_part_check=  1;
+                                    break;
+                                }
+
+                                else if($material->name == 'tool' || $material->name == 'tools' || $material->name == 'Tool' || $material->name == 'Tools'){
+                                    $tools_check=  1;
+                                    break;
+                                }else if($material->name == 'fuel' || $material->name == 'fuels' || $material->name == 'Fuel' || $material->name == 'Fuels'){
+                                    // dd('fuel_callwd');
+                                    $fuel=  1;
+                                    $not_fuel=  1;
+                                $total_remain =  Fuel_transfer::latest('date')->first()->total_fuel_remaining + $purchase->quantity;
+                                $fuel_t =  Fuel_transfer::latest('date')->first();
+                                $fuel_t->total_fuel_remaining = $total_remain;
+                                $fuel_t->save();
+                                    break;
+                                }
+                                
+                            }
+                        }
+
+                        if($tyre_check == 1){
+                            $data = [ ];
+                            for($i=1 ; $i<=$purchase->quantity ;$i++ ){
+                                array_push($data , ['row_status'=>'active' , 'status'=>'new']);
+                            }
+                            Inventory_Tyre::insert($data);
+                            $this->history_table('inventory__tyre_histories', $purchase->quanntity.' Tyres Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , -1 , 'inventory.tyres.new_used_tyres');
+                            
+                        }else if($spare_part_check == 1){
+
+                            $Inventory_spare_parts = new Inventory_spare_parts;
+                            $Inventory_spare_parts->part_description = $purchase->product_name;
+                            $Inventory_spare_parts->quantity = $purchase->quantity;
+                            $Inventory_spare_parts->save();
+
+                            $this->history_table('inventory_spare_parts_histories',$purchase->quanntity. ' Spare Part Added In  Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_spare_parts->id , 'inventory.spare_parts.edit_spare_parts_in_storage');
+                        }else if($tools_check == 1){
+                            $Inventory_tools = new Inventory_tools;
+                            $Inventory_tools->tools_description = $purchase->product_name;
+                            $Inventory_tools->quantity = $purchase->quantity;
+                            $Inventory_tools->brand = $purchase->brand;
+                            $Inventory_tools->unit = $purchase->unit;
+                            $Inventory_tools->po_number = $purchase->po_number;
+                            $Inventory_tools->created_at = date("Y-m-d H:i:s");
+                            $Inventory_tools->updated_at = date("Y-m-d H:i:s");
+
+                            $Inventory_tools->save();
+
+                            $this->history_table('inventory_tools_histories', $purchase->quanntity.' Tools Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_tools->id , 'inventory.tools.view_tools_in_storage');
+                        }else if(  $fuel != 1 ) {
+                            
+                            $Inventory_uncategorized = new Inventory_uncategorized;
+                            $Inventory_uncategorized->product_name = $purchase->product_name;
+                            $Inventory_uncategorized->date = $purchase->created_at;
+
+                            // $Inventory_uncategorized->quantity = $purchase->unit;
+                            $Inventory_uncategorized->brand = $purchase->brand;
+                            $Inventory_uncategorized->unit = $purchase->unit;
+                            $Inventory_uncategorized->made_in = $purchase->made_in;
+                            $Inventory_uncategorized->size = $purchase->size;
+
+                            $Inventory_uncategorized->po_number = $purchase->po_number;
+                            // $Inventory_uncategorized->date = date("Y-m-d");
+                            // $Inventory_uncategorized->created_at = date("Y-m-d H:i:s");
+                            // $Inventory_uncategorized->updated_at = date("Y-m-d H:i:s");
+
+                            $Inventory_uncategorized->save();
+
+                            $this->history_table('inventory_uncategorized_histories', 'Uncategorized Data Added In Storage (Po no: '.$purchase->po_number.')' ,   0 , $Inventory_uncategorized->id , 'inventory.uncategorized.view_uncategorized');
+                        }
+                    }
+                    
+                }
 
                 if($account_purchase->save()){
+
+
+
                     $this->history_table('account_purchase_histories', 'Add' , 0 , $account_purchase->id , 'account.view_approval');
 
                     $this->history_table('purchase_histories', 'Purchase Approve From Account ' , 0,  $purchase->id , "purchase.view_purchase");

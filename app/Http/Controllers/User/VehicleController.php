@@ -66,7 +66,7 @@ class VehicleController extends Controller
         //dd($data['modules']);     
 
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
@@ -75,7 +75,7 @@ class VehicleController extends Controller
 
         $data['page_title'] = "Vehicle";
         $data['view'] = 'vehicle.vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function own_new_vehicle(Request $request){
@@ -91,14 +91,14 @@ class VehicleController extends Controller
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          //$data['company_names']= DB::table('company_names')->get();
 
        
         $data['view'] = 'vehicle.own_new_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
 
@@ -112,14 +112,14 @@ class VehicleController extends Controller
 
       
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
         
 
         $data['page_title'] = "Register New Vehcile - Vehicle";
         $data['view'] = 'vehicle.register_new_vehicle.register_new_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_own_new_vehicle(){
@@ -131,7 +131,7 @@ class VehicleController extends Controller
         $data['page_title'] = "Add Own Vehicle
         ";
         $data['view'] = 'vehicle.register_new_vehicle.add_own_new_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function add_hired_sub_contractor_vehicle(){
@@ -141,7 +141,7 @@ class VehicleController extends Controller
         $data['page_title'] = "Add Hired Sub Contractor Vehicle
         ";
         $data['view'] = 'vehicle.register_new_vehicle.add_hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function view_vehicle(Request $request){
@@ -150,21 +150,21 @@ class VehicleController extends Controller
 
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
 
         $data['page_title'] = "Vehicles";
         $data['view'] = 'vehicle.view_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function edit_own_new_vehicle(Request $request){
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
@@ -172,7 +172,7 @@ class VehicleController extends Controller
         $data['page_title'] = "Edit Own Vehicle
         ";
         $data['view'] = 'vehicle.edit_vehicle.edit_own_new_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -180,7 +180,7 @@ class VehicleController extends Controller
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
@@ -188,7 +188,7 @@ class VehicleController extends Controller
         $data['page_title'] = "Edit Hired Sub Contractor Vehicle
         ";
         $data['view'] = 'vehicle.edit_vehicle.edit_hired_sub_contractor_vehicle';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
 
     }
 
@@ -201,7 +201,7 @@ class VehicleController extends Controller
         
         $data['page_title'] = "Register New Vehicle | Trash";
         $data['view'] = 'vehicle.register_new_vehicle.deleted_data';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function register_new_vehicle_history (){
@@ -209,14 +209,14 @@ class VehicleController extends Controller
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
 
         $data['page_title'] = "History | Register New Vehicle
         ";
         $data['view'] = 'vehicle.register_new_vehicle.register_new_vehicle_history';
-        return view('layout', ["data"=>$data]);
+        return view('users.layout', ["data"=>$data]);
     }
 
     public function purchase_history(){
@@ -224,7 +224,7 @@ class VehicleController extends Controller
         $data['modules']= DB::table('modules')->get();
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
      
@@ -240,7 +240,7 @@ class VehicleController extends Controller
         $data['modules']= DB::table('modules')->get();
 
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
         $data['company_names']= DB::table('company_names')->get();
@@ -257,7 +257,7 @@ class VehicleController extends Controller
 
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();
@@ -276,7 +276,7 @@ class VehicleController extends Controller
 
         //dd($data['modules']);
         $user = Auth::user();
-        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 9)->first();
 
          $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
          $data['company_names']= DB::table('company_names')->get();

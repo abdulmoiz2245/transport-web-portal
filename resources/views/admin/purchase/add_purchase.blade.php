@@ -226,7 +226,7 @@ use App\Models\Supplier_info;
             // create the option and append to Select2
             data.supplier_product.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool'){
-                        var option = new Option(e, "" , true, true);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -235,7 +235,7 @@ use App\Models\Supplier_info;
 
             data.supplier_services.forEach(function(e){ 
                     if(e != 'tyre' && e != 'tyres' && e != 'fuel' && e != 'fuels' && e != 'sparepart' && e != 'spareparts' && e != 'tools' && e != 'tool' && e != 'fuel' ){
-                        var option = new Option(e, "" , true, true);
+                        var option = new Option(e, e , true, true);
                         studentSelect.append(option).trigger('change');
 
                     }
@@ -269,8 +269,7 @@ use App\Models\Supplier_info;
 
         var supplier_id = $(this).val();
         var arrayLength = Object.keys(data).length;
-        console.log(supplier_id);
-        console.log('as');
+       
 
         for (var i = 0; i < arrayLength; i++) {
             if(supplier_id == data[i].id){
@@ -279,7 +278,7 @@ use App\Models\Supplier_info;
                     var selected = $(this)[0].value;
                   
                     if (selected == data[i].company_id) {
-                        console.log("found");
+                        
 
                         $('.trn_number input').val(parseInt(data[i].trn));
                         $('.trn_number input').attr("readonly" ,"readonly"  );
@@ -375,14 +374,12 @@ use App\Models\Supplier_info;
     // $('.trn_number input').val(parseInt(data[0].trn));
     
     var supplier_id = $(".as_supplier_id").find("option:first-child").val();
-    console.log(supplier_id);
-    console.log($("#Select_Supplier"));
-
+    
     var arrayLength = Object.keys(data).length;
 
     for (var i = 0; i < arrayLength; i++) {
         if(supplier_id == data[i].id){
-            console.log('found');
+            
             $('.trn_number input').val(parseInt(data[i].trn));
             $('.trn_number input').val(data[i].trn);
             
@@ -411,7 +408,7 @@ use App\Models\Supplier_info;
 
             var supplier_id = $("#Select_Supplier").val();
             var arrayLength = Object.keys(data).length;
-            console.log(supplier_id);
+            
             for (var i = 0; i < arrayLength; i++) {
                 if(supplier_id == data[i].id){
                     $('.trn_number input').val(data[i].trn);

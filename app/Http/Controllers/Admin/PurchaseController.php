@@ -37,6 +37,7 @@ use App\Models\Approvals;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
+use App\Models\Inventory_vehicle;
 use App\Models\Purchase_vechicle;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -268,7 +269,7 @@ class PurchaseController extends Controller
     public function save_purchase(Request $request){
 
         $purchase = new Purchase;
-        
+        // dd($request->input('meterial_data_id_1'));
         $check = 0;
          if($request->input('supplier_id') != ''){
             $purchase->supplier_id = $request->input('supplier_id');
@@ -1042,7 +1043,25 @@ class PurchaseController extends Controller
         }
 
         if($purchase->status_admin == 'approved' && $purchase->status_account== 'approved'){
-            
+            $inventory_vehicle = new Inventory_vehicle();
+            $inventory_vehicle->purchase_id = $purchase->id;
+            $inventory_vehicle->vechicle_type = $purchase->vechicle_type;
+            $inventory_vehicle->make = $purchase->make;
+            $inventory_vehicle->model = $purchase->model;
+            $inventory_vehicle->color = $purchase->color;
+            $inventory_vehicle->engine_number = $purchase->engine_number;
+            $inventory_vehicle->chassis_no = $purchase->chassis_no;
+            $inventory_vehicle->vehicle_suspension = $purchase->vehicle_suspension;
+            $inventory_vehicle->trailer_type = $purchase->trailer_type;
+            $inventory_vehicle->size = $purchase->size;
+            $inventory_vehicle->axle = $purchase->axle;
+            $inventory_vehicle->row_status = 'active';
+            $inventory_vehicle->user_id = 0;
+
+            $inventory_vehicle->save();
+
+
+
         }
 
         

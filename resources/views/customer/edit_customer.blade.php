@@ -39,7 +39,7 @@ use App\Models\Erp_department;
 </style>
 <div class="container">
     <div class="mb-4 ">
-        <a href="{{ route( 'user.customer.customer') }}">
+        <a href="{{ route( 'user.customer') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>
@@ -756,7 +756,7 @@ use App\Models\Erp_department;
                     if (data.status == 1) {
                         toastr.success("Customer Department Updated Successfully");
                         $('#smartwizard').smartWizard("next");
-                        window.location.replace("{{ route('user.customer.customer') }}");
+                        window.location.replace("{{ route('user.customer') }}");
                     }
                 },
                 error: function (){    
@@ -781,7 +781,7 @@ use App\Models\Erp_department;
                         if (data.status == 1) {
                             toastr.success("Customer Department Added Successfully");
                             $('#smartwizard').smartWizard("next");
-                            window.location.replace("{{ route('user.customer.customer') }}");
+                            window.location.replace("{{ route('user.customer') }}");
                         }
                     },
                     error: function (){    
@@ -807,7 +807,7 @@ use App\Models\Erp_department;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Customer Rate Card Updated Successfully");
-                        window.location.replace("{{ route('user.customer.customer') }}");
+                        window.location.replace("{{ route('user.customer') }}");
                     }
                 },
                 error: function (){    
@@ -831,7 +831,7 @@ use App\Models\Erp_department;
                 success: function (data) {
                     if (data.status == 1) {
                         toastr.success("Customer Rate Card Added Successfully");
-                        window.location.replace("{{ route('user.customer.customer') }}");
+                        window.location.replace("{{ route('user.customer') }}");
                     }
                 },
                 error: function (){    

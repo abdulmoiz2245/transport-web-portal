@@ -49,6 +49,9 @@ Route::middleware(['auth:user'])->group(function () {
     require __DIR__.'/petty.php';
 
     require __DIR__.'/vehicle.php';
+
+    require __DIR__.'/workshop.php';
+
     
     
 
@@ -72,8 +75,8 @@ Route::middleware(['auth:user'])->group(function () {
     // Route::get('/employee/vehicles', [UserController::class, 'vehicles']) 
     // ->name('user.vehicles');
 
-    Route::get('/employee/workshop', [UserController::class, 'workshop']) 
-    ->name('user.workshop');
+    // Route::get('/employee/workshop', [UserController::class, 'workshop']) 
+    // ->name('user.workshop');
 
 
 });

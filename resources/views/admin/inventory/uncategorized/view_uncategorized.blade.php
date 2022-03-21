@@ -1,7 +1,7 @@
 <div class="container   ">
 
     <div class="mb-5"> 
-        <a href="{{ route( 'user.inventory.uncategorized') }}">
+        <a href="{{ route( 'admin.inventory.uncategorized') }}">
             <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
         </a>
     </div>

@@ -259,8 +259,8 @@ use App\Models\Supplier_info;
 
         var supplier_id = $(this).val();
         var arrayLength = Object.keys(data).length;
-        console.log(supplier_id);
-        console.log('as');
+        
+        
 
         for (var i = 0; i < arrayLength; i++) {
             if(supplier_id == data[i].id){
@@ -269,7 +269,7 @@ use App\Models\Supplier_info;
                     var selected = $(this)[0].value;
                   
                     if (selected == data[i].company_id) {
-                        console.log("found");
+                        
 
                         $('.trn_number input').val(parseInt(data[i].trn));
                         $('.trn_number input').attr("readonly" ,"readonly"  );

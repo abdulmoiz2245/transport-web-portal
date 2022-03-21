@@ -294,6 +294,26 @@ use Illuminate\Support\Facades\Route;
 
         Route::post('uncategorized/restore-tools', [InventoryController::class, 'restore_uncategorized_entry']) 
         ->name('uncategorized.restore_uncategorized_entry');
+
+        //vechicle
+        Route::get('/vehicle', [InventoryController::class, 'vehicle']) 
+        ->name('vehicle');
+
+        Route::get('/vehicle/vehicle_history', [InventoryController::class, 'vehicle_history']) 
+        ->name('vehicle.vehicle_history');
+
+        Route::post('/vehicle/view', [InventoryController::class, 'view_vehicle']) 
+        ->name('vehicle.view_vehicle');
+
+
+        Route::get('/vehicle/trash', [InventoryController::class, 'vehicle_trash']) 
+        ->name('vehicle.vehicle_trash');
+
+        Route::post('/vehicle/delete-tools-status', [InventoryController::class, 'delete_vehicle_status']) 
+        ->name('vehicle.delete_vehicle_status');
+
+        Route::post('vehicle/restore-tools', [InventoryController::class, 'restore_vehicle_entry']) 
+        ->name('vehicle.restore_vehicle_entry');
     
 
     });

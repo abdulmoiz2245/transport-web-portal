@@ -11,7 +11,9 @@ use App\Models\Vehicle_pickup_type;
             </a>
     </div>
     <form action="{{ route('admin.vehicle.save_hired_sub_contractor_vehicle') }}" method="post" enctype="multipart/form-data">
-    @csrf
+        @csrf
+        <input type="text" name="haired_sub_contractor_vehicle" value="1" class="d-none">
+
         <div class="row">
             <div class="form-group col-md-6 col-12">
                 <label >Sub Contractor ID</label>
@@ -21,8 +23,37 @@ use App\Models\Vehicle_pickup_type;
                 @endforeach
                 </select>
             </div>
-
             <div class="form-group col-md-6 col-12">
+                <label >Vehicle Type</label>
+                <select name="vehicle_type" id="vehicle_type" class="form-control" >
+                        <option value="0" selected="selected">Truck</option>
+                        <option value="1">Pickup</option>
+                        <option value="2">Car</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-12 reg_type" >
+                <label >Registration Type</label>
+                <select name="registration_type" id="registration_type" class="form-control" placeholder="">
+                        <option value="0" selected="selected">Vehicle</option>
+                        <option value="1">Trailer</option>
+                </select>
+            </div>
+            <div class=" col-md-6 col-12">
+                <div class="form-group">
+                    <label>Upload Registration</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Upload Registration</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"   name="regisration_form" required>
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6 col-12 vehicle_number">
                 <label for="vehicle-number">Vehicle Number</label>
                 <input type="text" name="vehicle_number" class="form-control" required>
             </div>
@@ -44,25 +75,28 @@ use App\Models\Vehicle_pickup_type;
                 <input type="text" name="model" class="form-control" required>
             </div>
             <div class="form-group col-md-6 col-12">
-                <label for="colour">Colour</label>
+                <label for="colour">Color</label>
                 <input type="text" name="colour" class="form-control" required>
             </div>
-            <div class="form-group col-md-6 col-12">
+            <div class="form-group col-md-6 col-12 engine_number">
                 <label for="engine-number">Engine Number</label>
-                <input type="text" name="engine_number" class="form-control" required>
+                <input type="text" name="engine_number" class="form-control" >
             </div>
-            <div class="form-group col-md-6 col-12">
+            <div class="form-group col-md-6 col-12 chassis_number">
                 <label for="chassis-number">Chassis Number</label>
-                <input type="text" name="chassis_number" class="form-control" required>
+                <input type="text" name="chassis_number" class="form-control" >
             </div>
-            <div class="form-group col-md-6 col-12">
-                <label >Vehicle Type</label>
-                <select name="vehicle_type" id="vehicle_type" class="form-control" >
-                        <option value="0" selected="selected">Truck</option>
-                        <option value="1">Pickup</option>
-                        <option value="2">Car</option>
-                </select>
+
+            <div class="form-group col-md-6 col-12 trailer_size ">
+                <label for="chassis-number">Size </label>
+                <input type="text" name="trailer_size" class="form-control" >
             </div>
+
+            <div class="form-group col-md-6 col-12 axle">
+                <label for="chassis-number">Axle</label>
+                <input type="text" name="axle" class="form-control" >
+            </div>
+            
             <div class="form-group col-md-6 col-12 truck_type">
                 <div class="row">
                     <div class="form-group col-md-10 col-10 truck_type">
@@ -179,12 +213,16 @@ use App\Models\Vehicle_pickup_type;
 </div>
 
 <script>
+    
+    $('.reg_type').show();
 
 
     $('#vehicle_type').on('change', function()
-        {
+    {
             if(this.value == '0'){
                 $('.truck_type').show();
+                $('.reg_type').show();
+                
                 $('.pickup_weight').val('')
                 $('.pickup_weight').hide();
                 $('.pickup_shape').val('')
@@ -195,6 +233,8 @@ use App\Models\Vehicle_pickup_type;
 
             if(this.value == '1'){
                 $('.pickup_weight').show();
+                $('#reg_type').hide();
+
                 $('.pickup_shape').show();
                 $('.truck_type').val('')
                 $('.truck_type').hide();
@@ -203,6 +243,8 @@ use App\Models\Vehicle_pickup_type;
             }
             if(this.value == '2'){
                 $('.car_description').show();
+                $('.reg_type').hide();
+
                 $('.pickup_weight').val('')
                 $('.pickup_weight').hide();
                 $('.pickup_shape').val('')
@@ -211,7 +253,34 @@ use App\Models\Vehicle_pickup_type;
                 $('.truck_type').hide();
             }
             
-        });
+    });
+    $('#registration_type').on('change', function()
+    {
+        if(this.value == '0'){
+            $('.vehicle_number').show();
+           
+            $('.engine_number').show();
+            $('.chassis_number').hide();
+            $('.trailer_size').hide();
+            $('.axle').hide();
+           
+        }
+
+        if(this.value == '1'){
+            $('.vehicle_number').val('');
+            $('.vehicle_number').hide();
+            $('.chassis_number').show();
+            $('.trailer_size').show();
+            $('.axle').show();
+
+
+
+            $('.engine_number').val('');
+            $('.engine_number').hide();
+
+
+        }
+    });
 
         $('.vehicle_truck_type').on('submit', function (e) {
 

@@ -237,6 +237,7 @@
                         <tr>
                     
                             <td>
+                                
                                 {{ $purchase->id }}
                             </td>
                             <td>{{ $purchase->po_number }}</td>

@@ -303,7 +303,7 @@ use App\Models\Office_Land_contract;
                             <td>{{ $trade_license->id }}</td>
                             <td>{{ $trade_license->po_number }}</td>
                             <td>{{ $trade_license->product_name }}</td>
-                            <td>{{ $trade_license->quantity }}</td>
+                            <td>{{ $trade_license->unit }}</td>
 
                             <td>{{ $trade_license->total_amount }}</td>
                             <td>{{ $trade_license->trn }}</td>
@@ -464,7 +464,7 @@ use App\Models\Office_Land_contract;
                         <td>{{ $trade_license->id }}</td>
                         <td>{{ $trade_license->po_number }}</td>
                         <td>{{ $trade_license->product_name }}</td>
-                        <td>{{ $trade_license->quantity }}</td>
+                        <td>{{ $trade_license->unit }}</td>
 
                         <td>{{ $trade_license->total_amount }}</td>
                         <td>{{ $trade_license->trn }}</td>
