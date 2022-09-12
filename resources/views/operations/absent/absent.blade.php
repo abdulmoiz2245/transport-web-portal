@@ -185,13 +185,7 @@
   <!-- <button  class="tablinks "> <a href="{{ route('user.operations.add_absent') }}" style=""> Add New Complaint </a>  </button> -->
   <form action="" method="get">
     <input type="text" name="status" value="new" class="d-none">
-    <button type="submit" class="tablinks <?php 
-      if (isset($_GET["status"])) {
-        if($_GET["status"] == 'new'){
-          echo 'active';
-        }
-      }
-      ?>" onclick="openCity(event, 'new')"> New Absenties 
+    <button type="submit" class="tablinks"> New Absenties 
     </button>
   </form>
   <form action="" method="get">

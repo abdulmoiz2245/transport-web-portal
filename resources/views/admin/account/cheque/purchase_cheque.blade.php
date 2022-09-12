@@ -49,6 +49,10 @@ use App\Models\account_cheque;
 </style>
 
 <div class="tab" >
+
+  <a href="{{ route('admin.account.cheque_booking') }}">
+    <button class="tablinks" onclick="openCity(event, 'approved')"> Booking </button>
+  </a>
   
   <a href="{{ route('admin.account.cheque_purchase') }}">
     <button class="tablinks active" onclick="openCity(event, 'approved')"> Purchase </button>

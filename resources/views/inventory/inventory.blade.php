@@ -48,6 +48,19 @@
                 </div>
             </a>
         </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <a href="{{ route('user.inventory.vehicle') }}">
+                <div class="card card-icon mb-4">
+                    <div class="card-body text-center">
+                        <i class="nav-icon  i-Truck" style="
+                            font-size: 39px;
+                        "></i>
+                        <p class="text-muted mt-2 mb-2"><strong>Vehicle</strong></p>
+                        <p class="lead text-22 m-0"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route('user.inventory.uncategorized') }}">

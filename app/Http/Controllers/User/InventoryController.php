@@ -22,6 +22,9 @@ use App\Models\Login_password;
 use App\Models\Modules;
 use App\Models\Approvals;
 
+use App\Models\Inventory_vehicle;
+use App\Models\Inventory_vehicle_history;
+
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Redirect;
 use App\Models\Inventory_uncategorized;
@@ -1935,6 +1938,105 @@ class InventoryController extends Controller
         $data['uncategorized'] = Inventory_tools::all();
         $data['page_title'] = "Inventorty Uncategorized Data | Trash";
         $data['view'] = 'inventory.uncategorized.deleted_data';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    //vehicle
+    public function vehicle (){
+        $data['modules']= DB::table('modules')->get();
+        $data['vehicle']= Inventory_vehicle::all();
+        
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+       
+
+        $data['page_title'] = "Vehicle ";
+        $data['view'] = 'inventory.vehicle.vehicle';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function view_vehicle(Request $request){
+        $data['vehicle'] = Inventory_vehicle::find((int)$request->input('id'));
+        $data['modules']= DB::table('modules')->get();
+        // dd($data['spare_part']->part_description);
+
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['company_names']= DB::table('company_names')->get();
+
+        $data['page_title'] = "View vehicle Data";
+        $data['view'] = 'inventory.vehicle.view_vehicle';
+        return view('users.layout', ["data"=>$data]);
+
+    }
+
+    public function delete_vehicle_status(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_vehicle::where('id' , $id)->first();
+        
+        // $customer_info->status_message = $request->input('status_message');
+       
+
+        $customer_info->row_status = 'deleted';
+
+    
+        
+        $this->history_table('inventory_vehicle_histories', 'Delete' ,   0 , $customer_info->id , 'inventory.vehicle.view_vehicle');
+ 
+        if( $customer_info->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+    }
+
+    public function restore_vehicle_entry(Request $request){
+        $id =  (int)$request->input('id');
+        $customer_info = Inventory_vehicle::where('id' , $id)->first();
+       
+
+        $customer_info->row_status = 'active';
+
+        $customer_info->action = 'restored';
+        
+        $customer_info->save();
+
+        $this->history_table('inventory_vehicle_histories', 'Restored' ,   0 , $customer_info->id , 'inventory.vehicle.view_vehicle');
+
+        $customer_info->save();
+            return response()->json(['status'=>'1']);
+    }
+
+    public function vehicle_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        //dd($data['modules']);
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 5)->first();
+
+         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+         $data['trade_licenses_history']= DB::table('inventory_vehicle_histories')->get();
+     
+        // dd($route = 'admin.'. $data['trade_licenses_history'][0]->route_name);
+        $data['table_name']= 'inventory_vehicle_histories';
+
+        $data['page_title'] = "History | Vehicle | Inventory ";
+        $data['view'] = 'hr_pro.history';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function vehicle_trash(){
+        $data['modules']= DB::table('modules')->get();
+        $data['vehicle'] = Inventory_vehicle::all();
+        $data['page_title'] = "Inventorty vehicle Data | Trash";
+        $data['view'] = 'inventory.vehicle.deleted_data';
         return view('users.layout', ["data"=>$data]);
     }
 }

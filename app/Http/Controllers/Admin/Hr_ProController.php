@@ -42,13 +42,6 @@ use Illuminate\Support\Facades\DB;
 class Hr_ProController extends Controller
 {
     /*
-        1. Trade License and sponsors        line_no: 90
-        2. Company Names                     line_no: 58
-        3. non_mobiles_fuel_tanks_renewals   line_no: 471
-        4. non_mobiles_fuel_tanks_renewals   line_no: 720
-        5. office contract land contact      line_no: 970
-        6. Login Access and Password         line_no: 1450
-
 
     */
     
@@ -4394,13 +4387,11 @@ class Hr_ProController extends Controller
 
         
         $data['modules']= DB::table('modules')->get();
-        // dd($data['civil_defense']->document );
-        //dd($data['modules']);
+        
         $user = Auth::user();
         $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 1)->first();
 
-         $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
-        //  $data['company_names']= DB::table('company_names')->get();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
 
         $data['page_title'] = "View Trained Individual  Mobile Fuel Tank";
         $data['view'] = 'admin.hr_pro.mobiles_fuel_tanks_renewals.trained_individual.view_trained_individual';

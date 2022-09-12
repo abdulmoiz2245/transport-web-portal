@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.workshop.add_job_card') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="
@@ -17,7 +17,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.workshop.job_card') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.workshop.vehicle_maintainace_schedule') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.workshop.vehicle_maintenance_detail') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="

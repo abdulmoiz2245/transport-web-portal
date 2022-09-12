@@ -227,7 +227,7 @@
                         <div class="triangle"></div>
                     </li>
                     <li class="nav-item" data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.workshop.workshop') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.workshop') }}">
                             <i class="nav-icon i-Factory"></i>
                             <span class="nav-text">Workshop</span>
                         </a>
@@ -241,7 +241,7 @@
                         <div class="triangle"></div>
                     </li> 
                     <li class="nav-item" data-item="">
-                        <a class="nav-item-hold" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-item-hold" href="{{ route('admin.operations') }}">
                             <i class="nav-icon i-Calendar-4"></i>
                             <span class="nav-text">Booking</span>
                         </a>

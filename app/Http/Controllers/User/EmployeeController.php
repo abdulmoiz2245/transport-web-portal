@@ -182,6 +182,10 @@ class EmployeeController extends Controller
             $employee->name = $request->input('name');
         }
 
+        if($request->input('mobile_number') != ''){
+            $employee->mobile_number = $request->input('mobile_number');
+        }
+
         if($request->input('designation') != ''){
             $employee->designation = $request->input('designation');
         }
@@ -517,11 +521,16 @@ class EmployeeController extends Controller
 
         $employee_edit_info->incentives =  $employee->incentives;
         $employee_edit_info->incentives_upload =  $employee->incentives_upload;
+        $employee_edit_info->mobile_number =  $employee->mobile_number;
 
         $employee_edit_info->save();
 
         if($request->input('type') != ''){
             $employee->type = $request->input('type');
+        }
+
+        if($request->input('mobile_number') != ''){
+            $employee->mobile_number = $request->input('mobile_number');
         }
 
         if ($request->hasFile('photo')) {

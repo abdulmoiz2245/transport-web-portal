@@ -157,11 +157,10 @@
                 </div>
 
                 
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.hr_pro.employee_other') }}">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6"> -->
+                    <!-- <a href="{{ route('admin.hr_pro.employee_other') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
-                                <!-- <img src="<?= asset('assets') ?>/images/leave_clender.png" class="mb-1" alt="" width="35"> -->
                                 <i class="nav-icon  i-Business-Man" style="
                                     font-size: 39px;
                                 "></i>
@@ -170,7 +169,7 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
             </div>
         </div>

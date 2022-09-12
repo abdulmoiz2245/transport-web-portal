@@ -71,26 +71,3 @@ use App\Models\User;
 </div>
 
 
-<script>
-    $(document).ready(function() {
-        $('.table').DataTable( {
-            dom: 'Bfrtip',
-            responsive: true,
-            buttons: [
-              
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ]
-        } );
-    });
-
-   
-
-    var date = new Date();
-    date.setDate(date.getDate() + 10);
-    var new_date = date.toLocaleDateString('en-CA');  
-    console.log($("[type='date']").attr("min",new_date) );
- 
-</script>

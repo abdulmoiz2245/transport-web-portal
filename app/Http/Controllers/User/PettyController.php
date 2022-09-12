@@ -18,6 +18,7 @@ use App\Models\Account_petty_history;
 
 use App\Models\Account_hr;
 use App\Models\Petty_hr;
+use App\Models\petty_booking;
 
 use App\Models\Petty_bill;
 
@@ -429,6 +430,122 @@ class PettyController extends Controller
         }
 
         return \Redirect::route('user.petty.payable_purchase')->with('success', 'Reciving Updated');
+
+    }
+
+    //Payable Booking
+    public function payable_booking(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['booking'] = Petty_booking::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+    
+        $user = Auth::user();
+    
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 8)->first();
+    
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    
+        $data['page_title'] = "Petty Payable Booking";
+        $data['view'] = 'petty.petty_entery.booking_entery';
+        return view('users.layout', ["data"=>$data]);
+    }
+
+    public function issue_booking_payment(Request $request){
+       
+        $purchase = Petty_booking::find($request->input('id'));
+        if($purchase != null){
+            
+
+            $purchase->amount_remaning = (float)$purchase->amount_remaning - (float)$request->input('amount');
+
+            $purchase->amount_paid = $request->input('amount');
+            // dd($purchase->amount_paid );
+            $purchase->date = date('Y-m-d');
+
+
+            $petty = Petty::latest()->first();
+            if($petty != null){
+
+                $new_petty = new Petty();
+                $new_petty->paid_amount  = (float)$request->input('amount');
+
+                if((float)$petty->total_amount - (float)$request->input('amount') < 0){
+
+                    return \Redirect::route('petty.payable_booking')->with('error', 'Not Enough Blanace');
+                }
+
+                $new_petty->total_amount  =  (float)$petty->total_amount - (float)$request->input('amount');
+
+                $new_petty->date  =  date('Y-m-d');
+                $new_petty->status  =  'approved';
+                $new_petty->description  =  'Cash Paid to Booking (Job Id:'.$purchase->job_id .')';
+
+                $purchase_old = Purchase::find($purchase->job_id);
+
+                // $new_petty->company_id  =  $purchase_old->company_id;
+
+
+                $new_petty->row_status  =  'active';
+                $new_petty->user_id  =  0;
+                $new_petty->save();
+            }else{
+                return \Redirect::route('petty.payable_booking')->with('error', 'Not Enough Blanace');
+            }
+
+            
+
+            if($purchase->amount_remaning > 0  ){
+                $purchase->status = 'partial_paid';
+    
+                $account_purchase = new Petty_booking();
+                $account_purchase->job_id = $purchase->job_id;
+                // $account_purchase->po_id = $purchase->po_id;
+                // $account_purchase->company = $purchase->company_id;
+                $account_purchase->total_amount = $purchase->total_amount;
+                $account_purchase->amount_paid = 0 ;
+                $account_purchase->amount_remaning = $purchase->amount_remaning;
+                $account_purchase->status = 'not_paid';
+                $account_purchase->row_status = 'active';
+                $account_purchase->user_id = 0;
+                $account_purchase->save();
+    
+            }else{
+                // dd('called');
+                $purchase->status = 'paid';
+            }
+
+            $purchase->save();
+            
+             return \Redirect::route('petty.payable_booking')->with('success', 'Data Updated Successfully');
+        }
+
+        return \Redirect::route('petty.payable_booking')->with('error', 'Field Not Found or Deleted');
+    }
+
+    public function update_booking_status(Request $request){
+        $purchase = Petty_booking::find($request->input('id'));
+        if($purchase != null){
+
+            if($request->input('reciving_date') != ''){
+                $purchase->reciving_date = $request->input('reciving_date');
+            }
+    
+            if ($request->hasFile('reciving')) {
+    
+                $name = time().'_'.str_replace(" ", "_", $request->reciving->getClientOriginalName());
+                $file = $request->file('reciving');
+                if($file->storeAs('/main_admin/petty/', $name , ['disk' => 'public_uploads'])){
+                    $purchase->reciving = $name;
+    
+                }
+                
+            }
+
+            $purchase->save();
+        }
+
+        return \Redirect::route('petty.payable_booking')->with('success', 'Reciving Updated');
 
     }
 

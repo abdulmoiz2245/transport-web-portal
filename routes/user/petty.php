@@ -67,6 +67,16 @@ Route::group(['prefix'=>'/employee/petty','as'=>'user.petty.'], function(){
     Route::post('/payable/update-hr-status', [PettyController::class, 'update_hr_status']) 
     ->name('update_hr_status');
 
+    //Payable Booking
+    Route::get('/payable/booking', [PettyController::class, 'payable_booking']) 
+    ->name('payable_booking');
+
+    Route::post('/payable/issue-booking-payment', [PettyController::class, 'issue_booking_payment']) 
+    ->name('issue_booking_payment');
+
+    Route::post('/payable/update-booking-status', [PettyController::class, 'update_booking_status']) 
+    ->name('update_booking_status');
+
     //Payable Fines
     Route::get('/payable/fine', [PettyController::class, 'payable_fine']) 
     ->name('payable_fine');

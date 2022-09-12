@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="">
+            <a href="{{ route( 'admin.account.reciveable') }}">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                     <div class="card-body text-center">
                         <i class="i-Add-User"></i>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="">
+            <a href="{{ route( 'admin.account.invoice') }}">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                     <div class="card-body text-center">
                         <i class="i-Add-User"></i>
@@ -75,7 +75,7 @@
             </a>
         </div>
 
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                     <div class="card-body text-center">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> -->
 
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route( 'admin.account.approval') }}">

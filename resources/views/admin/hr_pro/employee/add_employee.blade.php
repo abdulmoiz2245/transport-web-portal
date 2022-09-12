@@ -189,6 +189,12 @@ p {
                     <input name="basic_salary_per_labour_contract" class="form-control" type="number" required>
                 </div>
             </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group required">
+                    <label class="control-label">Mobile Number</label>
+                    <input name="mobile_number" class="form-control" type="number" required>
+                </div>
+            </div>
             <!-- Nationality -->
             <div class="col-md-6 col-12">
                 <div class="form-group required">

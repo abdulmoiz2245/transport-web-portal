@@ -7,10 +7,20 @@ use App\Models\Supplier_info;
 <div class="container">
    
     <div class="row mb-5">
-        <div class="col-4">
-            <a href="{{ route( 'user.purchase.purchase') }}">
+        <div class="col-1">
+            <a href="{{ route( 'user.purchase') }}">
                 <img  src="<?= asset('assets') ?>/images/back-button.png" alt="" width="30">
             </a>
+        </div>
+        
+        <div class="col-6">
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{ route( 'user.purchase.add_vehicle_purchase') }}">
+                        <button class="btn btn-primary">Add Vehicle</button>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <form action="{{route('user.purchase.save_purchase')}}" method="post"    enctype="multipart/form-data">

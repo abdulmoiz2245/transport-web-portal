@@ -4,6 +4,8 @@ use App\Models\Petty_hr;
 
 use App\Models\Petty_bills;
 use App\Models\Petty_purchase;
+use App\Models\petty_booking;
+
 $petty = Petty::latest()->first();
 $circulating_cash = 0;
 
@@ -23,6 +25,11 @@ if($petty!= null){
     }
 
     foreach(Petty_bills::all() as $purchase){
+        if($purchase->amount > 0 && $purchase->reciving_date ==''){
+            $circulating_cash += $purchase->amount;
+        }
+    }
+    foreach(petty_booking::all() as $purchase){
         if($purchase->amount > 0 && $purchase->reciving_date ==''){
             $circulating_cash += $purchase->amount;
         }

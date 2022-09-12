@@ -96,8 +96,8 @@ use App\Models\Supplier_info;
                 <div class="form-group">
                     <label >Type</label>
                     <select name="vechicle_type" id="vechicle_type" class="form-control "required placeholder="">
-                        <option value="truck_head">Truck Head</option>
-                        <option value="trailer">trailer</option>
+                        <option value="vehicle">Vehicle</option>
+                        <option value="trailer">Trailer</option>
                     </select>
                 </div>
             </div>
@@ -148,9 +148,10 @@ use App\Models\Supplier_info;
                     <label>Trailer Type</label>
                    
                     <select name="trailer_type" id="" class="form-control">
-                        <option value="flat">Flat</option>
-                        <option value="c_side">C side</option>
-                        <option value="tipper">Tipper</option>
+                        <option value="flatbed" >FLATBED</option>
+                        <option value="curtain_side">Curtain Side</option>
+                        <option value="tripper_2xl">Tipper 2XL</option>
+                        <option value="tripper_3xl">Tipper 3XL</option>
                     </select>
                 </div>
             </div>

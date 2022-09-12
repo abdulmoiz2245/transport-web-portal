@@ -7,6 +7,8 @@ use App\Models\Petty_hr;
 
 use App\Models\Petty_bills;
 use App\Models\Petty_purchase;
+use App\Models\petty_booking;
+
 $petty = Petty::latest()->first();
 $circulating_cash = 0;
 
@@ -26,6 +28,12 @@ if($petty!= null){
     }
 
     foreach(Petty_bills::all() as $purchase){
+        if($purchase->amount > 0 && $purchase->reciving_date ==''){
+            $circulating_cash += $purchase->amount;
+        }
+    }
+
+    foreach(Petty_booking::all() as $purchase){
         if($purchase->amount > 0 && $purchase->reciving_date ==''){
             $circulating_cash += $purchase->amount;
         }
@@ -94,9 +102,11 @@ if($petty!= null){
     <button class="tablinks " >Hr Funds</button>
   </a>
 
-  <button class="tablinks">Toll</button>
-  <button class="tablinks">Gate Pass</button>
-  <button class="tablinks">Fines</button>
+
+  <a  href="{{ route('admin.petty.payable_booking') }}">
+    <button class="tablinks " >Booking</button>
+  </a>
+
   <a href="{{ route('admin.petty.payable_bill') }}">
     <button class="tablinks active">Bills</button>    
   </a>

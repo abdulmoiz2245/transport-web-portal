@@ -17,7 +17,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.vehicle.vehicle_fleet') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a href="{{ route('admin.vehicle.view_vehicle') }}">
+                    <a href="{{ route('admin.vehicle.assign_vehicle') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
                                 <i class="nav-icon  i-Truck" style="
@@ -44,7 +44,7 @@
                     </a>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.vehicle.view_vehicle') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
@@ -56,13 +56,12 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6">
                     <a href="{{ route('admin.vehicle.view_vehicle') }}">
                         <div class="card card-icon mb-4">
                             <div class="card-body text-center">
-                                <!-- <img src="<?= asset('assets') ?>/images/fuel.png" class="mb-1" alt="" width="35"> -->
                                 <i class="nav-icon  i-Truck" style="
                                     font-size: 39px;
                                 "></i>
@@ -71,7 +70,7 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

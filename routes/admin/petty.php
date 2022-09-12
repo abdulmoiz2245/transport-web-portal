@@ -57,6 +57,16 @@ Route::group(['prefix'=>'/admin/petty','as'=>'admin.petty.'], function(){
     Route::post('/payable/update-purchase-status', [PettyController::class, 'update_purchase_status']) 
     ->name('update_purchase_status');
 
+    //Payable Booking
+    Route::get('/payable/booking', [PettyController::class, 'payable_booking']) 
+    ->name('payable_booking');
+
+    Route::post('/payable/issue-booking-payment', [PettyController::class, 'issue_booking_payment']) 
+    ->name('issue_booking_payment');
+
+    Route::post('/payable/update-booking-status', [PettyController::class, 'update_booking_status']) 
+    ->name('update_booking_status');
+
     //Payable HR
     Route::get('/payable/hr-fund', [PettyController::class, 'payable_hr']) 
     ->name('payable_hr');

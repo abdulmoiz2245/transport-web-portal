@@ -17171,3 +17171,11 @@ textarea.popover-textarea {
 .old-value img{
     width:14px
 }
+
+.delete-file img{
+    width: 25px;
+}
+
+button img{
+    width: 25px;
+}

@@ -73,6 +73,9 @@ use Illuminate\Support\Facades\Route;
         Route::post('/purchase/vehicle/save', [PurchaseController::class, 'save_vechicle_purchase']) 
         ->name('save_vechicle_purchase');
 
+        Route::get('/purchase/get_purchase_vehicle', [PurchaseController::class, 'get_purchase_vehicle']) 
+        ->name('get_purchase_vehicle');
+
     });
 
 ?>

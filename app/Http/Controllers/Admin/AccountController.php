@@ -19,6 +19,10 @@ use App\Models\account_purchase;
 use App\Models\account_purchase_edit_history;
 use App\Models\account_purchase_history;
 
+use App\Models\account_invoice;
+use App\Models\account_invoice_history;
+
+
 use App\Models\account_3pl;
 use App\Models\account_3pl_edit_history;
 use App\Models\account_3pl_history;
@@ -26,6 +30,13 @@ use App\Models\Petty_finance_request;
 use App\Models\Purchase_mertial_data;
 use App\Models\Account_petty;
 use App\Models\Petty;
+use App\Models\Booking;
+
+use App\Models\account_booking;
+use App\Models\Petty_booking;
+
+
+
 
 use App\Models\Fuel_transfer;
 use App\Models\Inventory_spare_parts;
@@ -40,9 +51,17 @@ use App\Models\Inventory_vehicle;
 
 
 
+use App\Models\Vehicle;
 
 use App\Models\Employee;
+use App\Models\Customer_info;
+use App\Models\Customer_rate_card;
+
+
 use App\Models\account_cheque;
+// use App\Models\account_booking;
+use App\Models\account_booking_history;
+
 
 // account_cheques
 
@@ -52,6 +71,11 @@ use App\Models\Purchase_vehicle;
 use App\Models\Funds_request;
 use App\Models\Petty_purchase;
 use App\Models\Petty_hr;
+
+//invoice
+use App\Models\invoice;
+use App\Models\invoice_history;
+use App\Models\invoice_location;
 
 
 
@@ -169,6 +193,9 @@ class AccountController extends Controller
         $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
         $data['petty_funds'] = Petty_finance_request::where('row_status','!=' ,'deleted')->get();
 
+        $data['booking'] = Booking::where('row_status','!=' ,'deleted')->get();
+
+
  
 
         $data['page_title'] = "Accout Approvals";
@@ -191,43 +218,7 @@ class AccountController extends Controller
         return view('layout', ["data"=>$data]);
     }
 
-    public function approval_history(){
-
-        // $data['modules']= DB::table('modules')->get();
-        
-        // $data['employees'] = Employee::all();
-
-        // $data['trade_licenses_history']= Emmployee_approval_history::all();
-        // $data['table_name']= 'emmployee_approval_histories';
-
-        // $data['page_title'] = "History | Employee approval ";
-        // $data['view'] = 'admin.hr_pro.history';
-        // return view('layout', ["data"=>$data]);
-    }
-
-    public function add_approval(){
-        //     $data['modules']= DB::table('modules')->get();
-
-            
-        //     $data['employee'] = Employee::all();
-        //     $data['page_title'] = "Add  Employee approval";
-        //     $data['view'] = 'admin.account.approval.add_approval';
-        //     return view('layout', ["data"=>$data]);
-    }
-
-    public function view_approval(Request $request){
-        // $data['approval'] = approval::find($request->input('id'));
-        // $data['employees'] = Employee::all();
-
-        // $data['modules']= DB::table('modules')->get();
-
-        // //dd($data['modules']);
-        // $user = Auth::user();
-        
-        // $data['page_title'] = "  Employee approval Request";
-        // $data['view'] = 'admin.account.approval.view_approval';
-        // return view('layout', ["data"=>$data]);
-    }
+   
 
     public function edit_approval (Request $request){
         $user = Auth::user();
@@ -560,6 +551,118 @@ class AccountController extends Controller
 
                 return \Redirect::route('admin.account.approval')->with('success', 'Data Updated Sucessfully');
             }
+        }else if($request->input('type') == 'booking' ){
+            $data['approval'] = booking::find($request->input('id'));
+            if($request->input('status') == 'approved'){
+                $fund = booking::where('id' , $id)->first();
+
+                if($fund->toll_charges > 0){
+                    $account_booking = new account_booking();
+                    $account_booking->job_id = $fund->id;
+                    $account_booking->user_id = 0;
+                    $account_booking->type = 'toll_charges';
+    
+                    $account_booking->total_amount = $fund->toll_charges;
+                    $account_booking->amount_paid = 0;
+                    $account_booking->amount_remaning	 =  $fund->toll_charges;
+                    $account_booking->status = 'not_paid';
+                    $account_booking->row_status = 'active';
+                    $account_booking->booking_date = $fund->booking_date;
+    
+                    $account_booking->save();
+                }
+                if($fund->gate_charges > 0){
+                    $account_booking = new account_booking();
+                    // $account_booking->hr_fund_id = $fund->id;
+                    $account_booking->job_id = $fund->id;
+
+                    $account_booking->user_id = 0;
+                    $account_booking->type = 'gate_charges';
+    
+                    $account_booking->total_amount = $fund->gate_charges;
+                    $account_booking->amount_paid = 0;
+                    $account_booking->amount_remaning	 =  $fund->gate_charges;
+                    $account_booking->status = 'not_paid';
+                    $account_booking->row_status = 'active';
+                    $account_booking->booking_date = $fund->booking_date;
+    
+                    $account_booking->save();
+                }
+                if($fund->labour_charges > 0){
+                    $account_booking = new account_booking();
+                    // $account_booking->hr_fund_id = $fund->id;
+                    $account_booking->job_id = $fund->id;
+
+                    $account_booking->user_id = 0;
+                    $account_booking->type = 'labour_charges';
+    
+                    $account_booking->total_amount = $fund->labour_charges;
+                    $account_booking->amount_paid = 0;
+                    $account_booking->amount_remaning	 =  $fund->labour_charges;
+                    $account_booking->status = 'not_paid';
+                    $account_booking->row_status = 'active';
+                    $account_booking->booking_date = $fund->booking_date;
+    
+                    $account_booking->save();
+                }
+                if($fund->border_charges > 0){
+                    $account_booking = new account_booking();
+                    // $account_booking->hr_fund_id = $fund->id;
+                    $account_booking->job_id = $fund->id;
+
+                    $account_booking->user_id = 0;
+                    $account_booking->type = 'border_charges';
+    
+                    $account_booking->total_amount = $fund->border_charges;
+                    $account_booking->amount_paid = 0;
+                    $account_booking->amount_remaning	 =  $fund->border_charges;
+                    $account_booking->status = 'not_paid';
+                    $account_booking->row_status = 'active';
+                    $account_booking->booking_date = $fund->booking_date;
+    
+                    $account_booking->save();
+                }
+                if($fund->other_charges > 0){
+                    $account_booking = new account_booking();
+                    // $account_booking->hr_fund_id = $fund->id;
+                    $account_booking->job_id = $fund->id;
+
+                    $account_booking->user_id = 0;
+                    $account_booking->type = 'other_charges';
+    
+                    $account_booking->total_amount = $fund->other_charges;
+                    $account_booking->amount_paid = 0;
+                    $account_booking->amount_remaning	 =  $fund->other_charges;
+                    $account_booking->status = 'not_paid';
+                    $account_booking->row_status = 'active';
+                    $account_booking->booking_date = $fund->booking_date;
+    
+                    $account_booking->save();
+                }
+                
+                $fund->pending_by = 'clear';
+
+                $fund->status = 'approved';
+                $fund->save();
+
+                if($account_booking->save()){
+                    $this->history_table('account_booking_histories', 'Add' , 0 , $account_booking->id , 'account.view_approval');
+
+                    $this->history_table('booking_histories', 'Booking Approved From Account ' , 0,  $fund->id , "operations.view_booking");
+
+                    return \Redirect::route('admin.account.approval')->with('success', 'Data Updated Sucessfully');
+                }
+            }else{
+                $fund = booking::where('id' , $id)->first();
+
+                $fund->status = $request->input('status');
+                
+                $fund->save();
+
+                $this->history_table('booking_histories', 'Status Change From Account' , 0,  $fund->id , "operations.view_booking");
+
+                return \Redirect::route('admin.account.approval')->with('success', 'Data Updated Sucessfully');
+            }
         }
 
     }
@@ -579,6 +682,23 @@ class AccountController extends Controller
 
     $data['page_title'] = "Accout Payable Purchase";
     $data['view'] = 'admin.account.payable.purchase_payable';
+    return view('layout', ["data"=>$data]);
+   }
+
+   public function payable_booking(){
+    $data['modules']= DB::table('modules')->get();
+        
+    $data['booking'] = account_booking::where('row_status','!=' ,'deleted')->get();
+    // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+    $user = Auth::user();
+
+    $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+    $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+    $data['page_title'] = "Accout Payable Booking";
+    $data['view'] = 'admin.account.payable.booking_payable';
     return view('layout', ["data"=>$data]);
    }
 
@@ -686,7 +806,80 @@ class AccountController extends Controller
 
    }
 
-    public function cheque_issue_hr_fund(Request $request){
+   public function cheque_issue_booking(Request $request){
+        $purchase = account_booking::find($request->input('id'));
+        
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $purchase->amount_paid = $request->input('cheque_amount');
+
+        $purchase->amount_remaning = (int)$purchase->amount_remaning - (int)$request->input('cheque_amount');
+
+        if($purchase->amount_remaning > 0  ){
+            $purchase->status = 'partial_paid';
+
+            $account_purchase = new account_booking();
+            $account_purchase->job_id = $purchase->job_id;
+            // $account_purchase->po_id = $purchase->po_id;
+            // $account_purchase->company = $purchase->company_id;
+            $account_purchase->total_amount = $purchase->total_amount;
+            $account_purchase->amount_paid = 0 ;
+            $account_purchase->type = $purchase->type ;
+            $account_purchase->booking_date = $purchase->booking_date ;
+
+            $account_purchase->amount_remaning = $purchase->amount_remaning;
+            $account_purchase->status = 'not_paid';
+            $account_purchase->row_status = 'active';
+            $account_purchase->date = date('Y-m-d ');
+            $account_purchase->user_id = 0;
+            $account_purchase->save();
+
+        }else{
+            $purchase->status = 'paid';
+        }
+
+        $cheque = new account_cheque();
+        $cheque->account_name = $request->input('account_name');
+        $cheque->account_number = $request->input('account_number');
+        $cheque->cheque_amount = $request->input('cheque_amount');
+        $cheque->cheque_number = $request->input('cheque_number');
+        $cheque->date = $request->input('date');
+        $cheque->due_date = $request->input('due_date');
+        $cheque->data_id = $purchase->job_id;
+        $cheque->issued_to = 'booking';
+
+        $cheque->row_status =  'active';
+        $cheque->status =  'not_cleared';
+
+
+
+        if ($request->hasFile('upload')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/account/', $name , ['disk' => 'public_uploads'])){
+                $cheque->upload = $name;
+
+            }
+            
+        }
+        $cheque->save();
+        $purchase->cheque_id =  $cheque->id;
+        $purchase->pay_by =  'cheque';
+
+        $purchase->save();
+
+        $this->history_table('account_booking_histories', 'Cheque Id ( '. $cheque->id.' )  Issued' , 0 , $cheque->id , 'account.view_cheque');
+
+        return \Redirect::route('admin.account.payable_booking')->with('success', 'Cheque Issued');
+
+
+   }
+
+   public function cheque_issue_hr_fund(Request $request){
         $hr_fund = account_hr::find($request->input('id'));
         
         $user = Auth::user();
@@ -827,7 +1020,7 @@ class AccountController extends Controller
 
    
 
-   //Cheque
+    //Cheque
     public function cheque(){
         $data['modules']= DB::table('modules')->get();
         $user = Auth::user();
@@ -852,6 +1045,21 @@ class AccountController extends Controller
 
         $data['page_title'] = "Cheque For Purchase";
         $data['view'] = 'admin.account.cheque.purchase_cheque';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function cheque_booking(){
+        $data['modules']= DB::table('modules')->get();
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+        $data['cheque'] = account_cheque::where('row_status','!=' ,'deleted')->where('issued_to','=','booking')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+        $data['page_title'] = "Cheque For Booking";
+        $data['view'] = 'admin.account.cheque.booking_cheque';
         return view('layout', ["data"=>$data]);
     }
 
@@ -977,6 +1185,39 @@ class AccountController extends Controller
         
     }
 
+    public function  pay_by_petty_booking(Request $request){
+        $account_booking = account_booking::find($request->input('id'));
+        
+        $petty_booking = new Petty_booking();
+        $petty_booking->job_id = $account_booking->job_id;
+        // $petty_booking->po_id = $account_booking->po_id;
+        $petty_booking->account_id = $account_booking->id;
+        $petty_booking->booking_date = $account_booking->booking_date;
+
+        $petty_booking->total_amount = $account_booking->total_amount;
+        $petty_booking->amount_paid = $account_booking->amount_paid;
+        $petty_booking->amount_remaning = $account_booking->amount_remaning;
+        $petty_booking->status = 'not_paid';
+        $petty_booking->action = 'Add';
+        $petty_booking->row_status = 'active';
+
+        $petty_booking->user_id = 0;
+        $petty_booking->save();
+
+        $account_booking->status = 'paid';
+        $account_booking->pay_by = 'petty';
+
+        if( $account_booking->save()){
+           
+            return response()->json(['status'=>'1']);
+        }else{
+            return response()->json(['status'=>'0']);
+
+        }
+
+        
+    }
+
     public function  pay_by_petty_hr(Request $request){
         $account_purchase = account_hr::find($request->input('id'));
         
@@ -1042,6 +1283,23 @@ class AccountController extends Controller
         $data['view'] = 'admin.account.paid.purchase_paid';
         return view('layout', ["data"=>$data]);
     }
+
+    public function paid_booking(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['booking'] = account_booking::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+
+        $data['page_title'] = "Accout Paid Booking";
+        $data['view'] = 'admin.account.paid.booking_paid';
+        return view('layout', ["data"=>$data]);
+    }
     
     public function paid_hr_fund(){
         $data['modules']= DB::table('modules')->get();
@@ -1059,4 +1317,636 @@ class AccountController extends Controller
         $data['view'] = 'admin.account.paid.hr_paid';
         return view('layout', ["data"=>$data]);
     }
+
+    //invoice
+
+    public function invoice(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['purchase'] = account_purchase::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['customer'] = Customer_info::where('type' , '=' ,'permanent')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+
+        $data['page_title'] = "Invoice";
+        $data['view'] = 'admin.account.invoice.invoice';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function all_invoice(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['purchase'] = account_purchase::where('row_status','!=' ,'deleted')->get();
+        $data['invoice'] = invoice::where('row_status','!=' ,'deleted')->get();
+        $data['vehicle'] = vehicle::where('row_status','!=' ,'deleted')->get();
+        $data['company_names'] = Company_name::all();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['customer'] = Customer_info::where('type' , '=' ,'permanent')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+
+        $data['page_title'] = "All Invoice";
+        $data['view'] = 'admin.account.invoice.all_invoice';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function invoice_approval(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['invoice'] = invoice::where('row_status','!=' ,'deleted')->get();
+        // dd($data['invoice']);
+        $data['vehicle'] = vehicle::where('row_status','!=' ,'deleted')->get();
+        $data['company_names'] = Company_name::all();
+
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['customer'] = Customer_info::where('type' , '=' ,'permanent')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+
+        $data['page_title'] = "Invoice Approval";
+        $data['view'] = 'admin.account.invoice.invoice_approval';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function new_invoice(Request $request){
+        $user = Auth::user();
+        $customer_id = (int)$request->input('customer_id');
+        $customer_rate_card_id = (int)$request->input('customer_rate_card_id');
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 37)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['company_names'] =  Company_name::all();
+
+
+        $data['customer'] = Customer_info::where('id' , '=' ,$customer_id)->where('type' , '=' ,'permanent')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->first();
+
+        $data['booking'] = booking::where('customer_id' , '=' , $customer_id )->where('row_status' , '!=' , 'deleted')->where('booking_date' , '>='  ,$request->input('start_date'))->where('booking_date', '<=' , $request->input('end_date') )
+        ->where('booking_status' , '=' , 'closed')->where('pending_by' ,'=', 'clear')->where('invoice_status' , '0')->get();
+
+        $data['from_date'] = $request->input('start_date');
+        $data['to_date'] = $request->input('end_date');
+
+
+        $data['customer_rate_card'] = Customer_rate_card::where('customer_id' , '=' ,$customer_id)->get();
+        // dd( $data['customer_rate_card']);
+
+        // $data['sub_contractor'] = Sub_contractor_info::where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        //dd($data['modules']);
+        $data['vehicle'] = Vehicle::where('registration_type' ,'=' , 'vehicle')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        // dd($data['custome/r']);
+        // $data['sub_contractor_vehicle'] = Vehicle::where('registration_type' ,'=' , 'vehicle')->where('sub_contractor_id' ,'!=' , '')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        $data['trailer'] = Vehicle::where('registration_type' ,'=' , 'trailer')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        
+        // $data['page']
+
+        $data['page_title'] = "New Invoice";
+        $data['view'] = 'admin.account.invoice.new_invoice';
+        return view('layout', ["data"=>$data]);
+
+    } 
+
+    public function view_invoice(Request $request){
+        $user = Auth::user();
+        $invoice_id = (int)$request->input('id');
+        $data['invoice'] = invoice::find( $invoice_id);
+        $customer_id = $data['invoice']->customer_id ;
+        $data['customer'] = customer_info::find( $invoice_id);
+
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 37)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['modules']= DB::table('modules')->get();
+        
+        $data['company_names'] =  Company_name::all();
+
+
+
+        $data['booking'] = invoice_location::where('invoice_id' , '=' , $invoice_id )->get();
+
+        $data['vehicle'] = Vehicle::where('registration_type' ,'=' , 'vehicle')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        $data['trailer'] = Vehicle::where('registration_type' ,'=' , 'trailer')->where('row_status' ,'=' , 'active')->where('status' ,'=' , 'approved')->get();
+        
+
+        $data['page_title'] = "New Invoice";
+        $data['view'] = 'admin.account.invoice.view_invoice';
+        return view('layout', ["data"=>$data]);
+
+    } 
+
+    public function save_invoice(Request $request){
+        // dd($request->input('job_id'));
+        $invoice = new invoice();
+
+        if($request->input('invoice_no') != ''){
+            $invoice->invoice_no = $request->input('invoice_no');
+        }
+        if($request->input('company_id') != ''){
+            $invoice->company_id = $request->input('company_id');
+        }
+
+        $invoice->date = date('Y-m-d');
+
+        if($request->input('customer_id') != ''){
+            $invoice->customer_id = $request->input('customer_id');
+        }
+
+        if($request->input('customer_name') != ''){
+            $invoice->customer_name = $request->input('customer_name');
+        }
+
+        if($request->input('trn') != ''){
+            $invoice->trn = $request->input('trn');
+        }
+
+        if($request->input('from_date') != ''){
+            $invoice->from_date = $request->input('from_date');
+        }
+
+        if($request->input('to_date') != ''){
+            $invoice->to_date = $request->input('to_date');
+        }
+
+        if($request->input('sub_total_amount') != ''){
+            $invoice->sub_total_amount = $request->input('sub_total_amount');
+        }
+
+        if($request->input('vat_amount') != ''){
+            $invoice->vat_amount = $request->input('vat_amount');
+        }
+        
+        if($request->input('grand_total') != ''){
+            $invoice->grand_total = $request->input('grand_total');
+        }
+
+        
+        
+
+        $invoice->remaning_amount = (int)$request->input('grand_total');
+        $invoice->recived_amount = 0;
+        $invoice->invoice_status = 0;
+        $invoice->row_status = 'active';
+
+
+        if(Auth::guard('user')->check()){
+            $user_id = Auth::id();
+        }else{
+            $user_id = 0;
+        }
+
+        $invoice->status = 'approved';
+        $invoice->user_id = $user_id;
+
+        $invoice->account_status = '0';
+
+
+        if($invoice->save()){
+            for($i=0 ; $i < count($request->input('job_id')) ; $i++){
+                $invoice_location = new invoice_location();
+                $invoice_location->invoice_id = $invoice->id;
+                $invoice_location->job_id = $request->input('job_id')[$i];
+                $invoice_location->from_location = $request->input('from_location')[$i];
+                $invoice_location->to_location = $request->input('to_location')[$i];
+                $invoice_location->loading_date = $request->input('loading_date')[$i];
+                $invoice_location->offloading_date = $request->input('offloading_date')[$i];
+                $invoice_location->booking_date = $request->input('offloading_date')[$i];
+                $invoice_location->vehicle_id = $request->input('vehicle_id')[$i];
+                $invoice_location->detention_type = $request->input('detention_type')[$i];
+                $invoice_location->detention_rate = $request->input('detention_rate')[$i];
+                $invoice_location->detention_duration = $request->input('detention_duration')[$i];
+               
+                $invoice_location->toll_charges = $request->input('toll_charges')[$i];
+                $invoice_location->gate_charges = $request->input('gate_charges')[$i];
+                $invoice_location->labour_charges = $request->input('labour_charges')[$i];
+                $invoice_location->border_charges = $request->input('border_charges')[$i];
+                $invoice_location->other_charges = $request->input('other_charges')[$i];
+                $invoice_location->other_charges_description = $request->input('other_charges_description')[$i];
+                $invoice_location->job_price = $request->input('job_price')[$i];
+                $invoice_location->total_amount = $request->input('total_amount')[$i];
+                $invoice_location->row_status = 'active';
+
+
+                if($invoice_location->save()){
+                    $booking = booking::find($request->input('job_id')[$i]);
+                    $booking->invoice_status = 1;
+
+                    
+                    // dd($booking);
+                    if($booking->save()){
+                        $this->history_table('booking_histories', 'Invoice Id ( '. $invoice->id.' )  Created against Job Id ('. $invoice_location->job_id .')' , $user_id , $invoice->id , 'account.view_invoice');
+
+                    }
+
+                }
+
+
+            }
+                $account_invoice = new account_invoice();
+                $account_invoice->invoice_id = $invoice->id;
+                $account_invoice->invoice_no = $invoice->invoice_no;
+
+                $account_invoice->user_id = 0;
+
+                // $account_invoice->po_id = $fund->id;
+                // $account_invoice->company = $fund->company_id;
+                $account_invoice->total_amount = $invoice->grand_total;
+                $account_invoice->amount_recived = 0;
+                $account_invoice->amount_remaning	 =  $invoice->grand_total;
+                $account_invoice->status = 'not_recived';
+                $account_invoice->row_status = 'active';
+                $account_invoice->date = $invoice->date;
+
+                $account_invoice->save();
+
+
+            $this->history_table('invoice_histories', 'Invoice Id ( '. $invoice->id.' )  Created' , $user_id , $invoice->id , 'account.view_invoice');
+            return \Redirect::route('admin.account.invoice')->with('success', 'Cheque Issued');
+        }
+
+        return \Redirect::route('admin.account.invoice')->with('Error', 'Invoice Not Created');
+
+
+    }
+
+    public function update_invoice(Request $request){
+        // dd($request->input('job_id'));
+        $invoice =  invoice::find((int)$request->input('invoice_id'));
+        #
+        $check = false;
+        if($request->input('invoice_no') != '' && $request->input('invoice_no') !=  $invoice->invoice_no ){
+            $invoice->invoice_no = $request->input('invoice_no');
+            $check = true;
+        }
+        if($request->input('company_id') != ''){
+            $invoice->company_id = $request->input('company_id');
+        }
+
+        if($request->input('date') != ''){
+            $invoice->date = $request->input('date');
+        }
+
+
+        if($request->input('customer_id') != ''){
+            $invoice->customer_id = $request->input('customer_id');
+
+        }
+
+        if($request->input('customer_name') != ''){
+            $invoice->customer_name = $request->input('customer_name');
+
+        }
+
+        if($request->input('trn') != ''){
+            $invoice->trn = $request->input('trn');
+        }
+
+        if($request->input('from_date') != ''){
+            $invoice->from_date = $request->input('from_date');
+        }
+
+        if($request->input('to_date') != ''){
+            $invoice->to_date = $request->input('to_date');
+        }
+
+        if($request->input('sub_total_amount') != ''){
+            $invoice->sub_total_amount = $request->input('sub_total_amount');
+        }
+
+        if($request->input('vat_amount') != ''){
+            $invoice->vat_amount = $request->input('vat_amount');
+        }
+        
+        if($request->input('grand_total') != ''){
+            $invoice->grand_total = $request->input('grand_total');
+        }
+
+        
+        
+
+        $invoice->remaning_amount = (int)$request->input('grand_total');
+        $invoice->recived_amount = 0;
+        $invoice->invoice_status = 0;
+        $invoice->row_status = 'active';
+
+
+        if(Auth::guard('user')->check()){
+            $user_id = Auth::id();
+        }else{
+            $user_id = 0;
+        }
+
+        $invoice->status = 'approved';
+        $invoice->user_id = $user_id;
+
+        $invoice->account_status = '0';
+
+
+        if($invoice->save()){
+            for($i=0 ; $i < count($request->input('job_id')) ; $i++){
+                $invoice_location = new invoice_location();
+                $invoice_location->invoice_id = $invoice->id;
+                $invoice_location->job_id = $request->input('job_id')[$i];
+                $invoice_location->from_location = $request->input('from_location')[$i];
+                $invoice_location->to_location = $request->input('to_location')[$i];
+                $invoice_location->loading_date = $request->input('loading_date')[$i];
+                $invoice_location->offloading_date = $request->input('offloading_date')[$i];
+                $invoice_location->booking_date = $request->input('offloading_date')[$i];
+                $invoice_location->vehicle_id = $request->input('vehicle_id')[$i];
+                $invoice_location->detention_type = $request->input('detention_type')[$i];
+                $invoice_location->detention_rate = $request->input('detention_rate')[$i];
+                $invoice_location->detention_duration = $request->input('detention_duration')[$i];
+               
+                $invoice_location->toll_charges = $request->input('toll_charges')[$i];
+                $invoice_location->gate_charges = $request->input('gate_charges')[$i];
+                $invoice_location->labour_charges = $request->input('labour_charges')[$i];
+                $invoice_location->border_charges = $request->input('border_charges')[$i];
+                $invoice_location->other_charges = $request->input('other_charges')[$i];
+                $invoice_location->other_charges_description = $request->input('other_charges_description')[$i];
+                $invoice_location->job_price = $request->input('job_price')[$i];
+                $invoice_location->total_amount = $request->input('total_amount')[$i];
+                $invoice_location->row_status = 'active';
+
+
+                if($invoice_location->save()){
+                    $booking = booking::find($request->input('job_id')[$i]);
+                    $booking->invoice_status = 1;
+                    // dd($booking);
+                    if($booking->save()){
+                        $this->history_table('booking_histories', 'Invoice Id ( '. $invoice->id.' )  Created against Job Id ('. $invoice_location->job_id .')' , $user_id , $invoice->id , 'account.view_invoice');
+
+                    }
+
+                }
+
+
+            }
+
+            $this->history_table('invoice_histories', 'Invoice Id ( '. $invoice->id.' )  Created' , $user_id , $invoice->id , 'account.view_invoice');
+            return \Redirect::route('admin.account.invoice')->with('success', 'Cheque Issued');
+        }
+
+        return \Redirect::route('admin.account.invoice')->with('Error', 'Invoice Not Created');
+
+
+    }
+
+    public function update_invoice_approval(Request $request){
+        $id =  (int)$request->input('id');
+
+        if($request->input('type') == 'invoice' ){
+            $data['approval'] = invoice::find($request->input('id'));
+            if($request->input('status') == 'approved'){
+                $fund = invoice::where('id' , $id)->first();
+
+                $account_invoice = new account_invoice();
+                $account_invoice->invoice_id = $fund->id;
+                $account_invoice->invoice_no = $fund->invoice_no;
+
+                $account_invoice->user_id = 0;
+
+                // $account_invoice->po_id = $fund->id;
+                // $account_invoice->company = $fund->company_id;
+                $account_invoice->total_amount = $fund->grand_total;
+                $account_invoice->amount_recived = 0;
+                $account_invoice->amount_remaning	 =  $fund->grand_total;
+                $account_invoice->status = 'not_recived';
+                $account_invoice->row_status = 'active';
+                $account_invoice->date = $fund->date;
+
+                $account_invoice->save();
+
+                $fund->status = 'approved';
+                $fund->save();
+
+                if($account_invoice->save()){
+                    $this->history_table('account_invoice_histories', 'Add' , 0 , $account_invoice->id , 'account.view_approval');
+
+                    $this->history_table('invoice_histories', 'Invoice Approve From Account ' , 0,  $fund->id , "account.view_invoice");
+
+                    return \Redirect::route('admin.account.invoice_approval')->with('success', 'Data Updated Sucessfully');
+                }
+            }else{
+                $fund = invoice::where('id' , $id)->first();
+
+                $fund->status = $request->input('status');
+                
+                $fund->save();
+
+                $this->history_table('invoice_histories', 'Status Change From Account' , 0,  $fund->id , "account.view_invoice");
+
+                return \Redirect::route('admin.account.invoice_approval')->with('success', 'Data Updated Sucessfully');
+            }
+        }
+
+    } 
+
+    public function discard_invoice(Request $request){
+        $invoice = invoice::find($request->input('id'));
+        if($invoice){
+            $all_invoice_location = invoice_location::where('invoice_id' , '=' , $invoice->id);
+            $invoice->status_message = $request->input('status_message');
+            if( $invoice->user_id != 0){
+                $user_id  = $invoice->user_id;
+                
+            }else{
+                $user_id  = 0;
+            }
+    
+            $invoice->action = 'Invoice Discarde';
+            $invoice->row_status = 'deleted';
+    
+            $this->history_table('invoices_histories', $invoice->action , $user_id , $invoice->id , 'account.view_invoice');
+    
+            if($invoice->save()){
+                return response()->json(['status'=>'1']);
+            }else{
+                return response()->json(['status'=>'0']);
+    
+            }
+    
+        }
+    }
+
+    //Reciveable
+
+    public function reciveable_invoice(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['purchase'] = account_invoice::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+    
+        $user = Auth::user();
+    
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+    
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    
+        $data['page_title'] = "Accout Reciveable Invioce";
+        $data['view'] = 'admin.account.reciveable.invoice_reciveable';
+        return view('layout', ["data"=>$data]);
+    }
+    public function reciveable_invoice_over_due(){
+        $data['modules']= DB::table('modules')->get();
+            
+        // $data['purchase'] = account_invoice::where('row_status','!=' ,'deleted')->whereBetween('date', [$from, $to])->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+        $data['purchase'] = account_invoice::where('row_status','!=' ,'deleted')->get();
+    
+        $user = Auth::user();
+    
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+    
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    
+        $data['page_title'] = "Accout Reciveable Invioce Over Due";
+        $data['view'] = 'admin.account.reciveable.invoice_reciveable_over_due';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function recived_invoice(){
+        $data['modules']= DB::table('modules')->get();
+            
+        // $data['purchase'] = account_invoice::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+        $data['purchase'] = account_invoice::where('row_status','!=' ,'deleted')->get();
+    // dd($data['purchase']);
+        $user = Auth::user();
+    
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+    
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    
+        $data['page_title'] = "Accout Reciveable Invioce";
+        $data['view'] = 'admin.account.reciveable.invoice_recived';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function reciveable(){
+        $data['modules']= DB::table('modules')->get();
+            
+        $data['invoice'] = account_invoice::where('row_status','!=' ,'deleted')->get();
+        // $data['hr_funds'] = Funds_request::where('row_status','!=' ,'deleted')->get();
+    
+        $user = Auth::user();
+    
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+    
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+    
+        $data['page_title'] = "Accout Reciveable ";
+        $data['view'] = 'admin.account.reciveable.reciveable';
+        return view('layout', ["data"=>$data]);
+    }
+
+    public function recive_invoice_payment(Request $request){
+        $purchase = account_invoice::find($request->input('id'));
+        $invoice = invoice::find($purchase->invoice_id);
+        $user = Auth::user();
+
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $purchase->amount_recived = (int)$request->input('amount');
+
+        $purchase->amount_remaning = (int)$purchase->amount_remaning - $purchase->amount_recived;
+        // dd($purchase->amount_remaning);
+        if($purchase->amount_remaning > 0  ){
+            $purchase->status = 'partial_recived';
+
+            $account_purchase = new account_invoice();
+            $account_purchase->invoice_no = $purchase->invoice_no;
+            $account_purchase->invoice_id = $purchase->invoice_id;
+            // $account_purchase->company = $purchase->company_id;
+            $account_purchase->total_amount = $purchase->total_amount;
+            $account_purchase->amount_recived = 0 ;
+            $account_purchase->amount_remaning = $purchase->amount_remaning;
+            $account_purchase->status = 'not_recived';
+            $account_purchase->row_status = 'active';
+            $account_purchase->date = date('Y-m-d ');
+            $account_purchase->user_id = 0;
+            $account_purchase->save();
+
+        }else{
+            $purchase->status = 'recived';
+        }
+
+        
+        if($request->input('payment_advice_note') != ''){
+            $purchase->payment_advice_note = $request->input('payment_advice_note');
+        }
+
+        if ($request->hasFile('upload')) {
+
+            $name = time().'_'.str_replace(" ", "_", $request->upload->getClientOriginalName());
+            $file = $request->file('upload');
+            if($file->storeAs('/main_admin/account/', $name , ['disk' => 'public_uploads'])){
+                $purchase->upload = $name;
+
+
+            }
+            
+        }
+
+        
+
+        
+        if($purchase->save()){
+            $all_account_invoice = account_invoice::where('invoice_id' , '=' , $invoice->id)->where('row_status' , '!=' , 'deleted')->get();
+            $amount_recived = 0;
+            foreach($all_account_invoice as $account_invoice){
+                if($account_invoice != 'not_recived'){
+                    $amount_recived += $account_invoice->amount_recived;
+                }
+            }
+            $invoice->recived_amount = $amount_recived;
+            if($invoice->recived_amount >= $invoice->grand_total ){
+                $invoice->invoice_status = 1;
+            }
+            $invoice->save();
+        }
+
+        $this->history_table('account_invoice_histories', 'Payment Recived' , 0 , $purchase->invoice_id , 'account.view_invoice');
+
+        return \Redirect::route('admin.account.reciveable_invoice')->with('success', 'Cheque Issued');
+
+
+    }
+
+    public function invoice_history(){
+
+        $data['modules']= DB::table('modules')->get();
+        $user = Auth::user();
+        $data['permissions'] =  Permissions::where('role_id', '=', $user->role_id)->where('module_id' ,'=' , 7)->first();
+
+        $data['permission'] =  Permissions::where('role_id', '=', $user->role_id)->get();
+        $data['employees'] = Employee::all();
+
+
+        $data['trade_licenses_history']= invoice_history::all();
+        $data['table_name']= 'invoice_histories';
+
+        $data['page_title'] = "History | Invoice ";
+        $data['view'] = 'admin.hr_pro.history';
+        return view('layout', ["data"=>$data]);
+    }
+
+    
+
+
+
+          
 }

@@ -207,6 +207,18 @@ use App\Models\Erp_department;
                         <input name="basic_salary_per_labour_contract" class="form-control" type="number" value="{{ $data['employee']->basic_salary_per_labour_contract }}" required>
                     </div>
                 </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group required">
+                        <div class="d-flex">
+                                <label class="control-label">Mobile Number</label>
+                                @if($data['employee_history'] != null &&  $data['employee']->mobile_number != $data['employee_history']->mobile_number )
+                                    <div class="edit-badge"> Edited </div> 
+                                    <div class="old-value"> Old Value : {{ $data['employee_history']->mobile_number}} </div> 
+                                @endif
+                        </div>
+                        <input name="mobile_number" class="form-control" type="number" value="{{ $data['employee']->mobile_number }}" required>
+                    </div>
+                </div>
                 <!-- Nationality -->
                 <div class="col-md-6 col-12">
                     <div class="form-group required">

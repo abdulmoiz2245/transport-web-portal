@@ -218,6 +218,9 @@
               <button class="btn ml-3 mt-3 mb-3 petty_approved">
                   Petty Funds
               </button>
+              <button class="btn ml-3 mt-3 mb-3 booking_approved">
+                  Booking Jobs
+              </button>
             <div id="purchase_approved_table" class="">
                 <!-- Purchase Approval -->
                 <table  class="display table  nowrap " style="width:100%">
@@ -360,6 +363,62 @@
                     </tbody>         
                 </table>
             </div>
+
+            <div id="booking_approved_table" class="">
+                <!-- Petty Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Toll Charges</th>
+                            <th>Gate Charges</th>
+                            <th>Labour Charges</th>
+                            <th>Border Charges</th>
+                            <th>Other Charges</th>
+                            <th>Other Charges Description</th>
+                            <th>Booking Date</th>
+                            <th>Request Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['booking'] as $booking)
+                        @if($booking->status == 'approved'  && $booking->row_status != 'deleted' && $booking->pending_by == 'clear')
+        
+                        <tr>
+                    
+                            <td>
+                                {{ $booking->id }}
+                            </td>
+                            <td>{{ $booking->toll_charges }}</td>
+                            <td>{{ $booking->gate_charges }}</td>
+                            <td>{{ $booking->labour_charges }}</td>
+                            <td>{{ $booking->border_charges }}</td>
+                            <td>{{ $booking->other_charges }}</td>
+                            <td>{{ $booking->other_charges_description }}</td>
+
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->booking_date }}</span></td>
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->updated_at }}</span></td>
+
+                            <td>
+                                <form action="{{ route( 'admin.operations.view_booking') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$booking->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -372,6 +431,10 @@
             </button>
             <button class="btn ml-3 mt-3 mb-3 petty_pending">
                   Petty Funds
+            </button>
+
+            <button class="btn ml-3 mt-3 mb-3 booking_pending">
+                  Booking Jobs
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
@@ -589,6 +652,85 @@
                     </tbody>         
                 </table>
             </div>
+
+            <div id="booking_pending_table" class="">
+                <!-- Petty Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Toll Charges</th>
+                            <th>Gate Charges</th>
+                            <th>Labour Charges</th>
+                            <th>Border Charges</th>
+                            <th>Other Charges</th>
+                            <th>Other Charges Description</th>
+                            <th>Booking Date</th>
+                            <th>Request Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['booking'] as $booking)
+                        @if($booking->status == 'pending'  && $booking->pending_by == 'account' && $booking->row_status != 'deleted')
+        
+                        <tr>
+                    
+                        <td>
+                                {{ $booking->id }}
+                            </td>
+                            <td>{{ $booking->toll_charges }}</td>
+                            <td>{{ $booking->gate_charges }}</td>
+                            <td>{{ $booking->labour_charges }}</td>
+                            <td>{{ $booking->border_charges }}</td>
+                            <td>{{ $booking->other_charges }}</td>
+                            <td>{{ $booking->other_charges_description }}</td>
+
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->booking_date }}</span></td>
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->updated_at }}</span></td>
+                            <td>
+                                <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$booking->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="booking" >
+                                    <input type="text" class="form-control d-none" name="status" value ="rejected" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-danger">
+                                        Reject
+                                    </button>
+                                    </a>
+                                </form>
+
+                                <form action="{{ route( 'admin.account.update_approval') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$booking->id}}" placeholder="Enter id" >
+                                    <input type="text" class="form-control d-none" name="type" value ="booking" >
+                                    <input type="text" class="form-control d-none" name="status" value ="approved" >
+                                    <a href="">
+                                    <button type="submit" class="btn btn-success">
+                                        Approve
+                                    </button>
+                                    </a>
+                                </form>
+
+                                <form action="{{ route( 'admin.operations.view_booking') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$booking->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -601,6 +743,9 @@
             </button>
             <button class="btn ml-3 mt-3 mb-3 petty_rejected">
                 Petty Funds
+            </button>
+            <button class="btn ml-3 mt-3 mb-3 booking_rejected">
+                Booking
             </button>
           <div class="table-responsive">
             <!-- Purchase Approval -->
@@ -744,6 +889,61 @@
                     </tbody>         
                 </table>
             </div>
+
+            <div id="booking_rejected_table" class="">
+                <!-- booking Approval -->
+                <table   class="display table  nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Toll Charges</th>
+                            <th>Gate Charges</th>
+                            <th>Labour Charges</th>
+                            <th>Border Charges</th>
+                            <th>Other Charges</th>
+                            <th>Other Charges Description</th>
+                            <th>Booking Date</th>
+                            <th>Request Date</th>
+                            <th>Action</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data['booking'] as $booking)
+                        @if($booking->status == 'rejected'  && $booking->row_status != 'deleted')
+                        <tr>
+                    
+                            <td>
+                                {{ $booking->id }}
+                            </td>
+                            <td>{{ $booking->toll_charges }}</td>
+                            <td>{{ $booking->gate_charges }}</td>
+                            <td>{{ $booking->labour_charges }}</td>
+                            <td>{{ $booking->border_charges }}</td>
+                            <td>{{ $booking->other_charges }}</td>
+                            <td>{{ $booking->other_charges_description }}</td>
+
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->booking_date }}</span></td>
+                            <td><span class="badge badge-pill badge-warning">{{ $booking->updated_at }}</span></td>
+
+                            <td>
+                                <form action="{{ route( 'admin.operations.view_booking') }}" method="post" class="d-inline">
+                                    @csrf
+                                    <input type="text" class="form-control d-none" name="id" value ="{{$booking->id}}" placeholder="Enter id" >
+                                    <button type="submit" class="border-0 .bg-white">
+                                        <img src="<?= asset('assets') ?>/images/eye_icon.png" alt="" width="34">
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                            
+                        </tr>
+                    
+                        @endif
+                        @endforeach
+                    </tbody>         
+                </table>
+            </div>
             
           </div>
         </div>
@@ -856,16 +1056,22 @@
   $('#purchase_approved_table').show();
   $('#hr_approved_table').hide();
   $('#petty_approved_table').hide();
+  $('#booking_approved_table').hide();
+
 
   $('.purchase_approved').click(function () {
     $('#purchase_approved_table').show();
     $('#hr_approved_table').hide();
     $('#petty_approved_table').hide();
+    $('#booking_approved_table').hide();
+
     
   });
   $('.hr_approved').click(function () {
     $('#purchase_approved_table').hide();
     $('#petty_approved_table').hide();
+    $('#booking_approved_table').hide();
+
     $('#hr_approved_table').show();
     
   });
@@ -873,52 +1079,94 @@
     $('#purchase_approved_table').hide();
     $('#petty_approved_table').show();
     $('#hr_approved_table').hide();
+    $('#booking_approved_table').hide();
+
+    
+  });
+  $('.booking_approved').click(function () {
+    $('#purchase_approved_table').hide();
+    $('#petty_approved_table').hide();
+    $('#hr_approved_table').hide();
+    $('#booking_approved_table').show();
+
     
   });
 
   $('#purchase_pending_table').show();
   $('#hr_pending_table').hide();
   $('#petty_pending_table').hide();
+  $('#booking_pending_table').hide();
+
 
   $('.purchase_pending').click(function () {
     $('#purchase_pending_table').show();
     $('#hr_pending_table').hide();
     $('#petty_pending_table').hide();
+    $('#booking_pending_table').hide();
+
 
   });
   $('.hr_pending').click(function () {
     $('#purchase_pending_table').hide();
     $('#hr_pending_table').show();
     $('#petty_pending_table').hide();
+    $('#booking_pending_table').hide();
+
     
   });
   $('.petty_pending').click(function () {
     $('#purchase_pending_table').hide();
     $('#hr_pending_table').hide();
     $('#petty_pending_table').show();
+    $('#booking_pending_table').hide();
+
+    
+  });
+  $('.booking_pending').click(function () {
+    $('#purchase_pending_table').hide();
+    $('#hr_pending_table').hide();
+    $('#petty_pending_table').hide();
+    $('#booking_pending_table').show();
+
     
   });
 
   $('#purchase_rejected_table').show();
   $('#hr_rejected_table').hide();
   $('#petty_rejected_table').hide();
+  $('#booking_rejected_table').hide();
+
 
   $('.purchase_rejected').click(function () {
     $('#purchase_rejected_table').show();
     $('#hr_rejected_table').hide();
     $('#petty_rejected_table').hide();
+    $('#booking_rejected_table').hide();
+
 
   });
   $('.hr_rejected').click(function () {
     $('#purchase_rejected_table').hide();
     $('#hr_rejected_table').show();
     $('#petty_rejected_table').hide();
+    $('#booking_rejected_table').hide();
+
 
   });
   $('.petty_rejected').click(function () {
     $('#purchase_rejected_table').hide();
     $('#hr_rejected_table').hide();
     $('#petty_rejected_table').show();
+    $('#booking_rejected_table').hide();
+
+
+  });
+  $('.booking_rejected').click(function () {
+    $('#purchase_rejected_table').hide();
+    $('#hr_rejected_table').hide();
+    $('#petty_rejected_table').hide();
+    $('#booking_rejected_table').show();
+
 
   });
 
@@ -981,6 +1229,6 @@ $('.delete-file').click(function () {
         evt.path[0].className += " active";
         console.log('cale234d');
 
-      }, 2000);
+      }, 500);
   }
 </script>

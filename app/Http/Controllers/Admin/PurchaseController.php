@@ -1284,4 +1284,10 @@ class PurchaseController extends Controller
             return response()->json(['status'=>'1']);
         
     }
+
+    public function get_purchase_vehicle(){
+        $id = $_GET['id'];
+        $purchase_vehicle = Purchase_vehicle::find((int)$id);
+        return response()->json($purchase_vehicle);
+    }
 }

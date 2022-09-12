@@ -70,6 +70,8 @@ Route::middleware(['auth:admin'])->group(function () {
     require __DIR__.'/petty.php';
     require __DIR__.'/vehicle.php';
     require __DIR__.'/workshop.php';
+    require __DIR__.'/operations.php';
+
 
 
 

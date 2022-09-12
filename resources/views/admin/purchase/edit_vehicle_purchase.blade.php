@@ -103,7 +103,7 @@ use App\Models\Company_name;
                 <div class="form-group">
                     <label >Type</label>
                     <select name="vechicle_type" id="vechicle_type" class="form-control "required placeholder="">
-                        <option value="truck_head" <?php if($data['purchase']->vechicle_type  == 'truck_head'  ) { ?> selected <?php } ?> >Truck Head</option>
+                        <option value="vehicle" <?php if($data['purchase']->vechicle_type  == 'vehicle'  ) { ?> selected <?php } ?> >Vehicle</option>
                         <option value="trailer" <?php if($data['purchase']->vechicle_type  == 'trailer'  ) { ?> selected <?php } ?>>Trailer</option>
                     </select>
                 </div>
@@ -155,9 +155,11 @@ use App\Models\Company_name;
                     <label>Trailer Type</label>
                    
                     <select name="trailer_type" id="" class="form-control">
-                        <option value="flat"  <?php if($data['purchase']->trailer_type  == 'flat'  ) { ?> selected <?php } ?>>Flat</option>
-                        <option value="c_side" <?php if($data['purchase']->trailer_type  == 'c_side'  ) { ?> selected <?php } ?>>C Side</option>
-                        <option value="tipper"  <?php if($data['purchase']->trailer_type  == 'tipper'  ) { ?> selected <?php } ?>>Tipper</option>
+                        <option value="flatbed"  <?php if($data['purchase']->trailer_type  == 'flatbed'  ) { ?> selected <?php } ?>>Flatbed</option>
+                        <option value="curtain_side" <?php if($data['purchase']->trailer_type  == 'curtain_side'  ) { ?> selected <?php } ?>>Curtain Side</option>
+                        <option value="tripper_2xl"  <?php if($data['purchase']->trailer_type  == 'tripper_2xl'  ) { ?> selected <?php } ?>>Tipper 2xl</option>
+                        <option value="tripper_3xl"  <?php if($data['purchase']->trailer_type  == 'tripper_3xl'  ) { ?> selected <?php } ?>>Tipper 3xl</option>
+
                     </select>
                 </div>
             </div>

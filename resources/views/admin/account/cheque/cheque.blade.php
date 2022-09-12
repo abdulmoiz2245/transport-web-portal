@@ -38,7 +38,7 @@
                 </div>
             </a>
         </div>
-
+<!-- 
         <div class="col-lg-3 col-md-6 col-sm-6">
             <a href="{{ route( 'admin.account.cheque_hr_fund') }}">
                 <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> -->
 
         
     </div>
